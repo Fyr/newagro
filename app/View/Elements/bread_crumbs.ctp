@@ -1,17 +1,23 @@
-<small>
-<ul class="breadcrumb">
+<div style="overflow: hidden; text-align: center;">
 <?
-	foreach($aBreadCrumbs as $title => $url) {
+if ($aBreadCrumbs) {
+?>
+<ul class="breadCrumbs clearfix">
+<?
+	foreach($aBreadCrumbs as $url => $title) {
 		if ($url) {
 ?>
-	<li><a href="<?=$this->Html->url($url)?>"><?=$title?></a> <i class="icon-chevron-right"></i></li>
+	<li><a href="<?=$url?>"><?__($title);?></a></li>
 <?
 		} else {
 ?>
-	<li class="active"><?=$title?></li>
+	<li><span><?__($title)?></span></li>
 <?
 		}
 	}
 ?>
 </ul>
-</small>
+<?
+}
+?>
+</div>

@@ -8,6 +8,7 @@ class SiteRouter extends Router {
 	}
 	
 	static public function url($article) {
+		return '#';
 		$objectType = self::getObjectType($article);
 		if ($objectType == 'Product') {
 			$url = array(
@@ -35,4 +36,7 @@ class SiteRouter extends Router {
 		return parent::url($url);
 	}
 	
+	static public function catUrl($a, $b) {
+		return '#';
+	}
 }

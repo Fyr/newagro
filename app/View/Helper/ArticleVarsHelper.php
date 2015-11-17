@@ -12,8 +12,7 @@ class ArticleVarsHelper extends AppHelper {
 		
 		$title = $article[$objectType]['title'];
 		$teaser = nl2br($article[$objectType]['teaser']);
-		$src = (isset($article['Media']) && $article['Media'] && isset($article['Media']['id']) && $article['Media']['id']) 
-			? $this->Media->imageUrl($article, $size) : '';
+		$src = $this->Media->imageUrl($article, $size);
 		$featured = $article[$objectType]['featured'];
 	}
 

@@ -8,6 +8,7 @@ class News extends Article {
 	
 	var $hasOne = array(
 		'Media' => array(
+			'className' => 'Media.Model',
 			'foreignKey' => 'object_id',
 			'conditions' => array('Media.object_type' => 'News', 'Media.main' => 1),
 			'dependent' => true

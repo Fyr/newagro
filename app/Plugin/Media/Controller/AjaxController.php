@@ -16,7 +16,7 @@ class AjaxController extends PAjaxController {
 
 	public function move() {
 		$orig_fname = $this->request->data('name');
-		$tmp_name = PATH_FILES_UPLOAD.$orig_fname;
+		$tmp_name = Configure.read('media.path').$orig_fname;
 		list($media_type) = explode('/', $this->request->data('type'));
 		if (!in_array($media_type, $this->Media->types)) {
 		    $media_type = 'raw_file';

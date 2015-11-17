@@ -14,7 +14,7 @@ class Media extends AppModel {
     public function afterFind($results, $primary = false) {
     	foreach($results as &$_row) {
     		$row = $_row[$this->alias];
-    		if (!$primary) {
+    		if ($row && !$primary) {
     			unset($_row[$this->alias]);
     			$_row[$this->alias]['id'] = $row['id'];
     			$_row[$this->alias]['object_type'] = $row['object_type'];
@@ -22,10 +22,17 @@ class Media extends AppModel {
     			$_row[$this->alias]['media_type'] = $row['media_type'];
     			$_row[$this->alias]['file'] = $row['file'];
     			$_row[$this->alias]['ext'] = $row['ext']; // str_replace('.', '', $row['ext']);
+    			$_row[$this->alias]['orig_w'] = $row['orig_w'];
+    			$_row[$this->alias]['orig_h'] = $row['orig_h'];
+    			$_row[$this->alias]['orig_fsize'] = $row['orig_fsize'];
     		}
-    		if ($row['id']) {
+    		if (isset($row['id']) && $row['id']) {
 	    		if ($row['media_type'] == 'image') {
-	            	$_row[$this->alias]['url_img'] = $this->PHMedia->getImageUrl($row['object_type'], $row['id'], 'noresize', $row['file'].$row['ext'].'.png');
+	    			$file = $row['file'].$row['ext'];
+	    			if ($row['object_type'] == 'Product') {
+	    				$file.= '.png';
+	    			}
+	            	$_row[$this->alias]['url_img'] = $this->PHMedia->getImageUrl($row['object_type'], $row['id'], 'noresize', $file);
 	    		}
 	    		$_row[$this->alias]['url_download'] = $this->PHMedia->getRawUrl($row['object_type'], $row['id'], $row['file'].$row['ext']);
     		} else  {

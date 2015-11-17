@@ -85,4 +85,18 @@ class AppModel extends Model {
 		$date2 = date('Y-m-d H:i:s', strtotime($date2));
 		return array($field.' >= ' => $date1, $field.' <= ' => $date2);
 	}
+	
+	public function getRandomRows($count = 1, $aOptions = array()) {
+		if (!isset($aOptions['conditions'])) {
+			$aListOptions['conditions'] = $aOptions;
+		} else {
+			$aListOptions = $aOptions;
+		}
+		$list = $this->find('list', $aListOptions); // TODO: if number of recs > 10000, divide all row set into pages and limit row set due to page
+		$aID = array_keys($list); // $this->getIDList($list, $this->primaryKey, $this->name)
+		shuffle($aID);
+		$aID = array_slice($aID, 0, $count);
+		return $this->find('all', array('conditions' => array($this->alias.'.'.$this->primaryKey => $aID), 'order' => 'rand()'));
+	}
+
 }

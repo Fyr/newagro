@@ -1,10 +1,12 @@
 <?
+App::uses('AppModel', 'Model');
+App::uses('Media', 'Media.Model');
 class Banner extends AppModel {
 	var $name = 'Banner';
 	
 	var $hasMany = array(
 		'Media' => array(
-			'className' => 'Media',
+			'className' => 'Media.Media',
 			'foreignKey' => 'object_id',
 			'conditions' => array('Media.object_type' => 'Banner', 'Media.media_type' => 'image'),
 			'dependent' => true,

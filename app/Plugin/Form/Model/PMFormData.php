@@ -4,6 +4,7 @@ App::uses('PMFormField', 'Form.Model');
 App::uses('FieldTypes', 'Form.Vendor');
 class PMFormData extends AppModel {
 	public $useTable = 'form_data';
+	public $useDbConfig = 'vitacars';
 
 	protected $fieldsData = array();
 	protected $PMFormField;
