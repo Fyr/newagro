@@ -1,1 +1,1 @@
-<a href="<?=$url?>"><?__('read more')?></a>
+<a href="<?=$url?>"><?=__('read more')?></a>

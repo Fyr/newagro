@@ -17,7 +17,6 @@ class RouterController extends AppController {
 		$this->PHMedia = new MediaPath();
 		
 		$fname = $this->PHMedia->getFileName($type, $id, $size, $filename);
-		fdebug($fname);
 		$aFName = $this->PHMedia->getFileInfo($filename);
 		
 		if (file_exists($fname)) {

@@ -116,7 +116,7 @@ $(document).ready(function(){
 			echo $this->element('banner', compact('banner', 'min_w'));
 		}
 	}
-	echo $this->element('bread_crumbs');
+	// echo $this->element('bread_crumbs');
 	echo $this->fetch('content');
 	if (isset($aSlot[2])) {
 		foreach($aSlot[2] as $banner) {
@@ -154,7 +154,7 @@ $(document).ready(function(){
 <?
 			}
 ?>
-                    <div class="time"><span class="icon clock"></span><?=$this->PHTime->niceShort($article['Article']['created'])?></div>
+                    <div class="time"><span class="icon clock"></span><?=$this->PHTime->niceShort($article['News']['created'])?></div>
                     <a href="<?=$url?>" class="title"><?=$title?></a>
                     <div class="description"><p><?=$teaser?></p></div>
                     <div class="more">

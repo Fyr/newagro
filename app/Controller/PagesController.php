@@ -7,22 +7,21 @@ App::uses('SiteArticle', 'Model');
 
 class PagesController extends AppController {
 	public $name = 'Pages';
-	public $uses = array('Page', 'SiteArticle', 'Product', 'News');
+	public $uses = array('Page', 'Product', 'News');
 	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media');
 
 	public function home() {
-		/*
-		$conditions = array('Article.object_type' => 'news', 'Article.published' => 1);
+		$conditions = array('News.published' => 1);
 		if ($this->aEvents) {
-			$conditions['Article.id <> '] = $this->aEvents[0]['Article']['id'];
+			$conditions['News.id <> '] = $this->aEvents[0]['News']['id'];
 		}
-		$aNews = $this->SiteNews->find('all', array(
+		$aNews = $this->News->find('all', array(
 			'conditions' => $conditions,
-			'order' => array('Article.featured DESC', 'Article.created DESC'),
+			'order' => array('News.featured DESC', 'News.created DESC'),
 			'limit' => 3
 		));
 		$this->set('aHomePageNews', $aNews);
-
+		/*
 		$aID = array();
 		foreach($this->aFeaturedProducts as $article) {
 			$aID[] = $article['Article']['id'];
@@ -56,12 +55,33 @@ class PagesController extends AppController {
 		$this->set('contentArticle', $aArticle);
 	}
 	
-	public function view($slug) {
-		$this->request->params['objectType'] = 'Page';
+	public function show($slug) {
+		$aArticle = $this->Page->findBySlug($slug);
+		if (!$aArticle) {
+			$this->redirect('/404');
+			return;
+		}
+		$this->set('aArticle', $aArticle);
+		/*
+		if (in_array($slug, array('dealers', 'remont', 'about-us', 'about-us2', 'contacts1', 'contacts2'))) {
+			$aCurr = array(
+				'dealers' => 'partner',
+				'remont' => 'remont',
+				'about-us' => 'aboutus',
+				'about-us2' => 'aboutus',
+				'contacts1' => 'contacts',
+				'contacts2' => 'contacts'
+			);
+			$this->currMenu = $aCurr[$pageID];
+			$this->currLink = $this->currMenu;
+		}
+		*/
+		// $this->pageTitle = (isset($aArticle['Seo']['title']) && $aArticle['Seo']['title']) ? $aArticle['Seo']['title'] : $aArticle['Article']['title'];
+		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
+			$aArticle['Seo']['title'] = $aArticle['Page']['title'];
+		}
 		
-		$article = $this->Page->findBySlug($slug);
-		$this->set('article', $article);
-		
+		$this->seo = $aArticle['Seo'];
 		$this->currMenu = $slug;
 	}
 }

@@ -21,14 +21,6 @@ class Brand extends AppModel {
 			'conditions' => array('MediaArticle.media_type' => 'image', 'MediaArticle.object_type' => 'Brand', 'MediaArticle.main' => 1),
 			'dependent' => true
 		)
-		/*
-		'Media' => array(
-			'className' => 'MediaArticle',
-			'foreignKey' => 'object_id',
-			'conditions' => array('Media.media_type' => 'image', 'Media.object_type' => 'Brand', 'Media.main' => 1),
-			'dependent' => true
-		)
-		*/
 	);
 	
 	protected $objectType = 'Brand';

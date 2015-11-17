@@ -49,7 +49,7 @@ class AppController extends Controller {
 			'offers' => array('href' => '/offers', 'title' => 'Акции'),
 			'brands' => array('href' => '/brand', 'title' => 'Бренды'),
 			'motors' => array('href' => '/motors', 'title' => 'Техника'),
-			'about' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
+			'about-us' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
 			'partner' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
 			'contacts' => array('href' => '/contacts', 'title' => 'Контакты')
 		);
@@ -61,7 +61,7 @@ class AppController extends Controller {
 			'remont' => array('href' => '/pages/show/remont', 'title' => 'Ремонт'),
 			'brands' => array('href' => '/brand', 'title' => 'Бренды'),
 			'motors' => array('href' => '/motors', 'title' => 'Техника'),
-			'about' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
+			'about-us' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
 			'partner' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
 			'contacts' => array('href' => '/contacts', 'title' => 'Контакты')
 		);
@@ -70,8 +70,8 @@ class AppController extends Controller {
 		$this->currMenu = $this->_getCurrMenu();
 	    $this->currLink = $this->currMenu;
 	    
-		$this->loadModel('Article.Article');
-		$this->aEvents = $this->Article->getRandomRows(1, array('Article.object_type' => 'news', 'Article.featured' => 1, 'Article.published' => 1));
+		$this->loadModel('News');
+		$this->aEvents = $this->News->getRandomRows(1, array('News.featured' => 1, 'News.published' => 1));
 		$this->set('upcomingEvent', ($this->aEvents) ? $this->aEvents[0] : false);
 		
 		$this->set('aFilters', array());
@@ -129,7 +129,6 @@ class AppController extends Controller {
 		// $this->Article = $this->SiteArticle;
 		$this->loadModel('Brand');
 		$brands = $this->Brand->findAllByPublished(1);
-		fdebug($brands);
 		$this->set('aBrandTypes', $brands);
 		/*
 		$aBrands = array();

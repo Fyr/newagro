@@ -1,4 +1,8 @@
-<?=$this->element('title', array('title' => $aArticle['Article']['title']))?>
+<?
+	$aBreadCrumbs = array('/' => 'Главная', $aArticle['Page']['title']);
+	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
+	echo $this->element('title', array('title' => $aArticle['Page']['title']));
+?>
 <div class="block main clearfix">
-	<?=$this->HtmlArticle->fulltext($aArticle['Article']['body'])?>
+	<?=$this->ArticleVars->body($aArticle)?>
 </div>

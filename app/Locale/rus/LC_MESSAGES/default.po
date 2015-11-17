@@ -571,6 +571,9 @@ msgstr "Файл"
 msgid "Image"
 msgstr "Фото"
 
+msgid "read more"
+msgstr "подобнее"
+
 msgid "Set as main"
 msgstr "Назначить главным"
 
