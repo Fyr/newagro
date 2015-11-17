@@ -17,6 +17,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Catalog' => __('Catalogs'),
                 'CategoryProduct' => __('Product categories'),
                 'Product' => __('Products'),
+                'Brand' => __('Brands'),
             ), 
             'create' => array(
                 'Article' => __('Create Article'),
@@ -49,7 +50,8 @@ class ObjectTypeHelper extends AppHelper {
             'view' => array(
             	'Article' => __('View Article'),
             	'News' => __('View News article'),
-            	'Product' => __('View Product')
+            	'Product' => __('View Product'),
+            	'Brand' => __('View brand')
             )
         );
         return $Titles;

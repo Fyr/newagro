@@ -1,5 +1,5 @@
 <?
-	$aBreadCrumbs = array('/' => 'Главная', $aArticle['Page']['title']);
+	$aBreadCrumbs = array(__('Home') => '/', $aArticle['Page']['title'] => '');
 	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 	echo $this->element('title', array('title' => $aArticle['Page']['title']));
 ?>

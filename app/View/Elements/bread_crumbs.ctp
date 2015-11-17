@@ -7,7 +7,7 @@ if ($aBreadCrumbs) {
 	foreach($aBreadCrumbs as $title => $url) {
 		if ($url) {
 ?>
-	<li><a href="<?=$url?>"><?=$title?></a></li>
+	<li><?=$this->Html->link($title, $url)?></li>
 <?
 		} else {
 ?>

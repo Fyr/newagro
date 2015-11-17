@@ -21,7 +21,7 @@ class AppController extends Controller {
 	}
 	
 	protected function _beforeInit() {
-	    $this->helpers = array_merge(array('Html', 'Form', 'Paginator', 'ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media'), $this->helpers);
+	    $this->helpers = array_merge(array('Html', 'Form', 'Paginator', 'ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media', 'ObjectType'), $this->helpers);
 	}
 
 	protected function _afterInit() {
@@ -46,11 +46,11 @@ class AppController extends Controller {
 			'news' => array('href' => '/news', 'title' => 'Новости'),
 			'products' => array('href' => '/zapchasti', 'title' => 'Запчасти'),
 			'remont' => array('href' => '/pages/show/remont', 'title' => 'Ремонт'),
-			'offers' => array('href' => '/offers', 'title' => 'Акции'),
-			'brands' => array('href' => '/brand', 'title' => 'Бренды'),
-			'motors' => array('href' => '/motors', 'title' => 'Техника'),
+			'offer' => array('href' => '/offers', 'title' => 'Акции'),
+			'brand' => array('href' => '/brand', 'title' => 'Бренды'),
+			'motor' => array('href' => '/motors', 'title' => 'Техника'),
 			'about-us' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
-			'partner' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
+			'dealer' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
 			'contacts' => array('href' => '/contacts', 'title' => 'Контакты')
 		);
 
@@ -59,10 +59,10 @@ class AppController extends Controller {
 			'news' => array('href' => '/news', 'title' => 'Новости'),
 			'products' => array('href' => '/zaphasti', 'title' => 'Запчасти'),
 			'remont' => array('href' => '/pages/show/remont', 'title' => 'Ремонт'),
-			'brands' => array('href' => '/brand', 'title' => 'Бренды'),
-			'motors' => array('href' => '/motors', 'title' => 'Техника'),
+			'brand' => array('href' => '/brand', 'title' => 'Бренды'),
+			'motor' => array('href' => '/motors', 'title' => 'Техника'),
 			'about-us' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
-			'partner' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
+			'dealer' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
 			'contacts' => array('href' => '/contacts', 'title' => 'Контакты')
 		);
 
@@ -122,7 +122,7 @@ class AppController extends Controller {
 		$this->set('disableCopy', !TEST_ENV && $this->disableCopy);
 		
 		if (DOMAIN_NAME == 'agromotors.ru') {
-			unset($this->aBottomLinks['motors']);
+			unset($this->aBottomLinks['motor']);
 		}
 		$this->set('aBottomLinks', $this->aBottomLinks);
 
@@ -163,14 +163,14 @@ class AppController extends Controller {
 		$this->loadModel('Page');
 		$aArticleTitles = $this->Page->find('list', array('fields' => array('slug', 'title'), 'conditions' => array('slug' => array('magazini-zapchastei', 'about-us', 'about-us2', 'contacts1', 'contacts2'))));
 		// $this->aNavBar['about']['title'] = $aArticleTitles['about-us'];
-		$this->aNavBar['partner']['title'] = $aArticleTitles['magazini-zapchastei'];
-		$this->aBottomLinks['partner']['title'] = $aArticleTitles['magazini-zapchastei'];
+		$this->aNavBar['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
+		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->set('aBottomLinks', $this->aBottomLinks);
 		
 		if (DOMAIN_NAME == 'agromotors.by' || TEST_ENV) {
 			unset($this->aNavBar['home']);
 		} elseif (DOMAIN_NAME == 'agromotors.ru') {
-			unset($this->aNavBar['motors']);
+			unset($this->aNavBar['motor']);
 		}
 		
 		foreach($aTypes['type_'] as $type) {

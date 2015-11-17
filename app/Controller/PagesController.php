@@ -23,36 +23,7 @@ class PagesController extends AppController {
 			'limit' => 3
 		));
 		$this->set('aHomePageNews', $aNews);
-		/*
-		$aID = array();
-		foreach($this->aFeaturedProducts as $article) {
-			$aID[] = $article['Article']['id'];
-		}
-		$aFeaturedProducts = $this->Article->find('all', array(
-			'conditions' => array('Article.object_type' => 'products', 'Article.featured' => 1, 'Article.published' => 1, 'NOT' => array('Article.id' => $aID)),
-			'order' => 'Article.created DESC',
-			'limit' => 3
-		));
-
-		$this->set('aFeaturedProducts2', $aFeaturedProducts);
-
-		$aID = array();
-		foreach($aFeaturedProducts as $row) {
-			$aID[] = $row['Article']['id'];
-		}
-		$aLastProducts = $this->Article->find('all', array(
-			'conditions' => array('Article.object_type' => 'products', 'Article.published' => 1, 'NOT' => array('Article.id' => $aID)),
-			'order' => 'Article.created DESC',
-			'limit' => 8
-		));
-		$this->set('aLastProducts', $aLastProducts);
-
-		$aArticle = $this->SitePage->findByPageId('home');
-		$this->set('contentArticle', $aArticle);
-
-		$this->pageTitle = (isset($aArticle['Seo']['title']) && $aArticle['Seo']['title']) ? $aArticle['Seo']['title'] : $aArticle['Article']['title'];
-		$this->data['SEO'] = $aArticle['Seo'];
-		*/
+		
 		$aArticle = $this->Page->findBySlug('home');
 		$this->set('contentArticle', $aArticle);
 		

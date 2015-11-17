@@ -5,10 +5,9 @@ App::uses('SiteArticle', 'Model');
 App::uses('News', 'Model');
 class ArticlesController extends AppController {
 	public $name = 'Articles';
-	public $uses = array('SiteArticle', 'News');
-	public $helpers = array('ObjectType');
+	// public $uses = array('News', 'Offer', 'Motor');
 	
-	const PER_PAGE = 20;
+	const PER_PAGE = 21;
 	
 	protected $objectType;
 
@@ -26,16 +25,18 @@ class ArticlesController extends AppController {
 	}
 	
 	public function index() {
+		$this->loadModel($this->objectType);
 		$this->paginate = array(
 			'conditions' => array($this->objectType.'.published' => 1),
 			'limit' => self::PER_PAGE, 
-			'order' => $this->objectType.'.created DESC',
+			'order' => array($this->objectType.'.sorting' => 'ASC', $this->objectType.'.created' => 'DESC'),
 			'page' => $this->request->param('page')
 		);
 		$this->set('aArticles', $this->paginate($this->objectType));
 	}
 	
 	public function view($slug) {
+		$this->loadModel($this->objectType);
 		$aArticle = $this->{$this->objectType}->findBySlug($slug);
 		
 		if (!$aArticle && !TEST_ENV) {

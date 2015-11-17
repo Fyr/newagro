@@ -1,50 +1,50 @@
 <div class="dealer-info">
 <?
-		if ($article['Company']['address']) {
+		if ($article['DealerTable']['address']) {
 ?>
 	<div>
 		<span>Адрес:</span>
-		<?=$article['Company']['address']?>
+		<?=$article['DealerTable']['address']?>
 	</div>	
 <?
 		}
 ?>
 <?
-		if ($article['Company']['phones']) {
+		if ($article['DealerTable']['phones']) {
 ?>
 	<div>
 		<span>Тел.:</span>
-		<?=$article['Company']['phones']?>
+		<?=$article['DealerTable']['phones']?>
 	</div>
 <?
 		}
 ?>
 <?
-		if ($article['Company']['work_time']) {
+		if ($article['DealerTable']['work_time']) {
 ?>
 	<div>
 		<span>Время работы:</span>
-		<?=$article['Company']['work_time']?>
+		<?=$article['DealerTable']['work_time']?>
 	</div>
 <?
 		}
 ?>
 <?
-		if ($article['Company']['site_url']) {
+		if ($article['DealerTable']['site_url']) {
 ?>
 	<div>
 		<span>Сайт:</span>
-		<a href="http://<?=$article['Company']['site_url']?>"><?=$article['Company']['site_url']?></a>
+		<a href="http://<?=$article['DealerTable']['site_url']?>"><?=$article['DealerTable']['site_url']?></a>
 	</div>
 <?
 		}
 ?>
 <?
-		if ($article['Company']['email']) {
+		if ($article['DealerTable']['email']) {
 ?>
 	<div>
 		<span>Email:</span>
-		<a href="mailto:<?=$article['Company']['email']?>"><?=$article['Company']['email']?></a>
+		<a href="mailto:<?=$article['DealerTable']['email']?>"><?=$article['DealerTable']['email']?></a>
 	</div>
 <?
 		}

@@ -8,9 +8,6 @@ class ContactsController extends AppController {
 	public $helpers = array('Recaptcha.Recaptcha');
 
 	public function index() {
-		$article = $this->Page->findBySlug('contacts');
-		$this->set('article', $article);
-		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$lCaptchaValid = $this->Recaptcha->verify();
 			if (!$lCaptchaValid) {
@@ -31,6 +28,9 @@ class ContactsController extends AppController {
 				// fdebug('inValid');
 			}
 		}
+		
+		$this->set('article', $this->Page->findBySlug('contacts1'));
+		$this->set('article2', $this->Page->findBySlug('contacts2'));
 	}
 	
 	public function success() {

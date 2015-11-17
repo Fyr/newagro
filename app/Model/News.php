@@ -6,7 +6,7 @@ App::uses('Seo', 'Seo.Model');
 class News extends Article {
 	protected $objectType = 'News';
 	
-	var $hasOne = array(
+	public $hasOne = array(
 		'Media' => array(
 			'className' => 'Media.Media',
 			'foreignKey' => 'object_id',

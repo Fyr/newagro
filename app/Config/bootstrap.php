@@ -18,7 +18,7 @@ CakeLog::config('error', array(
 
 Configure::write('Config.language', 'rus');
 
-define('PATH_FILES_UPLOAD', $_SERVER['DOCUMENT_ROOT'].'/files/');
+// define('PATH_FILES_UPLOAD', $_SERVER['DOCUMENT_ROOT'].'/files/');
 Configure::write('media', array(
 	'path' => $_SERVER['DOCUMENT_ROOT'].'/files/',
 	'path2' => 'D:/Projects/vitacars.dev/wwwroot/app/webroot/files/'

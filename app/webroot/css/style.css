@@ -300,7 +300,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efc004', end
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4d452', endColorstr='#d09f27',GradientType=0 ); /* IE6-8 */
 }
 
-input[type=text], textarea { border: 1px solid #e7e7e7; background: #fff; padding: 0 5px 0 5px; border-radius: 3px; display: block; width: 100%; font-family: 'Open Sans'; font-size: 11px; margin: 0; height: 30px; outline: none; resize: none;    }
+input[type=text], input[type=email], input[type=password], textarea { border: 1px solid #e7e7e7; background: #fff; padding: 0 5px 0 5px; border-radius: 3px; display: block; width: 100%; font-family: 'Open Sans'; font-size: 11px; margin: 0; height: 30px; outline: none; resize: none;    }
 
 textarea { height: auto;}
 
