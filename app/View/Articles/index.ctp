@@ -4,35 +4,26 @@
 		__('Home') => '/',
 		$title => ''
 	)));
-	echo $this->element('title', array('pageTitle' => $title));
+	echo $this->element('title', compact('title'));
+	foreach($aArticles as $article) {
+		$this->ArticleVars->init($article, $url, $title, $teaser, $src, '150x', $featured, $id);
 ?>
-<div class="block">
-	
-<?
-	foreach($aArticles as $i => $article) {
-		$this->ArticleVars->init($article, $url, $title, $teaser, $src, '150x');
-?>
-	<div class="media">
+                        <div class="block clearfix">
 <?
 		if ($src) {
 ?>
-		<a class="pull-left" href="<?=$url?>">
-			<img class="media-object thumb" src="<?=$src?>" alt="<?=$title?>">
-		</a>
+                            <a href="<?=$url?>"><img src="<?=$src?>" alt="<?=$title?>" class="thumb"/></a>
 <?
 		}
 ?>
-		<div class="media-body">
-			<h4 class="media-heading"><a href="<?=$url?>"><?=$title?></a></h4>
-			<p><?=$teaser?></p>
-			<?=$this->element('more', compact('url'))?>
-		</div>
-	</div>
-	<hr />
+                            <div class="time"><span class="icon clock"></span><?=$this->PHTime->niceShort($article[$objectType]['created'])?></div>
+                            <a href="<?=$url?>" class="title"><?=$title?></a>
+                            <div class="description"><?=$teaser?></div>
+                            <div class="more">
+                                <?=$this->element('more', compact('url'))?>
+                            </div>
+                        </div>
 <?
 	}
 ?>
-</div>
-<?
-	echo $this->element('paginate');
-?>
+<?=$this->element('paginate')?>

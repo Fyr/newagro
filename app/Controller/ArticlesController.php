@@ -8,7 +8,7 @@ class ArticlesController extends AppController {
 	public $uses = array('SiteArticle', 'News');
 	public $helpers = array('ObjectType');
 	
-	const PER_PAGE = 5;
+	const PER_PAGE = 20;
 	
 	protected $objectType;
 
@@ -19,7 +19,7 @@ class ArticlesController extends AppController {
 	}
 	
 	public function beforeRender() {
-		$this->currMenu = ($this->objectType == 'News') ? 'News' : 'Articles';
+		$this->currMenu = strtolower($this->objectType);
 		$this->set('objectType', $this->objectType);
 		
 		parent::beforeRender();
@@ -33,17 +33,21 @@ class ArticlesController extends AppController {
 			'page' => $this->request->param('page')
 		);
 		$this->set('aArticles', $this->paginate($this->objectType));
-		
-		// $this->aBreadCrumbs = array(__('Home page') => '/', )
 	}
 	
 	public function view($slug) {
-		$article = $this->{$this->objectType}->findBySlug($slug);
+		$aArticle = $this->{$this->objectType}->findBySlug($slug);
 		
-		if (!$article && !TEST_ENV) {
-			// return $this->redirect('/');
+		if (!$aArticle && !TEST_ENV) {
+			return $this->redirect404();
 		}
 		
-		$this->set('article', $article);
+		$this->set('article', $aArticle);
+		
+		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
+			$aArticle['Seo']['title'] = $aArticle[$this->objectType]['title'];
+		}
+		$this->seo = $aArticle['Seo'];
+		$this->currMenu = $slug;
 	}
 }

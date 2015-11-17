@@ -21,7 +21,7 @@ class AppController extends Controller {
 	}
 	
 	protected function _beforeInit() {
-	    $this->helpers = array_merge(array('Html', 'Form', 'Paginator', 'Media', 'ArticleVars'), $this->helpers);
+	    $this->helpers = array_merge(array('Html', 'Form', 'Paginator', 'ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media'), $this->helpers);
 	}
 
 	protected function _afterInit() {
@@ -75,6 +75,7 @@ class AppController extends Controller {
 		$this->set('upcomingEvent', ($this->aEvents) ? $this->aEvents[0] : false);
 		
 		$this->set('aFilters', array());
+		$this->set('isHomePage', false);
 	}
 	
 	protected function _getCurrMenu() {
@@ -108,7 +109,6 @@ class AppController extends Controller {
 		$this->pageTitle = ($this->pageTitle) ? $this->pageTitle.' - '.DOMAIN_TITLE : DOMAIN_TITLE;
 		$this->set('pageTitle', $this->pageTitle);
 		
-		$this->set('isHomePage', true); // TODO
 		$this->set('seo', $this->seo); // TODO
 
 		$this->errMsg = (is_array($this->errMsg)) ? implode('<br/>', $this->errMsg) : $this->errMsg;
@@ -201,9 +201,12 @@ class AppController extends Controller {
 		$this->Session->setFlash($msg, 'default', array(), $type);
 	}
 
-	
 	protected function getObjectType() {
 		$objectType = $this->request->param('objectType');
 		return ($objectType) ? $objectType : 'SiteArticle';
+	}
+	
+	public function redirect404() {
+		return $this->redirect('/404');
 	}
 }

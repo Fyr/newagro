@@ -10,13 +10,13 @@ class News extends Article {
 		'Media' => array(
 			'className' => 'Media.Media',
 			'foreignKey' => 'object_id',
-			'conditions' => array('Media.media_type' => 'image', 'Media.object_type' => 'News', 'Media.main' => 1),
+			'conditions' => array('Media.media_type' => 'image', 'Media.object_type' => 'Page', 'Media.main' => 1),
 			'dependent' => true
 		),
 		'Seo' => array(
 			'className' => 'Seo.Seo',
 			'foreignKey' => 'object_id',
-			'conditions' => array('Seo.object_type' => 'News'),
+			'conditions' => array('Seo.object_type' => 'Page'),
 			'dependent' => true
 		)
 	);

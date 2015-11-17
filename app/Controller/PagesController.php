@@ -7,10 +7,12 @@ App::uses('SiteArticle', 'Model');
 
 class PagesController extends AppController {
 	public $name = 'Pages';
-	public $uses = array('Page', 'Product', 'News');
+	public $uses = array('Page', 'News');
 	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media');
 
 	public function home() {
+		$this->set('isHomePage', true);
+		
 		$conditions = array('News.published' => 1);
 		if ($this->aEvents) {
 			$conditions['News.id <> '] = $this->aEvents[0]['News']['id'];
@@ -53,34 +55,24 @@ class PagesController extends AppController {
 		*/
 		$aArticle = $this->Page->findBySlug('home');
 		$this->set('contentArticle', $aArticle);
+		
+		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
+			$aArticle['Seo']['title'] = $aArticle['Page']['title'];
+		}
+		$this->seo = $aArticle['Seo'];
 	}
 	
 	public function show($slug) {
 		$aArticle = $this->Page->findBySlug($slug);
 		if (!$aArticle) {
-			$this->redirect('/404');
+			$this->redirect404();
 			return;
 		}
 		$this->set('aArticle', $aArticle);
-		/*
-		if (in_array($slug, array('dealers', 'remont', 'about-us', 'about-us2', 'contacts1', 'contacts2'))) {
-			$aCurr = array(
-				'dealers' => 'partner',
-				'remont' => 'remont',
-				'about-us' => 'aboutus',
-				'about-us2' => 'aboutus',
-				'contacts1' => 'contacts',
-				'contacts2' => 'contacts'
-			);
-			$this->currMenu = $aCurr[$pageID];
-			$this->currLink = $this->currMenu;
-		}
-		*/
-		// $this->pageTitle = (isset($aArticle['Seo']['title']) && $aArticle['Seo']['title']) ? $aArticle['Seo']['title'] : $aArticle['Article']['title'];
+		
 		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
 			$aArticle['Seo']['title'] = $aArticle['Page']['title'];
 		}
-		
 		$this->seo = $aArticle['Seo'];
 		$this->currMenu = $slug;
 	}

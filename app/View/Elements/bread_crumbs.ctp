@@ -4,14 +4,14 @@ if ($aBreadCrumbs) {
 ?>
 <ul class="breadCrumbs clearfix">
 <?
-	foreach($aBreadCrumbs as $url => $title) {
+	foreach($aBreadCrumbs as $title => $url) {
 		if ($url) {
 ?>
-	<li><a href="<?=$url?>"><?__($title);?></a></li>
+	<li><a href="<?=$url?>"><?=$title?></a></li>
 <?
 		} else {
 ?>
-	<li><span><?__($title)?></span></li>
+	<li><span><?=$title?></span></li>
 <?
 		}
 	}
