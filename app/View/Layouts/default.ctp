@@ -100,7 +100,7 @@ $(document).ready(function(){
         <div class="wrapper clearfix">
             <form class="searchBlock" action="/products" method="get">
                 <button class="submit">поиск</button>
-                <div class="outerSearch"><input type="text" name="data[filter][Article.title]" placeholder="Введите номер или название запчасти..." /></div>
+                <div class="outerSearch"><input type="text" name="q" value="<?=$this->request->query('q')?>" placeholder="Введите номер или название запчасти..." /></div>
             </form>
             <div class="oneLeftSide">
                 <div class="leftSidebar">
@@ -251,5 +251,6 @@ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = 
 <?
 	}
 ?>
+	<?=$this->element('sql_dump')?>
 	</body>
 </html>
