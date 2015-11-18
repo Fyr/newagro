@@ -6,7 +6,8 @@ App::uses('MediaArticle', 'Model');
 App::uses('News', 'Model');
 App::uses('Brand', 'Model');
 App::uses('Product', 'Model');
-App::uses('CategoryProduct', 'Model');
+App::uses('Category', 'Model');
+App::uses('Subcategory', 'Model');
 App::uses('SiteRouter', 'Lib/Routing');
 
 class AppController extends Controller {
@@ -128,8 +129,8 @@ class AppController extends Controller {
 
 		// $this->Article = $this->SiteArticle;
 		$this->loadModel('Brand');
-		$brands = $this->Brand->findAllByPublished(1);
-		$this->set('aBrandTypes', $brands);
+		$brands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
+		$this->set('aBrands', $brands);
 		/*
 		$aBrands = array();
 		foreach($brands as $article) {
@@ -156,8 +157,19 @@ class AppController extends Controller {
 		$this->set('aFilter', $aFilter);
 
 		$this->loadModel('Category');
-		$aTypes = $this->Category->getTypesList();
-		$this->set('aTypes', $aTypes);
+		// $aTypes = $this->Category->getTypesList();
+		$aCategories = $this->Category->getObjectList('Category', '', array('Category.sorting' => 'ASC'));
+		$aCategories =  Hash::combine($aCategories, '{n}.Category.id', '{n}');
+		$this->set('aCategories', $aCategories);
+		foreach($aCategories as $article) {
+			$url = SiteRouter::url($article);
+			$this->aNavBar['products']['submenu'][] = array('href' => $url, 'title' => $article['Category']['title']);
+		}
+		
+		$this->loadModel('Subcategory');
+		$aSubcategories = $this->Subcategory->getObjectList('Subcategory', '', array('Subcategory.sorting' => 'ASC'));
+		$aSubcategories =  Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.object_id');
+		$this->set('aSubcategories', $aSubcategories);
 
 		// Fixes for menu titles
 		$this->loadModel('Page');
@@ -171,11 +183,6 @@ class AppController extends Controller {
 			unset($this->aNavBar['home']);
 		} elseif (DOMAIN_NAME == 'agromotors.ru') {
 			unset($this->aNavBar['motor']);
-		}
-		
-		foreach($aTypes['type_'] as $type) {
-			$url = SiteRouter::catUrl('products', $type);
-			$this->aNavBar['products']['submenu'][] = array('href' => $url, 'title' => $type['title']);
 		}
 		$this->set('aMenu', $this->aNavBar);
 		

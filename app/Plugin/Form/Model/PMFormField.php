@@ -2,6 +2,7 @@
 App::uses('AppModel', 'Model');
 App::uses('FieldTypes', 'Form.Vendor');
 class PMFormField extends AppModel {
+	public $useDbConfig = 'vitacars';
 	public $useTable = 'form_fields';
 	
 	public $validate = array(

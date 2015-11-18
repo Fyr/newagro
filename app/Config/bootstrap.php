@@ -24,6 +24,14 @@ Configure::write('media', array(
 	'path2' => 'D:/Projects/vitacars.dev/wwwroot/app/webroot/files/'
 ));
 
+Configure::write('params.motor', 6);
+Configure::write('params.price_by', 47);
+Configure::write('params.price_ru', 48);
+Configure::write('params.price2_ru', 31);
+Configure::write('params.markaTS', 33);
+Configure::write('params.motorsTS', 34);
+Configure::write('params.dopInfa', 9);
+
 // Values from google recaptcha account
 define('RECAPTCHA_PUBLIC_KEY', '6Lezy-QSAAAAAJ_mJK5OTDYAvPEhU_l-EoBN7rxV');
 define('RECAPTCHA_PRIVATE_KEY', '6Lezy-QSAAAAACCM1hh6ceRr445OYU_D_uA79UFZ');

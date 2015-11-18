@@ -36,7 +36,7 @@ class Media extends AppModel {
 	    		}
 	    		$_row[$this->alias]['url_download'] = $this->PHMedia->getRawUrl($row['object_type'], $row['id'], $row['file'].$row['ext']);
     		} else  {
-    			$_row[$this->alias]['url_img'] = '/img/no-photo.jpg';
+    			$_row[$this->alias]['url_img'] = ''; // '/img/no-photo.jpg';
     			$_row[$this->alias]['url_download'] = '';
     		}
     	}

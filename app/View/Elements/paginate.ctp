@@ -1,9 +1,9 @@
 <?
 	if ($this->Paginator->numbers()) {
-		// fdebug($this->request->params);
 		$this->Paginator->options(array('url' => array(
 			'objectType' => $this->request->param('objectType'),
-			'category' => $this->request->param('category')
+			'category' => $this->request->param('category'),
+			'subcategory' => $this->request->param('subcategory')
 		)));
 		
 		// $this->Paginator->options(array('url' => $options));

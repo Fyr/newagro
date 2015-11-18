@@ -2,32 +2,39 @@
 App::uses('AppModel', 'Model');
 App::uses('Article', 'Article.Model');
 App::uses('Media', 'Media.Model');
-App::uses('Category', 'Model');
 App::uses('PMFormData', 'Form.Model');
 App::uses('Seo', 'Seo.Model');
+App::uses('Category', 'Model');
+App::uses('Subcategory', 'Model');
 class Product extends Article {
+	public $useDbConfig = 'vitacars';
+	public $useTable = 'articles';
+	
 	const NUM_DETAIL = 5;
 	const MOTOR = 6;
 	
 	public $belongsTo = array(
 		'Category' => array(
 			'foreignKey' => 'cat_id'
+		),
+		'Subcategory' => array(
+			'foreignKey' => 'subcat_id'
 		)
 	);
 	
 	public $hasOne = array(
-		'Media' => array(
-			'className' => 'Media.Media',
+		'MediaArticle' => array(
+			'className' => 'MediaArticle',
 			'foreignKey' => 'object_id',
-			'conditions' => array('Media.media_type' => 'image', 'Media.object_type' => 'Product', 'Media.main' => 1),
+			'conditions' => array('MediaArticle.media_type' => 'image', 'MediaArticle.object_type' => 'Product', 'MediaArticle.main' => 1),
 			'dependent' => true
 		),
-		'PMFormData' => array(
+		/*'PMFormData' => array(
 			'className' => 'Form.PMFormData',
 			'foreignKey' => 'object_id',
 			'conditions' => array('PMFormData.object_type' => 'ProductParam'),
 			'dependent' => true
-		),
+		), */
 		'Seo' => array(
 			'className' => 'Seo.Seo',
 			'foreignKey' => 'object_id',

@@ -179,7 +179,7 @@ $(document).ready(function(){
                 <div class="leftBack">
                     <div class="rightBack" id="partnersParade">
 <?
-	foreach($aBrandTypes as $article) {
+	foreach($aBrands as $article) {
 		$this->ArticleVars->init($article, $url, $title, $teaser, $src, 'noresize');
 ?>
 						<a href="<?=$url?>" target="_blank"><img src="<?=$src?>" alt="<?=$title?>" class="grayscale" /></a>

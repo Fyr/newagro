@@ -122,6 +122,74 @@ Router::connect('/brand/page/:page', array(
 	array('named' => array('page' => '[\d]*'))
 );
 
+/* -= Products =- */
+Router::connect('/zapchasti', 
+	array(
+		'controller' => 'Products', 
+		'action' => 'index',
+		'objectType' => 'Product',
+	),
+	array('named' => array('page' => 1))
+);
+Router::connect('/zapchasti/:category', 
+	array(
+		'controller' => 'Products', 
+		'action' => 'index',
+		'objectType' => 'Product',
+	),
+	array('pass' => array('category'))
+);
+Router::connect('/zapchasti/page/:page', 
+	array(
+		'controller' => 'Products', 
+		'action' => 'index',
+		'objectType' => 'Product',
+	),
+	array('named' => array('page' => '[\d]*'))
+);
+Router::connect('/zapchasti/:category/page/:page', 
+	array(
+		'controller' => 'Products', 
+		'action' => 'index',
+		'objectType' => 'Product',
+	),
+	array(
+		'pass' => array('category'),
+		'named' => array('page' => '[\d]*')
+	)
+);
+
+Router::connect('/zapchasti/:category/:subcategory', 
+	array(
+		'controller' => 'Products', 
+		'action' => 'index',
+		'objectType' => 'Product',
+	),
+	array('pass' => array('category', 'subcategory'))
+);
+
+Router::connect('/zapchasti/:category/:subcategory/page/:page', 
+	array(
+		'controller' => 'Products', 
+		'action' => 'index',
+		'objectType' => 'Product',
+	),
+	array(
+		'pass' => array('category', 'subcategory'),
+		'named' => array('page' => '[\d]*')
+	)
+);
+
+Router::connect('/zapchasti/:category/:subcategory/:slug', 
+	array(
+		'controller' => 'Products', 
+		'action' => 'view',
+		'objectType' => 'Product',
+	),
+	array('pass' => array('slug'))
+);
+
+
 CakePlugin::routes();
 
 require CAKE.'Config'.DS.'routes.php';

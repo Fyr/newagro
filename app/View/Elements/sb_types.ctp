@@ -1,19 +1,19 @@
 <ul class="catalog" id="catalog">
 <?
-	foreach($aTypes['type_'] as $type) {
-		$url = (isset($aTypes['type_'.$type['id']])) ? 'javascript: void(0)' : SiteRouter::catUrl('products', $type);
+	foreach($aCategories as $id => $article) {
+		$url = (isset($aSubcategories[$id])) ? 'javascript: void(0)' : SiteRouter::url($article);
 ?>
-	<li id="cat-nav<?=$type['id']?>">
-        <a href="<?=$url?>" class="firstLevel"><span class="icon arrow"></span><?=$type['title']?></a>
+	<li id="cat-nav<?=$id?>">
+        <a href="<?=$url?>" class="firstLevel"><span class="icon arrow"></span><?=$article['Category']['title']?></a>
 <?
-		if (isset($aTypes['type_'.$type['id']])) {
+		if (isset($aSubcategories[$id])) {
 ?>
 		<ul style="display: none">
 <?
-			foreach($aTypes['type_'.$type['id']] as $subtype) {
-				$url = SiteRouter::catUrl('products', $subtype);
+			foreach($aSubcategories[$id] as $subcat_id => $_article) {
+				$url = SiteRouter::url($_article);
 ?>
-            <li><a href="<?=$url?>"><span class="icon smallArrow"></span> <?=$subtype['title']?></a></li>
+            <li><a href="<?=$url?>"><span class="icon smallArrow"></span> <?=$_article['Subcategory']['title']?></a></li>
 <?
 			}
 ?>

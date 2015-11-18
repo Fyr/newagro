@@ -55,8 +55,9 @@ class AppModel extends Model {
 		return compact('conditions');
 	}
 	
-	public function getObjectOptions($objectType = '', $objectID = '') {
-		return $this->find('list', $this->_getObjectConditions($objectType, $objectID));
+	public function getObjectOptions($objectType = '', $objectID = '', $order = array()) {
+		$conditions = array_values($this->_getObjectConditions($objectType, $objectID));
+		return $this->find('list', compact('conditions', 'order'));
 	}
 	
 	public function getObject($objectType = '', $objectID = '') {

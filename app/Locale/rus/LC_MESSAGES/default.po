@@ -73,6 +73,9 @@ msgstr "Тех.параметры"
 msgid "Products by sections"
 msgstr "Каталог по разделам"
 
+msgid "Products"
+msgstr "Каталог продукции"
+
 msgid "Slider"
 msgstr "Слайдер"
 
@@ -589,3 +592,11 @@ msgstr "URL"
 msgid "Alt.title"
 msgstr "Alt.название"
 
+msgid "Tech.parameters"
+msgstr "Технические параметры"
+
+msgid "Parameter"
+msgstr "Параметр"
+
+msgid "Value"
+msgstr "Значение"
