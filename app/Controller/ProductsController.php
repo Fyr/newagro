@@ -15,21 +15,6 @@ class ProductsController extends AppController {
 	// public $helpers = array('Media.PHMedia', 'Core.PHTime', 'Recaptcha.Recaptcha');
 	
 	const PER_PAGE = 51;
-	/*
-	public function beforeFilter() {
-		$this->objectType = $this->getObjectType();
-		$this->set('objectType', $this->objectType);
-		parent::beforeFilter();
-	}
-	*/
-	
-	/*
-	public function beforeRender() {
-		$this->currMenu = 'Products';
-		
-		parent::beforeRender();
-	}
-	*/
 	
 	public function index($catSlug = '', $subcatSlug = '') {
 		$this->paginate = array(
@@ -75,22 +60,6 @@ class ProductsController extends AppController {
 		$fields = $this->PMFormField->find('all', compact('conditions', 'order'));
 		$article['PMFormField'] = Hash::extract($fields, '{n}.PMFormField');
 		$this->set('article', $article);
-		
-		/*
-		$aMedia = $this->Media->getObjectList('Product', $id);
-		
-		// for bin-file we just upload an image with the same name + _thumb
-		$aThumbs = array();
-		foreach($aMedia as $media) {
-			if ($media['Media']['media_type'] == 'image' && strpos($media['Media']['orig_fname'], '_thumb') !== false) {
-				list($fname) = explode('.', str_replace('_thumb', '', $media['Media']['orig_fname']));
-				$aThumbs[$fname] = $media;
-			}
-		}
-		$aMedia = Hash::combine($aMedia, '{n}.Media.id', '{n}', '{n}.Media.media_type');
-		$this->set('aMedia', $aMedia);
-		$this->set('aThumbs', $aThumbs);
-		*/
 	}
 	
 }

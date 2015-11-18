@@ -29,12 +29,6 @@ class Product extends Article {
 			'conditions' => array('MediaArticle.media_type' => 'image', 'MediaArticle.object_type' => 'Product', 'MediaArticle.main' => 1),
 			'dependent' => true
 		),
-		/*'PMFormData' => array(
-			'className' => 'Form.PMFormData',
-			'foreignKey' => 'object_id',
-			'conditions' => array('PMFormData.object_type' => 'ProductParam'),
-			'dependent' => true
-		), */
 		'Seo' => array(
 			'className' => 'Seo.Seo',
 			'foreignKey' => 'object_id',
