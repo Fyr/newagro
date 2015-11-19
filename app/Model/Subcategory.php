@@ -2,7 +2,7 @@
 App::uses('AppModel', 'Model');
 App::uses('Article', 'Article.Model');
 App::uses('Media', 'Media.Model');
-App::uses('Seo', 'Seo.Model');
+App::uses('SeoArticle', 'Model');
 App::uses('Category', 'Model');
 
 class Subcategory extends AppModel {
@@ -19,7 +19,7 @@ class Subcategory extends AppModel {
 	
 	var $hasOne = array(
 		'Seo' => array(
-			'className' => 'Seo.Seo',
+			'className' => 'SeoArticle',
 			'foreignKey' => 'object_id',
 			'conditions' => array('Seo.object_type' => 'Subcategory'),
 			'dependent' => true

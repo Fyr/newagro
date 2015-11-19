@@ -3,6 +3,7 @@ App::uses('AppController', 'Controller');
 App::uses('AppModel', 'Model');
 App::uses('Media', 'Media.Model');
 App::uses('PMFormData', 'Form.Model');
+App::uses('Seo', 'Seo.Model');
 App::uses('Product', 'Model');
 App::uses('Category', 'Model');
 App::uses('Subcategory', 'Model');
@@ -10,7 +11,7 @@ App::uses('PHTimeHelper', 'Core.View/Helper');
 
 class ProductsController extends AppController {
 	public $name = 'Products';
-	public $uses = array('Category', 'Subcategory', 'Product');
+	public $uses = array('Category', 'Subcategory', 'Product', 'Seo.Seo');
 	public $components = array('Recaptcha.Recaptcha');
 	// public $helpers = array('Media.PHMedia', 'Core.PHTime', 'Recaptcha.Recaptcha');
 	
@@ -25,14 +26,31 @@ class ProductsController extends AppController {
 		);
 		if ($catSlug) {
 			$this->request->data('Category.slug', $catSlug);
-			$this->set('category', $this->Category->findBySlug($catSlug));
+			$category = $this->Category->findBySlug($catSlug);
+			$this->set('category', $category);
+			
+			$page_title = $category['Category']['title'];
+			$this->seo = $this->Seo->defaultSeo($category['Seo'],
+				'Каталог продукции '.$page_title,
+				"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
+				"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
+			);
 		}
 		if ($subcatSlug) {
 			$this->request->data('Subcategory.slug', $subcatSlug);
-			$this->set('subcategory', $this->Subcategory->findBySlug($subcatSlug));
+			$subcategory = $this->Subcategory->findBySlug($subcatSlug);
+			$this->set('subcategory', $subcategory);
+			
+			$page_title = $subcategory['Subcategory']['title'];
+			$this->seo = $this->Seo->defaultSeo($subcategory['Seo'],
+				'Каталог продукции '.$page_title,
+				"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
+				"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
+			);
 		}
 		if ($q = $this->request->query('q')) {
 			$this->processFilter($q);
+			$this->set('directSearch', true);
 		}
 		if ($data = $this->request->data) {
 			$this->paginate['conditions'] = array_merge($this->paginate['conditions'], $this->postConditions($data));
@@ -43,26 +61,33 @@ class ProductsController extends AppController {
 	}
 	
 	public function view($slug) {
-		$Product = $this->Product->findBySlug($slug);
-		if (!$Product) {
+		$article = $this->Product->findBySlug($slug);
+		if (!$article) {
 			return $this->redirect404();
 		}
-		$id = $Product['Product']['id'];
+		$id = $article['Product']['id'];
 		
-		$this->loadModel('MediaProduct');
-		$aMedia = $this->MediaProduct->getObjectList('Product', $id); // $this->Media->getList(array('object_type' => 'Product', 'object_id' => $id));
-		$Product['Media'] = Hash::extract($aMedia, '{n}.MediaProduct');
+		$this->loadModel('MediaArticle');
+		$aMedia = $this->MediaArticle->getObjectList('Product', $id); // $this->Media->getList(array('object_type' => 'Product', 'object_id' => $id));
+		$article['Media'] = Hash::extract($aMedia, '{n}.MediaArticle');
 		
 		$this->loadModel('Form.PMFormData');
 		$formData = $this->PMFormData->getObject('ProductParam', $id);
-		$Product['PMFormData'] = Hash::extract($formData, 'PMFormData');
+		$article['PMFormData'] = Hash::extract($formData, 'PMFormData');
 		
 		$this->loadModel('Form.PMFormField');
 		$conditions = array('PMFormField.object_type' => 'SubcategoryParam', 'exported' => 1);
 		$order = 'PMFormField.sort_order ASC';
 		$fields = $this->PMFormField->find('all', compact('conditions', 'order'));
-		$Product['PMFormField'] = Hash::extract($fields, '{n}.PMFormField');
-		$this->set('Product', $Product);
+		$article['PMFormField'] = Hash::extract($fields, '{n}.PMFormField');
+		
+		$this->set('article', $article);
+		
+		$this->seo = $this->Seo->defaultSeo($article['Seo'],
+			$article['Product']['title_rus'],
+			$article['Product']['title_rus'].", ".str_replace(',', ' ', $article['Product']['title_rus'])." ".$article['Category']['title'].", запчасти для спецтехники ".$article['Category']['title'].", запчасти для ".$article['Category']['title'],
+			'На нашем сайте вы можете приобрести '.str_replace(',', ' ', $article['Product']['title_rus']).' для трактора или спецтехники '.$article['Category']['title'].' в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт.'
+		);
 	}
 	
 	private function processFilter($value) {

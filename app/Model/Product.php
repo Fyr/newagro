@@ -3,7 +3,7 @@ App::uses('AppModel', 'Model');
 App::uses('Article', 'Article.Model');
 App::uses('Media', 'Media.Model');
 App::uses('PMFormData', 'Form.Model');
-App::uses('Seo', 'Seo.Model');
+App::uses('SeoArticle', 'Model');
 App::uses('Category', 'Model');
 App::uses('Subcategory', 'Model');
 class Product extends Article {
@@ -30,7 +30,7 @@ class Product extends Article {
 			'dependent' => true
 		),
 		'Seo' => array(
-			'className' => 'Seo.Seo',
+			'className' => 'SeoArticle',
 			'foreignKey' => 'object_id',
 			'conditions' => array('Seo.object_type' => 'Product'),
 			'dependent' => true

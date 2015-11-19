@@ -74,7 +74,7 @@ $(document).ready(function(){
                     <div class="phones">
                         <span class="icon phone"></span>
                         <span class="numbers">
-                            <?=Configure::read('Settings.phone')?><br />
+                            <?=Configure::read('Settings.phone1')?><br />
                             <?=Configure::read('Settings.phone2')?>
                         </span>
                     </div>
@@ -199,7 +199,7 @@ $(document).ready(function(){
                         <div class="phones">
                             <span class="icon phone"></span>
                             <span class="numbers">
-                                <?=Configure::read('Settings.phone')?><br />
+                                <?=Configure::read('Settings.phone1')?><br />
                                 <?=Configure::read('Settings.phone2')?>
                             </span>
                         </div>
@@ -251,6 +251,6 @@ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = 
 <?
 	}
 ?>
-	<?=$this->element('sql_dump')?>
+	<?//$this->element('sql_dump')?>
 	</body>
 </html>
