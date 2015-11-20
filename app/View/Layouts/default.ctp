@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<title><?=$pageTitle?></title>
 	<meta name="language" content="ru" />
 <?
 	echo $this->Html->charset();

@@ -37,7 +37,17 @@ class AppController extends Controller {
 	}
 	
 	public function beforeFilter() {
-		// parent::beforeFilter();
+		if (isset($this->request->url) && $this->request->url) {
+			
+			if (strpos($this->request->url, '.html') !== false) {
+				$this->redirect('/'.str_replace('.html', '', $this->request->url));
+				return;
+			}
+			if ($this->request->url !== '/' && substr($this->request->url, -1) == '/' && !$this->request->query) {
+				$this->redirect('/'.substr($this->request->url, 0, -1));
+				return;
+			}
+		}
 		$this->beforeFilterLayout();
 	}
 	

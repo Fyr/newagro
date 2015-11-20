@@ -8,6 +8,10 @@
 ?>
 	<title><?=$data['title']?></title>
 <?
+	} else {
+?>
+	<title><?=DOMAIN_TITLE?></title>
+<?
 	}
 	if (isset($data['descr']) && $data['descr']) {
 ?>

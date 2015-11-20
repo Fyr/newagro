@@ -1,5 +1,5 @@
 <?php
-Router::parseExtensions('json');
+Router::parseExtensions('json', 'xml');
 Router::connect('/', array('controller' => 'Pages', 'action' => 'home'));
 
 /* -= News =- */

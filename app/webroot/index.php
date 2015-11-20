@@ -106,3 +106,4 @@ $Dispatcher->dispatch(
 	new CakeRequest(),
 	new CakeResponse()
 );
+header("Content-Type: application/xml");
