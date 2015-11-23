@@ -130,7 +130,7 @@ class AppController extends Controller {
 		$this->set('aErrFields', $this->aErrFields);
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
 		
-		$this->set('disableCopy', !TEST_ENV && $this->disableCopy);
+		$this->set('disableCopy', !TEST_ENV);
 		
 		if (DOMAIN_NAME == 'agromotors.ru') {
 			unset($this->aBottomLinks['motor']);

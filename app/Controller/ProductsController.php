@@ -7,6 +7,7 @@ App::uses('Seo', 'Seo.Model');
 App::uses('Product', 'Model');
 App::uses('Category', 'Model');
 App::uses('Subcategory', 'Model');
+App::uses('SiteRouter', 'Lib/Routing');
 App::uses('PHTimeHelper', 'Core.View/Helper');
 
 class ProductsController extends AppController {
@@ -16,7 +17,7 @@ class ProductsController extends AppController {
 	// public $helpers = array('Media.PHMedia', 'Core.PHTime', 'Recaptcha.Recaptcha');
 	
 	const PER_PAGE = 51;
-	
+
 	public function index($catSlug = '', $subcatSlug = '') {
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
@@ -24,30 +25,45 @@ class ProductsController extends AppController {
 			'page' => $this->request->param('page'),
 			'order' => 'Product.created DESC'
 		);
+		$category = array();
 		if ($catSlug) {
 			$this->request->data('Category.slug', $catSlug);
 			$category = $this->Category->findBySlug($catSlug);
-			$this->set('category', $category);
-			
-			$page_title = $category['Category']['title'];
-			$this->seo = $this->Seo->defaultSeo($category['Seo'],
-				'Каталог продукции '.$page_title,
-				"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
-				"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
-			);
+			if ($category) {
+				$this->set('category', $category);
+				$page_title = $category['Category']['title'];
+				$this->seo = $this->Seo->defaultSeo($category['Seo'],
+					'Каталог продукции '.$page_title,
+					"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
+					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
+				);
+			}
 		}
+
+		$subcategory = array();
 		if ($subcatSlug) {
 			$this->request->data('Subcategory.slug', $subcatSlug);
 			$subcategory = $this->Subcategory->findBySlug($subcatSlug);
-			$this->set('subcategory', $subcategory);
-			
-			$page_title = $subcategory['Subcategory']['title'];
-			$this->seo = $this->Seo->defaultSeo($subcategory['Seo'],
-				'Каталог продукции '.$page_title,
-				"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
-				"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
-			);
+			if ($subcategory) {
+				$this->set('subcategory', $subcategory);
+				$page_title = $subcategory['Subcategory']['title'];
+				$this->seo = $this->Seo->defaultSeo($subcategory['Seo'],
+					'Каталог продукции ' . $page_title,
+					"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
+					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
+				);
+			}
 		}
+		if (($catSlug && !$category) || ($subcatSlug && !$subcategory)) {
+			$slug = ($subcatSlug) ? $subcatSlug : $catSlug;
+			$product = $this->Product->findBySlugAndPublished($slug, 1);
+			if ($product) {
+				return $this->redirect(SiteRouter::url($product));
+			} else {
+				return $this->redirect404();
+			}
+		}
+
 		if ($q = $this->request->query('q')) {
 			$this->processFilter($q);
 			$this->set('directSearch', true);

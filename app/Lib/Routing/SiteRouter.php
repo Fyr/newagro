@@ -10,11 +10,12 @@ class SiteRouter extends Router {
 	static public function url($article) {
 		$objectType = self::getObjectType($article);
 		if ($objectType == 'Product') {
+			$subcatSlug = Hash::get($article, 'Subcategory.slug');
 			$url = array(
 				'controller' => 'Products', 
 				'action' => 'view',
 				'category' => $article['Category']['slug'],
-				'subcategory' => $article['Subcategory']['slug'],
+				'subcategory' => ($subcatSlug) ? $subcatSlug : 'kupit',
 				'objectType' => 'Product',
 				'slug' => $article['Product']['slug']
 			);

@@ -11,10 +11,14 @@
 	$aBreadCrumbs = array(
 		__('Home') => '/',
 		$this->ObjectType->getTitle('index', 'Product') => $indexUrl,
-		$article['Category']['title'] => SiteRouter::url(array('Category' => $article['Category'])),
-		$article['Subcategory']['title'] => SiteRouter::url(array('Subcategory' => $article['Subcategory'], 'Category' => $article['Category'])),
-		$this->ObjectType->getTitle('view', 'Product') => ''
+		$article['Category']['title'] => SiteRouter::url(array('Category' => $article['Category']))
 	);
+	$subcatSlug = Hash::get($article, 'Subcategory.slug');
+	if ($subcatSlug) {
+		$aBreadCrumbs[$article['Subcategory']['title']] = SiteRouter::url(array('Subcategory' => $article['Subcategory'], 'Category' => $article['Category']));
+	}
+	$aBreadCrumbs[$this->ObjectType->getTitle('view', 'Product')] = '';
+
 	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 	echo $this->element('title', compact('title'));
 	$brand = $aBrands[$article['Product']['brand_id']];
