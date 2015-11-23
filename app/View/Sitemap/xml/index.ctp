@@ -20,7 +20,7 @@
 		$url = SiteRouter::url($article);
 ?>
 <url>
-  <loc><?=$url?></loc>
+  <loc>http://<?=DOMAIN_NAME.$url?></loc>
   <changefreq>daily</changefreq>
 </url>
 <?
@@ -31,7 +31,7 @@
 		$url = SiteRouter::url($article);
 ?>
 <url>
-  <loc><?=$url?></loc>
+  <loc>http://<?=DOMAIN_NAME.$url?></loc>
   <changefreq>daily</changefreq>
 </url>
 <?
