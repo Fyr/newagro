@@ -4,6 +4,51 @@ msgstr "Пользователь"
 msgid "Invalid username or password, try again"
 msgstr "Неправильное имя пользователя или пароль"
 
+msgid "Jan"
+msgstr "Янв"
+
+msgid "Feb"
+msgstr "Фев"
+
+msgid "Mar"
+msgstr "Мар"
+
+msgid "Apr"
+msgstr "Апр"
+
+msgid "May"
+msgstr "Май"
+
+msgid "Jun"
+msgstr "Июн"
+
+msgid "Jul"
+msgstr "Июл"
+
+msgid "Aug"
+msgstr "Авг"
+
+msgid "Sep"
+msgstr "Сен"
+
+msgid "Oct"
+msgstr "Окт"
+
+msgid "Nov"
+msgstr "Ноя"
+
+msgid "Dec"
+msgstr "Дек"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Yesterday"
+msgstr "Вчера"
+
+msgid "Text"
+msgstr "Текст"
+
 msgid "Static Pages"
 msgstr "Стат.страницы"
 
@@ -28,6 +73,9 @@ msgstr "Тех.параметры"
 msgid "Products by sections"
 msgstr "Каталог по разделам"
 
+msgid "Products"
+msgstr "Каталог продукции"
+
 msgid "Slider"
 msgstr "Слайдер"
 
@@ -37,11 +85,8 @@ msgstr "Настройки"
 msgid "Home"
 msgstr "Главная"
 
-msgid "Products catalogue"
-msgstr "Каталог продукции"
-
 msgid "About us"
-msgstr "О нас"
+msgstr "О проекте"
 
 msgid "Contacts"
 msgstr "Контакты"
@@ -154,6 +199,9 @@ msgstr "Обработка запроса..."
 msgid "Subcategory"
 msgstr "Подкатегория"
 
+msgid "Product categories"
+msgstr "Категории услуг"
+
 msgid "CMS Development"
 msgstr "Разработка CMS"
 
@@ -181,14 +229,8 @@ msgstr "Стат.страницы"
 msgid "Subcategories"
 msgstr "Подкатегории"
 
-msgid "Create Article"
-msgstr "Создать Статью"
-
 msgid "Create Static page"
 msgstr "Создать Cтат.страницу"
-
-msgid "Create News article"
-msgstr "Создать Новость"
 
 msgid "Create Category"
 msgstr "Создать Категорию"
@@ -196,17 +238,29 @@ msgstr "Создать Категорию"
 msgid "Create Subcategory"
 msgstr "Создать Подкатегорию"
 
-msgid "Create Product"
-msgstr "Создать Продукт"
+msgid "Create Product category"
+msgstr "Создать категорию продукта"
+
+msgid "Create Article"
+msgstr "Создать Статью"
 
 msgid "Edit Article"
 msgstr "Редактировать Статью"
 
+msgid "View Article"
+msgstr "Просмотр статьи"
+
 msgid "Edit Static page"
 msgstr "Редактировать Стат.страницу"
 
+msgid "Create News article"
+msgstr "Создать Новость"
+
 msgid "Edit News article"
 msgstr "Редактировать Новость"
+
+msgid "View News article"
+msgstr "Просмотр новости"
 
 msgid "Edit Category"
 msgstr "Редактировать Категорию"
@@ -214,8 +268,8 @@ msgstr "Редактировать Категорию"
 msgid "Edit Subcategory"
 msgstr "Редактировать Подкатегорию"
 
-msgid "Edit Product"
-msgstr "Редактировать Продукт"
+msgid "Edit Product сategory"
+msgstr "Редактировать категорию продукта"
 
 msgid "Spam protection"
 msgstr "Защита от спама"
@@ -388,3 +442,164 @@ msgstr "Символ-разделитель для дробн.части"
 msgid "Div Int"
 msgstr "Символ-разделитель для цел.части"
 
+msgid "Catalog"
+msgstr "Каталог"
+
+msgid "System"
+msgstr "Система"
+
+msgid "Sections"
+msgstr "Разделы"
+
+msgid "Edit section"
+msgstr "Редактировать раздел"
+
+msgid "Create section"
+msgstr "Создать раздел"
+
+msgid "News categories"
+msgstr "Категории новостей"
+
+msgid "Article categories"
+msgstr "Категории статей"
+
+msgid "Article subcategories"
+msgstr "Подкатегории статей"
+
+msgid "Create News category"
+msgstr "Создать категорию для новости"
+
+msgid "Create Article category"
+msgstr "Создать категорию для статьи"
+
+msgid "Create Article subcategory"
+msgstr "Создать подкатегорию для статьи"
+
+msgid "Edit News category"
+msgstr "Редактировать категорию для новости"
+
+msgid "Edit Article category"
+msgstr "Редактировать категорию для статьи"
+
+msgid "Edit Article subcategory"
+msgstr "Редактировать подкатегорию для статьи"
+
+msgid "Featured product"
+msgstr "Спец.предложение"
+
+msgid "more"
+msgstr "подробнее"
+
+msgid "Title (RUS)"
+msgstr "Название (RUS)"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Dealers"
+msgstr "Дилеры"
+
+msgid "New dealer"
+msgstr "Новый дилер"
+
+msgid "Edit dealer"
+msgstr "Редактирование дилера"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "View brand"
+msgstr "Просмотр бренда"
+
+msgid "View dealer"
+msgstr "Просмотр дилера"
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid "View dealer"
+msgstr "Просмотр дилера"
+
+msgid "View product"
+msgstr "Просмотр запчасти"
+
+msgid "Search results"
+msgstr "Результаты поиска"
+
+msgid "Offers"
+msgstr "Акции"
+
+msgid "Edit offer"
+msgstr "Редактировать акцию"
+
+msgid "New offer"
+msgstr "Новая акция"
+
+msgid "Banners"
+msgstr "Баннеры"
+
+msgid "Create banner"
+msgstr "Новый баннер"
+
+msgid "Edit banner"
+msgstr "Редактировать баннер"
+
+msgid "Banner type"
+msgstr "Тип баннера"
+
+msgid "Slot"
+msgstr "Слот"
+
+msgid "Motors"
+msgstr "Техника"
+
+msgid "New motor"
+msgstr "Новая техника"
+
+msgid "Edit motor"
+msgstr "Редактировать технику"
+
+msgid "Catalogs"
+msgstr "Каталоги"
+
+msgid "New catalog"
+msgstr "Новый каталог"
+
+msgid "Edit catalog"
+msgstr "Редактировать каталог"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Image"
+msgstr "Фото"
+
+msgid "read more"
+msgstr "подобнее"
+
+msgid "Set as main"
+msgstr "Назначить главным"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "HTML-code"
+msgstr "HTML-код"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Alt.title"
+msgstr "Alt.название"
+
+msgid "Tech.parameters"
+msgstr "Технические параметры"
+
+msgid "Parameter"
+msgstr "Параметр"
+
+msgid "Value"
+msgstr "Значение"
+
+msgid "Settings are saved"
+msgstr "Настройки сохранены"

@@ -71,7 +71,12 @@ class AdminContentController extends AdminController {
 			$editRoute = array('action' => 'edit', $id, $objectType, $objectID);
 			return $this->redirect(($this->request->data('apply')) ? $indexRoute : $editRoute);
 		}
-		
+
+		if ($objectType == 'SectionArticle') {
+			$this->set('aCategoryOptions', $this->Section->getOptions());
+			$this->set('aSubcategoryOptions', $this->SectionArticle->find('all', array('order' => 'SectionArticle.sorting')));
+		}
+
 		if (!$this->request->data('Article.sorting')) {
 			$this->request->data('Article.sorting', '0');
 		}

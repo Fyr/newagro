@@ -600,3 +600,27 @@ msgstr "Параметр"
 
 msgid "Value"
 msgstr "Значение"
+
+msgid "Settings are saved"
+msgstr "Настройки сохранены"
+
+msgid "Prices"
+msgstr "Цены"
+
+msgid "Address"
+msgstr "Цены"
+
+msgid "Phone1"
+msgstr "Тел."
+
+msgid "Phone2"
+msgstr "Тел.2"
+
+msgid "Sectionizer"
+msgstr "Рубрикатор"
+
+msgid "Prices"
+msgstr "Цены"
+
+msgid "Prices"
+msgstr "Цены"

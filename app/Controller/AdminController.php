@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('Sections', 'Model');
 class AdminController extends AppController {
 	public $name = 'Admin';
 	public $layout = 'admin';
@@ -19,6 +20,7 @@ class AdminController extends AppController {
 				array('label' => __('Motors'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Motor')),
 				array('label' => __('Articles'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'SiteArticle')),
 			)),
+			'Sectionizer' => array('label' => __('Sectionizer'), 'href' => '', 'submenu' => array()),
 			'Dealers' => array('label' => __('Dealers'), 'href' => array('controller' => 'AdminDealers', 'action' => 'index')),
 			'Banners' => array('label' => __('Banners'), 'href' => array('controller' => 'AdminBanners', 'action' => 'index')),
 			'Catalogs' => array('label' => __('Catalogs'), 'href' => array('controller' => 'AdminCatalogs', 'action' => 'index')),
@@ -43,20 +45,22 @@ class AdminController extends AppController {
 				array('label' => __('Upload new products'), 'href' => array('controller' => 'AdminUploadCsv', 'action' => 'uploadNewProducts')),
 			)),
 			*/
-			'Settings' => array('label' => __('Settings'), 'href' => array('controller' => 'AdminSettings', 'action' => 'index'))
+			'Settings' => array('label' => __('Settings'), 'href' => '', 'submenu' => array(
+				'ContactSettings' => array('label' => __('Contacts'), 'href' => array('controller' => 'AdminSettings', 'action' => 'index')),
+				'PriceSettings' => array('label' => __('Prices'), 'href' => array('controller' => 'AdminSettings', 'action' => 'prices')),
+				'SectionSettings' => array('label' => __('Sectionizer'), 'href' => array('controller' => 'AdminSections', 'action' => 'index'))
+			))
 		);
 		$this->aBottomLinks = $this->aNavBar;
 	}
 	
 	public function beforeFilter() {
-		/*
 		$this->loadModel('Section');
-		foreach($this->Section->find('list') as $id => $title) {
-			$this->aNavBar['Products']['submenu'][] = array(
-				'label' => $title, 'href' => array('controller' => 'AdminProducts', 'Product.section' => $id)
+		foreach($this->Section->getOptions() as $id => $title) {
+			$this->aNavBar['Sectionizer']['submenu'][] = array(
+				'label' => $title, 'href' => array('controller' => 'AdminSectionizer', 'action' => 'index', $id)
 			);
 		}
-		*/
 	    $this->currMenu = $this->_getCurrMenu();
 	    $this->currLink = $this->currMenu;
 	}
