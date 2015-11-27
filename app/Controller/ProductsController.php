@@ -35,7 +35,7 @@ class ProductsController extends AppController {
 				$this->seo = $this->Seo->defaultSeo($category['Seo'],
 					'Каталог продукции '.$page_title,
 					"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
-					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
+					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в ".((DOMAIN_NAME == 'agromotors.ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 				);
 			}
 		}
@@ -50,7 +50,7 @@ class ProductsController extends AppController {
 				$this->seo = $this->Seo->defaultSeo($subcategory['Seo'],
 					'Каталог продукции ' . $page_title,
 					"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
-					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
+					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в ".((DOMAIN_NAME == 'agromotors.ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 				);
 			}
 		}
@@ -102,7 +102,7 @@ class ProductsController extends AppController {
 		$this->seo = $this->Seo->defaultSeo($article['Seo'],
 			$article['Product']['title_rus'],
 			$article['Product']['title_rus'].", ".str_replace(',', ' ', $article['Product']['title_rus'])." ".$article['Category']['title'].", запчасти для спецтехники ".$article['Category']['title'].", запчасти для ".$article['Category']['title'],
-			'На нашем сайте вы можете приобрести '.str_replace(',', ' ', $article['Product']['title_rus']).' для трактора или спецтехники '.$article['Category']['title'].' в Белорусии. Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт.'
+			'На нашем сайте вы можете приобрести '.str_replace(',', ' ', $article['Product']['title_rus']).' для трактора или спецтехники '.$article['Category']['title']." в ".((DOMAIN_NAME == 'agromotors.ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 		);
 		unset($this->seo['keywords']);
 		unset($this->seo['descr']);

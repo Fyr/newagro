@@ -619,8 +619,6 @@ msgstr "Тел.2"
 msgid "Sectionizer"
 msgstr "Рубрикатор"
 
-msgid "Prices"
-msgstr "Цены"
+msgid "Section"
+msgstr "Раздел"
 
-msgid "Prices"
-msgstr "Цены"

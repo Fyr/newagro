@@ -1,21 +1,11 @@
-<?=$this->element('admin_title', array('title' => __('Settings').': '.__('Contacts')))?>
+<?=$this->element('admin_title', array('title' => __('Settings').': '.__('System')))?>
 <div class="span8 offset2">
 <?
 	echo $this->PHForm->create('Settings');
 	echo $this->element('admin_content');
 	echo $this->PHForm->input('admin_email', array('class' => 'input-large'));
-?>
-<fieldset class="fieldset">
-	<legend>Контакты для сайта</legend>
-<?
-	echo $this->PHForm->input('address');
-	echo $this->PHForm->input('phone1', array('class' => 'input-large'));
-	echo $this->PHForm->input('phone2', array('class' => 'input-large'));
-	echo $this->PHForm->input('email', array('class' => 'input-large'));
-	echo $this->PHForm->input('skype', array('class' => 'input-large'));
-?>
-</fieldset>
-<?
+	echo $this->PHForm->input('sectionizer', array('options' => array(0 => 'Категории', 1 => 'Статьи')));
+
 	echo $this->element('admin_content_end');
 	echo $this->element('Form.btn_save');
 	echo $this->PHForm->end();

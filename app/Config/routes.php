@@ -189,6 +189,29 @@ Router::connect('/zapchasti/:category/:subcategory/:slug',
 	array('pass' => array('slug'))
 );
 
+/* -= Articles =- */
+Router::connect('/articles', array(
+	'controller' => 'Articles',
+	'action' => 'index',
+	'objectType' => 'SectionArticle',
+),
+	array('named' => array('page' => 1))
+);
+Router::connect('/articles/:slug',
+	array(
+		'controller' => 'Articles',
+		'action' => 'view',
+		'objectType' => 'SectionArticle'
+	),
+	array('pass' => array('slug'))
+);
+Router::connect('/articles/page/:page', array(
+	'controller' => 'Articles',
+	'action' => 'index',
+	'objectType' => 'SectionArticle'
+),
+	array('named' => array('page' => '[\d]*'))
+);
 
 CakePlugin::routes();
 

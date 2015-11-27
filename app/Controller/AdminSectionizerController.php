@@ -35,7 +35,7 @@ class AdminSectionizerController extends AdminController {
         $this->set('aRowset', $aRowset);
     }
     
-	public function edit($id = 0, $cat_id = 0) {
+	public function edit($id = 0, $cat_id = 0, $subcat_id = 0) {
 		$objectType = 'SectionArticle';
 		$this->loadModel('Media.Media');
 		
@@ -43,6 +43,7 @@ class AdminSectionizerController extends AdminController {
 			// если не задан ID, то objectType+ObjectID должны передаваться
 			$this->request->data('Article.object_type', $objectType);
 			$this->request->data('Article.cat_id', $cat_id);
+            $this->request->data('Article.subcat_id', $subcat_id);
 			$this->request->data('Seo.object_type', 'Page');
 		}
 		
@@ -63,14 +64,15 @@ class AdminSectionizerController extends AdminController {
 
 		if ($lSaved) {
 			$cat_id = $this->request->data('Article.cat_id');
-
-			$indexRoute = array('action' => 'index', $cat_id);
+            $subcat_id = $this->request->data('Article.subcat_id');
+			$indexRoute = array('action' => 'index', $cat_id, $subcat_id);
 			$editRoute = array('action' => 'edit', $id);
 			return $this->redirect(($this->request->data('apply')) ? $indexRoute : $editRoute);
 		}
 
 		if (!$this->request->data('Article.sorting')) {
 			$this->request->data('Article.sorting', '0');
+            $this->request->data('Article.status', 'published');
 		}
 	}
 }

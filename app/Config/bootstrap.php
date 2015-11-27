@@ -24,6 +24,11 @@ Configure::write('media', array(
 	'path2' => 'D:/Projects/vitacars.dev/wwwroot/app/webroot/files/'
 ));
 
+Configure::write('sectionizer', array(
+	'path' => $_SERVER['DOCUMENT_ROOT'].'/files/',
+	'path2' => 'D:/Projects/vitacars.dev/wwwroot/app/webroot/files/'
+));
+
 Configure::write('params.motor', 6);
 Configure::write('params.price_by', 47);
 Configure::write('params.price_ru', 48);

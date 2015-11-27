@@ -46,7 +46,8 @@ class AdminController extends AppController {
 			)),
 			*/
 			'Settings' => array('label' => __('Settings'), 'href' => '', 'submenu' => array(
-				'ContactSettings' => array('label' => __('Contacts'), 'href' => array('controller' => 'AdminSettings', 'action' => 'index')),
+				'SystemSettings' => array('label' => __('System'), 'href' => array('controller' => 'AdminSettings', 'action' => 'index')),
+				'ContactSettings' => array('label' => __('Contacts'), 'href' => array('controller' => 'AdminSettings', 'action' => 'contacts')),
 				'PriceSettings' => array('label' => __('Prices'), 'href' => array('controller' => 'AdminSettings', 'action' => 'prices')),
 				'SectionSettings' => array('label' => __('Sectionizer'), 'href' => array('controller' => 'AdminSections', 'action' => 'index'))
 			))

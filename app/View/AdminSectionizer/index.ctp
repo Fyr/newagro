@@ -1,6 +1,5 @@
 <?
-	$title = $this->ObjectType->getTitle('index', $objectType);
-    $createURL = $this->Html->url(array('action' => 'edit', 0, $cat_id));
+    $createURL = $this->Html->url(array('action' => 'edit', 0, $cat_id, $subcat_id));
     $createTitle = $this->ObjectType->getTitle('create', $objectType);
     
     $actions = $this->PHTableGrid->getDefaultActions($objectType);
@@ -17,11 +16,11 @@
     }
 	$columns = $this->PHTableGrid->getDefaultColumns($objectType);
 
+    $title = $aCategoryOptions[$cat_id];
     if ($subcat_id) {
         $aSubcategoryOptions = Hash::combine($aSubcategoryOptions, '{n}.SectionArticle.id', '{n}.SectionArticle.title');
-        $title = $aSubcategoryOptions[$subcat_id];
+        $title.= ': '.$aSubcategoryOptions[$subcat_id];
     }
-    $title = $aCategoryOptions[$cat_id].': '.$title;
     echo $this->element('admin_title', compact('title'));
 ?>
 <div class="text-center">

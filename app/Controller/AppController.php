@@ -13,7 +13,7 @@ App::uses('SiteRouter', 'Lib/Routing');
 class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '';
-	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array();
+	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true;
 	
 	public function __construct($request = null, $response = null) {
 		$this->_beforeInit();
@@ -37,6 +37,7 @@ class AppController extends Controller {
 	}
 	
 	public function beforeFilter() {
+		$this->disableCopy = !TEST_ENV;
 		if (isset($this->request->url) && $this->request->url) {
 			
 			if (strpos($this->request->url, '.html') !== false) {
@@ -130,7 +131,7 @@ class AppController extends Controller {
 		$this->set('aErrFields', $this->aErrFields);
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
 		
-		$this->set('disableCopy', !TEST_ENV);
+		$this->set('disableCopy', $this->disableCopy);
 		
 		if (DOMAIN_NAME == 'agromotors.ru') {
 			unset($this->aBottomLinks['motor']);
@@ -141,16 +142,7 @@ class AppController extends Controller {
 		$this->loadModel('Brand');
 		$brands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
 		$this->set('aBrands', $brands);
-		/*
-		$aBrands = array();
-		foreach($brands as $article) {
-			if (isset($article['Media'][0])) {
-				$aBrands[] = $article;
-			}
-		}
-		$this->set('aBrands', $aBrands);
-		*/
-		
+
 		$aFilter = array();
 		if (isset($this->params['url']['data']['filter']['Article.title']) && $this->params['url']['data']['filter']['Article.title']) {
 			$aFilter['Article.title'] = $this->params['url']['data']['filter']['Article.title'];
@@ -166,24 +158,52 @@ class AppController extends Controller {
 		}
 		$this->set('aFilter', $aFilter);
 
-		$this->loadModel('Category');
-		// $aTypes = $this->Category->getTypesList();
-		$aCategories = $this->Category->getObjectList('Category', '', array('Category.sorting' => 'ASC'));
-		$aCategories =  Hash::combine($aCategories, '{n}.Category.id', '{n}');
-		$this->set('aCategories', $aCategories);
-		foreach($aCategories as $article) {
-			$url = SiteRouter::url($article);
-			$this->aNavBar['products']['submenu'][] = array('href' => $url, 'title' => $article['Category']['title']);
-		}
-		
-		$this->loadModel('Subcategory');
-		$aSubcategories = $this->Subcategory->getObjectList('Subcategory', '', array('Subcategory.sorting' => 'ASC'));
-		$aSubcategories =  Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.object_id');
-		$this->set('aSubcategories', $aSubcategories);
+		if (Configure::read('Settings.sectionizer')) {
+			$this->loadModel('Section');
+			$aSections = $this->Section->getOptions();
+			$this->set('aSections', $aSections);
 
+			$this->loadModel('SectionArticle');
+			$conditions = array('SectionArticle.published' => 1);
+			$aArticles = $this->SectionArticle->find('all', compact('conditions', 'order'));
+
+			$aCategories = array();
+			$aSubcategories = array();
+			foreach($aArticles as $article) {
+				$id = $article['SectionArticle']['id'];
+				$cat_id = $article['SectionArticle']['cat_id'];
+				if ($subcat_id = $article['SectionArticle']['subcat_id']) {
+					$aSubcategories[$subcat_id][] = $article;
+				} else {
+					$aCategories[$cat_id][$id] = $article;
+				}
+			}
+			$this->set('aCategories', $aCategories);
+			$this->set('aSubcategories', $aSubcategories);
+		} else {
+			$this->set('aSections', array(0 => __('Catalog')));
+
+			$this->loadModel('Category');
+			// $aTypes = $this->Category->getTypesList();
+			$aCategories = $this->Category->getObjectList('Category', '', array('Category.sorting' => 'ASC'));
+			$aCategories = Hash::combine($aCategories, '{n}.Category.id', '{n}');
+			$this->set('aCategories', array(0 => $aCategories));
+			foreach ($aCategories as $article) {
+				$url = SiteRouter::url($article);
+				$this->aNavBar['products']['submenu'][] = array('href' => $url, 'title' => $article['Category']['title']);
+			}
+
+			$this->loadModel('Subcategory');
+			$aSubcategories = $this->Subcategory->getObjectList('Subcategory', '', array('Subcategory.sorting' => 'ASC'));
+			$aSubcategories = Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.object_id');
+			$this->set('aSubcategories', $aSubcategories);
+		}
 		// Fixes for menu titles
 		$this->loadModel('Page');
-		$aArticleTitles = $this->Page->find('list', array('fields' => array('slug', 'title'), 'conditions' => array('slug' => array('magazini-zapchastei', 'about-us', 'about-us2', 'contacts1', 'contacts2'))));
+		$aArticleTitles = $this->Page->find('list', array(
+			'fields' => array('slug', 'title'),
+			'conditions' => array('slug' => array('magazini-zapchastei', 'about-us', 'about-us2', 'contacts1', 'contacts2'))
+		));
 		// $this->aNavBar['about']['title'] = $aArticleTitles['about-us'];
 		$this->aNavBar['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
@@ -206,6 +226,8 @@ class AppController extends Controller {
 			$aSlot[$slot_id] = $this->Banner->find('all', compact('conditions', 'order'));
 		}
 		$this->set('aSlot', $aSlot);
+
+
 	}
 	
 	/**
