@@ -7,17 +7,17 @@ App::uses('SectionArticle', 'Model');
 
 class SectionArticle extends Article {
 	protected $objectType = 'SectionArticle';
-
+/*
 	public $belongsTo = array(
 		'Section' => array(
 			'foreignKey' => 'cat_id'
 		),
-		'Category' => array(
+		'SectionCategory' => array(
 			'className' => 'SectionArticle',
 			'foreignKey' => 'subcat_id'
 		)
 	);
-
+*/
 	var $hasOne = array(
 		'Seo' => array(
 			'className' => 'Seo.Seo',

@@ -155,13 +155,15 @@ a:hover { text-decoration: none;}
     background: -ms-linear-gradient(top, #747474 0%,#6c6c6c 50%,#626262 51%,#606060 100%); /* IE10+ */
     background: linear-gradient(to bottom, #747474 0%,#6c6c6c 50%,#626262 51%,#606060 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#747474', endColorstr='#606060',GradientType=0 ); /* IE6-8 */
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 700;
     color: #fff; 
     text-transform: uppercase; 
     padding: 10px 0 9px 17px;
+    /*
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    */
 }
 
 .leftSidebar .catalogBlock { border: none;}
@@ -281,10 +283,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efc004', end
 
 .main { padding: 14px 11px 0 16px;  font-size: 14px; word-wrap: break-word;}
     .main .head { padding: 0 0 14px 0; }
-	.main img { max-width: 100%; height: auto; dis}
+	.main img { max-width: 100%; height: auto; }
 
 .searchBlock {
+    /*
     border-radius: 3px;
+    */
     overflow: hidden; 
     margin-bottom: 11px;
     padding: 13px 13px 13px 13px;

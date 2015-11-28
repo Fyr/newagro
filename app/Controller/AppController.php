@@ -161,7 +161,7 @@ class AppController extends Controller {
 		if (Configure::read('Settings.sectionizer')) {
 			$this->loadModel('Section');
 			$aSections = $this->Section->getOptions();
-			$this->set('aSections', $aSections);
+			$this->set('aSections2', $aSections);
 
 			$this->loadModel('SectionArticle');
 			$conditions = array('SectionArticle.published' => 1);
@@ -178,26 +178,26 @@ class AppController extends Controller {
 					$aCategories[$cat_id][$id] = $article;
 				}
 			}
-			$this->set('aCategories', $aCategories);
-			$this->set('aSubcategories', $aSubcategories);
-		} else {
-			$this->set('aSections', array(0 => __('Catalog')));
-
-			$this->loadModel('Category');
-			// $aTypes = $this->Category->getTypesList();
-			$aCategories = $this->Category->getObjectList('Category', '', array('Category.sorting' => 'ASC'));
-			$aCategories = Hash::combine($aCategories, '{n}.Category.id', '{n}');
-			$this->set('aCategories', array(0 => $aCategories));
-			foreach ($aCategories as $article) {
-				$url = SiteRouter::url($article);
-				$this->aNavBar['products']['submenu'][] = array('href' => $url, 'title' => $article['Category']['title']);
-			}
-
-			$this->loadModel('Subcategory');
-			$aSubcategories = $this->Subcategory->getObjectList('Subcategory', '', array('Subcategory.sorting' => 'ASC'));
-			$aSubcategories = Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.object_id');
-			$this->set('aSubcategories', $aSubcategories);
+			$this->set('aCategories2', $aCategories);
+			$this->set('aSubcategories2', $aSubcategories);
 		}
+		$this->set('aSections', array(0 => __('Catalog')));
+
+		$this->loadModel('Category');
+		// $aTypes = $this->Category->getTypesList();
+		$aCategories = $this->Category->getObjectList('Category', '', array('Category.sorting' => 'ASC'));
+		$aCategories = Hash::combine($aCategories, '{n}.Category.id', '{n}');
+		$this->set('aCategories', array(0 => $aCategories));
+		foreach ($aCategories as $article) {
+			$url = SiteRouter::url($article);
+			$this->aNavBar['products']['submenu'][] = array('href' => $url, 'title' => $article['Category']['title']);
+		}
+
+		$this->loadModel('Subcategory');
+		$aSubcategories = $this->Subcategory->getObjectList('Subcategory', '', array('Subcategory.sorting' => 'ASC'));
+		$aSubcategories = Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.object_id');
+		$this->set('aSubcategories', $aSubcategories);
+
 		// Fixes for menu titles
 		$this->loadModel('Page');
 		$aArticleTitles = $this->Page->find('list', array(
