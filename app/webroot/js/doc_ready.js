@@ -33,7 +33,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#catalog').find('.firstLevel').click(function(){
+	$('ul.catalog').find('.firstLevel').click(function(){
 	    $(this).next().stop().slideToggle();
 	    if ( $(this).next().is('ul') ) {
 	        if( $(this).hasClass('active')) {
