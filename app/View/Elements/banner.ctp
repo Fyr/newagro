@@ -1,3 +1,4 @@
+<span class="bannerSlot">
 <?
 	if ($banner['Banner']['type'] == BannerType::HTML) {
 		echo $banner['Banner']['options']['html'];
@@ -32,3 +33,4 @@
 <?
 	}
 ?>
+</span>

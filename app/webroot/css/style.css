@@ -310,7 +310,7 @@ textarea { height: auto;}
 
 .searchBlock .outerSearch { margin: 0 95px 0 0}
 
-.submit { margin: 0; color: #fff; border: none; border-radius: 3px; padding: 0 14px 0 14px; cursor: pointer; font-size: 13px; font-weight: 700; height: 32px; outline: none;
+.submit { margin: 0; color: #fff; border: none; border-radius: 3px; padding: 0 14px 0 14px; cursor: pointer; font-size: 13px; font-weight: 700; outline: none; line-height: 32px; display: inline-block;
     background: #787878; /* Old browsers */
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc4Nzg3OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzYyNjI2MiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iIzUzNTM1MyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0MzQyNDIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -336,6 +336,12 @@ background: linear-gradient(to bottom,  #5e5e5e 0%,#4c4c4c 50%,#383838 51%,#3332
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5e5e', endColorstr='#333232',GradientType=0 ); /* IE6-8 */
 
 }
+
+@-moz-document url-prefix() { 
+ .submit { padding-bottom: 3px; line-height: 29px; } 
+}
+
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 
 .searchBlock .submit { float: right; }
 
@@ -399,11 +405,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5e5e', end
     .footer .phones { display: inline-block;}
     
     .footer .footerSkypeEmail { float: none; margin-top: 20px; margin-left: 3px; position: static; top: 0;}
+    .bannerSlot { display: none; }
 }
 
 @media (max-width: 407px) { 
     .footer .address { margin-left: 0; display: block; }
-    .footer .footerPromo { margin-top: 320px;}
+    .footer .footerPromo { margin-top: 320px; }
 }
 
 .footerLine { background: url('../img/footer_line.jpg') repeat-x left top; height: 17px;}
