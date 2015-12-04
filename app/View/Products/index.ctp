@@ -61,28 +61,28 @@
 			}
 			
 ?>
-							<div id="product_<?=$article['Product']['id']?>" class="block" onclick="window.location.href= '<?=$url?>'">
-								<div class="top">
+			<a id="product_<?=$article['Product']['id']?>" class="block" href="<?=$url?>">
+				<div class="top">
 <?
 			if ($article['Product']['brand_id'] && isset($aBrands[$brand_id])) {
 				if (isset($directSearch) && $directSearch) {
 					$catTitle = $article['Category']['title'].' &gt; '.$article['Subcategory']['title']; // $brands[$article['Product']['brand_id']]['Brand']['title']
 ?>
-									<div class="brand"><small><?=$catTitle?></small></div>
+					<div class="brand"><small><?=$catTitle?></small></div>
 <?
 				}
 			}
 ?>
-									<a class="title" href="javascript:void(0)"><?=$title?></a>
-								</div>
-								<a class="ava" href="javascript:void(0)">
-									<span class="icon <?=($article['Product']['active']) ? 'available' : 'noAvailable'?>"></span>
-									<img src="<?=($src) ? $src : '/img/default_product100.png'?>" alt="<?=$title?>" />
-								</a>
+					<div class="title"><?=$title?></div>
+				</div>
+				<div class="ava">
+					<span class="icon <?=($article['Product']['active']) ? 'available' : 'noAvailable'?>"></span>
+					<img src="<?=($src) ? $src : '/img/default_product100.png'?>" alt="<?=$title?>" />
+				</div>
 <?
 			$price = 0;
 			$prod_id = $article['Product']['id'];
-			if (DOMAIN_NAME == 'agromotors.ru') {
+			if (Configure::read('domain.zone') == 'ru') {
 				if (isset($prices_ru[$prod_id])) {
 					$price = $prices_ru[$prod_id]['value'];
 				} elseif (isset($prices2_ru[$prod_id])) {
@@ -97,7 +97,7 @@
 				echo '<div class="price">'.$this->element('price', compact('price')).'</div>';
 			}
 ?>
-							</div>
+			</a>
 <?
 		}
 ?>                            

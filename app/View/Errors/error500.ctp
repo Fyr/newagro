@@ -1,22 +1,8 @@
 <?php
 /**
- *
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Errors
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
+
 ?>
-<h2><?php echo $name; ?></h2>
+<h2>#<?php echo $name; ?></h2>
 <p class="error">
 	<strong><?php echo __d('cake', 'Error'); ?>: </strong>
 	<?php echo __d('cake', 'An Internal Error Has Occurred.'); ?>
@@ -25,4 +11,15 @@
 if (Configure::read('debug') > 0):
 	echo $this->element('exception_stack_trace');
 endif;
+ */
 ?>
+<?
+echo $this->element('title', array('title' => __('Page not found')));
+?>
+<div class="block main clearfix">
+	<p><b>Внимание!</b> По вашему запросу произошла ошибка сервера.<br />
+		Наши специалисты уже занимаются ей, в ближайее время ошибка будет исправлена.<br />
+		<br />
+		<a href="/">На главную</a>
+	</p>
+</div>

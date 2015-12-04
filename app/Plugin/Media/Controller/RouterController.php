@@ -19,7 +19,7 @@ class RouterController extends AppController {
 		$aFName = $this->PHMedia->getFileInfo($filename);
 		$fname = $this->PHMedia->getFileName($type, $id, $size, $filename);
 		if ($type == 'product') {
-			list($domain, $zone) = explode('.', DOMAIN_NAME);
+			$zone = Configure::read('domain.zone');
 			$fname = str_replace('.'.$aFName['ext'], '_'.$zone.'.'.$aFName['ext'], $fname);
 			if (TEST_ENV) {
 				$zone = 'by';

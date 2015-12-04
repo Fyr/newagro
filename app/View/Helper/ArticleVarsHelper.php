@@ -11,12 +11,15 @@ class ArticleVarsHelper extends AppHelper {
 		$url = SiteRouter::url($article);
 		
 		$title = $article[$objectType]['title'];
-		$teaser = nl2br($article[$objectType]['teaser']);
+		$field = (Configure::read('domain.zone') == 'ru' && in_array($objectType, array('Brand', 'Category', 'Subcategory'))) ? 'teaser_ru' : 'teaser';
+		$teaser = nl2br($article[$objectType][$field]);
 		$src = $this->Media->imageUrl($article, $size);
 		$featured = $article[$objectType]['featured'];
 	}
 
 	public function body($article) {
-		return $article[$this->getObjectType($article)]['body'];
+		$objectType = $this->getObjectType($article);
+		$field = (Configure::read('domain.zone') == 'ru' && in_array($objectType, array('Brand', 'Category', 'Subcategory'))) ? 'body_ru' : 'body';
+		return $article[$this->getObjectType($article)][$field];
 	}
 }

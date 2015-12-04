@@ -15,7 +15,7 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
-
+Configure::write('Exception.renderer', 'SiteExceptionRenderer');
 Configure::write('Config.language', 'rus');
 
 // define('PATH_FILES_UPLOAD', $_SERVER['DOCUMENT_ROOT'].'/files/');
@@ -44,8 +44,11 @@ define('RECAPTCHA_PRIVATE_KEY', '6Lezy-QSAAAAACCM1hh6ceRr445OYU_D_uA79UFZ');
 Configure::write('Recaptcha.publicKey', RECAPTCHA_PUBLIC_KEY);
 Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
 
-define('DOMAIN_NAME', 'newagro.dev');
-define('DOMAIN_TITLE', 'NewAgro.dev');
+Configure::write('domain', array(
+	'url' => 'newagro.dev',
+	'title' => 'NewAgro.dev',
+	'zone' => 'ru'
+));
 
 define('AUTH_ERROR', __('Invalid username or password, try again'));
 define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '192.168.1.22');

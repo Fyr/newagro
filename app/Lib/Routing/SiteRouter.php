@@ -7,7 +7,7 @@ class SiteRouter extends Router {
 		return $objectType;
 	}
 	
-	static public function url($article) {
+	static public function url($article, $lFull = false) {
 		$objectType = self::getObjectType($article);
 		if ($objectType == 'Product') {
 			$subcatSlug = Hash::get($article, 'Subcategory.slug');
@@ -42,10 +42,7 @@ class SiteRouter extends Router {
 				'slug' => $article[$objectType]['slug']
 			);
 		}
-		return parent::url($url);
+		return parent::url($url, $lFull);
 	}
 	
-	static public function catUrl($a, $b) {
-		return '#';
-	}
 }

@@ -10,7 +10,7 @@
 <?
 	} else {
 ?>
-	<title><?=DOMAIN_TITLE?></title>
+	<title><?=Configure::read('domain.title')?></title>
 <?
 	}
 	if (isset($data['descr']) && $data['descr']) {

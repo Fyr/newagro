@@ -118,7 +118,7 @@ class AppController extends Controller {
 	}
 	
 	protected function beforeRenderLayout() {
-		$this->pageTitle = ($this->pageTitle) ? $this->pageTitle.' - '.DOMAIN_TITLE : DOMAIN_TITLE;
+		$this->pageTitle = ($this->pageTitle) ? $this->pageTitle.' - '.Configure::read('domain.title') : Configure::read('domain.title');
 		$this->set('pageTitle', $this->pageTitle);
 		
 		$this->set('seo', $this->seo); // TODO
@@ -133,7 +133,7 @@ class AppController extends Controller {
 		
 		$this->set('disableCopy', $this->disableCopy);
 		
-		if (DOMAIN_NAME == 'agromotors.ru') {
+		if (Configure::read('domain.zone') == 'ru') {
 			unset($this->aBottomLinks['motor']);
 		}
 		$this->set('aBottomLinks', $this->aBottomLinks);
@@ -209,9 +209,9 @@ class AppController extends Controller {
 		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->set('aBottomLinks', $this->aBottomLinks);
 		
-		if (DOMAIN_NAME == 'agromotors.by' || TEST_ENV) {
+		if (Configure::read('domain.zone') == 'by') {
 			unset($this->aNavBar['home']);
-		} elseif (DOMAIN_NAME == 'agromotors.ru') {
+		} elseif (Configure::read('domain.zone') == 'ru') {
 			unset($this->aNavBar['motor']);
 		}
 		$this->set('aMenu', $this->aNavBar);
@@ -246,6 +246,7 @@ class AppController extends Controller {
 	}
 	
 	public function redirect404() {
-		return $this->redirect('/404');
+		// return $this->redirect(array('controller' => 'pages', 'action' => 'notExists'), 404);
+		throw new NotFoundException();
 	}
 }

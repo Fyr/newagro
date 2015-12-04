@@ -622,3 +622,8 @@ msgstr "Рубрикатор"
 msgid "Section"
 msgstr "Раздел"
 
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+msgid "Error!"
+msgstr "Ошибка!"

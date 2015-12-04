@@ -57,7 +57,7 @@
 							<!--b><?=__('Type')?></b> : <?=$article['Category']['title']?><br /-->
 <?
 	$price = 0;
-	if (DOMAIN_NAME == 'agromotors.ru') {
+	if (Configure::read('domain.zone') == 'ru') {
 		if (isset($aParamValues[$price_ru]) && $aParamValues[$price_ru]) {
 			$price = $aParamValues[$price_ru]['ParamValue']['value'];
 		} elseif (isset($aParamValues[$price2_ru]) && $aParamValues[$price2_ru]) {
