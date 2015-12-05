@@ -32,7 +32,8 @@ $(document).ready(function(){
 			$(".header .menuMobile li ul").stop().slideUp();
 		}
 	});
-	
+
+	/*
 	$('ul.catalog').find('.firstLevel').click(function(){
 	    $(this).next().stop().slideToggle();
 	    if ( $(this).next().is('ul') ) {
@@ -43,7 +44,8 @@ $(document).ready(function(){
 	        }
 	    }
 	}).next().stop().hide();
-	
+	*/
+
 	if ($(window).width() <= 983 && $(window).width() > 703 ) {
 		$(".rightSidebar").appendTo($(".oneLeftSide"));
 	}

@@ -2,14 +2,16 @@
 <?
 	foreach($aCategories[$section_id] as $id => $article) {
 		$objectType = $this->ArticleVars->getObjectType($article);
-		$url = (isset($aSubcategories[$id])) ? 'javascript: void(0)' : SiteRouter::url($article);
+		$url = SiteRouter::url($article);
+		$active = (isset($category) && $id == $category[$this->ArticleVars->getObjectType($category)]['id']) ? 'active' : '';
 ?>
 	<li id="cat-nav<?=$id?>">
-        <a href="<?=$url?>" class="firstLevel"><span class="icon arrow"></span><?=$article[$objectType]['title']?></a>
+        <a href="<?=$url?>" class="firstLevel <?=$active?>"><span class="icon arrow"></span><?=$article[$objectType]['title']?></a>
 <?
 		if (isset($aSubcategories[$id])) {
+			$style = ($active) ? '' : 'style="display: none"';
 ?>
-		<ul style="display: none">
+		<ul <?=$style?>>
 <?
 			foreach($aSubcategories[$id] as $subcat_id => $_article) {
 				$objectType = $this->ArticleVars->getObjectType($_article);
