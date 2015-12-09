@@ -365,8 +365,6 @@ button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 
 @media (max-width: 720px) {  
     .companyNews { float: none; width: auto; margin-right: 2%;}
-    .headBlock { font-size: 16px;}
-    .headBlock .text { padding-top: 11px; height: 35px;}
 }
 
 .ourPartners { background: url('../img/partners_back.gif') repeat-x left top; }
@@ -434,7 +432,7 @@ img.grayscale {
 
 .news .block { margin-bottom: 20px;}
 .catalogContent { }
-    .catalogContent .block { float: left; width: 32%; margin-left: 2%; box-sizing: border-box; padding: 10px 10px 20px 10px; height:  210px;  text-align: center; text-decoration: none; }
+    .catalogContent .block { float: left; width: 32%; margin-left: 2%; box-sizing: border-box; padding: 10px 10px 20px 10px; height:  210px;  text-align: center; text-decoration: none; display: block; }
     .catalogContent .block:nth-child(3n+1) { margin-left: 0;}
     .catalogContent .block .ava { display: inline-block; position: relative; }
     .catalogContent .block .ava img { max-width: 100%; height: auto; display: block; border: 1px solid #eee; }

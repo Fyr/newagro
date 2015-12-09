@@ -53,8 +53,6 @@ class ArticlesController extends AppController {
 
 		if ($this->objectType == 'SectionArticle') {
 			if ($aArticle['SectionArticle']['subcat_id']) {
-				fdebug($aArticle['SectionArticle']['cat_id']);
-				fdebug($this->SectionArticle->findById($aArticle['SectionArticle']['subcat_id']));
 				$this->set('category', $this->SectionArticle->findById($aArticle['SectionArticle']['subcat_id']));
 			} else {
 				$this->set('category', $aArticle);
