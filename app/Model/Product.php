@@ -34,6 +34,10 @@ class Product extends Article {
 			'foreignKey' => 'object_id',
 			'conditions' => array('Seo.object_type' => 'Product'),
 			'dependent' => true
+		),
+		'Search' => array(
+			'foreignKey' => 'id',
+			'dependent' => true
 		)
 	);
 	

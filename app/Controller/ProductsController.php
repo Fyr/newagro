@@ -23,7 +23,7 @@ class ProductsController extends AppController {
 			'conditions' => array('Product.published' => 1),
 			'limit' => self::PER_PAGE, 
 			'page' => $this->request->param('page'),
-			'order' => 'Product.created DESC'
+			// 'order' => 'Product.created DESC'
 		);
 		$category = array();
 		if ($catSlug) {
@@ -65,6 +65,7 @@ class ProductsController extends AppController {
 		}
 
 		if ($q = $this->request->query('q')) {
+			$this->logSearch($q);
 			$this->processFilter($q);
 			$this->set('directSearch', true);
 		}
@@ -107,7 +108,140 @@ class ProductsController extends AppController {
 		unset($this->seo['keywords']);
 		unset($this->seo['descr']);
 	}
-	
+
+	private function logSearch($q) {
+		$this->loadModel('SearchLog');
+		$this->SearchLog->save(array('q' => $q, 'ip' => $_SERVER['REMOTE_ADDR']));
+	}
+
+	private function processFilter($value) {
+		// очищаем от лишних пробелов
+		$_value = str_replace(array('   ', '  '), ' ', $value);
+
+		list($_value, $_exact) = $this->getExactWords($_value);
+
+		$aWords = explode(' ', mb_strtolower($_value));
+
+		// очищаем от лишних символов слова
+		foreach($aWords as &$word) {
+			$word = $this->stripWord($word);
+		}
+		unset($word);
+
+		// убиваем короткие незначащие слова
+		$aWords = $this->stripShortWords($aWords);
+
+		// Сортируем слова - с цифрами вперед
+		$aDigiWords = array();
+		$aRest = array();
+		foreach($aWords as $word) {
+			if ($this->isDigitWord($word)) {
+				$aDigiWords[] = $word;
+			} else {
+				$aRest[] = $word;
+			}
+		}
+		unset($word);
+
+		$aWords = array_merge($aDigiWords, $aRest);
+		$this->paginate['conditions']['Search.body LIKE '] = '%'.implode('%', $aWords).'%';
+		if ($_exact) {
+			$this->paginate['conditions']['Search.body LIKE '].= $_exact.'%';
+		}
+
+		/*
+		fdebug($this->getExactWords('прокладка гбц deutz 1013'));
+		fdebug($this->getExactWords('прокладка deutz 1013 гбц'));
+		fdebug($this->getExactWords('deutz 1013 прокладка гбц'));
+		*/
+
+		//$this->paginate['fields'][] = "MATCH (Search.body) AGAINST ('{$_value}' IN BOOLEAN MODE) AS rel";
+		//$this->paginate['conditions'][] = "MATCH (Search.body) AGAINST ('{$_value}' IN BOOLEAN MODE)";
+		//$this->paginate['order'] = 'Product.created DESC';
+		//$this->paginate['order'] = array("MATCH (Search.body) AGAINST ('{$_value}' IN BOOLEAN MODE) DESC");
+		//$this->paginate['order'] = 'rel DESC';
+	}
+
+	private function getExactWords($q) {
+		$this->loadModel('VcarsArticle');
+		$fields = array('id', 'object_type', 'title', 'LENGTH(title) AS len');
+		$conditions = array('object_type' => array('Subcategory', 'Category', 'Brand'));
+		$order = 'len DESC, title ASC';
+		$aArticles = $this->VcarsArticle->find('all', compact('fields', 'conditions', 'order'));
+		$_q = '';
+		foreach($aArticles as $article) {
+			list($objectType) = array_keys($article);
+			$title = mb_strtolower($article[$objectType]['title']);
+			$pos = mb_strpos($q, $title);
+			if ($pos !== false) {
+				if ($pos == 0) {
+					$pos = 1;
+				}
+				$_q = mb_substr($q, 0, $pos - 1).mb_substr($q, $pos + mb_strlen($title));
+				return array($_q, $title);
+			}
+		}
+		return array($q, '');
+	}
+
+	private function stripWord($q) {
+		return str_replace(array('.', '', '-', ',', '/', '\\'), '', $q);
+	}
+
+	private function stripShortWords($aWords) {
+		$_words = array();
+		foreach($aWords as $word) {
+			if ($this->isRu($word) && mb_strlen($word) <= 2) {
+				// исключаем такие слова
+			} else {
+				$_words[] = $word;
+			}
+		}
+		return $_words;
+	}
+
+	/*
+	private function stripStopWords($aWords) {
+		$_words = array();
+		foreach($aWords as $word) {
+			foreach($aStopWords as $stop) {
+				if (mb_strpos($word) <= 3) {
+					// исключаем такие слова
+				} else {
+					$_words[] = $word;
+				}
+			}
+		}
+		return $_words;
+	}
+	*/
+	/**
+	 * Возвращает true, если слово состоит из русских букв
+	 * (Считаем, что состоит, если хотя бы один символ русский, т.к. могут быть опечатки)
+	 * @param $q
+	 * @return bool
+	 */
+	private function isRu($q) {
+		for($i = 0; $i < mb_strlen($q); $i++) {
+			$ch = mb_substr($q, $i, 1);
+			if (mb_strpos('абвгдеёжзийклмнопрстуфхцчшщъыьэюя', $ch) !== false) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private function isDigitWord($q) {
+		for($i = 0; $i < mb_strlen($q); $i++) {
+			$ch = mb_substr($q, $i, 1);
+			if (!preg_match('/[a-z0-9]/', $ch)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/*
 	private function processFilter($value) {
 		$_value = str_replace(array('.', ' ', '-', ',', '/', '\\'), '', $value);
 		
@@ -159,4 +293,5 @@ class ProductsController extends AppController {
 		
 		$this->paginate['conditions'][] = '('.implode(' OR ', $ors).')';
 	}
+	*/
 }

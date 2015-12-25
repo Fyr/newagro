@@ -232,7 +232,7 @@ $(document).ready(function(){
 </a><script type="text/javascript" src="/app/webroot/mibew/js/compiled/chat_popup.js"></script><script type="text/javascript">Mibew.ChatPopup.init({"id":"552c0eeae6c3cd3e","url":"\/app\/webroot\/mibew\/chat?locale=ru","preferIFrame":true,"modSecurity":false,"width":640,"height":480,"resizable":true,"styleLoader":"\/app\/webroot\/mibew\/chat\/style\/popup"});</script>
 </div>
 */
-	if (Configure::read('domain.zone') == 'by') {
+	if (!TEST_ENV && Configure::read('domain.zone') == 'by') {
 ?>
 <!-- BEGIN JIVOSITE CODE {literal} -->
 <script type='text/javascript'>
@@ -240,7 +240,7 @@ $(document).ready(function(){
 var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
 <!-- {/literal} END JIVOSITE CODE -->
 <?
-	} elseif (Configure::read('domain.zone') == 'ru') {
+	} elseif (!TEST_ENV && Configure::read('domain.zone') == 'ru') {
 ?>
 <!-- BEGIN JIVOSITE CODE {literal} -->
 <script type='text/javascript'>
@@ -250,6 +250,6 @@ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = 
 <?
 	}
 ?>
-	<?//$this->element('sql_dump')?>
+	<?=$this->element('sql_dump')?>
 	</body>
 </html>
