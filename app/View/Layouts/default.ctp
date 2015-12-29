@@ -250,6 +250,6 @@ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = 
 <?
 	}
 ?>
-	<?=$this->element('sql_dump')?>
+	<?//$this->element('sql_dump')?>
 	</body>
 </html>
