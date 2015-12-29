@@ -61,3 +61,21 @@ CakePlugin::loadAll();
 function fdebug($data, $logFile = 'tmp.log', $lAppend = true) {
 		file_put_contents($logFile, mb_convert_encoding(print_r($data, true), 'cp1251', 'utf8'), ($lAppend) ? FILE_APPEND : null);
 }
+
+function assertTrue($msg, $result) {
+	if ($result) {
+		echo $msg.' - OK<br>';
+	} else {
+		$result = var_export($result, true);
+		echo "{$msg} - ERROR! <br>Result: <b>`{$result}`</b><br>Must be: `true`<br>";
+	}
+}
+
+function assertEqual($msg, $sample, $result) {
+	if ($sample === $result) {
+		echo $msg.' - OK<br>';
+	} else {
+		$result = var_export($result, true);
+		echo "{$msg} - ERROR! <br>Result: <b>`{$result}`</b><br>Must be: `{$sample}`<br>";
+	}
+}

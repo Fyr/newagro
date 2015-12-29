@@ -121,6 +121,11 @@ class ProductsController extends AppController {
 		list($_value, $_exact) = $this->getExactWords($_value);
 
 		$aWords = explode(' ', mb_strtolower($_value));
+		if (count($aWords) == 1 && $this->isDigitWord($value)) {
+			$this->processNumber($value);
+			return;
+		}
+
 
 		// очищаем от лишних символов слова
 		foreach($aWords as &$word) {
@@ -153,6 +158,7 @@ class ProductsController extends AppController {
 		fdebug($this->getExactWords('прокладка гбц deutz 1013'));
 		fdebug($this->getExactWords('прокладка deutz 1013 гбц'));
 		fdebug($this->getExactWords('deutz 1013 прокладка гбц'));
+		fdebug($this->getExactWords('deutz прокладка гбц 1013'));
 		*/
 
 		//$this->paginate['fields'][] = "MATCH (Search.body) AGAINST ('{$_value}' IN BOOLEAN MODE) AS rel";
@@ -169,6 +175,17 @@ class ProductsController extends AppController {
 		$order = 'len DESC, title ASC';
 		$aArticles = $this->VcarsArticle->find('all', compact('fields', 'conditions', 'order'));
 		$_q = '';
+		/*
+		$articles = array(); // 'Subcategory' => array(), 'Category' => array(), 'Brand' => array());
+		foreach($aArticles as $article) {
+			$id = $article['VcarsArticle']['id'];
+			$objectType = $article['VcarsArticle']['object_type'];
+			$title = mb_strtolower($article['VcarsArticle']['title']);
+			$title = str_replace(array('.', '-', ',', '/', '\\', '&'), ' ', $title);
+			$title = str_replace(array('   ', '  '), ' ', $title);
+			$articles[] = compact('id', 'objectType', 'title');
+		}
+		*/
 		foreach($aArticles as $article) {
 			list($objectType) = array_keys($article);
 			$title = mb_strtolower($article[$objectType]['title']);
@@ -231,6 +248,7 @@ class ProductsController extends AppController {
 		return false;
 	}
 
+	/*
 	private function isDigitWord($q) {
 		for($i = 0; $i < mb_strlen($q); $i++) {
 			$ch = mb_substr($q, $i, 1);
@@ -240,11 +258,20 @@ class ProductsController extends AppController {
 		}
 		return true;
 	}
+	*/
+	private function isDigitWord($q) {
+		for($i = 0; $i < mb_strlen($q); $i++) {
+			$ch = mb_substr($q, $i, 1);
+			if (!preg_match('/[a-z0-9\-\.\\/]/', $ch)) {
+				return false;
+			}
+		}
+		return preg_match('/.*[0-9]+.*/', $q) && true;
+	}
 
-	/*
-	private function processFilter($value) {
-		$_value = str_replace(array('.', ' ', '-', ',', '/', '\\'), '', $value);
-		
+	private function processNumber($value) {
+		$_value = str_replace(array('.', '-', ',', '/', '\\'), '', $value);
+		/*
 		// ищем запчасти по "марка TC, моторы TC, доп.инфа"
 		$this->loadModel('Form.PMFormData');
 		$conditions = array();
@@ -254,13 +281,15 @@ class ProductsController extends AppController {
 		$conditions = implode(' AND ', $conditions);
 		$products = $this->PMFormData->find('all', compact('conditions'));
 		$product_ids = implode(',', ($products) ? Hash::extract($products, '{n}.PMFormData.object_id') : array(0));
-		
+
 		// поиск по общим номера деталей
 		$numbers = explode(' ', str_replace(',', ' ', $_value));
+		*/
+		$numbers = array($_value); // убрать, если откомментить
+		$count = count($numbers);
+		$i = 0;
 		$ors = array();
 		$order = array();
-		$i = 0;
-		$count = count($numbers);
 		$_count = 0;
 		while ($i < 100 && $count !== $_count) {
 			$i++; // избегать бесконечный цикл
@@ -278,12 +307,16 @@ class ProductsController extends AppController {
 			$_count = $count;
 			$count = count($numbers);
 		}
-		
+		/*
 		$ors = array(
 			"Product.title LIKE '%{$value}%'", "Product.title LIKE '%{$_value}%'",
 			"Product.title_rus LIKE '%{$value}%'", "Product.title_rus LIKE '%{$_value}%'",
 			"Product.detail_num LIKE '%{$value}%'", "Product.detail_num LIKE '%{$_value}%'",
 			"Product.id IN ({$product_ids})"
+		);
+		*/
+		$ors = array(
+			"Product.detail_num LIKE '%{$value}%'", "Product.detail_num LIKE '%{$_value}%'" // убрать, если откомментить
 		);
 		foreach ($numbers as $key_ => $value_) {
 			if (trim($value_) != ''){
@@ -292,6 +325,20 @@ class ProductsController extends AppController {
 		}
 		
 		$this->paginate['conditions'][] = '('.implode(' OR ', $ors).')';
+	}
+
+	/*
+	public function runTests() {
+		$this->autoRender = false;
+		assertTrue('isDigitWord Test 1', $this->isDigitWord('bf1234'));
+		assertTrue('isDigitWord Test 2', $this->isDigitWord('1234566bf'));
+		assertTrue('isDigitWord Test 3', $this->isDigitWord('123bf123'));
+		assertTrue('isDigitWord Test 5', $this->isDigitWord('0'));
+		assertTrue('isDigitWord Test 6', $this->isDigitWord('0123'));
+		assertTrue('isDigitWord Test 7', !$this->isDigitWord('a'));
+		assertTrue('isDigitWord Test 8', $this->isDigitWord('a/123.21-bf'));
+		assertTrue('isDigitWord Test 9', !$this->isDigitWord('г/123.21-bf'));
+		assertTrue('isDigitWord Test 10', !$this->isDigitWord('mercedes-benz'));
 	}
 	*/
 }
