@@ -116,7 +116,7 @@ class ProductsController extends AppController {
 
 	private function processFilter($value) {
 		// очищаем от лишних пробелов
-		$_value = str_replace(array('   ', '  '), ' ', $value);
+		$_value = $this->stripSpaces($value);
 
 		list($_value, $_exact) = $this->getExactWords($_value);
 
@@ -153,7 +153,7 @@ class ProductsController extends AppController {
 		if ($_exact) {
 			$this->paginate['conditions']['Search.body LIKE '].= $_exact.'%';
 		}
-
+		fdebug(array($_exact, $aWords));
 		/*
 		fdebug($this->getExactWords('прокладка гбц deutz 1013'));
 		fdebug($this->getExactWords('прокладка deutz 1013 гбц'));
@@ -176,15 +176,47 @@ class ProductsController extends AppController {
 		$aArticles = $this->VcarsArticle->find('all', compact('fields', 'conditions', 'order'));
 		$_q = '';
 		/*
-		$articles = array(); // 'Subcategory' => array(), 'Category' => array(), 'Brand' => array());
+		// $articles = array(); // 'Subcategory' => array(), 'Category' => array(), 'Brand' => array());
+		$_factor = array();
+		$_words = explode(' ', $q);
+		fdebug($_words, 'tmp3.log');
 		foreach($aArticles as $article) {
 			$id = $article['VcarsArticle']['id'];
 			$objectType = $article['VcarsArticle']['object_type'];
 			$title = mb_strtolower($article['VcarsArticle']['title']);
 			$title = str_replace(array('.', '-', ',', '/', '\\', '&'), ' ', $title);
-			$title = str_replace(array('   ', '  '), ' ', $title);
-			$articles[] = compact('id', 'objectType', 'title');
+			$title = $this->stripSpaces($title);
+
+			foreach($_words as $_word) {
+				$_pos = mb_strpos($title, $_word);
+				if ($_pos !== false) {
+					$_factor[$id]['info'] = compact('id', 'objectType', 'title');
+					$_factor[$id]['keys'][$_word] = array('pos' => $_pos, 'len' => mb_strlen($_word) == mb_strlen($title));
+					if (!isset($_factor[$id]['_total'])) {
+						$_factor[$id]['_total'] = 0;
+					}
+					$_factor[$id]['_total']++;
+				}
+			}
 		}
+		fdebug($aArticles, 'tmp1.log');
+		if (!count($_factor)) {
+			return array($q, '');
+		}
+
+		$_factor = Hash::sort($_factor, '{n}._total', 'desc');
+		fdebug($_factor, 'tmp2.log');
+		$_total = $_factor[0]['_total'];
+		$_most = array();
+		foreach($_factor as $id => $_row) {
+			if ($_factor[$id]['_total'] < $_total) {
+				break;
+			} else {
+				$_most[] = $_row;
+			}
+		}
+
+		fdebug($_most, 'tmp4.log');
 		*/
 		foreach($aArticles as $article) {
 			list($objectType) = array_keys($article);
@@ -203,6 +235,10 @@ class ProductsController extends AppController {
 
 	private function stripWord($q) {
 		return str_replace(array('.', '', '-', ',', '/', '\\'), '', $q);
+	}
+
+	private function stripSpaces($q) {
+		return trim(str_replace(array('    ', '   ', '  '), ' ', $q));
 	}
 
 	private function stripShortWords($aWords) {

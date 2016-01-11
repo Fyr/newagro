@@ -73,7 +73,7 @@
 				}
 			}
 ?>
-					<div class="title"><?=$title?></div>
+					<div class="title ellipsis"><?=$title?></div>
 				</div>
 				<div class="ava">
 					<span class="icon <?=($article['Product']['active']) ? 'available' : 'noAvailable'?>"></span>

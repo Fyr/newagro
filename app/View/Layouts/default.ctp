@@ -27,6 +27,7 @@
 		'vendor/jquery/jquery.smoothdivscroll-1.3-min',
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
+        'vendor/jquery/jquery.dotdotdot',
 		'doc_ready'
 	);
 	if ($disableCopy) {

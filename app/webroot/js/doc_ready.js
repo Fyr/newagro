@@ -96,4 +96,6 @@ $(document).ready(function(){
 			padding: 5
 		});
 	}
+
+	$('.ellipsis').dotdotdot();
 });

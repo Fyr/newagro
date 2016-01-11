@@ -101,5 +101,6 @@ body { font-size: 14px; }
 	background: -ms-linear-gradient(top,  #84c924 0%,#90bc20 50%,#549122 50%,#549122 100%); /* IE10 preview */
 	background: linear-gradient(to bottom,  #84c924 0%,#90bc20 50%,#549122 50%,#549122 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84c924', endColorstr='#549122',GradientType=0 ); /* IE6-8 */
-
 }
+
+.catalogContent .block .title { height: 60px; overflow-y: hidden; }
