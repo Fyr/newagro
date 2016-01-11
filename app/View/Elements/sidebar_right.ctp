@@ -9,7 +9,11 @@
 		echo $this->element('sbr_block', array('title' => 'Новости', 'content' => $this->element('sb_news', array('aArticles' => $featuredEvents))));
 	}
 	if ($featuredOffers) {
-		echo $this->element('sbr_block', array('title' => 'Акции', 'content' => $this->element('sb_news', array('aArticles' => $featuredOffers))));
+?>
+	<div class="sbr-offers">
+		<?=$this->element('sbr_block', array('title' => 'Акции', 'content' => $this->element('sb_news', array('aArticles' => $featuredOffers))))?>
+	</div>
+<?
 	}
 	if (isset($aSlot[5])) {
 		foreach($aSlot[5] as $banner) {

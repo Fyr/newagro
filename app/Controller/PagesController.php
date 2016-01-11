@@ -19,7 +19,7 @@ class PagesController extends AppController {
 		}
 		$aNews = $this->News->find('all', array(
 			'conditions' => $conditions,
-			'order' => array('News.featured DESC', 'News.created DESC'),
+			'order' => array('News.featured DESC', 'News.sorting ASC', 'News.created DESC'),
 			'limit' => 3
 		));
 		$this->set('aHomePageNews', $aNews);
