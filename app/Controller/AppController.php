@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
 App::uses('Media', 'Media.Model');
 App::uses('MediaArticle', 'Model');
 App::uses('News', 'Model');
+App::uses('Offer', 'Model');
 App::uses('Brand', 'Model');
 App::uses('Product', 'Model');
 App::uses('Category', 'Model');
@@ -83,8 +84,15 @@ class AppController extends Controller {
 	    $this->currLink = $this->currMenu;
 	    
 		$this->loadModel('News');
-		$this->aEvents = $this->News->getRandomRows(1, array('News.featured' => 1, 'News.published' => 1));
-		$this->set('upcomingEvent', ($this->aEvents) ? $this->aEvents[0] : false);
+		$conditions = array('News.featured' => 1, 'News.published' => 1);
+		$order = array('News.sorting' => 'ASC', 'News.created' => 'DESC');
+		$this->aEvents = $this->News->find('all', compact('conditions', 'order'));
+		$this->set('featuredEvents', $this->aEvents);
+
+		$this->loadModel('Offer');
+		$conditions = array('Offer.featured' => 1, 'Offer.published' => 1);
+		$order = array('Offer.sorting' => 'ASC', 'Offer.created' => 'DESC');
+		$this->set('featuredOffers', $this->Offer->find('all', compact('conditions', 'order')));
 		
 		$this->set('aFilters', array());
 		$this->set('isHomePage', false);
@@ -226,8 +234,6 @@ class AppController extends Controller {
 			$aSlot[$slot_id] = $this->Banner->find('all', compact('conditions', 'order'));
 		}
 		$this->set('aSlot', $aSlot);
-
-
 	}
 	
 	/**

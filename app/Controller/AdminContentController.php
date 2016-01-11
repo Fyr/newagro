@@ -21,10 +21,10 @@ class AdminContentController extends AdminController {
             	'fields' => array('title', 'slug')
             ),
         	'News' => array(
-        		'fields' => array('created', 'title', 'slug', 'featured', 'published')
+        		'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')
         	),
         	'Offer' => array(
-        		'fields' => array('created', 'title', 'slug', 'featured', 'published')
+        		'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')
         	),
         	'Motor' => array(
         		'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')
