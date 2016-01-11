@@ -23,7 +23,7 @@ class CatalogController extends AppController {
 	
 	function download($id) {
 		$this->autoRender = false;
-		$conditions = array('Media.media_type' => 'raw_file', 'Media.object_type' => 'Catalog', 'Media.object_id' => $id, 'Media.main' => 1);
+		$conditions = array('Media.media_type' => 'raw_file', 'Media.object_type' => 'Catalog', 'Media.object_id' => $id);
 		$row = $this->Media->find('first', compact('conditions'));
 		$file = '';
 		if ($row) {
