@@ -15,7 +15,7 @@ class PagesController extends AppController {
 		
 		$conditions = array('News.published' => 1);
 		if ($this->aEvents) {
-			$conditions['News.id NOT IN '] = Hash::extract($this->aEvents, '{n}.News.id');
+			$conditions['NOT'] = array('News.id' => Hash::extract($this->aEvents, '{n}.News.id'));
 		}
 		$aNews = $this->News->find('all', array(
 			'conditions' => $conditions,
