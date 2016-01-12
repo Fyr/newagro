@@ -1,15 +1,15 @@
 <?=$this->element('title', array('title' => $article2['Page']['title']))?>
-<div class="block main clearfix">
+<div class="block main">
 	<?=$this->ArticleVars->body($article2)?>
 </div>
 <a name="map"></a>
 <?=$this->element('title', array('title' => $article['Page']['title']))?>
-<div class="block main clearfix">
+<div class="block main">
 	<?=$this->ArticleVars->body($article)?>
 </div>
 <?=$this->element('title', array('title' => 'Отправить сообщение'))?>
 <form method="post" action="" id="postForm" class="feedback">
-	<div class="block main clearfix">
+	<div class="block main">
 		<p>
 			Вы можете отправить нам сообщение.<br/>
 			Поля, помеченные знаком <span class="star">*</span>, обязательны для заполнения.<br/>

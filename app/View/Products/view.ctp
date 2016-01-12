@@ -140,14 +140,10 @@
 		if (in_array($field['id'], array($price_by, $price_ru, $price2_ru))) {
 			continue;
 		}
-		
-		/*
-		if ($param_id == Configure::read('params.motor')) { // Мотор показываем как строку
-			$param['Param']['param_type'] = Param::STRING;
-			$param['ParamValue']['value'] = str_replace(',', ', ', $param['ParamValue']['value']);
-		}
-		*/
 		$value = $article['PMFormData']['fk_'.$field['id']];
+		if ($field['id'] == Configure::read('params.motor')) {
+			$value = str_replace(',', ', ', $value);
+		}
 		if ($value) {
 			$class = ($class == 'odd') ? 'even' : 'odd';
 ?>
