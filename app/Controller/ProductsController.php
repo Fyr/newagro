@@ -127,12 +127,6 @@ class ProductsController extends AppController {
 
 		$aWords = $this->processTextRequest($_value);
 		$this->paginate['conditions']['Search.body LIKE '] = '%'.implode('%', $aWords).'%';
-		/*
-		fdebug($this->getExactWords('прокладка гбц deutz 1013'));
-		fdebug($this->getExactWords('прокладка deutz 1013 гбц'));
-		fdebug($this->getExactWords('deutz 1013 прокладка гбц'));
-		fdebug($this->getExactWords('deutz прокладка гбц 1013'));
-		*/
 
 		//$this->paginate['fields'][] = "MATCH (Search.body) AGAINST ('{$_value}' IN BOOLEAN MODE) AS rel";
 		//$this->paginate['conditions'][] = "MATCH (Search.body) AGAINST ('{$_value}' IN BOOLEAN MODE)";
