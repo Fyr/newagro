@@ -1,1 +1,1 @@
-<div class="head"><?=$title?></div>
+<h1><?=$title?></h1>
