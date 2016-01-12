@@ -50,6 +50,10 @@ Configure::write('domain', array(
 	'zone' => 'ru'
 ));
 
+Configure::write('search', array(
+	'stopWords' => __('search.stopWords')
+));
+
 define('AUTH_ERROR', __('Invalid username or password, try again'));
 define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '192.168.1.22');
 
@@ -76,6 +80,7 @@ function assertEqual($msg, $sample, $result) {
 		echo $msg.' - OK<br>';
 	} else {
 		$result = var_export($result, true);
+		$sample = var_export($sample, true);
 		echo "{$msg} - ERROR! <br>Result: <b>`{$result}`</b><br>Must be: `{$sample}`<br>";
 	}
 }

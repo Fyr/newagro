@@ -627,3 +627,6 @@ msgstr "Страница не найдена"
 
 msgid "Error!"
 msgstr "Ошибка!"
+
+msgid "search.stopWords"
+msgstr "на для запчасти запчастей мотор мотора моторы"
