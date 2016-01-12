@@ -22,7 +22,7 @@ class SectionArticle extends Article {
 		'Seo' => array(
 			'className' => 'Seo.Seo',
 			'foreignKey' => 'object_id',
-			'conditions' => array('Seo.object_type' => 'SectionArticle'),
+			'conditions' => array('Seo.object_type' => 'Page'),
 			'dependent' => true
 		)
 	);
