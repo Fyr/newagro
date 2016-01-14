@@ -43,6 +43,9 @@ class CatalogController extends AppController {
 		    header('Pragma: public');
 		    // header('Content-Length: ' . filesize($file));
 		    readfile($file);
+			/*
+			TODO: http://book.cakephp.org/2.0/en/controllers/request-response.html#cakeresponse
+			*/
 		} else {
 			return $this->redirect404();
 		}

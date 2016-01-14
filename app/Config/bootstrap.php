@@ -3,6 +3,13 @@ Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
 	'CacheDispatcher'
 ));
+Cache::config('default', array(
+	'engine' => 'File', //[required]
+	'duration' => '+999', //[optional]
+	'prefix' => 'app_', //[optional]  prefix every cache file with this string
+	'lock' => false, //[optional]  use file locking
+	'serialize' => true, //[optional]
+));
 
 App::uses('CakeLog', 'Log');
 CakeLog::config('debug', array(
