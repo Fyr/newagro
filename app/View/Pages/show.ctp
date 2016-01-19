@@ -4,5 +4,7 @@
 	echo $this->element('title', array('title' => $aArticle['Page']['title']));
 ?>
 <div class="block main clearfix">
-	<?=$this->ArticleVars->body($aArticle)?>
+	<div class="article">
+		<?=$this->ArticleVars->body($aArticle)?>
+	</div>
 </div>

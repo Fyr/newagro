@@ -104,3 +104,10 @@ body { font-size: 14px; }
 }
 
 .catalogContent .block .title { height: 60px; overflow-y: hidden; }
+
+.article ul {
+	list-style: disc inside;
+}
+.article ul li {
+	padding-left: 20px;
+}

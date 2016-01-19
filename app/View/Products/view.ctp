@@ -76,7 +76,9 @@
 	}
 ?>
 							<div style="margin-top: 20px">
-								<?=$this->ArticleVars->body($article)?>
+								<div class="article">
+									<?=$this->ArticleVars->body($article)?>
+								</div>
 							</div>
 							<!-- div class="line" style="width: 100%"></div-->
 						</div>

@@ -32,6 +32,10 @@ class ArticlesController extends AppController {
 			'order' => array($this->objectType.'.sorting' => 'ASC', $this->objectType.'.created' => 'DESC'),
 			'page' => $this->request->param('page')
 		);
+
+		if ($this->objectType == 'Dealer') {
+			$this->paginate['limit'] = 100;
+		}
 		$this->set('aArticles', $this->paginate($this->objectType));
 	}
 	

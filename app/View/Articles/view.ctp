@@ -10,7 +10,9 @@
 	} else {
 ?>
 <div class="block main clearfix">
-	<?=$this->ArticleVars->body($article)?>
+	<div class="article">
+		<?=$this->ArticleVars->body($article)?>
+	</div>
 </div>
 <?
 	}

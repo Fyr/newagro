@@ -98,4 +98,8 @@ $(document).ready(function(){
 	}
 
 	$('.ellipsis').dotdotdot();
+
+	$('.article table > tbody > tr > td').each(function(){
+		$(this).html($('p', this).html());
+	});
 });
