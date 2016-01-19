@@ -23,7 +23,7 @@ class AdminSectionizerController extends AdminController {
         $this->paginate = array(
 			'SectionArticle' => array(
 				'conditions' => array('SectionArticle.cat_id' => $cat_id, 'SectionArticle.subcat_id' => $subcat_id),
-				'fields' => array('created', 'title', 'slug', 'published', 'sorting'),
+				'fields' => array('created', 'title', 'slug', 'published', 'featured', 'sorting'),
 				'order' => 'SectionArticle.sorting'
 			)
         );
@@ -70,9 +70,9 @@ class AdminSectionizerController extends AdminController {
 			return $this->redirect(($this->request->data('apply')) ? $indexRoute : $editRoute);
 		}
 
-		if (!$this->request->data('Article.sorting')) {
+		if (!$id && !$this->request->is(array('put', 'post'))) {
 			$this->request->data('Article.sorting', '0');
-            $this->request->data('Article.status', 'published');
+			$this->request->data('Article.status', 'published');
 		}
 	}
 }

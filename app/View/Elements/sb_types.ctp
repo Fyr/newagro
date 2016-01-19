@@ -17,8 +17,12 @@
 				$objectType = $this->ArticleVars->getObjectType($_article);
 				$url = SiteRouter::url($_article);
 				$active = (isset($currSubcat) && $currSubcat == $_article[$objectType]['id']) ? 'class="active"' : '';
+				$title = $_article[$objectType]['title'];
+				if ($_article[$objectType]['featured']) {
+					$title = '<b>'.$title.'</b>';
+				}
 ?>
-            <li><a <?=$active?> href="<?=$url?>"><span class="icon smallArrow"></span> <?=$_article[$objectType]['title']?></a></li>
+            <li><a <?=$active?> href="<?=$url?>"><span class="icon smallArrow"></span> <?=$title?></a></li>
 <?
 			}
 ?>

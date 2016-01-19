@@ -67,9 +67,9 @@ class AdminRepairController extends AdminController {
 			return $this->redirect(($this->request->data('apply')) ? $indexRoute : $editRoute);
 		}
 
-		if (!$this->request->data('Article.sorting')) {
+		if (!$id && !$this->request->is(array('put', 'post'))) {
 			$this->request->data('Article.sorting', '0');
-            $this->request->data('Article.status', 'published');
+			$this->request->data('Article.status', 'published');
 		}
 	}
 }
