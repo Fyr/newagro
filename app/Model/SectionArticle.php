@@ -3,7 +3,6 @@ App::uses('AppModel', 'Model');
 App::uses('Article', 'Article.Model');
 App::uses('Seo', 'Seo.Model');
 App::uses('Section', 'Model');
-App::uses('SectionArticle', 'Model');
 
 class SectionArticle extends Article {
 	protected $objectType = 'SectionArticle';

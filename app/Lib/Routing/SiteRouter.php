@@ -34,6 +34,12 @@ class SiteRouter extends Router {
 				'subcategory' => $article['Subcategory']['slug'],
 				'objectType' => 'Product'
 			);
+		} elseif ($objectType == 'RepairArticle') {
+			$url = array(
+				'controller' => 'Repair',
+				'action' => 'index',
+				'slug' => $article['RepairArticle']['slug']
+			);
 		} else {
 			$url = array(
 				'controller' => 'Articles', 

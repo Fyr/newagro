@@ -1,11 +1,15 @@
 <?=$this->element('title', array('title' => $article2['Page']['title']))?>
 <div class="block main">
-	<?=$this->ArticleVars->body($article2)?>
+	<div class="article">
+		<?=$this->ArticleVars->body($article2)?>
+	</div>
 </div>
 <a name="map"></a>
 <?=$this->element('title', array('title' => $article['Page']['title']))?>
 <div class="block main">
-	<?=$this->ArticleVars->body($article)?>
+	<div class="article">
+		<?=$this->ArticleVars->body($article)?>
+	</div>
 </div>
 <?=$this->element('title', array('title' => 'Отправить сообщение'))?>
 <form method="post" action="" id="postForm" class="feedback">

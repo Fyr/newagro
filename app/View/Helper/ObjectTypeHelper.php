@@ -18,6 +18,7 @@ class ObjectTypeHelper extends AppHelper {
                 'CategoryProduct' => __('Product categories'),
                 'Product' => __('Products'),
                 'Brand' => __('Brands'),
+                'RepairArticle' => __('Repair articles'),
             ), 
             'create' => array(
                 'Article' => __('Create Article'),

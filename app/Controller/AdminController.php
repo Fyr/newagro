@@ -20,7 +20,8 @@ class AdminController extends AppController {
 				array('label' => __('Motors'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Motor')),
 				array('label' => __('Articles'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'SiteArticle')),
 			)),
-			'Sectionizer' => array('label' => __('Sectionizer'), 'href' => '', 'submenu' => array()),
+			'SectionArticle' => array('label' => __('Sectionizer'), 'href' => '', 'submenu' => array()),
+			'RepairArticle' => array('label' => __('Repair'), 'href' => array('controller' => 'AdminRepair', 'action' => 'index')),
 			'Dealers' => array('label' => __('Dealers'), 'href' => array('controller' => 'AdminDealers', 'action' => 'index')),
 			'Banners' => array('label' => __('Banners'), 'href' => array('controller' => 'AdminBanners', 'action' => 'index')),
 			'Catalogs' => array('label' => __('Catalogs'), 'href' => array('controller' => 'AdminCatalogs', 'action' => 'index')),
@@ -58,7 +59,7 @@ class AdminController extends AppController {
 	public function beforeFilter() {
 		$this->loadModel('Section');
 		foreach($this->Section->getOptions() as $id => $title) {
-			$this->aNavBar['Sectionizer']['submenu'][] = array(
+			$this->aNavBar['SectionArticle']['submenu'][] = array(
 				'label' => $title, 'href' => array('controller' => 'AdminSectionizer', 'action' => 'index', $id)
 			);
 		}

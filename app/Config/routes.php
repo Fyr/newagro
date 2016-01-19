@@ -213,6 +213,21 @@ Router::connect('/articles/page/:page', array(
 	array('named' => array('page' => '[\d]*'))
 );
 
+
+/* -= Repair articles =- */
+Router::connect('/remont', array(
+	'controller' => 'Repair',
+	'action' => 'index',
+	//'objectType' => 'RepairArticle'
+));
+Router::connect('/remont/:slug',
+	array(
+		'controller' => 'Repair',
+		'action' => 'index',
+		//'objectType' => 'RepairArticle'
+	),
+	array('pass' => array('slug'))
+);
 CakePlugin::routes();
 
 require CAKE.'Config'.DS.'routes.php';

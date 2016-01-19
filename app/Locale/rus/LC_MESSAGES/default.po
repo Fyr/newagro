@@ -630,3 +630,12 @@ msgstr "Ошибка!"
 
 msgid "search.stopWords"
 msgstr "на для запчасти запчастей мотор мотора моторы"
+
+msgid "Are you sure to delete this record?"
+msgstr "Вы уверены что хотите удалить эту запись?"
+
+msgid "Repair"
+msgstr "Ремонт"
+
+msgid "Repair articles"
+msgstr "Статьи по ремонту"
