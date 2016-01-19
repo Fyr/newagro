@@ -16,8 +16,9 @@
 			foreach($aSubcategories[$id] as $subcat_id => $_article) {
 				$objectType = $this->ArticleVars->getObjectType($_article);
 				$url = SiteRouter::url($_article);
+				$active = (isset($currSubcat) && $currSubcat == $_article[$objectType]['id']) ? 'class="active"' : '';
 ?>
-            <li><a href="<?=$url?>"><span class="icon smallArrow"></span> <?=$_article[$objectType]['title']?></a></li>
+            <li><a <?=$active?> href="<?=$url?>"><span class="icon smallArrow"></span> <?=$_article[$objectType]['title']?></a></li>
 <?
 			}
 ?>

@@ -46,6 +46,7 @@ class ProductsController extends AppController {
 			$subcategory = $this->Subcategory->findBySlug($subcatSlug);
 			if ($subcategory) {
 				$this->set('subcategory', $subcategory);
+				$this->set('currSubcat', $subcategory['Subcategory']['id']);
 				$page_title = $subcategory['Subcategory']['title'];
 				$this->seo = $this->Seo->defaultSeo($subcategory['Seo'],
 					'Каталог продукции ' . $page_title,

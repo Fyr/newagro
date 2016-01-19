@@ -192,7 +192,7 @@ a:hover { text-decoration: none;}
         -moz-box-shadow:    inset 0px -12px 12px -22px rgba(0, 0, 0, 0.47);
         box-shadow:         inset 0px -12px 12px -22px rgba(0, 0, 0, 0.47);
     }
-    .catalog li ul li a:hover {
+    .catalog li ul li a:hover, .catalog li ul li a.active {
         color: #d69906;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
