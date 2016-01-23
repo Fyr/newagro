@@ -1,5 +1,11 @@
 <?
-	echo $this->PHForm->input('status', array('label' => false, 'multiple' => 'checkbox', 'options' => array('published' => __('Published', true), 'featured' => __('Featured', true)), 'class' => 'checkbox inline'));
+	echo $this->PHForm->input('status', array(
+		'label' => false,
+		'multiple' => 'checkbox',
+		'options' => array('published' => __('Published', true), 'featured' => __('Featured', true)),
+		'class' => 'checkbox inline'
+	));
+	echo $this->PHForm->input('section', array('label' => array('class' => 'control-label', 'text' => 'Название (рубрикатор)')));
 	echo $this->element('Article.edit_title');
 	echo $this->element('Article.edit_slug');
 	echo $this->PHForm->input('cat_id', array('options' => $aCategoryOptions, 'onchange' => 'onChangeCategory()', 'label' => array('class' => 'control-label', 'text' => __('Section'))));

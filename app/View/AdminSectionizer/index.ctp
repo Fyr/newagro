@@ -34,7 +34,7 @@
 <br/>
 <?
     echo $this->PHTableGrid->render($objectType, array(
-        'baseURL' => $this->Html->url(array('action' => 'index', $cat_id)),
+        'baseURL' => $this->Html->url(array('action' => 'index', $cat_id, $subcat_id)),
         'actions' => $actions,
         'columns' => $columns,
         'data' => $aRowset

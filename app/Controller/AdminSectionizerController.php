@@ -23,7 +23,7 @@ class AdminSectionizerController extends AdminController {
         $this->paginate = array(
 			'SectionArticle' => array(
 				'conditions' => array('SectionArticle.cat_id' => $cat_id, 'SectionArticle.subcat_id' => $subcat_id),
-				'fields' => array('created', 'title', 'slug', 'published', 'featured', 'sorting'),
+				'fields' => array('created', 'section', 'title', 'slug', 'published', 'featured', 'sorting'),
 				'order' => 'SectionArticle.sorting'
 			)
         );
