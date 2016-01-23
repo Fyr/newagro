@@ -1,7 +1,7 @@
 <?
 	$objectType = $this->ArticleVars->getObjectType($aArticle);
 	if ($objectType == 'Page') {
-		$aBreadCrumbs = array(__('Home') => '/', 'Ремонт' => '');
+		$aBreadCrumbs = array(__('Home') => '/', __('Repair') => '');
 	} else {
 		$aBreadCrumbs = array(
 			__('Home') => '/',

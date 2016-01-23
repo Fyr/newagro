@@ -11,18 +11,18 @@
 		<?=$this->ArticleVars->body($article)?>
 	</div>
 </div>
-<?=$this->element('title', array('title' => 'Отправить сообщение'))?>
+<?=$this->element('title', array('title' => __('Send message')))?>
 <form method="post" action="" id="postForm" class="feedback">
 	<div class="block main">
 		<p>
-			Вы можете отправить нам сообщение.<br/>
-			Поля, помеченные знаком <span class="star">*</span>, обязательны для заполнения.<br/>
+			<?=__('You can send a message for us.')?><br/>
+			<?=__('Fields with %s are mandatory.', '<span class="star">*</span>')?><br/>
 		</p>
 <?
 	echo $this->Form->create('Contact');
-	echo $this->Form->input('Contact.username', array('label' => array('text' => '<span class="star">*</span> Ваше имя')));
-	echo $this->Form->input('Contact.email', array('label' => array('text' => '<span class="star">*</span> Ваш e-mail для обратной связи')));
-	echo $this->Form->input('Contact.body', array('type' => 'textarea', 'label' => array('text' => '<span class="star">*</span> Ваше сообщение')));
+	echo $this->Form->input('Contact.username', array('label' => array('text' => '<span class="star">*</span> '.__('Your name'))));
+	echo $this->Form->input('Contact.email', array('label' => array('text' => '<span class="star">*</span>'.__('Your e-mail for reply'))));
+	echo $this->Form->input('Contact.body', array('type' => 'textarea', 'label' => array('text' => '<span class="star">*</span> '.__('Your message'))));
 	// echo $this->Form->input('captcha', array('type' => 'hidden', 'label' => array('text' => '<span class="star">*</span> '.__('Spam protection'))));
 	echo $this->Form->label('captcha', '<span class="star">*</span> '.__('Spam protection'));
 	echo $this->element('recaptcha');

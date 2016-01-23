@@ -99,8 +99,8 @@ $(document).ready(function(){
         </div>
         <div class="wrapper clearfix">
             <form class="searchBlock" action="/products" method="get">
-                <button class="submit">поиск</button>
-                <div class="outerSearch"><input type="text" name="q" value="<?=$this->request->query('q')?>" placeholder="Введите номер или название запчасти..." /></div>
+                <button class="submit"><?=__('search')?></button>
+                <div class="outerSearch"><input type="text" name="q" value="<?=$this->request->query('q')?>" placeholder="<?=__('Enter spare number or its name...')?>" /></div>
             </form>
             <div class="oneLeftSide">
                 <div class="leftSidebar">
@@ -140,7 +140,7 @@ $(document).ready(function(){
 ?>
 
             <div class="headBlock">
-                <div class="text">Новости нашей компании</div>
+                <div class="text"><?=__('News of our company')?></div>
                 <span class="corner"></span>
             </div>
             <div class="block clearfix">
@@ -171,7 +171,7 @@ $(document).ready(function(){
 	}
 ?>
             <div class="headBlock" style="margin-top: 14px">
-                <div class="text">Наши партнеры</div>
+                <div class="text"><?=__('Our partners')?></div>
                 <span class="corner"></span>
             </div>
             

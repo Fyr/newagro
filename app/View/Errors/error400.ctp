@@ -19,9 +19,9 @@ endif;
 echo $this->element('title', array('title' => __('Page not found')));
 ?>
 <div class="block main clearfix">
-	<p>Извините, по вашему запросу ничего не найдено либо запрашиваемая вами страница не существует.<br />
-		Воспользуйтесь навигацией или поиском, чтобы найти необходимую вам информацию.<br />
+	<p><?=__('Sorry, no items found or page does not exists.')?><br />
+		<?=__('Please use the navigation bar or the search to find the information you need.')?><br />
 		<br />
-		<a href="/">На главную</a>
+		<a href="/"><?=__('Back to home page')?></a>
 	</p>
 </div>

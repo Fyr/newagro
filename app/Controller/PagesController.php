@@ -47,4 +47,8 @@ class PagesController extends AppController {
 		$this->seo = $aArticle['Seo'];
 		$this->currMenu = $slug;
 	}
+
+	public function nonExist() {
+		$this->render('/Errors/error400');
+	}
 }

@@ -17,9 +17,9 @@ endif;
 echo $this->element('title', array('title' => __('Page not found')));
 ?>
 <div class="block main clearfix">
-	<p><b>Внимание!</b> По вашему запросу произошла ошибка сервера.<br />
-		Наши специалисты уже занимаются ей, в ближайее время ошибка будет исправлена.<br />
+	<p><b><?=__('Attention!')?></b> <?=__('Server error occurred by your request.')?><br />
+		<?=__('Our experts are fixing it right now. It will be fixed as soon as possible.')?><br />
 		<br />
-		<a href="/">На главную</a>
+		<a href="/"><?=__('Back to home page')?></a>
 	</p>
 </div>

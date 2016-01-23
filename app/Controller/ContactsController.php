@@ -35,8 +35,6 @@ class ContactsController extends AppController {
 	}
 	
 	public function success() {
-		$article = $this->Page->findBySlug('contacts');
-		$this->pageTitle = $article['Page']['title'];
 		// $this->set('article', $article);
 	}
 

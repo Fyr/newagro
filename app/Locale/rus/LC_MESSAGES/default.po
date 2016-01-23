@@ -85,9 +85,6 @@ msgstr "Настройки"
 msgid "Home"
 msgstr "Главная"
 
-msgid "About us"
-msgstr "О проекте"
-
 msgid "Contacts"
 msgstr "Контакты"
 
@@ -529,6 +526,9 @@ msgstr "Результаты поиска"
 msgid "Offers"
 msgstr "Акции"
 
+msgid "Hot Offers"
+msgstr "Акции"
+
 msgid "Edit offer"
 msgstr "Редактировать акцию"
 
@@ -639,3 +639,76 @@ msgstr "Ремонт"
 
 msgid "Repair articles"
 msgstr "Статьи по ремонту"
+
+msgid "About us"
+msgstr "О нас"
+
+msgid "Spares"
+msgstr "Запчасти"
+
+msgid "Machinery"
+msgstr "Техника"
+
+msgid "search"
+msgstr "поиск"
+
+msgid "Enter spare number or its name..."
+msgstr "Введите номер или название запчасти..."
+
+msgid "News of our company"
+msgstr "Новости нашей компании"
+
+msgid "Our partners"
+msgstr "Наши партнеры"
+
+msgid "Send message"
+msgstr "Отправить сообщение"
+
+msgid "You can send a message for us."
+msgstr "Вы можете отправить нам сообщение."
+
+msgid "Fields with %s are mandatory."
+msgstr "Поля, помеченные знаком %s, обязательны для заполнения."
+
+msgid "Your name"
+msgstr "Ваше имя"
+
+msgid "Your e-mail for reply"
+msgstr "Ваш e-mail для обратной связи"
+
+msgid "Your message"
+msgstr "Ваше сообщение"
+
+msgid "Spare number"
+msgstr "Номер запчасти"
+
+msgid "Back to catalog"
+msgstr "Перейти в каталог"
+
+msgid "Back to home page"
+msgstr "Вернуться на главную"
+
+msgid "Thank you for your message!"
+msgstr "Спасибо за ваше сообщение!"
+
+msgid "Click %s to send another message."
+msgstr "Чтобы отправить другое сообщение, нажмите %s."
+
+msgid "here"
+msgstr "сюда"
+
+msgid "Sorry, no items found or page does not exists."
+msgstr "Извините, по вашему запросу ничего не найдено либо запрашиваемая вами страница не существует."
+
+msgid "Please use the navigation bar or the search to find the information you need."
+msgstr "Воспользуйтесь навигацией или поиском, чтобы найти необходимую вам информацию."
+
+msgid "Attention!"
+msgstr "Внимание!"
+
+msgid "Server error occurred by your request."
+msgstr "По вашему запросу произошла ошибка сервера."
+
+msgid "Our experts are fixing it right now. It will be fixed as soon as possible."
+msgstr "Наши специалисты уже занимаются ей, в ближайее время ошибка будет исправлена."
+

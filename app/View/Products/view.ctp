@@ -131,7 +131,7 @@
 	if ($article['Product']['show_detailnum']) {
 ?>
 	<tr class="gridRow td">
-		<td nowrap="nowrap" align="right">Номер запчасти</td>
+		<td nowrap="nowrap" align="right"><?=__('Spare number')?></td>
 		<td><b><?=$article['Product']['detail_num']?></b></td>
 	</tr>
 <?
@@ -163,7 +163,7 @@
 	}
 ?>
 	<br />
-	<a href="/zapchasti/">Перейти в каталог</a>
+	<a href="/zapchasti/"><?=__('Back to catalog')?></a>
 <?
 /*
 	if ($aSimilar) {

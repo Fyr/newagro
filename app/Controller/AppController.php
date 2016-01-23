@@ -55,28 +55,29 @@ class AppController extends Controller {
 	
 	protected function beforeFilterLayout() {
 		$this->aNavBar = array(
-			'home' => array('href' => '/', 'title' => 'Главная'),
-			'news' => array('href' => '/news', 'title' => 'Новости'),
-			'products' => array('href' => '/zapchasti', 'title' => 'Запчасти'),
-			'remont' => array('href' => '/remont', 'title' => 'Ремонт'),
-			'offer' => array('href' => '/offers', 'title' => 'Акции'),
-			'brand' => array('href' => '/brand', 'title' => 'Бренды'),
-			'motor' => array('href' => '/motors', 'title' => 'Техника'),
-			'about-us' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
-			'dealer' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
-			'contacts' => array('href' => '/contacts', 'title' => 'Контакты')
+			'home' => array('href' => '/', 'title' => __('Home')),
+			'news' => array('href' => '/news', 'title' => __('News')),
+			'products' => array('href' => '/zapchasti', 'title' => __('Spares')),
+			'remont' => array('href' => '/remont', 'title' => __('Repair')),
+			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
+			'brand' => array('href' => '/brand', 'title' => __('Brands')),
+			'motor' => array('href' => '/motors', 'title' => __('Machinery')),
+			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
+			'dealer' => array('href' => '/magazini-zapchastei', 'title' => ''),
+			'contacts' => array('href' => '/contacts', 'title' => __('Contacts'))
 		);
 
 		$this->aBottomLinks = array(
-			'home' => array('href' => '/', 'title' => 'Главная'),
-			'news' => array('href' => '/news', 'title' => 'Новости'),
-			'products' => array('href' => '/zaphasti', 'title' => 'Запчасти'),
-			'remont' => array('href' => '/remont', 'title' => 'Ремонт'),
-			'brand' => array('href' => '/brand', 'title' => 'Бренды'),
-			'motor' => array('href' => '/motors', 'title' => 'Техника'),
-			'about-us' => array('href' => '/pages/show/about-us', 'title' => 'О нас'),
-			'dealer' => array('href' => '/magazini-zapchastei', 'title' => 'Дилеры'),
-			'contacts' => array('href' => '/contacts', 'title' => 'Контакты')
+			'home' => array('href' => '/', 'title' => __('Home')),
+			'news' => array('href' => '/news', 'title' => __('News')),
+			'products' => array('href' => '/zapchasti', 'title' => __('Spares')),
+			'remont' => array('href' => '/remont', 'title' => __('Repair')),
+			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
+			'brand' => array('href' => '/brand', 'title' => __('Brands')),
+			// 'motor' => array('href' => '/motors', 'title' => __('Machinery')),
+			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
+			'dealer' => array('href' => '/magazini-zapchastei', 'title' => ''),
+			'contacts' => array('href' => '/contacts', 'title' => __('Contacts'))
 		);
 
 		
@@ -212,7 +213,8 @@ class AppController extends Controller {
 			'fields' => array('slug', 'title'),
 			'conditions' => array('slug' => array('magazini-zapchastei', 'about-us', 'about-us2', 'contacts1', 'contacts2'))
 		));
-		// $this->aNavBar['about']['title'] = $aArticleTitles['about-us'];
+		$this->aNavBar['about-us']['title'] = $aArticleTitles['about-us'];
+		$this->aBottomLinks['about-us']['title'] = $aArticleTitles['about-us'];
 		$this->aNavBar['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->set('aBottomLinks', $this->aBottomLinks);

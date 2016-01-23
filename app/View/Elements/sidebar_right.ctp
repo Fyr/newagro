@@ -6,12 +6,12 @@
 		}
 	}
 	if ($featuredEvents) {
-		echo $this->element('sbr_block', array('title' => 'Новости', 'content' => $this->element('sb_news', array('aArticles' => $featuredEvents))));
+		echo $this->element('sbr_block', array('title' => __('News'), 'content' => $this->element('sb_news', array('aArticles' => $featuredEvents))));
 	}
 	if ($featuredOffers) {
 ?>
 	<div class="sbr-offers">
-		<?=$this->element('sbr_block', array('title' => 'Акции', 'content' => $this->element('sb_news', array('aArticles' => $featuredOffers))))?>
+		<?=$this->element('sbr_block', array('title' => __('Hot Offers'), 'content' => $this->element('sb_news', array('aArticles' => $featuredOffers))))?>
 	</div>
 <?
 	}
