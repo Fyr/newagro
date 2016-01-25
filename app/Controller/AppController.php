@@ -174,6 +174,7 @@ class AppController extends Controller {
 
 			$this->loadModel('SectionArticle');
 			$conditions = array('SectionArticle.published' => 1);
+			$order = 'SectionArticle.sorting';
 			$aArticles = $this->SectionArticle->find('all', compact('conditions', 'order'));
 
 			$aCategories = array();
