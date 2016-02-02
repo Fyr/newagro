@@ -31,7 +31,9 @@ class RepairController extends AppController {
 		}
 		$this->seo = $aArticle['Seo'];
 
-		$this->set('articles', $this->RepairArticle->findAllByCatId($cat_id));
+		$conditions = array('cat_id' => $cat_id, 'published' => 1);
+		$order = 'sorting';
+		$this->set('articles', $this->RepairArticle->find('all', compact('conditions', 'order')));
 		$this->currMenu = 'remont';
 	}
 }
