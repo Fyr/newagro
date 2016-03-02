@@ -235,22 +235,15 @@ $(document).ready(function(){
 */
 	if (!TEST_ENV && Configure::read('domain.zone') == 'by') {
 ?>
-<!-- BEGIN JIVOSITE CODE {literal} -->
-<script type='text/javascript'>
-(function(){ var widget_id = 'nzJOgSwy2Q';
-var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
-<!-- {/literal} END JIVOSITE CODE -->
+
+
 <?
 	} elseif (!TEST_ENV && Configure::read('domain.zone') == 'ru') {
 ?>
-<!-- BEGIN JIVOSITE CODE {literal} -->
-<script type='text/javascript'>
-(function(){ var widget_id = 'z8unW7ZOIo';
-var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
-<!-- {/literal} END JIVOSITE CODE -->
+
 <?
 	}
 ?>
-	<?//$this->element('sql_dump')?>
+	<?=$this->element('sql_dump')?>
 	</body>
 </html>
