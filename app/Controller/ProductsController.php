@@ -268,60 +268,14 @@ class ProductsController extends AppController {
 
 	private function processNumber($value) {
 		$_value = str_replace(array('.', '-', ',', '/', '\\'), '', $value);
-		/*
-		// ищем запчасти по "марка TC, моторы TC, доп.инфа"
-		$this->loadModel('Form.PMFormData');
-		$conditions = array();
-		foreach(array(Configure::read('params.markaTS'), Configure::read('params.motorsTS'), Configure::read('params.dopInfa')) as $id) {
-			$conditions[] = "(PMFormData.fk_{$id} LIKE '%{$value}%' OR PMFormData.fk_{$id} LIKE '%{$_value}%')";
-		}
-		$conditions = implode(' AND ', $conditions);
-		$products = $this->PMFormData->find('all', compact('conditions'));
-		$product_ids = implode(',', ($products) ? Hash::extract($products, '{n}.PMFormData.object_id') : array(0));
-
-		// поиск по общим номера деталей
-		$numbers = explode(' ', str_replace(',', ' ', $_value));
-		*/
-		$numbers = array($_value); // убрать, если откомментить
-		$count = count($numbers);
-		$i = 0;
-		$ors = array();
+		$this->loadModel('DetailNum');
+		$product_ids = $this->DetailNum->findDetails($this->DetailNum->stripList($value));
+		$this->paginate['conditions'][] = array('Product.id' => $product_ids);
 		$order = array();
-		$_count = 0;
-		while ($i < 100 && $count !== $_count) {
-			$i++; // избегать бесконечный цикл
-			foreach ($numbers as $key_ => $value_) {
-				if (trim($value_) != ''){
-					$ors[] = array('Product.detail_num LIKE "%'.trim($value_).'%"');
-					$order[] = 'Product.detail_num LIKE "%'.trim($value_).'%" DESC';
-				}
-			}
-			$products = $this->Product->find('all', array('conditions' => array('OR' => $ors)));
-			foreach($products as $product) {
-				$numbers = array_merge($numbers, explode(' ', str_replace(',', ' ', $product['Product']['detail_num'])));
-			}
-			$numbers = array_unique($numbers);
-			$_count = $count;
-			$count = count($numbers);
+		foreach ($product_ids as $id) {
+			$order[] = 'Product.id = ' . $id . ' DESC';
 		}
-		/*
-		$ors = array(
-			"Product.title LIKE '%{$value}%'", "Product.title LIKE '%{$_value}%'",
-			"Product.title_rus LIKE '%{$value}%'", "Product.title_rus LIKE '%{$_value}%'",
-			"Product.detail_num LIKE '%{$value}%'", "Product.detail_num LIKE '%{$_value}%'",
-			"Product.id IN ({$product_ids})"
-		);
-		*/
-		$ors = array(
-			"Product.detail_num LIKE '%{$value}%'", "Product.detail_num LIKE '%{$_value}%'" // убрать, если откомментить
-		);
-		foreach ($numbers as $key_ => $value_) {
-			if (trim($value_) != ''){
-				$ors[] = 'Product.detail_num LIKE "%'.trim($value_).'%"';
-			}
-		}
-		
-		$this->paginate['conditions'][] = '('.implode(' OR ', $ors).')';
+		$this->paginate['order'] = implode(', ', $order);
 	}
 
 	public function runTests() {
