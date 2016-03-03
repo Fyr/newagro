@@ -1,4 +1,4 @@
-<ul class="catalog" id="catalog">
+<ul class="catalog">
 <?
 	foreach($aCategories[$section_id] as $id => $article) {
 		$objectType = $this->ArticleVars->getObjectType($article);

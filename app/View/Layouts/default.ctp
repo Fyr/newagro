@@ -41,8 +41,9 @@
 	echo $this->fetch('css');
 	echo $this->fetch('script');
 ?>
+
 <?
-	if (isset($cat_autoOpen)) {
+    if (isset($cat_autoOpen)) {
 ?>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -50,7 +51,7 @@ $(document).ready(function(){
 });
 </script>
 <?
-	}
+    }
 ?>
 </head>
 	<body>

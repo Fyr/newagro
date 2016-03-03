@@ -33,18 +33,12 @@ $(document).ready(function(){
 		}
 	});
 
-	/*
-	$('ul.catalog').find('.firstLevel').click(function(){
-	    $(this).next().stop().slideToggle();
-	    if ( $(this).next().is('ul') ) {
-	        if( $(this).hasClass('active')) {
-	            $(this).removeClass('active')
-	        } else {
-	            $(this).addClass('active');
-	        }
-	    }
-	}).next().stop().hide();
-	*/
+	$('.catalog .firstLevel .icon.arrow').click(function(e){
+		e.stopPropagation();
+		$('.catalog .firstLevel').removeClass('active').parent().find('ul').hide();
+		$(this).parent().toggleClass('active').parent().find('ul').slideToggle();
+		return false;
+	});
 
 	if ($(window).width() <= 983 && $(window).width() > 703 ) {
 		$(".rightSidebar").appendTo($(".oneLeftSide"));

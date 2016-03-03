@@ -111,3 +111,4 @@ body { font-size: 14px; }
 .article ul li {
 	padding-left: 20px;
 }
+.catalog li a .arrow.active { background-position: -16px -106px;}
