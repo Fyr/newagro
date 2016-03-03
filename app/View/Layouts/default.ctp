@@ -20,19 +20,21 @@
 <![endif]-->
 <?
 	$scripts = array(
-		'vendor/jquery/jquery-1.10.2.min', 
-		'vendor/jquery/jquery-ui-1.10.3.custom.min', 
-		'vendor/jquery/jquery.mousewheel.min', 
-		'vendor/jquery/jquery.kinetic.min', 
+		'vendor/jquery/jquery-1.10.2.min',
+        'vendor/jquery/jquery-ui-1.10.3.custom.min',
+	);
+	if ($disableCopy) {
+		$scripts[] = 'vendor/jquery/jquery.select.js';
+	}
+    $scripts = array_merge($scripts, array(
+		'vendor/jquery/jquery.mousewheel.min',
+		'vendor/jquery/jquery.kinetic.min',
 		'vendor/jquery/jquery.smoothdivscroll-1.3-min',
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
         'vendor/jquery/jquery.dotdotdot',
 		'doc_ready'
-	);
-	if ($disableCopy) {
-		$scripts[] = 'nocopy';
-	}
+    ));
 	echo $this->Html->script($scripts);
 	
 	echo $this->fetch('meta');
