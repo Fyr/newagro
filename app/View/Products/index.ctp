@@ -103,14 +103,13 @@
 ?>                            
 	</div>
 <?
+		/*
 		if (isset($directSearch) && $directSearch) {
 			// echo $this->element('pagination2', array('filterURL' => $aFilters['url']));
 		} else {
-			echo $this->element('paginate', array('objectType' => 'products'));
 		}
-?>
-
-<?
+		*/
+		echo $this->element('paginate', array('objectType' => 'products'));
 	}
 
 	if ($relatedArticle) {

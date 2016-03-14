@@ -1,12 +1,14 @@
 <?
 	if ($this->Paginator->numbers()) {
-		$this->Paginator->options(array('url' => array(
+		$options = array(
 			'objectType' => $this->request->param('objectType'),
 			'category' => $this->request->param('category'),
 			'subcategory' => $this->request->param('subcategory')
-		)));
-		
-		// $this->Paginator->options(array('url' => $options));
+		);
+		if ($this->request->query) {
+			$options['?'] = $this->request->query;
+		}
+		$this->Paginator->options(array('url' => $options));
 ?>
 <div class="pagination">
 	Страницы: <?=$this->Paginator->numbers(array('separator' => ' '))?>
