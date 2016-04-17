@@ -1,4 +1,6 @@
 <?
+	$this->Html->css('grid', array('inline' => false));
+
 	$indexUrl = array(
 		'controller' => 'Products', 
 		'action' => 'index',
@@ -110,6 +112,15 @@
 		}
 		*/
 		echo $this->element('paginate', array('objectType' => 'products'));
+	}
+
+	if (isset($gpzData) || isset($gpzError)) {
+		echo '<br/><br/>'.$this->element('title', array('title' => 'Запчасти от партнеров'));
+?>
+	<div class="block main clearfix">
+		<?=$this->element('gpz_search')?>
+	</div>
+<?
 	}
 
 	if ($relatedArticle) {

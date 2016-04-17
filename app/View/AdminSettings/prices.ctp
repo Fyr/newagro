@@ -24,11 +24,12 @@
 		'class' => 'input-small', 
 		'label' => array('text' => 'Разделитель разрядов', 'class' => 'control-label')
 	));
+/*
 	echo $this->PHForm->input('xchg_rur', array(
 		'class' => 'input-small', 
 		'label' => array('text' => 'Курс RUR', 'class' => 'control-label')
 	));
-
+*/
 	echo $this->element('admin_content_end');
 	echo $this->element('Form.btn_save');
 	echo $this->PHForm->end();

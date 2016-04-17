@@ -2,7 +2,7 @@
 App::uses('Model', 'Model');
 class AppModel extends Model {
 	
-	protected $objectType = '';
+	protected $objectType = '', $altDbConfig = false;
 	
 	public function __construct($id = false, $table = null, $ds = null) {
 		$this->_beforeInit();
@@ -12,6 +12,11 @@ class AppModel extends Model {
 	
 	protected function _beforeInit() {
 	    // Add here behaviours, models etc that will be also loaded while extending child class
+		if ($this->altDbConfig) {
+			if ($this->getDomain() !== $this->altDbConfig) {
+				$this->useDbConfig = $this->altDbConfig;
+			}
+		}
 	}
 
 	protected function _afterInit() {
@@ -69,10 +74,6 @@ class AppModel extends Model {
 		return $this->find('all', compact('conditions', 'order'));
 	}
 	
-	public function getTableName() {
-		return $this->getDataSource()->fullTableName($this);
-	}
-	
 	public function dateRange($field, $date1, $date2 = '') {
 		// TODO: implement for free date2
 		$date1 = date('Y-m-d 00:00:00', strtotime($date1));
@@ -100,4 +101,37 @@ class AppModel extends Model {
 		return $this->find('all', array('conditions' => array($this->alias.'.'.$this->primaryKey => $aID), 'order' => 'rand()'));
 	}
 
+	public function getTableName() {
+		return $this->getDataSource()->fullTableName($this);
+	}
+
+	public function setTableName($table) {
+		$this->setSource($table);
+	}
+
+	public function trxBegin() {
+		$this->getDataSource()->begin();
+	}
+	
+	public function trxCommit() {
+		$this->getDataSource()->commit();
+	}
+	
+	public function trxRollback() {
+		$this->getDataSource()->rollback();
+	}
+	
+	public function isBot($ip = '') {
+		if (!$ip) {
+			$ip = $_SERVER['REMOTE_ADDR'];
+		}
+		$hostname = gethostbyaddr($ip);
+		return ($hostname === 'spider-'.str_replace('.', '-', $ip).'.yandex.com') 
+			|| ($hostname === 'crawl-'.str_replace('.', '-', $ip).'.googlebot.com');
+	}
+
+	public function getDomain() {
+		list($domain) = explode('.', Configure::read('domain.url'));
+		return $domain;
+	}
 }

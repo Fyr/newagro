@@ -12,6 +12,7 @@ Cache::config('default', array(
 ));
 
 App::uses('CakeLog', 'Log');
+
 CakeLog::config('debug', array(
 	'engine' => 'File',
 	'types' => array('notice', 'info', 'debug'),
@@ -61,6 +62,8 @@ define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '192.168.1.22');
 
 define('EMAIL_ADMIN', 'fyr.work@gmail.com');
 define('EMAIL_ADMIN_CC', 'fyr.work@gmail.com');
+
+require_once('api.php');
 
 CakePlugin::loadAll();
 

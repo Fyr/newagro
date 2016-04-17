@@ -247,6 +247,6 @@ $(document).ready(function(){
 <?
 	}
 ?>
-	<?//$this->element('sql_dump')?>
+	<?=$this->element('sql_dump')?>
 	</body>
 </html>
