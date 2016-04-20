@@ -115,7 +115,7 @@
 	}
 
 	if (isset($gpzData) || isset($gpzError)) {
-		echo '<br/><br/>'.$this->element('title', array('title' => 'Запчасти от партнеров'));
+		echo '<br/><br/>'.$this->element('title', array('title' => 'Региональные склады'));
 ?>
 	<div class="block main clearfix">
 		<?=$this->element('gpz_search')?>

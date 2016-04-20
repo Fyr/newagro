@@ -28,8 +28,13 @@ class AppController extends Controller {
 
 	protected function _afterInit() {
 	    // after construct actions here
-	    $this->loadModel('Settings');
-	    $this->Settings->initData();
+		App::uses('Settings', 'Model');
+		$this->Settings = new Settings();
+		$this->Settings->setDataSource('giperzap'); // load settings from GiperZap
+		$this->Settings->initData();
+
+		$this->Settings = new Settings();
+		$this->Settings->initData();
 	}
 	
 	public function isAuthorized($user) {

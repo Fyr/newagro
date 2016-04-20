@@ -53,6 +53,7 @@ $(document).ready(function(){
 <?
     }
 ?>
+<script type="text/javascript"  src="/rkt.php?yab=true&key=475f18d21cecb94"></script>
 </head>
 	<body>
 		<div class="header">
@@ -247,6 +248,6 @@ $(document).ready(function(){
 <?
 	}
 ?>
-	<?=$this->element('sql_dump')?>
+	<?//$this->element('sql_dump')?>
 	</body>
 </html>
