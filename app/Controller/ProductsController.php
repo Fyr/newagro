@@ -18,6 +18,8 @@ class ProductsController extends AppController {
 	
 	const PER_PAGE = 51;
 
+	private $searchNumber = '';
+
 	public function index($catSlug = '', $subcatSlug = '') {
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
@@ -67,18 +69,18 @@ class ProductsController extends AppController {
 
 		if ($q = $this->request->query('q')) {
 			$this->logSearch($q);
-
-			try {
-				App::uses('GpzApi', 'Model');
-				$this->GpzApi = new GpzApi();
-				$gpzData = $this->GpzApi->search($q);
-				$this->set(compact('gpzData'));
-			} catch (Exception $e) {
-				$this->set('gpzError', $e->getMessage());
-			}
-
 			$this->processFilter($q);
 			$this->set('directSearch', true);
+			if ($this->searchNumber && $this->_filterGpzSearch($this->searchNumber)) {
+				try {
+					App::uses('GpzApi', 'Model');
+					$this->GpzApi = new GpzApi();
+					$gpzData = $this->GpzApi->search($q);
+					$this->set(compact('gpzData'));
+				} catch (Exception $e) {
+					$this->set('gpzError', $e->getMessage());
+				}
+			}
 		}
 		if ($data = $this->request->data) {
 			$this->paginate['conditions'] = array_merge($this->paginate['conditions'], $this->postConditions($data));
@@ -87,7 +89,16 @@ class ProductsController extends AppController {
 		$this->set('aArticles', $aProducts);
 		$this->set('objectType', 'Product');
 	}
-	
+
+	private function _filterGpzSearch($number) {
+		$aBrands = explode(',', Configure::read('Settings.gpz_brands'));
+		$this->DetailNum->bindModel(array('belongsTo' => array('Product')));
+		$fields = array('DetailNum.detail_num');
+		$conditions = array('Product.brand_id' => $aBrands, 'DetailNum.detail_num' => $number);
+		$aRows = $this->DetailNum->find('all', compact('conditions', 'fields'));
+		return !$aRows;
+	}
+
 	public function view($slug) {
 		$article = $this->Product->findBySlug($slug);
 		if (!$article) {
@@ -145,6 +156,7 @@ class ProductsController extends AppController {
 	}
 
 	private function processNumber($value) {
+		$this->searchNumber = $value;
 		// $_value = str_replace(array('.', '-', ',', '/', '\\'), '', $value);
 		$product_ids = $this->DetailNum->findDetails($this->DetailNum->stripList('*'.$value.'*'), true, DetailNum::ORIG);
 		$this->paginate['conditions'] = array('Product.id' => $product_ids);
