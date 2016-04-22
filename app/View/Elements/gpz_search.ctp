@@ -1,3 +1,8 @@
+<style type="text/css">
+	.main .product-img {max-width: 100px;}
+	.main .brand-logo {max-width: 50px;}
+</style>
+
 <?
 	if (isset($gpzError)) {
 		echo $this->element('admin_content');
@@ -31,9 +36,11 @@
 	</thead>
 	<tbody>
 <?
+		$class = '';
 		foreach ($gpzData as $row) {
+			$class = ($class == 'odd') ? 'even' : 'odd';
 ?>
-		<tr class="grid-row">
+		<tr class="grid-row <?=$class?>">
 			<td align="center">
 				<?=($row['brand_logo']) ? $this->Html->image($row['brand_logo'], array('class' => 'brand-logo')) : ''?>
 			</td>
@@ -45,9 +52,7 @@
 <?
 			if ($row['image']) {
 ?>
-			<a class="fancybox" href="<?=$row['image']?>">
 				<?=$this->Html->image($row['image'], array('class' => 'product-img', 'alt' => $row['partnumber'].' '.$row['title']))?>
-			</a>
 <?
 			}
 ?>

@@ -16,7 +16,7 @@ class Search extends AppModel {
 		$aRest = array();
 		foreach($aWords as $word) {
 			if ($this->DetailNum->isDigitWord($word)) {
-				$aDigiWords[] = $this->stripWord($word);
+				$aDigiWords[] = $this->DetailNum->strip($word);
 			} else {
 				$aRest[] = $this->stripWord($word);
 			}

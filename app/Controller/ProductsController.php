@@ -143,7 +143,7 @@ class ProductsController extends AppController {
 		// если ввели только номер - поиск по номерам
 		$aWords = explode(' ', $_value);
 		if (count($aWords) == 1 && $this->DetailNum->isDigitWord($value)) {
-			$this->processNumber($value);
+			$this->processNumber($this->DetailNum->strip($value));
 			return;
 		}
 		$aWords = $this->Search->processTextRequest($_value);
