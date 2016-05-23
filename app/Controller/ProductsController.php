@@ -121,11 +121,14 @@ class ProductsController extends AppController {
 		$article['PMFormField'] = Hash::extract($fields, '{n}.PMFormField');
 		
 		$this->set('article', $article);
-		
-		$this->seo = $this->Seo->defaultSeo($article['Seo'],
-			$article['Product']['title_rus'],
-			$article['Product']['title_rus'].", ".str_replace(',', ' ', $article['Product']['title_rus'])." ".$article['Category']['title'].", запчасти для спецтехники ".$article['Category']['title'].", запчасти для ".$article['Category']['title'],
-			'На нашем сайте вы можете приобрести '.str_replace(',', ' ', $article['Product']['title_rus']).' для трактора или спецтехники '.$article['Category']['title']." в ".((Configure::read('domain.zone') == 'ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
+
+		$code = $article['Product']['code'];
+		$title_rus = $article['Product']['title_rus'];
+		$this->loadModel('SeoArticle');
+		$this->seo = $this->SeoArticle->defaultSeo($article['Seo'],
+			(Configure::read('domain.zone') == 'ru') ? $code.' '.$title_rus : $title_rus.' '.$code,
+			$title_rus.", ".str_replace(',', ' ', $title_rus)." ".$article['Category']['title'].", запчасти для спецтехники ".$article['Category']['title'].", запчасти для ".$article['Category']['title'],
+			'На нашем сайте вы можете приобрести '.str_replace(',', ' ', $title_rus).' для трактора или спецтехники '.$article['Category']['title']." в ".((Configure::read('domain.zone') == 'ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 		);
 		unset($this->seo['keywords']);
 		unset($this->seo['descr']);

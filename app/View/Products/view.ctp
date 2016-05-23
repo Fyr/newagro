@@ -22,8 +22,7 @@
 	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 	echo $this->element('title', compact('title'));
 	$brand = $aBrands[$article['Product']['brand_id']];
-	$alt = $article['Product']['title_rus'].' '.$article['Product']['detail_num'];
-	
+
 	$price_by = Configure::read('params.price_by');
 	$price_ru = Configure::read('params.price_ru');
 	$price2_ru = Configure::read('params.price2_ru');
@@ -84,13 +83,17 @@
 						</div>
 						<div class="gallery">
 <?
+	$title_rus = $article['Product']['title_rus'];
+	$code = $article['Product']['code'];
+	$alt = (Configure::read('domain.zone') == 'ru') ? $code.' '.$title_rus : $title_rus.' '.$code;
 	if (isset($article['Media']) && $article['Media']) {
-		foreach($article['Media'] as $media) {
+		foreach($article['Media'] as $i => $media) {
+			$_alt = (isset($media['alt']) && $media['alt']) ? $media['alt'] : $alt.' Вид '.($i + 1);
 			$src = $this->Media->imageUrl(array('Media' => $media), '400x'); // $this->Media->imageUrl($media['object_type'], $media['id'], '400x', $media['file'].$media['ext'].'.png');
 			$orig = $media['url_img']; // $this->Media->imageUrl($media['object_type'], $media['id'], 'noresize', $media['file'].$media['ext'].'.png');
 ?>
 								<div class="image" style="text-align:center">
-									<a class="fancybox" href="<?=$orig?>" rel="photoalobum"><img alt="<?=$alt?>" src="<?=$src?>" /></a>
+									<a class="fancybox" href="<?=$orig?>" rel="photoalobum"><img alt="<?=$_alt?>" title="<?=$_alt?>" src="<?=$src?>" /></a>
 								</div>
 <?
 		}
