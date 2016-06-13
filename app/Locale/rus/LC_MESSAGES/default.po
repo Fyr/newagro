@@ -608,13 +608,25 @@ msgid "Prices"
 msgstr "Цены"
 
 msgid "Address"
-msgstr "Цены"
+msgstr "Адрес"
 
 msgid "Phone1"
 msgstr "Тел."
 
 msgid "Phone2"
 msgstr "Тел.2"
+
+msgid "Phones"
+msgstr "Тел."
+
+msgid "Work Time"
+msgstr "Время работы"
+
+msgid "Site Url"
+msgstr "URL сайта"
+
+msgid "Site url"
+msgstr "URL сайта"
 
 msgid "Sectionizer"
 msgstr "Рубрикатор"

@@ -29,7 +29,7 @@ class ObjectTypeHelper extends AppHelper {
                 'SubcategoryArticle' => __('Create Article subcategory'),
                 'Subcategory' => __('Create Subcategory'),
                 'Banner' => __('Create banner'),
-                'Dealers' => __('New dealer'),
+                'Dealer' => __('New dealer'),
                 'Catalog' => __('New catalog'),
                 'CategoryProduct' => __('Create Product category'),
                 'Product' => __('Create Product'),

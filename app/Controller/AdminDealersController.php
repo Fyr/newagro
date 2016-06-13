@@ -24,16 +24,16 @@ class AdminDealersController extends AdminController {
         $this->set('aRowset', $aRowset);
     }
     
-	public function edit($id = 0, $objectType = '', $objectID = '') {
+	public function edit($id = 0) {
 		$objectType = 'Dealer';
 		$this->loadModel('Media.Media');
 		
 		if (!$id) {
 			// если не задан ID, то objectType+ObjectID должны передаваться
-			$this->request->data('Article.object_type', $objectType);
+			$this->request->data('Dealer.object_type', 'Dealer');
 			$this->request->data('Seo.object_type', 'Page');
 		}
-		
+
 		$this->PCArticle->setModel('Dealer')->edit(&$id, &$lSaved);
 		
 		if ($lSaved) {
