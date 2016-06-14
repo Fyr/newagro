@@ -17,6 +17,11 @@ class AppModel extends Model {
 				$this->useDbConfig = $this->altDbConfig;
 			}
 		}
+		if (isset($this->hasOne['MediaArticle']) && isset($this->hasOne['MediaArticle']['conditions'])
+				&& isset($this->hasOne['MediaArticle']['conditions']['MediaArticle.main_$zone'])) {
+			$this->hasOne['MediaArticle']['conditions']['MediaArticle.main_'.Configure::read('domain.zone')] = 1;
+			unset($this->hasOne['MediaArticle']['conditions']['MediaArticle.main_$zone']);
+		}
 	}
 
 	protected function _afterInit() {

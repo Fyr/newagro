@@ -26,7 +26,7 @@ class Product extends Article {
 		'MediaArticle' => array(
 			'className' => 'MediaArticle',
 			'foreignKey' => 'object_id',
-			'conditions' => array('MediaArticle.media_type' => 'image', 'MediaArticle.object_type' => 'Product', 'MediaArticle.main' => 1),
+			'conditions' => array('MediaArticle.media_type' => 'image', 'MediaArticle.object_type' => 'Product', 'MediaArticle.main_$zone' => 1),
 			'dependent' => true
 		),
 		'Seo' => array(

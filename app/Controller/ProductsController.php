@@ -107,7 +107,10 @@ class ProductsController extends AppController {
 		$id = $article['Product']['id'];
 		
 		$this->loadModel('MediaArticle');
-		$aMedia = $this->MediaArticle->getObjectList('Product', $id); // $this->Media->getList(array('object_type' => 'Product', 'object_id' => $id));
+		$zone = Configure::read('domain.zone');
+		$conditions = array('object_type' => 'Product', 'object_id' => $id, 'show_'.$zone => 1);
+		$order = array('main_'.$zone => 'DESC', 'id' => 'ASC');
+		$aMedia = $this->MediaArticle->find('all', compact('conditions', 'order')); // $this->Media->getList(array('object_type' => 'Product', 'object_id' => $id));
 		$article['Media'] = Hash::extract($aMedia, '{n}.MediaArticle');
 		
 		$this->loadModel('Form.PMFormData');
