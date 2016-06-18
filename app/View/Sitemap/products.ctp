@@ -6,17 +6,14 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <?
+/*
+    $url = Router::url(array('controller' => 'Products', 'action' => 'index', 'objectType' => 'Product'), true);
+    echo $this->element('sitemap_url', compact('url'));
+*/
 	foreach($aArticles as $article) {
-		$object_type = $article['Article']['object_type'];
-		$article[$object_type] = $article['Article'];
-		unset($article['Article']);
 		$url = SiteRouter::url($article, true);
-?>
-<url>
-  <loc><?=$url?></loc>
-  <changefreq>daily</changefreq>
-</url>
-<?
+        echo $this->element('sitemap_url', compact('url'));
 	}
 ?>
+
 </urlset>
