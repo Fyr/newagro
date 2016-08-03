@@ -174,7 +174,7 @@ class Image
 	 * @param int $iNewSizeX
 	 * @param int $iNewSizeY
 	 */
-	public function thumb($iNewSizeX, $iNewSizeY) 
+	public function thumb($iNewSizeX, $iNewSizeY, $sHexBkgColor = "FFFFFF")
 	{
 		$iSourceX = $this->getSizeX();
 		$iSourceY = $this->getSizeY();
@@ -186,8 +186,10 @@ class Image
 		
 		$iDestX = $iSourceX * $fAspect;
 		$iDestY = $iSourceY * $fAspect;
-		
+
 		$rImage = imagecreatetruecolor($iNewSizeX, $iNewSizeY);
+		$aColor = $this->getAColor($sHexBkgColor);
+		imagefill($rImage, 1, 1, imagecolorallocate($rImage, $aColor[0], $aColor[1], $aColor[2]));
 		imagecopyresampled($rImage, $this->getImage(), ($iNewSizeX - $iDestX) / 2, ($iNewSizeY - $iDestY) / 2, 0, 0, $iDestX, $iDestY, $iSourceX, $iSourceY);
 		$this->setImage($rImage);
 	}
