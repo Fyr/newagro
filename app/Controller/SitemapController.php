@@ -6,7 +6,7 @@ class SitemapController extends AppController {
 	public $components = array('RequestHandler');
 	public $uses = array('Article.Article', 'Product', 'SectionArticle');
 
-	const PER_PAGE = 2500;
+	const PER_PAGE = 5000;
 
 	public function index() {
 		// $this->RequestHandler->setContent('xml');

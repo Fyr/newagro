@@ -8,7 +8,7 @@ class DetailNum extends AppModel {
 
 	public function strip($q) {
 		$q = str_replace(array('.', '-', '/', '\\'), '', $q);
-		while (strpos($q, '0') === 0) { // kill leading zeroes
+		while (strpos($q, '0') === 0) { // вырезаем лидирующие нули
 			$q = substr($q, 1);
 		}
 		return $q;
