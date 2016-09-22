@@ -54,28 +54,43 @@ class RouterController extends AppController {
 		if ($type == 'product') {
 
 			$logo = new Image();
-			$logo->load('./img/logo_'.$zone.'.gif');
+			$logo->load('./img/logo4_'.$zone.'.gif');
 
-			// т.к. есть баг с ресайзом лого (при ресайзе исчезает прозрачность и появляется фон),
-			// то ресайзим саму картинку, а потом возвращаем ее в исх. размер или ресайзим в нужный
-			$oldSizeX = $image->getSizeX();
-			$oldSizeY = $image->getSizeY();
-			$lRestoreSize = false;
-			if ($aSize) {
-				if ($logo->getSizeX() > $image->getSizeX()) {
-					$image->{$method}($logo->getSizeX(), null);
-					$lRestoreSize = true;
-				}
-			} elseif ($image->getSizeX() > 400) {
-				$logo->load('./img/logo_'.$zone.'.gif'); // './img/logo_big_'.$zone.'.gif'
+			if ($image->getSizeX() > 1200 || $image->getSizeY() > 900) {
+				$image->resize(1200, null);
 			}
-			$x = round(($image->getSizeX()) / 2, 0) - round($logo->getSizeX() / 2, 0);
-			$y = round(($image->getSizeY()) / 2, 0) - round($logo->getSizeY() / 2, 0);
+
 			imagealphablending($image->getImage(), false);
 			imagesavealpha($image->getImage(), true);
-			imagecopymerge($image->getImage(), $logo->getImage(), $x, $y, 0, 0, $logo->getSizeX(), $logo->getSizeY(), 40);
-			if ($lRestoreSize) {
-				$image->{$method}($oldSizeX, null);
+
+			if ($logo->getSizeX() < $image->getSizeX() && $logo->getSizeY() < $image->getSizeY()) {
+				$nX = floor($image->getSizeX() / $logo->getSizeX());
+				$nY = floor($image->getSizeY() / $logo->getSizeY());
+
+				$startX = floor(($image->getSizeX() - $nX * $logo->getSizeX()) / 2);
+				$startY = floor(($image->getSizeY() - $nY * $logo->getSizeY()) / 2);
+
+				for ($i = 0; $i < $nX; $i++) {
+					for ($j = 0; $j < $nY; $j++) {
+						imagecopymerge($image->getImage(), $logo->getImage(),
+							$startX + $i * $logo->getSizeX(), $startY + $j * $logo->getSizeY(),
+							0, 0, $logo->getSizeX(), $logo->getSizeY(),
+							40
+						); // opacity
+					}
+				}
+			} else {
+				$oldSizeX = $image->getSizeX();
+
+				// т.к. есть баг с ресайзом лого (при ресайзе исчезает прозрачность и появляется фон),
+				// то ресайзим саму картинку, а потом возвращаем ее в исх. размер
+				$image->resize($logo->getSizeX(), null); // по идее все картинки по ширине больше чем по высоте
+
+				$x = round(($image->getSizeX()) / 2, 0) - round($logo->getSizeX() / 2, 0);
+				$y = round(($image->getSizeY()) / 2, 0) - round($logo->getSizeY() / 2, 0);
+				imagecopymerge($image->getImage(), $logo->getImage(), $x, $y, 0, 0, $logo->getSizeX(), $logo->getSizeY(), 40);
+
+				$image->resize($oldSizeX, null);
 			}
 		}
 
