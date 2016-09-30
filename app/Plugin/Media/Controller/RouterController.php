@@ -26,7 +26,7 @@ class RouterController extends AppController {
 			}
 		}
 		
-		if (file_exists($fname)) {
+		if (file_exists($fname) && filesize($fname)) {
 			header('Content-type: image/'.$aFName['ext']);
 			echo file_get_contents($fname);
 			exit;
