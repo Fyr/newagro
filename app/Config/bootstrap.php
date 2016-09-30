@@ -47,10 +47,12 @@ define('RECAPTCHA_PRIVATE_KEY', '6Lezy-QSAAAAACCM1hh6ceRr445OYU_D_uA79UFZ');
 Configure::write('Recaptcha.publicKey', RECAPTCHA_PUBLIC_KEY);
 Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
 
+$domain = explode('.', $_SERVER['HTTP_HOST']);
 Configure::write('domain', array(
 	'url' => 'newagro.dev',
 	'title' => 'NewAgro.dev',
-	'zone' => 'by'
+	'zone' => 'by',
+	'subdomain' => (count($domain) > 2) ? $domain[0] : ''
 ));
 
 Configure::write('search', array(

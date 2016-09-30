@@ -724,3 +724,14 @@ msgstr "По вашему запросу произошла ошибка сер�
 msgid "Our experts are fixing it right now. It will be fixed as soon as possible."
 msgstr "Наши специалисты уже занимаются ей, в ближайее время ошибка будет исправлена."
 
+msgid "Subdomains"
+msgstr "Субдомены"
+
+msgid "Create subdomain"
+msgstr "Создать субдомен"
+
+msgid "Edit subdomain"
+msgstr "Редактировать субдомен"
+
+msgid "Name"
+msgstr "Название"
