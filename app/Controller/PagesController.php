@@ -13,18 +13,21 @@ class PagesController extends AppController {
 	public function home() {
 		$this->set('isHomePage', true);
 		
-		$conditions = array('News.published' => 1);
+		$conditions = array('News.published' => 1, 'News.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
 		if ($this->aEvents) {
 			$conditions['NOT'] = array('News.id' => Hash::extract($this->aEvents, '{n}.News.id'));
 		}
 		$aNews = $this->News->find('all', array(
 			'conditions' => $conditions,
-			'order' => array('News.featured DESC', 'News.sorting ASC', 'News.created DESC'),
+			'order' => array('News.subdomain_id DESC', 'News.featured DESC', 'News.sorting ASC', 'News.created DESC'),
 			'limit' => 3
 		));
 		$this->set('aHomePageNews', $aNews);
-		
-		$aArticle = $this->Page->findBySlug('home');
+
+		// $conditions = array('slug' => 'home', 'subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
+		// $order = array('subdomain_id' => 'DESC');
+		// $aArticle = $this->Page->find('all', compact('conditions', 'order'));
+		$aArticle = $this->Page->getBySlug('home');
 		$this->set('contentArticle', $aArticle);
 		
 		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
@@ -34,7 +37,7 @@ class PagesController extends AppController {
 	}
 	
 	public function show($slug) {
-		$aArticle = $this->Page->findBySlug($slug);
+		$aArticle = $this->Page->getBySlug($slug);
 		if (!$aArticle) {
 			$this->redirect404();
 			return;

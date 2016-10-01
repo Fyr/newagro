@@ -20,5 +20,8 @@ class News extends Article {
 			'dependent' => true
 		)
 	);
-	
+
+	public function getFeaturedList() {
+
+	}
 }

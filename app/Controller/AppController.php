@@ -40,6 +40,7 @@ class AppController extends Controller {
 
 		$this->Settings = new Settings();
 		$this->Settings->initData();
+
 	}
 	
 	public function isAuthorized($user) {
@@ -49,6 +50,23 @@ class AppController extends Controller {
 	
 	public function beforeFilter() {
 		$this->disableCopy = !TEST_ENV;
+
+		// $this->Subdomain = $this->loadModel('Subdomain');
+		App::uses('Subdomain', 'Model');
+		$this->Subdomain =  new Subdomain();
+		$subdomain = $this->Subdomain->findByName(Configure::read('domain.subdomain'));
+		if (!$subdomain) {
+			$this->redirect404();
+			return false;
+		}
+		$subdomain = $subdomain['Subdomain'];
+		Configure::write('domain.subdomain_id', $subdomain['id']);
+		Configure::write('Settings.address', nl2br($subdomain['address']));
+		Configure::write('Settings.phone1', $subdomain['phone1']);
+		Configure::write('Settings.phone2', $subdomain['phone2']);
+		Configure::write('Settings.email', $subdomain['email']);
+		Configure::write('Settings.skype', $subdomain['skype']);
+
 		if (isset($this->request->url) && $this->request->url) {
 			
 			if (strpos($this->request->url, '.html') !== false) {
@@ -95,13 +113,21 @@ class AppController extends Controller {
 	    $this->currLink = $this->currMenu;
 	    
 		$this->loadModel('News');
-		$conditions = array('News.featured' => 1, 'News.published' => 1);
-		$order = array('News.sorting' => 'ASC', 'News.created' => 'DESC');
+		$conditions = array(
+			'News.featured' => 1,
+			'News.published' => 1,
+			'News.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId())
+		);
+		$order = array('News.subdomain_id' => 'DESC', 'News.sorting' => 'ASC', 'News.created' => 'DESC');
 		$this->aEvents = $this->News->find('all', compact('conditions', 'order'));
 		$this->set('featuredEvents', $this->aEvents);
 
 		$this->loadModel('Offer');
-		$conditions = array('Offer.featured' => 1, 'Offer.published' => 1);
+		$conditions = array(
+			'Offer.featured' => 1,
+			'Offer.published' => 1,
+			'Offer.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId())
+		);
 		$order = array('Offer.sorting' => 'ASC', 'Offer.created' => 'DESC');
 		$this->set('featuredOffers', $this->Offer->find('all', compact('conditions', 'order')));
 		
@@ -222,7 +248,10 @@ class AppController extends Controller {
 		$this->loadModel('Page');
 		$aArticleTitles = $this->Page->find('list', array(
 			'fields' => array('slug', 'title'),
-			'conditions' => array('slug' => array('magazini-zapchastei', 'about-us', 'about-us2', 'contacts1', 'contacts2'))
+			'conditions' => array(
+				'slug' => array('magazini-zapchastei', 'about-us'),
+				'subdomain_id' => 0
+			)
 		));
 		$this->aNavBar['about-us']['title'] = $aArticleTitles['about-us'];
 		$this->aBottomLinks['about-us']['title'] = $aArticleTitles['about-us'];
@@ -267,5 +296,9 @@ class AppController extends Controller {
 	public function redirect404() {
 		// return $this->redirect(array('controller' => 'pages', 'action' => 'notExists'), 404);
 		throw new NotFoundException();
+	}
+
+	protected function getSubdomainId() {
+		return Configure::read('domain.subdomain_id');
 	}
 }

@@ -9,6 +9,13 @@
     $actions['row']['edit']['href'] = $this->Html->url(array('action' => 'edit', '~id', $objectType, $objectID));
 
 	$columns = $this->PHTableGrid->getDefaultColumns($objectType);
+    if (in_array($objectType, array('Page', 'News', 'Offer'))) {
+        $columns[$objectType . '.subdomain_id']['label'] = __('Site');
+        //$columns[$objectType.'.subdomain_id']['format'] = 'string';
+        foreach ($aRowset as &$row) {
+            $row[$objectType]['subdomain_id'] = $aSubdomainOptions[$row[$objectType]['subdomain_id']];
+        }
+    }
 ?>
 <?=$this->element('admin_title', compact('title'))?>
 <div class="text-center">

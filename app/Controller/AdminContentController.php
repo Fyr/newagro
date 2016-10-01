@@ -8,23 +8,30 @@ App::uses('News', 'Model');
 App::uses('Offer', 'Model');
 App::uses('Motor', 'Model');
 App::uses('SiteArticle', 'Model');
+App::uses('Subdomain', 'Model');
 
 class AdminContentController extends AdminController {
     public $name = 'AdminContent';
     public $components = array('Article.PCArticle');
-    public $uses = array('Article.Article', 'Page', 'News', 'Offer', 'Motor', 'SiteArticle');
+    public $uses = array('Article.Article', 'Page', 'News', 'Offer', 'Motor', 'SiteArticle', 'Subdomain');
     public $helpers = array('ObjectType');
+
+	public function beforeRenderLayout() {
+		parent::beforeRenderLayout();
+
+		$this->set('aSubdomainOptions', $this->Subdomain->getOptions());
+	}
     
     public function index($objectType, $objectID = '') {
         $this->paginate = array(
             'Page' => array(
-            	'fields' => array('title', 'slug')
+            	'fields' => array('subdomain_id', 'title', 'slug')
             ),
         	'News' => array(
-        		'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')
+        		'fields' => array('created', 'subdomain_id', 'title', 'slug', 'featured', 'published', 'sorting')
         	),
         	'Offer' => array(
-        		'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')
+        		'fields' => array('created', 'subdomain_id', 'title', 'slug', 'featured', 'published', 'sorting')
         	),
         	'Motor' => array(
         		'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')

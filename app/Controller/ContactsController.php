@@ -29,8 +29,8 @@ class ContactsController extends AppController {
 			}
 		}
 		
-		$this->set('article', $this->Page->findBySlug('contacts1'));
-		$this->set('article2', $this->Page->findBySlug('contacts2'));
+		$this->set('article', $this->Page->getBySlug('contacts1'));
+		$this->set('article2', $this->Page->getBySlug('contacts2'));
 		$this->disableCopy = false;
 	}
 	

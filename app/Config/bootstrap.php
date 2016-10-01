@@ -52,8 +52,9 @@ Configure::write('domain', array(
 	'url' => 'newagro.dev',
 	'title' => 'NewAgro.dev',
 	'zone' => 'by',
-	'subdomain' => (count($domain) > 2) ? $domain[0] : ''
+	'subdomain' => (count($domain) > 2) ? $domain[0] : 'www'
 ));
+define('SUBDOMAIN_ALL', 0);
 
 Configure::write('search', array(
 	'stopWords' => __('search.stopWords')

@@ -139,4 +139,15 @@ class AppModel extends Model {
 		list($domain) = explode('.', Configure::read('domain.url'));
 		return $domain;
 	}
+
+	public function getSubdomainId() {
+		return Configure::read('domain.subdomain_id');
+	}
+
+	public function getBySlug($slug) {
+		$conditions = array('slug' => $slug, 'subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
+		$order = array('subdomain_id' => 'DESC');
+		$aArticle = $this->find('all', compact('conditions', 'order'));
+		return $aArticle[0];
+	}
 }

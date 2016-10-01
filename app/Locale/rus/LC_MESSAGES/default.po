@@ -727,6 +727,12 @@ msgstr "Наши специалисты уже занимаются ей, в б�
 msgid "Subdomains"
 msgstr "Субдомены"
 
+msgid "Subdomain"
+msgstr "Субдомен"
+
+msgid "Site"
+msgstr "Сайт"
+
 msgid "Create subdomain"
 msgstr "Создать субдомен"
 
@@ -735,3 +741,6 @@ msgstr "Редактировать субдомен"
 
 msgid "Name"
 msgstr "Название"
+
+msgid "- all sites -"
+msgstr "- все сайты -"

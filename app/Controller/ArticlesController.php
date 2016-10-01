@@ -27,9 +27,16 @@ class ArticlesController extends AppController {
 	public function index() {
 		$this->loadModel($this->objectType);
 		$this->paginate = array(
-			'conditions' => array($this->objectType.'.published' => 1),
+			'conditions' => array(
+				$this->objectType.'.published' => 1,
+				$this->objectType.'.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId())
+			),
 			'limit' => self::PER_PAGE, 
-			'order' => array($this->objectType.'.sorting' => 'ASC', $this->objectType.'.created' => 'DESC'),
+			'order' => array(
+				$this->objectType.'.subdomain_id' => 'DESC',
+				$this->objectType.'.sorting' => 'ASC',
+				$this->objectType.'.created' => 'DESC'
+			),
 			'page' => $this->request->param('page')
 		);
 
@@ -41,7 +48,7 @@ class ArticlesController extends AppController {
 	
 	public function view($slug) {
 		$this->loadModel($this->objectType);
-		$aArticle = $this->{$this->objectType}->findBySlug($slug);
+		$aArticle = $this->{$this->objectType}->getBySlug($slug);
 		
 		if (!$aArticle && !TEST_ENV) {
 			return $this->redirect404();
