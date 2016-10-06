@@ -83,7 +83,7 @@ class AppController extends Controller {
 	
 	protected function beforeFilterLayout() {
 		$this->aNavBar = array(
-			'home' => array('href' => '/', 'title' => __('Home')),
+			// 'home' => array('href' => '/', 'title' => __('Home')),
 			'news' => array('href' => '/news', 'title' => __('News')),
 			'products' => array('href' => '/zapchasti', 'title' => __('Spares')),
 			'remont' => array('href' => '/remont', 'title' => __('Repair')),
@@ -102,7 +102,7 @@ class AppController extends Controller {
 			'remont' => array('href' => '/remont', 'title' => __('Repair')),
 			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
 			'brand' => array('href' => '/brand', 'title' => __('Brands')),
-			// 'motor' => array('href' => '/motors', 'title' => __('Machinery')),
+			'motor' => array('href' => '/motors', 'title' => __('Machinery')),
 			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
 			'dealer' => array('href' => '/magazini-zapchastei', 'title' => ''),
 			'contacts' => array('href' => '/contacts', 'title' => __('Contacts'))
@@ -178,9 +178,6 @@ class AppController extends Controller {
 		
 		$this->set('disableCopy', $this->disableCopy);
 		
-		if (Configure::read('domain.zone') == 'ru') {
-			unset($this->aBottomLinks['motor']);
-		}
 		$this->set('aBottomLinks', $this->aBottomLinks);
 
 		// $this->Article = $this->SiteArticle;
@@ -259,11 +256,6 @@ class AppController extends Controller {
 		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->set('aBottomLinks', $this->aBottomLinks);
 		
-		if (Configure::read('domain.zone') == 'by') {
-			unset($this->aNavBar['home']);
-		} elseif (Configure::read('domain.zone') == 'ru') {
-			unset($this->aNavBar['motor']);
-		}
 		$this->set('aMenu', $this->aNavBar);
 		
 		$this->loadModel('SlotPlace');
