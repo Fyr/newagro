@@ -29,7 +29,6 @@ class ArticlesController extends AppController {
 		$this->paginate = array(
 			'conditions' => array(
 				$this->objectType.'.published' => 1,
-				$this->objectType.'.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId())
 			),
 			'limit' => self::PER_PAGE, 
 			'order' => array(
@@ -39,7 +38,9 @@ class ArticlesController extends AppController {
 			),
 			'page' => $this->request->param('page')
 		);
-
+		if (in_array($this->objectType, array('News', 'Offer'))) {
+			$this->paginate['conditions'][$this->objectType.'.subdomain_id'] = array(SUBDOMAIN_ALL, $this->getSubdomainId());
+		}
 		if ($this->objectType == 'Dealer') {
 			$this->paginate['limit'] = 100;
 		}
