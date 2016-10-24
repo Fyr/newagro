@@ -179,7 +179,9 @@ $(document).ready(function(){
 	}
 ?>
             <div class="headBlock" style="margin-top: 14px">
-                <div class="text"><?=__('Our partners')?></div>
+                <a class="our-partners" href="<?=$this->Html->url(array('controller' => 'Articles', 'action' => 'index', 'objectType' => 'Brand'))?>">
+                    <div class="text"><?=__('Our partners')?></div>
+                </a>
                 <span class="corner"></span>
             </div>
             

@@ -1,5 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+RewriteCond %{HTTP_HOST} krasnodar\.newagro\.dev.*$
+RewriteRule ^robots\.txt$ robots_krasnodar.txt
+
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]

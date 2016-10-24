@@ -88,7 +88,7 @@ class AppController extends Controller {
 			'products' => array('href' => '/zapchasti', 'title' => __('Spares')),
 			'remont' => array('href' => '/remont', 'title' => __('Repair')),
 			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
-			'brand' => array('href' => '/brand', 'title' => __('Brands')),
+			// 'brand' => array('href' => '/brand', 'title' => __('Brands')),
 			'motor' => array('href' => '/motors', 'title' => __('Machinery')),
 			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
 			'dealer' => array('href' => '/magazini-zapchastei', 'title' => ''),

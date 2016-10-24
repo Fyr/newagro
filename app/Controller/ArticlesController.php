@@ -49,7 +49,8 @@ class ArticlesController extends AppController {
 	
 	public function view($slug) {
 		$this->loadModel($this->objectType);
-		$aArticle = $this->{$this->objectType}->getBySlug($slug);
+		$method = (in_array($this->objectType, array('News', 'Offer'))) ? 'getBySlug' : 'findBySlug';
+		$aArticle = $this->{$this->objectType}->{$method}($slug);
 		
 		if (!$aArticle && !TEST_ENV) {
 			return $this->redirect404();

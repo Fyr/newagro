@@ -374,7 +374,7 @@ msgid "Print selected records"
 msgstr "Распечатать выделенные строки"
 
 msgid "Brands"
-msgstr "Бренды"
+msgstr "Наши партнеры"
 
 msgid "Create Brand"
 msgstr "Создать Бренд"
