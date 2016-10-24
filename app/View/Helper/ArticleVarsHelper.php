@@ -19,7 +19,7 @@ class ArticleVarsHelper extends AppHelper {
 
 	public function body($article) {
 		$objectType = $this->getObjectType($article);
-		$field = (Configure::read('domain.zone') == 'ru' && in_array($objectType, array('Brand', 'Category', 'Subcategory'))) ? 'body_ru' : 'body';
+		$field = (Configure::read('domain.zone') == 'ru' && in_array($objectType, array('Brand', 'Category', 'Subcategory', 'Product'))) ? 'body_ru' : 'body';
 		return $article[$this->getObjectType($article)][$field];
 	}
 }
