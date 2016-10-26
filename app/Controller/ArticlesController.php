@@ -3,8 +3,13 @@ App::uses('AppController', 'Controller');
 App::uses('AppModel', 'Model');
 App::uses('SiteArticle', 'Model');
 App::uses('News', 'Model');
+App::uses('Offer', 'Model');
+App::uses('Motor', 'Model');
+App::uses('Brand', 'Model');
+App::uses('SiteArticle', 'Model');
 class ArticlesController extends AppController {
 	public $name = 'Articles';
+	public $components = array('Table.PCTableGrid');
 	// public $uses = array('News', 'Offer', 'Motor');
 	
 	const PER_PAGE = 21;
@@ -30,9 +35,8 @@ class ArticlesController extends AppController {
 			'conditions' => array(
 				$this->objectType.'.published' => 1,
 			),
-			'limit' => self::PER_PAGE, 
+			'limit' => self::PER_PAGE,
 			'order' => array(
-				$this->objectType.'.subdomain_id' => 'DESC',
 				$this->objectType.'.sorting' => 'ASC',
 				$this->objectType.'.created' => 'DESC'
 			),
@@ -40,6 +44,11 @@ class ArticlesController extends AppController {
 		);
 		if (in_array($this->objectType, array('News', 'Offer'))) {
 			$this->paginate['conditions'][$this->objectType.'.subdomain_id'] = array(SUBDOMAIN_ALL, $this->getSubdomainId());
+			$this->paginate['order'] = array(
+				$this->objectType.'.subdomain_id' => 'DESC',
+				$this->objectType.'.sorting' => 'ASC',
+				$this->objectType.'.created' => 'DESC'
+			);
 		}
 		if ($this->objectType == 'Dealer') {
 			$this->paginate['limit'] = 100;

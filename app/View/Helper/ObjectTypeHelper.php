@@ -20,6 +20,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Brand' => __('Brands'),
                 'RepairArticle' => __('Repair articles'),
                 'Subdomain' => __('Subdomains'),
+                'MachineTool' => __('Machine tools'),
             ), 
             'create' => array(
                 'Article' => __('Create Article'),
@@ -35,6 +36,7 @@ class ObjectTypeHelper extends AppHelper {
                 'CategoryProduct' => __('Create Product category'),
                 'Product' => __('Create Product'),
                 'Subdomain' => __('Create subdomain'),
+                'MachineTool' => __('Create machine tool'),
             ),
             'edit' => array(
                 'Article' => __('Edit Article'),
@@ -50,12 +52,14 @@ class ObjectTypeHelper extends AppHelper {
                 'CategoryProduct' => __('Edit Product category'),
                 'Product' => __('Edit Product'),
                 'Subdomain' => __('Edit subdomain'),
+                'MachineTool' => __('Edit machine tool'),
             ),
             'view' => array(
             	'Article' => __('View Article'),
             	'News' => __('View News article'),
             	'Product' => __('View product'),
-            	'Brand' => __('View brand')
+            	'Brand' => __('View brand'),
+                // 'MachineTool' => __('View machine tool')
             )
         );
         return $Titles;

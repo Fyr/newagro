@@ -744,3 +744,12 @@ msgstr "Название"
 
 msgid "- all sites -"
 msgstr "- все сайты -"
+
+msgid "Machine tools"
+msgstr "Станки"
+
+msgid "Create machine tool"
+msgstr "Новый станок"
+
+msgid "Edit machine tool"
+msgstr "Редактировать станок"

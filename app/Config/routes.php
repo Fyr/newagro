@@ -244,6 +244,30 @@ Router::connect('/motors/page/:page', array(
 	array('named' => array('page' => '[\d]*'))
 );
 
+/* -= Machine Tools =- */
+Router::connect('/stanki', array(
+	'controller' => 'Articles',
+	'action' => 'index',
+	'objectType' => 'MachineTool',
+),
+	array('named' => array('page' => 1))
+);
+Router::connect('/stanki/:slug',
+	array(
+		'controller' => 'Articles',
+		'action' => 'view',
+		'objectType' => 'MachineTool'
+	),
+	array('pass' => array('slug'))
+);
+Router::connect('/stanki/page/:page', array(
+	'controller' => 'Articles',
+	'action' => 'index',
+	'objectType' => 'MachineTool'
+),
+	array('named' => array('page' => '[\d]*'))
+);
+
 /* -= Dealers =- */
 Router::connect('/magazini-zapchastei', array(
 		'controller' => 'Articles', 

@@ -19,6 +19,7 @@ class AdminController extends AppController {
 				array('label' => __('Offers'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Offer')),
 				array('label' => __('Motors'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Motor')),
 				array('label' => __('Articles'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'SiteArticle')),
+				array('label' => __('Machine tools'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'MachineTool')),
 			)),
 			'SectionArticle' => array('label' => __('Sectionizer'), 'href' => '', 'submenu' => array()),
 			'RepairArticle' => array('label' => __('Repair'), 'href' => array('controller' => 'AdminRepair', 'action' => 'index')),

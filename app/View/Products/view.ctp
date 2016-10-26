@@ -74,11 +74,7 @@
 <?
 	}
 ?>
-							<div style="margin-top: 20px">
-								<div class="article">
-									<?=$this->ArticleVars->body($article)?>
-								</div>
-							</div>
+
 							<!-- div class="line" style="width: 100%"></div-->
 						</div>
 						<div class="gallery">
@@ -183,3 +179,8 @@
 	}
 	*/
 ?>
+<div style="margin-top: 20px">
+	<div class="article">
+		<?=$this->ArticleVars->body($article)?>
+	</div>
+</div>

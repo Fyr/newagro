@@ -36,6 +36,9 @@ class AdminContentController extends AdminController {
         	'Motor' => array(
         		'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')
         	),
+			'MachineTool' => array(
+				'fields' => array('created', 'title', 'slug', 'featured', 'published', 'sorting')
+			),
         	'SiteArticle' => array(
         		'fields' => array('created', 'title', 'slug', 'featured', 'published')
         	)
