@@ -127,38 +127,42 @@
 	</thead>
 	<tbody>
 <?
-	if ($article['Product']['show_detailnum']) {
+		if ($article['Product']['show_detailnum']) {
 ?>
 	<tr class="gridRow td">
 		<td nowrap="nowrap" align="right"><?=__('Spare number')?></td>
 		<td><b><?=$article['Product']['detail_num']?></b></td>
 	</tr>
 <?
-	}
-	$class = '';
-	
-	foreach($article['PMFormField'] as $field) {
-		if (in_array($field['id'], array($price_by, $price_ru, $price2_ru))) {
-			continue;
 		}
-		$value = $article['PMFormData']['fk_'.$field['id']];
-		if ($field['id'] == Configure::read('params.motor')) {
-			$value = str_replace(',', ', ', $value);
-		}
-		if ($value) {
-			$class = ($class == 'odd') ? 'even' : 'odd';
+		$class = '';
+
+		foreach($article['PMFormField'] as $field) {
+			if (in_array($field['id'], array($price_by, $price_ru, $price2_ru))) {
+				continue;
+			}
+			$value = $article['PMFormData']['fk_'.$field['id']];
+			if ($field['id'] == Configure::read('params.motor')) {
+				$value = str_replace(',', ', ', $value);
+			}
+			if ($value) {
+				$class = ($class == 'odd') ? 'even' : 'odd';
 ?>
 	<tr class="gridRow <?=$class?> td">
 		<td nowrap="nowrap" align="right"><?=$field['label']?></td>
 		<td><b><?=$value?></b></td>
 	</tr>
 <?
+			}
 		}
-	}
 ?>
 	</tbody>
 	</table>
 <?
+	}
+	if ($aRelated) {
+		echo $this->Html->tag('h3', __('Related products'));
+		echo $this->element('product_index', array('aArticles' => $aRelated));
 	}
 ?>
 	<br />

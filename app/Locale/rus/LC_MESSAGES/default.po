@@ -753,3 +753,6 @@ msgstr "Новый станок"
 
 msgid "Edit machine tool"
 msgstr "Редактировать станок"
+
+msgid "Related products"
+msgstr "Похожие запчасти"

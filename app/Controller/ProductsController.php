@@ -135,6 +135,33 @@ class ProductsController extends AppController {
 		);
 		unset($this->seo['keywords']);
 		unset($this->seo['descr']);
+
+		$this->set('aRelated', $this->_getRelatedProducts($id, $article['Product']['code'], $article['Product']['subcat_id']));
+	}
+
+	private function _getRelatedProducts($id, $code, $subcat_id) {
+		$limit = 6;
+		$value = $this->DetailNum->strip($code);
+		$product_ids = $this->DetailNum->findDetails($this->DetailNum->stripList('*'.$value.'*'), true, DetailNum::ORIG);
+		if (!$product_ids)  {
+			$product_ids = $this->DetailNum->findDetails('*'.$this->DetailNum->stripList($value).'*', true);
+		}
+		$product_ids = array_diff($product_ids, array($id)); // исключаем текущий продукт
+		$products = array();
+		if ($product_ids && count($product_ids) >= 6) {
+			$conditions = array('Product.id' => $product_ids);
+		} else {
+			if ($product_ids) { // не хватает продуктов
+				$products = $this->Product->findAllById($product_ids);
+				// добавляем из той же подкатегории
+				$conditions = array('Product.subcat_id' => $subcat_id, 'Product.published' => 1, 'NOT' => array('Product.id' => am($product_ids, array($id))));
+				$limit = 6 - count($product_ids);
+			} else {
+				$conditions = array('Product.subcat_id' => $subcat_id, 'Product.published' => 1, 'Product.id <> ' => $id);
+			}
+		}
+		$products = am($products, $this->Product->find('all', compact('conditions', 'limit')));
+		return $products;
 	}
 
 	private function logSearch($q) {
