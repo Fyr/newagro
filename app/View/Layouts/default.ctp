@@ -223,10 +223,15 @@ $(document).ready(function(){
 	                        <a href="callto:<?=Configure::read('Settings.skype')?>" class="icon skype"></a>
 	                        <a href="callto:<?=Configure::read('Settings.skype')?>"><?=Configure::read('Settings.skype')?></a>
 	                    </div>
-	                    <div class="letter">
+	                    <div class="letter" style="margin-bottom: 10px;">
 	                        <a href="mailto:<?=Configure::read('Settings.email')?>" class="icon email"></a>
 	                        <a href="mailto:<?=Configure::read('Settings.email')?>"><?=Configure::read('Settings.email')?></a>
 	                    </div>
+<?
+    if (Configure::read('domain.zone') == 'ru') {
+        echo $this->element('social');
+    }
+?>
                     </div>
                 </div>
 				<?=$this->element('counters')?>

@@ -114,3 +114,10 @@ body { font-size: 14px; }
 .catalog li a .arrow.active { background-position: -16px -106px;}
 
 a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:active { color: #fff; }
+
+@media (max-width: 720px) {
+	.footer .footerPromo { margin-top: 300px; margin-bottom: -10px;}
+}
+
+.social a { margin-right: 5px; }
+.social a > img { width: 32px; }
