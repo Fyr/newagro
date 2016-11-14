@@ -49,8 +49,8 @@ Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
 
 $domain = explode('.', $_SERVER['HTTP_HOST']);
 Configure::write('domain', array(
-	'url' => 'newagro.dev',
-	'title' => 'NewAgro.dev',
+	'url' => 'agromotors.dev',
+	'title' => 'agromotors.dev',
 	'zone' => 'by',
 	'subdomain' => (count($domain) > 2) ? $domain[0] : 'www'
 ));

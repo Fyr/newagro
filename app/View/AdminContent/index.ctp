@@ -11,10 +11,9 @@
 	$columns = $this->PHTableGrid->getDefaultColumns($objectType);
     if (in_array($objectType, array('Page', 'News', 'Offer'))) {
         $columns[$objectType . '.subdomain_id']['label'] = __('Site');
-        //$columns[$objectType.'.subdomain_id']['format'] = 'string';
-        foreach ($aRowset as &$row) {
-            $row[$objectType]['subdomain_id'] = $aSubdomainOptions[$row[$objectType]['subdomain_id']];
-        }
+        $columns[$objectType . '.subdomain_id']['nowrap'] = true;
+        $columns[$objectType.'.subdomain_id']['format'] = 'select';
+        $columns[$objectType.'.subdomain_id']['options'] = $aSubdomainOptions;
     }
 ?>
 <?=$this->element('admin_title', compact('title'))?>
