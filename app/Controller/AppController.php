@@ -88,6 +88,7 @@ class AppController extends Controller {
 			'products' => array('href' => '/zapchasti', 'title' => __('Spares')),
 			'remont' => array('href' => '/remont', 'title' => __('Repair')),
 			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
+			// 'brand' => array('href' => '/brand', 'title' => __('Brands')),
 			'machinetool' => array('href' => '/stanki', 'title' => __('Machine tools')),
 			'motor' => array('href' => '/motors', 'title' => __('Machinery')),
 			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
@@ -102,6 +103,7 @@ class AppController extends Controller {
 			'remont' => array('href' => '/remont', 'title' => __('Repair')),
 			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
 			'brand' => array('href' => '/brand', 'title' => __('Brands')),
+			'machinetool' => array('href' => '/stanki', 'title' => __('Machine tools')),
 			'motor' => array('href' => '/motors', 'title' => __('Machinery')),
 			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
 			'dealer' => array('href' => '/magazini-zapchastei', 'title' => ''),
@@ -254,10 +256,16 @@ class AppController extends Controller {
 		$this->aBottomLinks['about-us']['title'] = $aArticleTitles['about-us'];
 		$this->aNavBar['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
+
+		if (Configure::read('domain.zone') == 'ru') {
+			unset($this->aBottomLinks['brand']);
+		} else {
+			unset($this->aNavBar['machinetool']);
+			unset($this->aBottomLinks['machinetool']);
+		}
 		$this->set('aBottomLinks', $this->aBottomLinks);
-		
 		$this->set('aMenu', $this->aNavBar);
-		
+
 		$this->loadModel('SlotPlace');
 		$this->loadModel('Banner');
 		$this->loadModel('BannerType');
