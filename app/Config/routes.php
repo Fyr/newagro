@@ -316,7 +316,10 @@ Router::connect('/articles/page/:page', array(
 	array('named' => array('page' => '[\d]*'))
 );
 
-
+Router::connect('/robots.txt', array(
+	'controller' => 'Robots',
+	'action' => 'index',
+));
 
 CakePlugin::routes();
 
