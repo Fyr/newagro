@@ -1,10 +1,15 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SiteRouter', 'Lib/Routing');
+App::uses('Article', 'Article.Model');
+App::uses('Product', 'Model');
+App::uses('SectionArticle', 'Model');
+App::uses('Region', 'Model');
+App::uses('Catalog', 'Model');
 class SitemapController extends AppController {
 	public $name = 'Sitemap';
 	public $components = array('RequestHandler');
-	public $uses = array('Article.Article', 'Product', 'SectionArticle');
+	public $uses = array('Article.Article', 'Product', 'SectionArticle', 'Region', 'Catalog');
 
 	const PER_PAGE = 5000;
 
@@ -25,6 +30,12 @@ class SitemapController extends AppController {
 	}
 
 	public function plain() {
+		$aRegions = $this->Region->getOptions();
+
+		$aCatalog = $this->Catalog->findAllByPublished(1);
+		$aCatalogFiles = Hash::extract($aCatalog, '{n}.Media.{n}.url_download');
+
+		$this->set(compact('aRegions', 'aCatalogFiles'));
 	}
 
 	public function products($page) {
@@ -45,5 +56,9 @@ class SitemapController extends AppController {
 		}
 		$this->response->type('gzip');
 		$this->response->download('sitemap_'.$page.'.xml.gz');
+	}
+
+	public function catalog() {
+
 	}
 }
