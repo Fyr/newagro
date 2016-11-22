@@ -17,6 +17,10 @@
 		<loc><?=Router::url(array('action' => 'plain', 'ext' => 'xml'), true)?></loc>
 		<lastmod><?=$date?></lastmod>
 	</sitemap>
+	<sitemap>
+		<loc><?=Router::url(array('action' => 'catalog', 'ext' => 'xml'), true) ?></loc>
+		<lastmod><?=$date?></lastmod>
+	</sitemap>
 <?
 	for($i = 1; $i <= $productPages; $i++) {
 		// $url = Router::url(array('action' => 'products', $i), true);

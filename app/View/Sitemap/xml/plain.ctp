@@ -14,5 +14,10 @@
         $url = 'http://'.Configure::read('domain.url').$url;
         echo $this->element('sitemap_url', compact('url'));
     }
+
+    foreach($aRegions as $id => $title) {
+        $url = $this->Html->url(array('controller' => 'pages', 'action' => 'region', $id), true);
+        echo $this->element('sitemap_url', compact('url'));
+    }
 ?>
 </urlset>

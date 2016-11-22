@@ -7,7 +7,12 @@
 	echo $this->PHForm->hidden('id');
 	$aTabs = array(
 		__('General') =>
-			$this->PHForm->input('name', array('label' => array('text' => __('Subdomain'), 'class' => 'control-label')))
+			$this->PHForm->input('name', array('label' => array('text' => __('Subdomain'), 'class' => 'control-label'))).
+			$this->PHForm->input('title').
+			$this->PHForm->input('region_id', array(
+				'options' => $aRegions,
+				'label' => array('text' => __('Region'), 'class' => 'control-label'))
+			)
 			.$this->PHForm->input('sorting', array('class' => 'input-mini')),
 		__('Contacts') =>
 			$this->PHForm->input('address', array('type' => 'textarea'))

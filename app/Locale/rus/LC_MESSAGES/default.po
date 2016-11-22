@@ -756,3 +756,21 @@ msgstr "Редактировать станок"
 
 msgid "Related products"
 msgstr "Похожие запчасти"
+
+msgid "Map"
+msgstr "Карта"
+
+msgid "Subdomains"
+msgstr "Субдомены"
+
+msgid "Regions"
+msgstr "Регионы"
+
+msgid "Region"
+msgstr "Регион"
+
+msgid "Create region"
+msgstr "Создать регион"
+
+msgid "Edit регион"
+msgstr "Редактировать регион"

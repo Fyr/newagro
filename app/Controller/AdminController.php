@@ -51,6 +51,7 @@ class AdminController extends AppController {
 				'SystemSettings' => array('label' => __('System'), 'href' => array('controller' => 'AdminSettings', 'action' => 'index')),
 				'PriceSettings' => array('label' => __('Prices'), 'href' => array('controller' => 'AdminSettings', 'action' => 'prices')),
 				'SectionSettings' => array('label' => __('Sectionizer'), 'href' => array('controller' => 'AdminSections', 'action' => 'index')),
+				'Regions' => array('label' => __('Regions'), 'href' => array('controller' => 'AdminRegions', 'action' => 'index')),
 				'Subdomains' => array('label' => __('Subdomains'), 'href' => array('controller' => 'AdminSubdomains', 'action' => 'index'))
 			))
 		);

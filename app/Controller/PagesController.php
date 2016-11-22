@@ -4,10 +4,10 @@ App::uses('AppModel', 'Model');
 App::uses('Page', 'Model');
 App::uses('News', 'Model');
 App::uses('SiteArticle', 'Model');
-
+App::uses('Region', 'Model');
 class PagesController extends AppController {
 	public $name = 'Pages';
-	public $uses = array('Page', 'News');
+	public $uses = array('Page', 'News', 'Region');
 	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media');
 
 	public function home() {
@@ -34,6 +34,8 @@ class PagesController extends AppController {
 			$aArticle['Seo']['title'] = $aArticle['Page']['title'];
 		}
 		$this->seo = $aArticle['Seo'];
+
+		$this->set('aRegions', $this->Region->getOptions());
 	}
 	
 	public function show($slug) {
@@ -53,5 +55,18 @@ class PagesController extends AppController {
 
 	public function nonExist() {
 		$this->render('/Errors/error400');
+	}
+
+	public function region($id) {
+		$region = $this->Region->findById($id);
+		if (!$region) {
+			$this->redirect404();
+			return;
+		}
+
+		$conditions = array('region_id' => $id);
+		$order = 'sorting';
+		$aSubdomains = $this->Subdomain->find('all', compact('conditions', 'order'));
+		$this->set(compact('region', 'aSubdomains'));
 	}
 }

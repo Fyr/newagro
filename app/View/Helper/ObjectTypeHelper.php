@@ -21,6 +21,7 @@ class ObjectTypeHelper extends AppHelper {
                 'RepairArticle' => __('Repair articles'),
                 'Subdomain' => __('Subdomains'),
                 'MachineTool' => __('Machine tools'),
+                'Region' => __('Regions'),
             ), 
             'create' => array(
                 'Article' => __('Create Article'),
@@ -37,6 +38,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Product' => __('Create Product'),
                 'Subdomain' => __('Create subdomain'),
                 'MachineTool' => __('Create machine tool'),
+                'Region' => __('Create region'),
             ),
             'edit' => array(
                 'Article' => __('Edit Article'),
@@ -53,6 +55,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Product' => __('Edit Product'),
                 'Subdomain' => __('Edit subdomain'),
                 'MachineTool' => __('Edit machine tool'),
+                'Region' => __('Edit region'),
             ),
             'view' => array(
             	'Article' => __('View Article'),

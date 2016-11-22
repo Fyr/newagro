@@ -2,13 +2,22 @@
 App::uses('AdminController', 'Controller');
 App::uses('AppModel', 'Model');
 App::uses('Subdomain', 'Model');
+App::uses('Region', 'Model');
 class AdminSubdomainsController extends AdminController {
     public $name = 'AdminSubdomains';
     public $components = array('Auth', 'Table.PCTableGrid', 'Article.PCArticle');
-    public $uses = array('Subdomain');
+    public $uses = array('Subdomain', 'Region');
+
+	public function beforeRender() {
+		parent::beforeRender();
+		$this->set('aRegions', $this->Region->getOptions());
+	}
 
 	public function index() {
-		$this->paginate['order'] = 'Subdomain.sorting';
+		$this->paginate = array(
+			'fields' => array('name', 'title', 'region_id', 'email', 'skype'),
+			'order' => array('region_id' => 'ASC')
+		);
 		$this->PCTableGrid->paginate('Subdomain');
 		$this->currMenu = 'Settings';
 	}
