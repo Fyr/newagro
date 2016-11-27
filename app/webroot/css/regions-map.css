@@ -1,0 +1,91 @@
+.map {width: 615px; height: 361px;}
+.region-map {position: relative; }
+.rh1 {
+    background-image: url('/img/regions/h1.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 9px;
+    top: 289px;
+    width: 40px;
+    height: 60px;
+    z-index: 1;
+}
+.rh2 {
+    background-image: url('/img/regions/h2.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 1px;
+    top: 257px;
+    width: 79px;
+    height: 63px;
+    z-index: 1;
+}
+
+.rh4 {
+    background-image: url('/img/regions/h4.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 60px;
+    top: 204px;
+    width: 118px;
+    height: 113px;
+    z-index: 1;
+}
+.rh5 {
+    background-image: url('/img/regions/h5.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 21px;
+    top: 182px;
+    width: 103px;
+    height: 84px;
+    z-index: 1;
+}
+.rh6 {
+    background-image: url('/img/regions/h6.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 37px;
+    top: 106px;
+    width: 218px;
+    height: 122px;
+    z-index: 1;
+}
+.rh7 {
+    background-image: url('/img/regions/h7.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 131px;
+    top: 140px;
+    width: 156px;
+    height: 168px;
+    z-index: 1;
+}
+.rh8 {
+    background-image: url('/img/regions/h8.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 201px;
+    top: 71px;
+    width: 257px;
+    height: 290px;
+    z-index: 1;
+}
+.rh9 {
+    background-image: url('/img/regions/h9.png');
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    left: 346px;
+    top: 0px;
+    width: 269px;
+    height: 351px;
+    z-index: 1;
+}
