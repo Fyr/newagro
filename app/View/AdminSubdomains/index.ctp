@@ -14,7 +14,6 @@
     $columns['Subdomain.region_id']['label'] = __('Region');
     $columns['Subdomain.region_id']['format'] = 'select';
     $columns['Subdomain.region_id']['options'] = $aRegions;
-    fdebug($columns);
 
     $title = __('Settings').': '.__('Subdomains');
     echo $this->element('admin_title', compact('title'));

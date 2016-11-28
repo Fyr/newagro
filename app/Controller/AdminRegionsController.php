@@ -21,7 +21,7 @@ class AdminRegionsController extends AdminController {
     
     public function index() {
     	$this->paginate = array(
-    		'fields' => array('id', 'title', 'map_js')
+    		'fields' => array('id', 'title')
     	);
     	$this->PCTableGrid->paginate('Region');
     }

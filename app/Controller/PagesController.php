@@ -24,9 +24,6 @@ class PagesController extends AppController {
 		));
 		$this->set('aHomePageNews', $aNews);
 
-		// $conditions = array('slug' => 'home', 'subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
-		// $order = array('subdomain_id' => 'DESC');
-		// $aArticle = $this->Page->find('all', compact('conditions', 'order'));
 		$aArticle = $this->Page->getBySlug('home');
 		$this->set('contentArticle', $aArticle);
 		
@@ -35,7 +32,10 @@ class PagesController extends AppController {
 		}
 		$this->seo = $aArticle['Seo'];
 
-		$this->set('aRegions', $this->Region->getOptions());
+		$aRegions = Hash::combine($this->Region->find('all'), '{n}.Region.id', '{n}.Region');
+		$aSubdomains = $this->Subdomain->find('all');
+		$aSubdomains = Hash::combine($aSubdomains, '{n}.Subdomain.id', '{n}.Subdomain', '{n}.Subdomain.region_id'); // group by region
+		$this->set(compact('aRegions', 'aSubdomains'));
 	}
 	
 	public function show($slug) {

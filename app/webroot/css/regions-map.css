@@ -1,5 +1,20 @@
 .map {width: 615px; height: 361px;}
 .region-map {position: relative; }
+.map-nav {position: absolute; z-index: 3;}
+#map-all {background: url(/img/regions/regions_all.png) no-repeat; position: absolute;}
+.small-map {
+    background-image: none;
+    background-repeat: no-repeat;
+    display: block;
+    width: 50px;
+    height: 30px;
+    position: absolute;
+}
+.small-map:hover {
+    background-image: url('/img/regions/small_map.png');
+}
+.small-map img { width: 50px;}
+.small-map:hover img { display: none;}
 .rh1 {
     background-image: url('/img/regions/h1.png');
     background-repeat: no-repeat;

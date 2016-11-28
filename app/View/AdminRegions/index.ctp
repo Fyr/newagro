@@ -8,8 +8,6 @@
 	unset($actions['row']['delete']);
 
 	$columns = $this->PHTableGrid->getDefaultColumns($objectType);
-	$columns['Region.map_js']['format'] = 'boolean';
-	$columns['Region.map_js']['label'] = __('Map');
 
 	$title = __('Settings').': '.$this->ObjectType->getTitle('index', $objectType);
 	echo $this->element('admin_title', compact('title'));
