@@ -400,7 +400,7 @@ button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 }
 
 @media (max-width: 935px) { 
-    .footer .footerSkypeEmail { margin-left: 20px; margin-top: -50px; float: none; position: absolute; left: 0; top: 130px;}
+    .footer .footerSkypeEmail { margin-left: 20px; margin-top: -50px; float: none; position: absolute; left: -10px; top: 110px;}
     .footer .footerPromo { margin-top: 110px; margin-bottom: -14px}
 }
 
