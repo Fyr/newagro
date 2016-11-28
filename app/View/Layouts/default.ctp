@@ -228,7 +228,7 @@ $(document).ready(function(){
 	                        <a href="mailto:<?=Configure::read('Settings.email')?>"><?=Configure::read('Settings.email')?></a>
 	                    </div>
 <?
-    if (Configure::read('domain.zone') == 'ru') {
+    if (Configure::read('domain.zone') == 'ru' || TEST_ENV) {
         echo $this->element('social');
     }
 ?>
