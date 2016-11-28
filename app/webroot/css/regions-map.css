@@ -1,7 +1,12 @@
 .map {width: 615px; height: 361px;}
 .region-map {position: relative; }
 .map-nav {position: absolute; z-index: 3;}
-#map-all {background: url(/img/regions/regions_all.png) no-repeat; position: absolute;}
+#map-all {
+    background-image: url(/img/regions/regions_all.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+}
 .small-map {
     background-image: none;
     background-repeat: no-repeat;

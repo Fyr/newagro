@@ -12,8 +12,9 @@
 <div id="wrap-map" style="display: none">
 	<div class="region-map map">
 		<div id="map-all" class="map"></div>
-		<div class="map-region" style="display: none; position: relative;">
+		<div class="map-region" style="position: relative; text-align: center; display: none; ">
 			<a class="small-map" href="javascript:;" title="Назад к карте"><img src="/img/regions/regions_all.png" alt="Назад к карте" /></a>
+			<span style="display: inline-block; position: relative;">
 <?
 	foreach($aRegions as $id => $region) {
 		echo $this->Html->image('/img/regions/region'.$id.'.png', array('id' => 'region'.$id, 'class' => 'region', 'style' => 'display: none'));
@@ -31,6 +32,7 @@
 		}
 	}
 ?>
+			</span>
 		</div>
 		<div class="map-nav">
 			<img class="map" src="/img/blank.gif" alt="Карта регионов России" usemap="#regions_nav" />
