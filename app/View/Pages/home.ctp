@@ -95,25 +95,25 @@ $(function(){
 				$('.map-nav').hide();
 
 				$('#map-all').addClass('small-map');
-				setTimeout(function(){
-					$('.map-region .region').hide();
-					$('.marker').hide();
-					$('.map-region #region' + regionID).show();
 
-					$('.map-region').show();
-					$('.rm' + regionID).show();
-				}, 800);
+				$('.map-region .region').hide();
+				$('.marker').hide();
+				$('.map-region #region' + regionID).show();
+				$('.rm' + regionID).show();
+
+				setTimeout(function(){
+					$('.map-region').fadeIn(500);
+				}, 250);
 			});
 		}(i));
 	}
 	$('.small-map').click(function(){
-		$('.map-region').hide();
-
+		$('.map-region').fadeOut(500);
 		$('#map-all').show();
 		$('#map-all').removeClass('small-map');
 		setTimeout(function(){
 			$('.map-nav').show();
-		}, 800);
+		}, 500);
 	});
 });
 </script>
