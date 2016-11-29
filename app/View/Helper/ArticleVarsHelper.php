@@ -11,7 +11,8 @@ class ArticleVarsHelper extends AppHelper {
 		$url = SiteRouter::url($article);
 		
 		$title = $article[$objectType]['title'];
-		$field = (Configure::read('domain.zone') == 'ru' && in_array($objectType, array('Brand', 'Category', 'Subcategory'))) ? 'teaser_ru' : 'teaser';
+		$zone = Configure::read('domain.zone');
+		$field = ($zone != 'by' && in_array($objectType, array('Brand', 'Category', 'Subcategory'))) ? 'teaser_'.$zone : 'teaser';
 		$teaser = nl2br($article[$objectType][$field]);
 		$src = $this->Media->imageUrl($article, $size);
 		$featured = $article[$objectType]['featured'];
@@ -19,7 +20,8 @@ class ArticleVarsHelper extends AppHelper {
 
 	public function body($article) {
 		$objectType = $this->getObjectType($article);
-		$field = (Configure::read('domain.zone') == 'ru' && in_array($objectType, array('Brand', 'Category', 'Subcategory', 'Product'))) ? 'body_ru' : 'body';
+		$zone = Configure::read('domain.zone');
+		$field = ($zone != 'by' && in_array($objectType, array('Brand', 'Category', 'Subcategory', 'Product'))) ? 'body_'.$zone : 'body';
 		return $article[$this->getObjectType($article)][$field];
 	}
 }
