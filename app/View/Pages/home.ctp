@@ -53,10 +53,20 @@
 			'alt' => $region['title'],
 			'title' => $region['title'],
 			'class' => 'r'.$id,
+			'data-region' => $id,
 			'shape' => 'poly',
 			'coords' => $region['area_map'],
 			'href' => 'javascript:;',
 		));
+		if ($region['marker_x'] || $region['marker_y']) {
+			echo $this->Html->link('', 'javascript:;', array(
+				'escape' => false,
+				'data-region' => $id,
+				'class' => 'r'.$id.' region-point',
+				'title' => $region['marker_title'],
+				'style' => 'left: ' . $region['marker_x'] . 'px; top: ' . $region['marker_y'] . 'px;'
+			));
+		}
 	}
 ?>
 			</map>
@@ -80,21 +90,30 @@ $(function(){
 				$('.rh' + i).hide();
 				$('.region-nav').html('');
 			}).click(function(){
-				var regionID = this.className.replace(/r/, '');
-				$('#map-all').hide();
+				// var regionID = this.className.replace(/r/, '');
+				var regionID = $(this).data('region');
 				$('.map-nav').hide();
-				$('.map-region .region').hide();
-				$('.map-region').show();
-				$('.map-region #region' + regionID).show();
-				$('.marker').hide();
-				$('.rm' + regionID).show();
+
+				$('#map-all').addClass('small-map');
+				setTimeout(function(){
+					$('.map-region .region').hide();
+					$('.marker').hide();
+					$('.map-region #region' + regionID).show();
+
+					$('.map-region').show();
+					$('.rm' + regionID).show();
+				}, 800);
 			});
 		}(i));
 	}
 	$('.small-map').click(function(){
-		$('#map-all').show();
-		$('.map-nav').show();
 		$('.map-region').hide();
+
+		$('#map-all').show();
+		$('#map-all').removeClass('small-map');
+		setTimeout(function(){
+			$('.map-nav').show();
+		}, 800);
 	});
 });
 </script>

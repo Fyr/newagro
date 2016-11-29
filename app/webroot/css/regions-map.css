@@ -6,6 +6,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
+    transition: all 0.5s ease-in-out;
 }
 .small-map {
     background-image: none;
@@ -20,6 +21,8 @@
 }
 .small-map img { width: 50px;}
 .small-map:hover img { display: none;}
+.region-point { display: block; width: 16px; height: 16px; background: url(/img/point.png) no-repeat; position: absolute;}
+.region-point:hover {background: url(/img/point-selected.png);}
 .rh1 {
     background-image: url('/img/regions/h1.png');
     background-repeat: no-repeat;
