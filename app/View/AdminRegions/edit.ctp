@@ -16,7 +16,8 @@
 			$this->PHForm->input('title')
 			.$this->PHForm->input('marker_title', array('label' => array('class' => 'control-label', 'text' => 'Надпись маркера'))),
 		__('Map') =>
-			$this->Html->div('', 'Кликните по карте, чтобы установить маркер данного региона')
+			$this->Html->div('', 'Кликните по карте, чтобы установить маркер данного региона<br />
+				Кликните <a href="javascript:;" onclick="delMarker()">сюда</a>, чтобы удалить маркер')
 			.$this->Html->div('map-images', $map_images, array('style' => 'position: relative;'))
 	);
 	// echo $this->PHForm->input('title');
@@ -39,6 +40,18 @@ function cssPx(e, prop, val) {
 function placeMarker(pos) {
 	cssPx('#marker', 'left', pos.x);
 	cssPx('#marker', 'top', pos.y);
+
+	$('#RegionMarkerX').val(pos.x);
+	$('#RegionMarkerY').val(pos.y);
+
+	if (pos.x && pos.y) {
+		$('#marker').show();
+	} else {
+		$('#marker').hide();
+	}
+}
+function delMarker() {
+	placeMarker({x: 0, y: 0});
 }
 $(function(){
 	placeMarker({x: <?=intval($this->request->data('Region.marker_x'))?>, y: <?=intval($this->request->data('Region.marker_y'))?>});
@@ -46,8 +59,6 @@ $(function(){
 		var div = $('.map-images').get(0).getBoundingClientRect();
 		var pos = {x: e.pageX - parseInt(div.left) - 8, y: e.pageY - parseInt(div.top) - 8};
 		placeMarker(pos);
-		$('#RegionMarkerX').val(pos.x);
-		$('#RegionMarkerY').val(pos.y);
 	});
 });
 </script>

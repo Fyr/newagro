@@ -772,5 +772,5 @@ msgstr "Регион"
 msgid "Create region"
 msgstr "Создать регион"
 
-msgid "Edit регион"
+msgid "Edit region"
 msgstr "Редактировать регион"

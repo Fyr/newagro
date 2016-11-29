@@ -58,7 +58,7 @@
 			'coords' => $region['area_map'],
 			'href' => 'javascript:;',
 		));
-		if ($region['marker_x'] || $region['marker_y']) {
+		if ($region['marker_x'] && $region['marker_y']) {
 			echo $this->Html->link('', 'javascript:;', array(
 				'escape' => false,
 				'data-region' => $id,
