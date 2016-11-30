@@ -1,4 +1,5 @@
 .map {width: 615px; height: 361px;}
+.mobile-map .map {width: 431px; height: 253px;} /* x 0.7 */
 .region-map {position: relative; }
 .map-nav {position: absolute; z-index: 3;}
 #map-all {
@@ -12,8 +13,8 @@
     background-image: none;
     background-repeat: no-repeat;
     display: block;
-    width: 50px;
-    height: 30px;
+    width: 50px !important;
+    height: 30px !important;
     position: absolute;
 }
 .small-map:hover {
@@ -26,6 +27,7 @@
 .rh1 {
     background-image: url('/img/regions/h1.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 9px;
@@ -37,6 +39,7 @@
 .rh2 {
     background-image: url('/img/regions/h2.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 1px;
@@ -49,6 +52,7 @@
 .rh4 {
     background-image: url('/img/regions/h4.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 60px;
@@ -60,6 +64,7 @@
 .rh5 {
     background-image: url('/img/regions/h5.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 21px;
@@ -71,6 +76,7 @@
 .rh6 {
     background-image: url('/img/regions/h6.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 37px;
@@ -82,6 +88,7 @@
 .rh7 {
     background-image: url('/img/regions/h7.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 131px;
@@ -93,6 +100,7 @@
 .rh8 {
     background-image: url('/img/regions/h8.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 201px;
@@ -104,6 +112,7 @@
 .rh9 {
     background-image: url('/img/regions/h9.png');
     background-repeat: no-repeat;
+    background-size: contain;
     display: none;
     position: absolute;
     left: 346px;

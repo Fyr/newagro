@@ -9,7 +9,15 @@ $(window).load(function() {
 		pauseOnHover: false
 	});
 });
+/*
+function isMobile() {
+	return $(window).width() <= 430;
+}
 
+function isIpad() {
+	return $(window).width() <= 720;
+}
+*/
 var flag = true;
 $(document).ready(function(){
 	$('img[align="left"]').css('margin', '10px 10px 10px 0');
