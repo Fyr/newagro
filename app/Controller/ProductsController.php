@@ -136,10 +136,11 @@ class ProductsController extends AppController {
 		unset($this->seo['keywords']);
 		unset($this->seo['descr']);
 
-		$this->set('aRelated', $this->_getRelatedProducts($id, $article['Product']['code'], $article['Product']['subcat_id']));
+		$this->set('aRelated', $this->_getRelatedProducts($id, $article['Product']['code'], $article['Product']['cat_id'], $article['Product']['subcat_id']));
 	}
 
-	private function _getRelatedProducts($id, $code, $subcat_id) {
+	private function _getRelatedProducts($id, $code, $cat_id, $subcat_id) {
+		/*
 		$limit = 6;
 		$value = $this->DetailNum->strip($code);
 		$product_ids = $this->DetailNum->findDetails($this->DetailNum->stripList('*'.$value.'*'), true, DetailNum::ORIG);
@@ -161,7 +162,15 @@ class ProductsController extends AppController {
 			}
 		}
 		$products = am($products, $this->Product->find('all', compact('conditions', 'limit')));
-		return $products;
+		*/
+
+		$conditions = array('Product.published' => 1, 'Product.code <> ' => $code);
+		if ($subcat_id) {
+			$conditions['Product.subcat_id'] = $subcat_id;
+		} else {
+			$conditions['Product.cat_id'] = $cat_id;
+		}
+		return $this->Product->getRandomRows(6, $conditions);
 	}
 
 	private function logSearch($q) {
