@@ -774,3 +774,15 @@ msgstr "Создать регион"
 
 msgid "Edit region"
 msgstr "Редактировать регион"
+
+msgid "Markers"
+msgstr "Карта региона"
+
+msgid "Create marker"
+msgstr "Создать маркер"
+
+msgid "Edit marker"
+msgstr "Редактировать маркер"
+
+msgid "Url"
+msgstr "URL"

@@ -18,15 +18,16 @@
 <?
 	foreach($aRegions as $id => $region) {
 		echo $this->Html->image('/img/regions/region'.$id.'.png', array('id' => 'region'.$id, 'class' => 'region', 'style' => 'display: none'));
-		if (isset($aSubdomains[$id])) {
-			foreach($aSubdomains[$id] as $subdomain) {
-				$url = 'http://'.$subdomain['name'].'.'.Configure::read('domain.url');
-				echo $this->Html->link($this->Html->image('/img/pointer.png'), $url, array(
+		if (isset($aMarkers[$id])) {
+			foreach($aMarkers[$id] as $marker) {
+				$marker = $marker;
+				// $url = 'http://'.$marker['name'].'.'.Configure::read('domain.url');
+				echo $this->Html->link($this->Html->image('/img/pointer.png'), $marker['url'], array(
 					'escape' => false,
 					'id' => 'marker'.$id,
 					'class' => 'marker rm'.$id,
-					'title' => $subdomain['title'],
-					'style' => 'display: none; position: absolute; left: '.$subdomain['marker_x'].'px; top: '.$subdomain['marker_y'].'px'
+					'title' => $marker['title'],
+					'style' => 'display: none; position: absolute; left: '.$marker['marker_x'].'px; top: '.$marker['marker_y'].'px'
 				));
 			}
 		}
@@ -113,40 +114,41 @@ $(function(){
 	$('#wrap-map area.r').each(function(){
 		$('#wrap-map .region-map').append('<div class="rh rh' + $(this).data('region') + '" />');
 	});
-	if ($(window).width() < 870) {
-		resizeMapWidget('#wrap-map');
-	}
-	$('#regions-map').html($('#wrap-map').html());
-	$('#wrap-map').html('');
+	if ($(window).width() > 870) {
+		// resizeMapWidget('#wrap-map');
 
-	$('.r').mouseenter(function () {
-		$('.rh' + $(this).data('region')).show();
-	}).mouseleave(function () {
-		$('.rh' + $(this).data('region')).hide();
-	}).click(function(){
-		var regionID = $(this).data('region');
-		$('.map-nav').hide();
+		$('#regions-map').html($('#wrap-map').html());
+		$('#wrap-map').html('');
 
-		$('#map-all').addClass('small-map');
+		$('.r').mouseenter(function () {
+			$('.rh' + $(this).data('region')).show();
+		}).mouseleave(function () {
+			$('.rh' + $(this).data('region')).hide();
+		}).click(function () {
+			var regionID = $(this).data('region');
+			$('.map-nav').hide();
 
-		$('.map-region .region').hide();
-		$('.marker').hide();
-		$('.map-region #region' + regionID).show();
-		$('.rm' + regionID).show();
+			$('#map-all').addClass('small-map');
 
-		setTimeout(function(){
-			$('.map-region').fadeIn(500);
-		}, 250);
-	});
-	$('.small-map').click(function(){
-		$('.map-region').fadeOut(500);
-		$('#map-all').show();
-		setTimeout(function(){
-			$('#map-all').removeClass('small-map');
-			setTimeout(function(){
-				$('.map-nav').show();
+			$('.map-region .region').hide();
+			$('.marker').hide();
+			$('.map-region #region' + regionID).show();
+			$('.rm' + regionID).show();
+
+			setTimeout(function () {
+				$('.map-region').fadeIn(500);
+			}, 250);
+		});
+		$('.small-map').click(function () {
+			$('.map-region').fadeOut(500);
+			$('#map-all').show();
+			setTimeout(function () {
+				$('#map-all').removeClass('small-map');
+				setTimeout(function () {
+					$('.map-nav').show();
+				}, 500);
 			}, 500);
-		}, 500);
-	});
+		});
+	}
 });
 </script>

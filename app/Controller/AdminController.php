@@ -52,7 +52,8 @@ class AdminController extends AppController {
 				'PriceSettings' => array('label' => __('Prices'), 'href' => array('controller' => 'AdminSettings', 'action' => 'prices')),
 				'SectionSettings' => array('label' => __('Sectionizer'), 'href' => array('controller' => 'AdminSections', 'action' => 'index')),
 				'Regions' => array('label' => __('Regions'), 'href' => array('controller' => 'AdminRegions', 'action' => 'index')),
-				'Subdomains' => array('label' => __('Subdomains'), 'href' => array('controller' => 'AdminSubdomains', 'action' => 'index'))
+				'Subdomains' => array('label' => __('Subdomains'), 'href' => array('controller' => 'AdminSubdomains', 'action' => 'index')),
+				'Markers' => array('label' => __('Markers'), 'href' => array('controller' => 'AdminMarkers', 'action' => 'index'))
 			))
 		);
 		$this->aBottomLinks = $this->aNavBar;

@@ -7,7 +7,7 @@ App::uses('SiteArticle', 'Model');
 App::uses('Region', 'Model');
 class PagesController extends AppController {
 	public $name = 'Pages';
-	public $uses = array('Page', 'News', 'Region');
+	public $uses = array('Page', 'News', 'Region', 'Marker');
 	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media');
 
 	public function home() {
@@ -33,9 +33,9 @@ class PagesController extends AppController {
 		$this->seo = $aArticle['Seo'];
 
 		$aRegions = Hash::combine($this->Region->find('all'), '{n}.Region.id', '{n}.Region');
-		$aSubdomains = $this->Subdomain->find('all');
-		$aSubdomains = Hash::combine($aSubdomains, '{n}.Subdomain.id', '{n}.Subdomain', '{n}.Subdomain.region_id'); // group by region
-		$this->set(compact('aRegions', 'aSubdomains'));
+		$aMarkers = $this->Marker->find('all');
+		$aMarkers = Hash::combine($aMarkers, '{n}.Marker.id', '{n}.Marker', '{n}.Marker.region_id'); // group by region
+		$this->set(compact('aRegions', 'aMarkers'));
 	}
 	
 	public function show($slug) {
