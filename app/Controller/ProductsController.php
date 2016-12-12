@@ -29,9 +29,9 @@ class ProductsController extends AppController {
 		);
 		$category = array();
 		if ($catSlug) {
-			$this->request->data('Category.slug', $catSlug);
 			$category = $this->Category->findBySlug($catSlug);
 			if ($category) {
+				$this->request->data('Product.cat_id', $category['Category']['id']);
 				$this->set('category', $category);
 				$page_title = $category['Category']['title'];
 				$this->seo = $this->Seo->defaultSeo($category['Seo'],
@@ -44,9 +44,10 @@ class ProductsController extends AppController {
 
 		$subcategory = array();
 		if ($subcatSlug) {
-			$this->request->data('Subcategory.slug', $subcatSlug);
+			// $this->request->data('Subcategory.slug', $subcatSlug);
 			$subcategory = $this->Subcategory->findBySlug($subcatSlug);
 			if ($subcategory) {
+				$this->request->data('Product.subcat_id', $subcategory['Subcategory']['id']);
 				$this->set('subcategory', $subcategory);
 				$this->set('currSubcat', $subcategory['Subcategory']['id']);
 				$page_title = $subcategory['Subcategory']['title'];
@@ -81,10 +82,14 @@ class ProductsController extends AppController {
 					$this->set('gpzError', $e->getMessage());
 				}
 			}
+		} else {
+			$this->Product->unbindModel(array('hasOne' => array('Search'))); // нужно для поиска по тексту
 		}
 		if ($data = $this->request->data) {
 			$this->paginate['conditions'] = array_merge($this->paginate['conditions'], $this->postConditions($data));
 		}
+
+		$this->Product->unbindModel(array('hasOne' => array('Seo')));
 		$aProducts = $this->paginate('Product');
 		$this->set('aArticles', $aProducts);
 		$this->set('objectType', 'Product');
