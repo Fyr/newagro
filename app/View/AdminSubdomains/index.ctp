@@ -6,7 +6,7 @@
     $actions['table']['add']['href'] = $createURL;
     $actions['table']['add']['label'] = $createTitle;
     $backURL = $this->Html->url(array('action' => 'index'));
-    $deleteURL = $this->Html->url(array('action' => 'delete')).'/{$id}?model=Section&backURL='.urlencode($backURL);
+    $deleteURL = $this->Html->url(array('action' => 'delete')).'/{$id}?model=Subdomain&backURL='.urlencode($backURL);
     $actions['row']['delete'] = $this->Html->link('', $deleteURL, array('class' => 'icon-color icon-delete', 'title' => __('Delete record')), __('Are you sure to delete this record?'));
 
     $columns = $this->PHTableGrid->getDefaultColumns('Subdomain');

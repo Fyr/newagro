@@ -33,10 +33,7 @@
 			.$this->PHForm->input('phone1', array('class' => 'input-large'))
 			.$this->PHForm->input('phone2', array('class' => 'input-large'))
 			.$this->PHForm->input('email', array('class' => 'input-large'))
-			.$this->PHForm->input('skype', array('class' => 'input-large')),
-		__('Map') =>
-			$this->Html->div('', 'Кликните по карте, чтобы установить маркер данного субдомена').
-			$this->Html->div('map-images', $map_images, array('style' => 'position: relative;'))
+			.$this->PHForm->input('skype', array('class' => 'input-large'))
 	);
 	echo $this->element('admin_tabs', compact('aTabs'));
 	echo $this->element('Form.form_actions', array('backURL' => $this->Html->url(array('action' => 'index'))));
