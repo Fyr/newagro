@@ -65,7 +65,7 @@ class SiteRouter extends Router {
 			);
 		}
 
-		if (in_array($objectType, array('Product', 'Category', 'Subcategory')) && Hash::get($article, 'Category.is_subdomain')) {
+		if (in_array($objectType, array('Product', 'Category', 'Subcategory')) && Hash::get($article, 'Category.is_subdomain') && Configure::read('domain.subdomain') == 'www') {
 			return self::fullUrl($article['Category']['slug'], $url);
 		} elseif (Configure::read('domain.category')) {
 			return self::fullUrl('', $url);
