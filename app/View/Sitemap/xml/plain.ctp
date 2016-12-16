@@ -7,11 +7,11 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <?
     $aURL = array(
-        '/pages/show/about-us',
-        '/contacts'
+        array('controller' => 'pages', 'action' => 'show', 'about-us'),
+        array('controller' => 'contacts', 'action' => 'index')
     );
     foreach($aURL as $url) {
-        $url = 'http://'.Configure::read('domain.url').$url;
+        $url = $this->Html->url($url, true);
         echo $this->element('sitemap_url', compact('url'));
     }
 

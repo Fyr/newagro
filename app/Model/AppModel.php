@@ -147,7 +147,6 @@ class AppModel extends Model {
 	public function getBySlug($slug) {
 		$conditions = array('slug' => $slug, 'subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
 		$order = array('subdomain_id' => 'DESC');
-		$aArticle = $this->find('all', compact('conditions', 'order'));
-		return $aArticle[0];
+		return $this->find('first', compact('conditions', 'order'));
 	}
 }

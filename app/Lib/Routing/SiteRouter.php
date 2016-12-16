@@ -6,9 +6,19 @@ class SiteRouter extends Router {
 		list($objectType) = array_keys($article);
 		return $objectType;
 	}
+
+	static public function fullUrl($subdomain, $url) {
+		if (!$subdomain) {
+			$subdomain = Configure::read('domain.url');
+		} elseif (strpos($subdomain, '.') === false) {
+			$subdomain.= '.'.Configure::read('domain.url');
+		}
+		return 'http://'.$subdomain.parent::url($url, false);
+	}
 	
 	static public function url($article, $lFull = false) {
 		$objectType = self::getObjectType($article);
+		$subdomain = '';
 		if ($objectType == 'Product') {
 			$subcatSlug = Hash::get($article, 'Subcategory.slug');
 			$url = array(
@@ -21,7 +31,7 @@ class SiteRouter extends Router {
 			);
 		} elseif ($objectType == 'Category') {
 			$url = array(
-				'controller' => 'Products', 
+				'controller' => 'Products',
 				'action' => 'index',
 				'category' => $article['Category']['slug'],
 				'objectType' => 'Product'
@@ -40,6 +50,12 @@ class SiteRouter extends Router {
 				'action' => 'index',
 				'slug' => $article['RepairArticle']['slug']
 			);
+		} elseif ($objectType == 'Page') {
+			$url = array(
+				'controller' => 'page',
+				'action' => 'show',
+				$article['Page']['slug']
+			);
 		} else {
 			$url = array(
 				'controller' => 'Articles', 
@@ -48,7 +64,13 @@ class SiteRouter extends Router {
 				'slug' => $article[$objectType]['slug']
 			);
 		}
-		return parent::url($url, $lFull);
+
+		if (in_array($objectType, array('Product', 'Category', 'Subcategory')) && Hash::get($article, 'Category.is_subdomain')) {
+			return self::fullUrl($article['Category']['slug'], $url);
+		} elseif (Configure::read('domain.category')) {
+			return self::fullUrl('', $url);
+		}
+		return parent::url($url, true);
 	}
 	
 }

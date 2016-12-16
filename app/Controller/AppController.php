@@ -51,9 +51,17 @@ class AppController extends Controller {
 	public function beforeFilter() {
 		$this->disableCopy = !TEST_ENV;
 
-		// $this->Subdomain = $this->loadModel('Subdomain');
+		$this->loadModel('Category');
+		$conditions = array('slug' => Configure::read('domain.subdomain'), 'is_subdomain' => 1);
+		$category = $this->Category->find('first', compact('conditions'));
+		if ($category) {
+			Configure::write('domain.category', Configure::read('domain.subdomain'));
+			Configure::write('domain.category_id', Hash::get($category, 'Category.id'));
+			Configure::write('domain.subdomain', 'www');
+		}
+
 		App::uses('Subdomain', 'Model');
-		$this->Subdomain =  new Subdomain();
+		$this->Subdomain = new Subdomain();
 		$subdomain = $this->Subdomain->findByName(Configure::read('domain.subdomain'));
 		if (!$subdomain) {
 			$this->redirect404();
@@ -66,6 +74,8 @@ class AppController extends Controller {
 		Configure::write('Settings.phone2', $subdomain['phone2']);
 		Configure::write('Settings.email', $subdomain['email']);
 		Configure::write('Settings.skype', $subdomain['skype']);
+
+		Configure::write('subdomains', $this->Subdomain->getOptions());
 
 		if (isset($this->request->url) && $this->request->url) {
 			
@@ -80,37 +90,44 @@ class AppController extends Controller {
 		}
 		$this->beforeFilterLayout();
 	}
+
+	protected function getUrl($url) {
+		$subdomain = (($subdomain = Configure::read('domain.subdomain')) && $subdomain <> 'www') ? $subdomain.'.' : '';
+		return (Configure::read('domain.category'))
+			? 'http://'.Configure::read('domain.url').$url
+			: 'http://'.$subdomain.Configure::read('domain.url').$url;
+	}
 	
 	protected function beforeFilterLayout() {
-		$this->aNavBar = array(
-			'home' => array('href' => '/', 'title' => __('Home')),
-			'news' => array('href' => '/news', 'title' => __('News')),
-			'products' => array('href' => '/zapchasti', 'title' => __('Spares')),
-			'remont' => array('href' => '/remont', 'title' => __('Repair')),
-			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
-			'brand' => array('href' => '/brand', 'title' => __('Brands')),
-			'machinetool' => array('href' => '/stanki', 'title' => __('Machine tools')),
-			'motor' => array('href' => '/motors', 'title' => __('Machinery')),
-			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
-			'dealer' => array('href' => '/magazini-zapchastei', 'title' => ''),
-			'contacts' => array('href' => '/contacts', 'title' => __('Contacts'))
+		$this->aNavBar = $this->aBottomLinks = array(
+			'home' => array('href' => $this->getUrl('/'), 'title' => __('Home')),
+			'news' => array('href' => $this->getUrl('/news'), 'title' => __('News')),
+			'products' => array('href' => $this->getUrl('/zapchasti'), 'title' => __('Spares')),
+			'remont' => array('href' => $this->getUrl('/remont'), 'title' => __('Repair')),
+			'offer' => array('href' => $this->getUrl('/offers'), 'title' => __('Hot Offers')),
+			'brand' => array('href' => $this->getUrl('/brand'), 'title' => __('Brands')),
+			'machinetool' => array('href' => $this->getUrl('/stanki'), 'title' => __('Machine tools')),
+			'motor' => array('href' => $this->getUrl('/motors'), 'title' => __('Machinery')),
+			'about-us' => array('href' => $this->getUrl('/pages/show/about-us'), 'title' => ''),
+			'dealer' => array('href' => $this->getUrl('/magazini-zapchastei'), 'title' => ''),
+			'contacts' => array('href' => $this->getUrl('/contacts'), 'title' => __('Contacts'))
 		);
-
+		/*
 		$this->aBottomLinks = array(
-			'home' => array('href' => '/', 'title' => __('Home')),
-			'news' => array('href' => '/news', 'title' => __('News')),
-			'products' => array('href' => '/zapchasti', 'title' => __('Spares')),
-			'remont' => array('href' => '/remont', 'title' => __('Repair')),
-			'offer' => array('href' => '/offers', 'title' => __('Hot Offers')),
-			'brand' => array('href' => '/brand', 'title' => __('Brands')),
-			'machinetool' => array('href' => '/stanki', 'title' => __('Machine tools')),
-			'motor' => array('href' => '/motors', 'title' => __('Machinery')),
-			'about-us' => array('href' => '/pages/show/about-us', 'title' => ''),
-			'dealer' => array('href' => '/magazini-zapchastei', 'title' => ''),
-			'contacts' => array('href' => '/contacts', 'title' => __('Contacts'))
+			'home' => array('href' => $this->getUrl('', '/'), 'title' => __('Home')),
+			'news' => array('href' => $this->getUrl('', '/news'), 'title' => __('News')),
+			'products' => array('href' => $this->getUrl('www', '/zapchasti'), 'title' => __('Spares')),
+			'remont' => array('href' => $this->getUrl('www', '/remont'), 'title' => __('Repair')),
+			'offer' => array('href' => $this->getUrl('', '/offers'), 'title' => __('Hot Offers')),
+			'brand' => array('href' => $this->getUrl('www', '/brand'), 'title' => __('Brands')),
+			'machinetool' => array('href' => $this->getUrl('www', '/stanki'), 'title' => __('Machine tools')),
+			'motor' => array('href' => $this->getUrl('www', '/motors'), 'title' => __('Machinery')),
+			'about-us' => array('href' => $this->getUrl('', '/pages/show/about-us'), 'title' => ''),
+			'dealer' => array('href' => $this->getUrl('www', '/magazini-zapchastei'), 'title' => ''),
+			'contacts' => array('href' => $this->getUrl('', '/contacts'), 'title' => __('Contacts'))
 		);
+		*/
 
-		
 		$this->currMenu = $this->_getCurrMenu();
 	    $this->currLink = $this->currMenu;
 	    
@@ -180,8 +197,6 @@ class AppController extends Controller {
 		
 		$this->set('disableCopy', $this->disableCopy);
 		
-		$this->set('aBottomLinks', $this->aBottomLinks);
-
 		// $this->Article = $this->SiteArticle;
 		$this->loadModel('Brand');
 		$brands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
