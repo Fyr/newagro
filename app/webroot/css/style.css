@@ -43,7 +43,7 @@ a:hover { text-decoration: none;}
 
     .header .promoContent { position: relative; }
         .header .promoContent .right { position: absolute; right: 38px; top: -20px; width: 210px;}
-        .header .promoContent .left { position: absolute; left: 38px; top: 0px; width: 210px; color: #363636; font-size: 14px;}
+        .header .promoContent .left { position: absolute; left: 38px; top: 0px; width: 220px; color: #363636; font-size: 14px;}
         .header .promoContent .left .letter { margin-top: 10px;}
         .header .promoContent .left .skype { margin-right: 10px;}
         .header .promoContent .left .email { margin-right: 8px;}

@@ -25,7 +25,7 @@ class ContactsController extends AppController {
 				
 				$this->redirect(array('action' => 'success'));
 			} else {
-				// fdebug('inValid');
+				// captcha is invalid
 			}
 		}
 		
