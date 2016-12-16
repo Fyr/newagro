@@ -5,9 +5,10 @@ App::uses('Page', 'Model');
 App::uses('News', 'Model');
 App::uses('SiteArticle', 'Model');
 App::uses('Region', 'Model');
+App::uses('Category', 'Model');
 class PagesController extends AppController {
 	public $name = 'Pages';
-	public $uses = array('Page', 'News', 'Region', 'Marker');
+	public $uses = array('Page', 'News', 'Region', 'Marker', 'Category');
 	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media');
 
 	public function home() {
@@ -24,7 +25,12 @@ class PagesController extends AppController {
 		));
 		$this->set('aHomePageNews', $aNews);
 
-		$aArticle = $this->Page->getBySlug('home');
+		if ($cat_id = Configure::read('domain.category_id')) {
+			$aArticle = $this->Category->findById($cat_id);
+			$aArticle['Page'] = $aArticle['Category'];
+		} else {
+			$aArticle = $this->Page->getBySlug('home');
+		}
 		$this->set('contentArticle', $aArticle);
 		
 		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
