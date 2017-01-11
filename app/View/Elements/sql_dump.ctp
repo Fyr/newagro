@@ -2,22 +2,6 @@
 .cake-sql-log td { vertical-align: top; }
 </style>
 <?php
-/**
- * SQL Dump element. Dumps out SQL log information
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.View.Elements
- * @since         CakePHP(tm) v 1.3
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
 
 if (!class_exists('ConnectionManager') || Configure::read('debug') < 2) {
 	return false;
@@ -35,7 +19,6 @@ if ($noLogs):
 		$sqlLogs[$source] = $db->getLog();
 	endforeach;
 endif;
-
 if ($noLogs || isset($_forced_from_dbo_)):
 	foreach ($sqlLogs as $source => $logInfo):
 		$text = $logInfo['count'] > 1 ? 'queries' : 'query';

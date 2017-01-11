@@ -1,4 +1,5 @@
 <?php
+$time = microtime(true);
 /**
  * Index
  *
@@ -106,3 +107,5 @@ $Dispatcher->dispatch(
 	new CakeRequest(),
 	new CakeResponse()
 );
+$time = microtime(true) - $time;
+fdebug("{$time},{$_SERVER['REQUEST_URI']}\r\n", 'web_stats.log');
