@@ -60,7 +60,11 @@ define('SUBDOMAIN_WWW', 1);
 Configure::write('search', array(
 	'stopWords' => __('search.stopWords')
 ));
-
+Configure::write('sitemap', array(
+	'cache' => true,
+	'dir' => ROOT.DS.APP_DIR.DS.'tmp'.DS.'cache'.DS,
+	'prefix' => 'sitemap_'
+));
 define('AUTH_ERROR', __('Invalid username or password, try again'));
 define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '192.168.1.22');
 

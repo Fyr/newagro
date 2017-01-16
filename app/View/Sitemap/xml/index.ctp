@@ -1,35 +1,24 @@
 <? echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
-<?
-	$date = date('c');
-?>
 <sitemapindex xmlns="http://www.google.com/schemas/sitemap/0.84">
 <?
+	$date = date('c');
+
 	foreach(array('News', 'RepairArticle', 'Offer', 'Brand', 'Motor', 'Dealer', 'SectionArticle') as $objectType) {
-?>
-	<sitemap>
-		<loc><?= Router::url(array('action' => 'articles', 'objectType' => $objectType, 'ext' => 'xml'), true) ?></loc>
-		<lastmod><?=$date?></lastmod>
-	</sitemap>
-<?
+		$url = Router::url(array('action' => 'articles', 'objectType' => $objectType, 'ext' => 'xml'), true);
+		echo $this->element('sitemap_map', compact('url', 'date'));
 	}
-?>
-	<sitemap>
-		<loc><?=Router::url(array('action' => 'plain', 'ext' => 'xml'), true)?></loc>
-		<lastmod><?=$date?></lastmod>
-	</sitemap>
-	<sitemap>
-		<loc><?=Router::url(array('action' => 'catalog', 'ext' => 'xml'), true) ?></loc>
-		<lastmod><?=$date?></lastmod>
-	</sitemap>
-<?
-	for($i = 1; $i <= $productPages; $i++) {
-		$url = 'http://'.Configure::read('domain.url').'/zapchasti/sitemap_'.$i.'.xml.gz';
-?>
-	<sitemap>
-		<loc><?=$url?></loc>
-		<lastmod><?=$date?></lastmod>
-	</sitemap>
-<?
+
+	$url = Router::url(array('action' => 'plain', 'ext' => 'xml'), true);
+	echo $this->element('sitemap_map', compact('url', 'date'));
+
+	foreach($aCategories as $category) {
+		for($i = 1; $i <= $category['Product']['pages']; $i++) {
+			$url = SiteRouter::url($category).'/sitemap_'.$i.'.xml.gz';
+			echo $this->element('sitemap_map', compact('url', 'date'));
+		}
 	}
+
 ?>
 </sitemapindex>
+<?//$this->element('sql_dump')?>
+<?=$this->element('sql_stats')?>

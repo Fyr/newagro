@@ -58,12 +58,21 @@ Router::connect('/sitemap_plain',
 		'action' => 'plain',
 	)
 );
-Router::connect('/zapchasti/sitemap_:page.xml.gz',
+/* почему то не работает :(
+Router::connect('/sitemap/products/:page.xml',
+	array(
+		'controller' => 'sitemap',
+		'action' => 'zapchasti',
+	),
+	array('pass' => array('page'))
+);
+*/
+Router::connect('/zapchasti/:slug/sitemap_:page.xml.gz',
 	array(
 		'controller' => 'sitemap',
 		'action' => 'products',
 	),
-	array('pass' => array('page'))
+	array('pass' => array('slug', 'page'))
 );
 
 /* -= News =- */

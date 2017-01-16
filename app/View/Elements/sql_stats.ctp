@@ -1,6 +1,3 @@
-<style>
-.cake-sql-log td { vertical-align: top; }
-</style>
 <?php
 
 if (!class_exists('ConnectionManager') || Configure::read('debug') < 2) {

@@ -7,7 +7,7 @@ App::uses('Section', 'Model');
 class RepairArticle extends Article {
 	protected $objectType = 'RepairArticle';
 
-	var $hasOne = array(
+	public $hasOne = array(
 		'Media' => array(
 			'className' => 'Media.Media',
 			'foreignKey' => 'object_id',

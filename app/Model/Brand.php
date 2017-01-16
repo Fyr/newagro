@@ -8,7 +8,7 @@ class Brand extends AppModel {
 	public $useDbConfig = 'vitacars';
 	public $useTable = 'articles';
 	
-	var $hasOne = array(
+	public $hasOne = array(
 		'Seo' => array(
 			'className' => 'SeoArticle',
 			'foreignKey' => 'object_id',
