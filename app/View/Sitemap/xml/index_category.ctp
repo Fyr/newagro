@@ -4,7 +4,7 @@
 	$date = date('c');
 	for($i = 1; $i <= $productPages; $i++) {
 		// $url = 'http://'.Configure::read('domain.url').'/zapchasti/sitemap_'.$i.'.xml.gz';
-		$url = SiteRouter::url($category).'/sitemap_'.$i.'.xml.gz';
+		$url = 'http://'.$subdomain.'.'.Configure::read('domain.url').'/zapchasti/sitemap_'.$i.'.xml.gz';
 		echo $this->element('sitemap_map', compact('url', 'date'));
 	}
 ?>

@@ -6,10 +6,6 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <?
-/*
-    $url = Router::url(array('controller' => 'Products', 'action' => 'index', 'objectType' => 'Product'), true);
-    echo $this->element('sitemap_url', compact('url'));
-*/
 	foreach($aArticles as $article) {
 		$url = SiteRouter::url($article, true);
         echo $this->element('sitemap_url', compact('url'));

@@ -35,11 +35,12 @@ class SitemapController extends AppController {
 
 	public function index() {
 		// $this->RequestHandler->setContent('xml');
-		$cacheKey = 'index.xml';
+		$cacheKey = 'www_index.xml';
 		if ($cat_id = Configure::read('domain.category_id')) { // category subdomain
-			$cacheKey = 'index_category.xml';
+			$slug = Configure::read('domain.category');
+			$cacheKey = $slug.'_index_category.xml';
 		} elseif (($subdomain = Configure::read('domain.subdomain')) && $subdomain <> 'www') { // subdomain
-			$cacheKey = 'index_subdomains.xml';
+			$cacheKey = $subdomain.'_index_subdomains.xml';
 		}
 		$cacheFilename = $this->_getCacheFilename($cacheKey);
 
@@ -122,9 +123,9 @@ class SitemapController extends AppController {
 	public function articles() {
 		$model = $this->request->param('objectType');
 		if (($subdomain = Configure::read('domain.subdomain')) && $subdomain <> 'www') { // subdomain
-			$cacheKey = 'articles_'.$model.'_'.$subdomain.'.xml';
+			$cacheKey = $subdomain.'_articles_'.$model.'.xml';
 		} else {
-			$cacheKey = 'articles_'.$model.'.xml';
+			$cacheKey = 'www_articles_'.$model.'.xml';
 		}
 
 		if (Configure::read('sitemap.cache') && $body = $this->_readCache($cacheKey)) {
@@ -175,147 +176,133 @@ class SitemapController extends AppController {
 		$this->render($tpl);
 	}
 
-	private function _isCacheReadable($cacheKey) {
+	private function _getFromCache($cacheKey, $category_ids) {
 		$cacheFilename = $this->_getCacheFilename($cacheKey);
-		if (!Configure::read('sitemap.cache') || !file_exists($cacheFilename)) {
-			return false;
-		}
-		$cacheModified = filectime($this->_getCacheFilename($cacheKey));
+		if (Configure::read('sitemap.cache') && file_exists($cacheFilename)) {
+			$cacheModified = filemtime($cacheFilename);
 
-		return true;
+			// Берем created, а не modified т.к. для sitemap важен URL (т.е. slug), а не просто модификация данных
+			// slug вряд ли меняется после создания продукта, в крайнем случае кэш обновится при создании нового продукта
+			$fields = array('Product.id', 'Product.created', 'Product.cat_id');
+			$conditions = array('Product.cat_id' => $category_ids);
+			$order = array('Product.created' => 'DESC');
+			$product = $this->Product->find('first', compact('fields', 'conditions', 'order'));
+			$productModified = strtotime($product['Product']['created']);
+			// fdebug(array($product['Product']['created'], $productModified, date('Y-m-d H:i:s', $cacheModified), $cacheModified));
+
+			// Из кэша берем данные только тогда когда кэш обновлялся после модифицации продукта
+			// (т.е. ничего с момента формирования кэша не изменилось)
+			if ($productModified < $cacheModified && $body = $this->_readCache($cacheKey)) {
+				return $body;
+			}
+		}
+		return false;
 	}
 
-	public function zapchasti($page) {
-		$cacheKey = 'zapchasti_'.$page.'.xml';
-		$cacheFilename = $this->_getCacheFilename($cacheKey);
+	private function _getProducts($page, $aCategoryOptions) {
+		$this->paginate = array(
+			'fields' => array('Product.id', 'Product.slug', 'Product.cat_id', 'Product.subcat_id'),
+			'conditions' => array('Product.published' => 1, 'Product.cat_id' => array_keys($aCategoryOptions)),
+			'limit' => self::PER_PAGE,
+			'page' => $page
+		);
+
+		$aArticles = $this->paginate('Product');
+
+		// Добавить подкатегории вручную - сокращает время запроса на count(*) Product
+		$this->_unbindModels($this->Subcategory);
+		$subcat_ids = array_unique(Hash::extract($aArticles, '{n}.Product.subcat_id'));
+		$subcategories = $this->Subcategory->findAllById($subcat_ids, array('id', 'slug'));
+		$subcategories = Hash::combine($subcategories, '{n}.Subcategory.id', '{n}');
+		foreach($aArticles as &$article) {
+			$cat_id = $article['Product']['cat_id'];
+			$subcat_id = $article['Product']['subcat_id'];
+			$article['Category'] = $aCategoryOptions[$cat_id]['Category'];
+			if (isset($subcategories[$subcat_id])) { // подкатегория у продукта может отсутствовать
+				$article['Subcategory'] = $subcategories[$subcat_id]['Subcategory'];
+			}
+		}
+		return $aArticles;
+	}
+
+	public function products($page) {
+		$cacheKey = 'www_all_products_'.$page.'.xml';
 
 		$conditions = array('is_subdomain' => 0);
 		$fields = array('id', 'title', 'slug', 'is_subdomain');
 		$categories = $this->Category->find('all', compact('fields', 'conditions'));
 		$categories = Hash::combine($categories, '{n}.Category.id', '{n}');
 
-		if (Configure::read('sitemap.cache') && file_exists($cacheFilename)) {
-			$cacheModified = filemtime($cacheFilename);
-
-			// Берем created, а не modified т.к. для sitemap важен URL (т.е. slug), а не просто модификация данных
-			// slug вряд ли меняется после создания продукта, в крайнем случае кэш обновится при создании нового продукта
-			$fields = array('Product.id', 'Product.created', 'Product.cat_id');
-			$conditions = array('Product.cat_id' => array_keys($categories));
-			$order = array('Product.created' => 'DESC');
-			$product = $this->Product->find('first', compact('fields', 'conditions', 'order'));
-			$productModified = strtotime($product['Product']['created']);
-			// fdebug(array($product['Product']['created'], $productModified, date('Y-m-d H:i:s', $cacheModified), $cacheModified));
-
-			// Из кэша берем данные только тогда когда кэш обновлялся после модифицации продукта
-			// (т.е. ничего с момента формирования кэша не изменилось)
-			if ($productModified < $cacheModified && $body = $this->_readCache($cacheKey)) {
-				$this->response->body($body);
-				$this->autoRender = false;
-				return;
-			}
+		if ($body = $this->_getFromCache($cacheKey, array_keys($categories))) {
+			$this->response->body($body);
+			$this->autoRender = false;
+			return;
 		}
 
-		$this->paginate = array(
-			'conditions' => array('Product.published' => 1),
-			'limit' => self::PER_PAGE,
-			'page' => $page
-		);
-
-		$this->paginate['conditions']['Product.cat_id'] = array_keys($categories);
-		$aArticles = $this->paginate('Product');
-
-		// Добавить подкатегории вручную - сокращает время запроса на count(*) Product
-		$this->_unbindModels($this->Subcategory);
-		$subcategories = $this->Subcategory->findAllById(array_unique(Hash::extract($aArticles, '{n}.Product.subcat_id')));
-		$subcategories = Hash::combine($subcategories, '{n}.Subcategory.id', '{n}');
-		foreach($aArticles as &$article) {
-			$cat_id = $article['Product']['cat_id'];
-			$subcat_id = $article['Product']['subcat_id'];
-			$article['Category'] = $categories[$cat_id]['Category'];
-			if (isset($subcategories[$subcat_id])) {
-				$article['Subcategory'] = $subcategories[$subcat_id]['Subcategory'];
-			}
-		}
+		$aArticles = $this->_getProducts($page, $categories);
 
 		$this->set(compact('aArticles'));
-		$this->render('zapchasti');
-
+		$this->render('all_products');
 		$this->_writeCache($cacheKey, $this->response->body());
 	}
 
-
-	public function products($slug, $page = 0) {
-		if (is_numeric($slug) && !$page) { // почему то роут не работает
-			$page = $slug;
-			return $this->zapchasti($page);
-		}
+	public function subdomain_products($page) {
+		$this->layout = false;
 		$this->response->header(array(
 			'Content-Encoding' => 'gzip',
 			'Content-Type' => 'text/xml'
 		));
 
 		$cat_id = Configure::read('domain.category_id');
-		$cacheKey = 'products_'.$slug.'_'.$page.'_'.$cat_id.'.xml.gz';
-		$cacheFilename = $this->_getCacheFilename($cacheKey);
+		$slug = Configure::read('domain.category');
+		$cacheKey = $slug.'_products_'.$page.'.xml.gz';
+		$outName = 'sitemap_'.$page.'.xml.gz';
 
-		if ($cat_id) {
-			$category = $this->Category->findById($cat_id);
-		} else {
-			$category = $this->Category->findBySlug($slug);
-			$cat_id = $category['Category']['id'];
+		if ($body = $this->_getFromCache($cacheKey, $cat_id)) {
+			$this->response->body($body);
+			$this->response->download($outName);
+			$this->autoRender = false;
+			return;
 		}
 
-		if (Configure::read('sitemap.cache') && file_exists($cacheFilename)) {
-			$cacheModified = filemtime($cacheFilename);
-
-			// Берем created, а не modified т.к. для sitemap важен URL (т.е. slug), а не просто модификация данных
-			// slug вряд ли меняется после создания продукта, в крайнем случае кэш обновится при создании нового продукта
-			$fields = array('Product.id', 'Product.created', 'Product.cat_id');
-			$conditions = array('Product.cat_id' => $cat_id);
-			$order = array('Product.created' => 'DESC');
-			$product = $this->Product->find('first', compact('fields', 'conditions', 'order'));
-			$productModified = strtotime($product['Product']['created']);
-			// fdebug(array($product['Product']['created'], $productModified, date('Y-m-d H:i:s', $cacheModified), $cacheModified));
-
-			// Из кэша берем данные только тогда когда кэш обновлялся после модифицации продукта
-			// (т.е. ничего с момента формирования кэша не изменилось)
-			if ($productModified < $cacheModified && $body = $this->_readCache($cacheKey)) {
-				$this->response->body($body);
-				$this->response->download('sitemap_'.$page.'.xml.gz');
-				$this->autoRender = false;
-				return;
-			}
-		}
-
-		$this->layout = false;
-		$this->paginate = array(
-			'conditions' => array('Product.published' => 1),
-			'limit' => self::PER_PAGE,
-			'page' => $page
-		);
-
-		$this->paginate['conditions']['Product.cat_id'] = $cat_id;
-		$aArticles = $this->paginate('Product');
-
-		// Добавить подкатегории вручную - сокращает время запроса на count(*) Product
-		$this->_unbindModels($this->Subcategory);
-		$subcategories = $this->Subcategory->findAllById(array_unique(Hash::extract($aArticles, '{n}.Product.subcat_id')));
-		$subcategories = Hash::combine($subcategories, '{n}.Subcategory.id', '{n}');
-		foreach($aArticles as &$article) {
-			$subcat_id = $article['Product']['subcat_id'];
-			$article['Category'] = $category['Category'];
-			if (isset($subcategories[$subcat_id])) {
-				$article['Subcategory'] = $subcategories[$subcat_id]['Subcategory'];
-			}
-		}
+		$category = $this->Category->findById($cat_id, array('id', 'slug', 'is_subdomain'));
+		$aArticles = $this->_getProducts($page, array($cat_id => $category));
 
 		$this->set(compact('aArticles'));
-		$this->render();
+		$this->render('products');
 
-		$this->response->body(gzencode($this->response->body()));
-		// $this->response->type('gzip');
+		$this->response->body(gzencode($this->response->body())); // $this->response->type('gzip');
 		$this->_writeCache($cacheKey, $this->response->body());
-		$this->response->download('sitemap_'.$page.'.xml.gz');
+		$this->response->download($outName);
+	}
+
+	public function category_products($slug, $page) {
+		$this->layout = false;
+		$this->response->header(array(
+			'Content-Encoding' => 'gzip',
+			'Content-Type' => 'text/xml'
+		));
+
+		$category = $this->Category->findBySlug($slug, array('id', 'slug', 'is_subdomain'));
+		$cat_id = $category['Category']['id'];
+		$cacheKey = 'www_products_'.$slug.'_'.$page.'.xml.gz';
+		$outName = 'sitemap_'.$page.'.xml.gz';
+
+		if ($body = $this->_getFromCache($cacheKey, $cat_id)) {
+			$this->response->body($body);
+			$this->response->download($outName);
+			$this->autoRender = false;
+			return;
+		}
+
+		$aArticles = $this->_getProducts($page, array($cat_id => $category));
+
+		$this->set(compact('aArticles'));
+		$this->render('products');
+
+		$this->response->body(gzencode($this->response->body())); // $this->response->type('gzip');
+		$this->_writeCache($cacheKey, $this->response->body());
+		$this->response->download($outName);
 	}
 
 	private function _getCacheFilename($key) {

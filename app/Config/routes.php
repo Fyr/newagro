@@ -58,19 +58,26 @@ Router::connect('/sitemap_plain',
 		'action' => 'plain',
 	)
 );
-/* почему то не работает :(
+/*
 Router::connect('/sitemap/products/:page.xml',
 	array(
 		'controller' => 'sitemap',
-		'action' => 'zapchasti',
+		'action' => 'all_products',
 	),
 	array('pass' => array('page'))
 );
 */
+Router::connect('/zapchasti/sitemap_:page.xml.gz',
+	array(
+		'controller' => 'sitemap',
+		'action' => 'subdomain_products',
+	),
+	array('pass' => array('page'))
+);
 Router::connect('/zapchasti/:slug/sitemap_:page.xml.gz',
 	array(
 		'controller' => 'sitemap',
-		'action' => 'products',
+		'action' => 'category_products',
 	),
 	array('pass' => array('slug', 'page'))
 );
