@@ -24,7 +24,7 @@ class SiteRouter extends Router {
 			$url = array(
 				'controller' => 'Products', 
 				'action' => 'view',
-				'category' => $article['Category']['slug'],
+				// 'category' => $article['Category']['slug'],
 				'subcategory' => ($subcatSlug) ? $subcatSlug : 'kupit',
 				'objectType' => 'Product',
 				'slug' => $article['Product']['slug']
@@ -33,14 +33,14 @@ class SiteRouter extends Router {
 			$url = array(
 				'controller' => 'Products',
 				'action' => 'index',
-				'category' => $article['Category']['slug'],
+				// 'category' => $article['Category']['slug'],
 				'objectType' => 'Product'
 			);
 		} elseif ($objectType == 'Subcategory') {
 			$url = array(
 				'controller' => 'Products', 
 				'action' => 'index',
-				'category' => $article['Category']['slug'],
+				// 'category' => $article['Category']['slug'],
 				'subcategory' => $article['Subcategory']['slug'],
 				'objectType' => 'Product'
 			);

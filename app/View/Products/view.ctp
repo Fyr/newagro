@@ -9,8 +9,8 @@
 	);
 	
 	$aBreadCrumbs = array(
-		__('Home') => '/',
-		$this->ObjectType->getTitle('index', 'Product') => $indexUrl,
+		__('Home') => 'http://'.Configure::read('domain.url'),
+		// $this->ObjectType->getTitle('index', 'Product') => $indexUrl,
 		$article['Category']['title'] => SiteRouter::url(array('Category' => $article['Category']))
 	);
 	$subcatSlug = Hash::get($article, 'Subcategory.slug');

@@ -276,6 +276,7 @@ class SitemapController extends AppController {
 		$this->response->download($outName);
 	}
 
+	/* На данный момент все категории для продуктов это субдомены
 	public function category_products($slug, $page) {
 		$this->layout = false;
 		$this->response->header(array(
@@ -304,7 +305,7 @@ class SitemapController extends AppController {
 		$this->_writeCache($cacheKey, $this->response->body());
 		$this->response->download($outName);
 	}
-
+*/
 	private function _getCacheFilename($key) {
 		return Configure::read('sitemap.dir').Configure::read('sitemap.prefix').$key;
 	}

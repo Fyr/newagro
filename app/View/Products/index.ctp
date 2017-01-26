@@ -1,6 +1,7 @@
 <?
 	$this->Html->css('grid', array('inline' => false));
 
+	$homeUrl = 'http://'.Configure::read('domain.url');
 	$indexUrl = array(
 		'controller' => 'Products', 
 		'action' => 'index',
@@ -12,8 +13,7 @@
 	if (isset($subcategory)) {
 		$title = $subcategory['Subcategory']['title'];
 		$aBreadCrumbs = array(
-			__('Home') => '/',
-			$this->ObjectType->getTitle('index', 'Product') => $indexUrl,
+			__('Home') => $homeUrl,
 			$subcategory['Category']['title'] => SiteRouter::url(array('Category' => $subcategory['Category'])),
 			$title => ''
 		);
@@ -21,17 +21,10 @@
 	} elseif (isset($category)) {
 		$title = $category['Category']['title'];
 		$aBreadCrumbs = array(
-			__('Home') => '/',
-			$this->ObjectType->getTitle('index', 'Product') => $indexUrl,
+			__('Home') => $homeUrl,
 			$title => ''
 		);
 		$relatedArticle = $category;
-	} else {
-		$title = $this->ObjectType->getTitle('index', 'Product');
-		$aBreadCrumbs = array(
-			__('Home') => '/',
-			$this->ObjectType->getTitle('index', 'Product') => ''
-		);
 	}
 	if ($aBreadCrumbs) {
 		echo $this->element('bread_crumbs', compact('aBreadCrumbs'));

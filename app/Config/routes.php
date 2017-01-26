@@ -115,13 +115,13 @@ Router::connect('/zapchasti',
 	),
 	array('named' => array('page' => 1))
 );
-Router::connect('/zapchasti/:category',
+Router::connect('/zapchasti/:subcategory',
 	array(
 		'controller' => 'Products',
 		'action' => 'index',
 		'objectType' => 'Product',
 	),
-	array('pass' => array('category'))
+	array('pass' => array('subcategory'))
 );
 Router::connect('/zapchasti/page/:page',
 	array(
@@ -131,7 +131,7 @@ Router::connect('/zapchasti/page/:page',
 	),
 	array('named' => array('page' => '[\d]*'))
 );
-Router::connect('/zapchasti/:category/page/:page',
+Router::connect('/zapchasti/:subcategory/page/:page',
 	array(
 		'controller' => 'Products',
 		'action' => 'index',
@@ -142,7 +142,7 @@ Router::connect('/zapchasti/:category/page/:page',
 		'named' => array('page' => '[\d]*')
 	)
 );
-
+/*
 Router::connect('/zapchasti/:category/:subcategory',
 	array(
 		'controller' => 'Products',
@@ -163,8 +163,8 @@ Router::connect('/zapchasti/:category/:subcategory/page/:page',
 		'named' => array('page' => '[\d]*')
 	)
 );
-
-Router::connect('/zapchasti/:category/:subcategory/:slug',
+*/
+Router::connect('/zapchasti/:subcategory/:slug',
 	array(
 		'controller' => 'Products',
 		'action' => 'view',

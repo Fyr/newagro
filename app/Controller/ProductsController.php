@@ -20,17 +20,21 @@ class ProductsController extends AppController {
 
 	private $searchNumber = '';
 
-	public function index($catSlug = '', $subcatSlug = '') {
+	public function index($subcatSlug = '') {
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
 			'limit' => self::PER_PAGE, 
 			'page' => $this->request->param('page'),
 			// 'order' => 'Product.created DESC'
 		);
+		$q = $this->request->query('q');
+		$cat_id = Configure::read('domain.category_id');
 		$category = array();
-		if ($catSlug) {
-			$category = $this->Category->findBySlug($catSlug);
+		$catSlug = '';
+		if ($cat_id && !$q) {
+			$category = $this->Category->findById($cat_id);
 			if ($category) {
+				$catSlug = $category['Category']['slug'];
 				$this->request->data('Product.cat_id', $category['Category']['id']);
 				$this->set('category', $category);
 				$page_title = $category['Category']['title'];
@@ -68,7 +72,7 @@ class ProductsController extends AppController {
 			}
 		}
 
-		if ($q = $this->request->query('q')) {
+		if ($q) {
 			$this->logSearch($q);
 			$this->processFilter($q);
 			$this->set('directSearch', true);
