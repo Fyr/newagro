@@ -2,85 +2,8 @@
 Router::parseExtensions('json', 'xml');
 Router::connect('/', array('controller' => 'Pages', 'action' => 'home'));
 
-/* -= Sitemap =- */
-Router::connect('/news/sitemap',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'articles',
-		'objectType' => 'News'
-	)
-);
-Router::connect('/remont/sitemap',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'articles',
-		'objectType' => 'RepairArticle'
-	)
-);
-Router::connect('/offers/sitemap',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'articles',
-		'objectType' => 'Offer'
-	)
-);
-Router::connect('/brand/sitemap',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'articles',
-		'objectType' => 'Brand'
-	)
-);
-Router::connect('/motors/sitemap',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'articles',
-		'objectType' => 'Motor'
-	)
-);
-Router::connect('/magazini-zapchastei/sitemap',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'articles',
-		'objectType' => 'Dealer'
-	)
-);
-Router::connect('/articles/sitemap',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'articles',
-		'objectType' => 'SectionArticle'
-	)
-);
-Router::connect('/sitemap_plain',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'plain',
-	)
-);
-/*
-Router::connect('/sitemap/products/:page.xml',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'all_products',
-	),
-	array('pass' => array('page'))
-);
-*/
-Router::connect('/zapchasti/sitemap_:page.xml.gz',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'subdomain_products',
-	),
-	array('pass' => array('page'))
-);
-Router::connect('/zapchasti/:slug/sitemap_:page.xml.gz',
-	array(
-		'controller' => 'sitemap',
-		'action' => 'category_products',
-	),
-	array('pass' => array('slug', 'page'))
-);
+require_once('routes_sitemap.php');
+require_once('routes_products.php');
 
 /* -= News =- */
 Router::connect('/news', array(
@@ -104,73 +27,6 @@ Router::connect('/news/page/:page', array(
 	'objectType' => 'News'
 ),
 	array('named' => array('page' => '[\d]*'))
-);
-
-/* -= Products =- */
-Router::connect('/zapchasti',
-	array(
-		'controller' => 'Products',
-		'action' => 'index',
-		'objectType' => 'Product',
-	),
-	array('named' => array('page' => 1))
-);
-Router::connect('/zapchasti/:subcategory',
-	array(
-		'controller' => 'Products',
-		'action' => 'index',
-		'objectType' => 'Product',
-	),
-	array('pass' => array('subcategory'))
-);
-Router::connect('/zapchasti/page/:page',
-	array(
-		'controller' => 'Products',
-		'action' => 'index',
-		'objectType' => 'Product',
-	),
-	array('named' => array('page' => '[\d]*'))
-);
-Router::connect('/zapchasti/:subcategory/page/:page',
-	array(
-		'controller' => 'Products',
-		'action' => 'index',
-		'objectType' => 'Product',
-	),
-	array(
-		'pass' => array('category'),
-		'named' => array('page' => '[\d]*')
-	)
-);
-/*
-Router::connect('/zapchasti/:category/:subcategory',
-	array(
-		'controller' => 'Products',
-		'action' => 'index',
-		'objectType' => 'Product',
-	),
-	array('pass' => array('category', 'subcategory'))
-);
-
-Router::connect('/zapchasti/:category/:subcategory/page/:page',
-	array(
-		'controller' => 'Products',
-		'action' => 'index',
-		'objectType' => 'Product',
-	),
-	array(
-		'pass' => array('category', 'subcategory'),
-		'named' => array('page' => '[\d]*')
-	)
-);
-*/
-Router::connect('/zapchasti/:subcategory/:slug',
-	array(
-		'controller' => 'Products',
-		'action' => 'view',
-		'objectType' => 'Product',
-	),
-	array('pass' => array('slug'))
 );
 
 /* -= Repair articles =- */
@@ -331,11 +187,6 @@ Router::connect('/articles/page/:page', array(
 ),
 	array('named' => array('page' => '[\d]*'))
 );
-
-Router::connect('/robots.txt', array(
-	'controller' => 'Robots',
-	'action' => 'index',
-));
 
 CakePlugin::routes();
 

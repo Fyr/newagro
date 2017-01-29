@@ -20,7 +20,18 @@ class ProductsController extends AppController {
 
 	private $searchNumber = '';
 
+	/*
 	public function index($subcatSlug = '') {
+		$this->products_index($this->Category->findBySlug($catSlug), $subcatSlug);
+	}
+*/
+	/*
+	public function subdomain_index($subcatSlug = '') {
+		$cat_id = Configure::read('domain.category_id');
+		$this->products_index($this->Category->findById($cat_id), $subcatSlug);
+	}
+*/
+	public function index() {
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
 			'limit' => self::PER_PAGE, 
@@ -28,13 +39,15 @@ class ProductsController extends AppController {
 			// 'order' => 'Product.created DESC'
 		);
 		$q = $this->request->query('q');
-		$cat_id = Configure::read('domain.category_id');
+		if (Configure::read('domain.category_id')) {
+			$catSlug = Configure::read('domain.category');
+		} else {
+			$catSlug = $this->request->param('category');
+		}
 		$category = array();
-		$catSlug = '';
-		if ($cat_id && !$q) {
-			$category = $this->Category->findById($cat_id);
+		if ($catSlug && !$q) {
+			$category = $this->Category->findBySlug($catSlug);
 			if ($category) {
-				$catSlug = $category['Category']['slug'];
 				$this->request->data('Product.cat_id', $category['Category']['id']);
 				$this->set('category', $category);
 				$page_title = $category['Category']['title'];
@@ -46,9 +59,9 @@ class ProductsController extends AppController {
 			}
 		}
 
+		$subcatSlug = $this->request->param('subcategory');
 		$subcategory = array();
-		if ($subcatSlug) {
-			// $this->request->data('Subcategory.slug', $subcatSlug);
+		if ($subcatSlug && !$q) {
 			$subcategory = $this->Subcategory->findBySlug($subcatSlug);
 			if ($subcategory) {
 				$this->request->data('Product.subcat_id', $subcategory['Subcategory']['id']);
@@ -131,8 +144,10 @@ class ProductsController extends AppController {
 		$order = 'PMFormField.sort_order ASC';
 		$fields = $this->PMFormField->find('all', compact('conditions', 'order'));
 		$article['PMFormField'] = Hash::extract($fields, '{n}.PMFormField');
-		
+
 		$this->set('article', $article);
+		$this->set('category', array('Category' => $article['Category']));
+		$this->set('currSubcat', $article['Subcategory']['id']);
 
 		$code = $article['Product']['code'];
 		$title_rus = $article['Product']['title_rus'];

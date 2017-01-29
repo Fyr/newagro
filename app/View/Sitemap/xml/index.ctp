@@ -3,7 +3,11 @@
 <?
 	$date = date('c');
 
-	foreach(array('News', 'RepairArticle', 'Offer', 'Brand', 'Motor', 'Dealer', 'SectionArticle') as $objectType) {
+	$aObjectTypes = array('News', 'RepairArticle', 'Offer', 'Brand', 'Motor', 'Dealer', 'SectionArticle', 'MachineTool');
+	if (Configure::read('domain.zone') == 'ua') {
+		$aObjectTypes = array('News', 'RepairArticle', 'Offer', 'SectionArticle');
+	}
+	foreach($aObjectTypes as $objectType) {
 		$url = Router::url(array('action' => 'articles', 'objectType' => $objectType, 'ext' => 'xml'), true);
 		echo $this->element('sitemap_map', compact('url', 'date'));
 	}
@@ -17,7 +21,6 @@
 			echo $this->element('sitemap_map', compact('url', 'date'));
 		}
 	}
-
 ?>
 </sitemapindex>
 <?//$this->element('sql_dump')?>

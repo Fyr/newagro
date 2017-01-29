@@ -2,6 +2,7 @@ User-agent: *
 Disallow: /
 Allow: /$
 Allow: /contacts
+Allow: /sitemap
 <?
     foreach($articles as $article) {
         $http_subdomain = 'http://'.$subdomain.'.'.Configure::read('domain.url');
@@ -12,5 +13,5 @@ Allow: <?=$url?>
 <?
     }
 ?>
-Sitemap: http://<?=$subdomain?>.agromotors.ru/sitemap.xml
-Host: <?=$subdomain?>.agromotors.ru
+Sitemap: http://<?=$subdomain.'.'.Configure::read('domain.url')?>/sitemap.xml
+Host: <?=$subdomain.'.'.Configure::read('domain.url')?>

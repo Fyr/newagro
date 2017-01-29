@@ -48,12 +48,21 @@ Configure::write('Recaptcha.publicKey', RECAPTCHA_PUBLIC_KEY);
 Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
 
 $domain = explode('.', $_SERVER['HTTP_HOST']);
+
 Configure::write('domain', array(
 	'url' => 'agromotors.dev',
 	'title' => 'agromotors.dev',
 	'zone' => 'by',
 	'subdomain' => (count($domain) > 2) ? $domain[0] : 'www'
 ));
+/*
+Configure::write('domain', array(
+	'url' => 'deutzua.com.dev',
+	'title' => 'agromotors.dev',
+	'zone' => 'by',
+	'subdomain' => (count($domain) > 3) ? $domain[0] : 'www'
+));
+*/
 define('SUBDOMAIN_ALL', 0);
 define('SUBDOMAIN_WWW', 1);
 

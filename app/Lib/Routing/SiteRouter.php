@@ -29,6 +29,11 @@ class SiteRouter extends Router {
 				'objectType' => 'Product',
 				'slug' => $article['Product']['slug']
 			);
+			if (Configure::read('domain.subdomain') == 'www') {
+				$url['subdomain'] = 1;
+			} else {
+				$url['category'] = $article['Category']['slug'];
+			}
 		} elseif ($objectType == 'Category') {
 			$url = array(
 				'controller' => 'Products',
@@ -36,6 +41,11 @@ class SiteRouter extends Router {
 				// 'category' => $article['Category']['slug'],
 				'objectType' => 'Product'
 			);
+			if (Configure::read('domain.subdomain') == 'www') {
+				$url['subdomain'] = 1;
+			} else {
+				$url['category'] = $article['Category']['slug'];
+			}
 		} elseif ($objectType == 'Subcategory') {
 			$url = array(
 				'controller' => 'Products', 
@@ -44,6 +54,11 @@ class SiteRouter extends Router {
 				'subcategory' => $article['Subcategory']['slug'],
 				'objectType' => 'Product'
 			);
+			if (Configure::read('domain.subdomain') == 'www') {
+				$url['subdomain'] = 1;
+			} else {
+				$url['category'] = $article['Category']['slug'];
+			}
 		} elseif ($objectType == 'RepairArticle') {
 			$url = array(
 				'controller' => 'Repair',

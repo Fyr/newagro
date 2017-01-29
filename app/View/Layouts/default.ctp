@@ -69,8 +69,10 @@ $(document).ready(function(){
                    	<span class="logo"></span>
 <?
 	} else {
+        $subdomain = Configure::read('domain.subdomain');
+        $domainUrl = ($subdomain == 'www') ? Configure::read('domain.url') : $subdomain.'.'.Configure::read('domain.url');
 ?>
-					<a href="/" class="logo"></a>
+					<a href="http://<?=$domainUrl?>" class="logo"></a>
 <?
 	}
 ?>
@@ -240,25 +242,7 @@ $(document).ready(function(){
         </div>
         <div class="footerLine"></div>
 <?
-// 	if (!TEST_ENV) {
-/*
- 	<div style="position:fixed;top:50%;left:0px;">
-<a id="mibew-agent-button" href="/app/webroot/mibew/chat?locale=ru" target="_blank" onclick="Mibew.Objects.ChatPopups['552c0eeae6c3cd3e'].open();return false;"><!--<img src="/app/webroot/mibew/b?i=mgreen&amp;lang=ru" border="0" alt="" />-->
-<img src="/app/webroot/mibew/b?i=mgreen&amp;lang=ru" border="0" alt="" style="width: 38px; height: 160px;" />
-</a><script type="text/javascript" src="/app/webroot/mibew/js/compiled/chat_popup.js"></script><script type="text/javascript">Mibew.ChatPopup.init({"id":"552c0eeae6c3cd3e","url":"\/app\/webroot\/mibew\/chat?locale=ru","preferIFrame":true,"modSecurity":false,"width":640,"height":480,"resizable":true,"styleLoader":"\/app\/webroot\/mibew\/chat\/style\/popup"});</script>
-</div>
-*/
-	if (!TEST_ENV && Configure::read('domain.zone') == 'by') {
-?>
-
-
-<?
-	} elseif (!TEST_ENV && Configure::read('domain.zone') == 'ru') {
-?>
-
-<?
-	}
-    echo $this->element('sql_dump');
+    // echo $this->element('sql_dump');
     echo $this->element('sql_stats');
 ?>
 	</body>
