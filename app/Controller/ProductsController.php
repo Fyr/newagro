@@ -80,7 +80,7 @@ class ProductsController extends AppController {
 			$product = $this->Product->findBySlugAndPublished($slug, 1);
 			if ($product) {
 				return $this->redirect(SiteRouter::url($product));
-			} else {
+			} elseif (!$q) {
 				return $this->redirect404();
 			}
 		}

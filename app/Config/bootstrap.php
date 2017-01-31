@@ -23,7 +23,7 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
-Configure::write('Exception.renderer', 'SiteExceptionRenderer');
+//Configure::write('Exception.renderer', 'SiteExceptionRenderer');
 Configure::write('Config.language', 'rus');
 
 // define('PATH_FILES_UPLOAD', $_SERVER['DOCUMENT_ROOT'].'/files/');
