@@ -25,7 +25,6 @@
 				'options' => $aRegions,
 				'label' => array('text' => __('Region'), 'class' => 'control-label'),
 				'onclick' => 'onSelectRegion()',
-				'autocomplete' => 'off'
 			))
 			.$this->PHForm->input('sorting', array('class' => 'input-mini')),
 		__('Contacts') =>

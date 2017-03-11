@@ -786,3 +786,6 @@ msgstr "Редактировать маркер"
 
 msgid "Url"
 msgstr "URL"
+
+msgid "Stretch"
+msgstr "Растянуть"

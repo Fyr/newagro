@@ -36,6 +36,10 @@ class PHFormHelper extends FormHelper {
 		} elseif ($options['type'] == 'text' || $options['type'] == 'textarea') {
 			$options = array_merge(array('class' => 'input-xxlarge'), $options);
 		}
+
+		if (in_array($options['type'], array('checkbox', 'select'))) {
+			$options['autocomplete'] = 'off';
+		}
 		return parent::input($fieldName, $options);
 	}
 

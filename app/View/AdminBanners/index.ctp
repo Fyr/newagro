@@ -9,10 +9,12 @@
     $actions['row']['edit']['href'] = $this->Html->url(array('action' => 'edit', '~id'));
 
 	$columns = $this->PHTableGrid->getDefaultColumns($objectType);
-	
 	$columns['Banner.type']['format'] = 'string';
+    $columns['Banner.slot']['format'] = 'string';
+
 	foreach($aRowset as &$row) {
 		$row['Banner']['type'] = $bannerTypes[$row['Banner']['type']];
+        $row['Banner']['slot'] = $slotPlaces[$row['Banner']['slot']];
 	}
 ?>
 <?=$this->element('admin_title', compact('title'))?>

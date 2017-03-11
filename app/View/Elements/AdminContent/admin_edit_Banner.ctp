@@ -16,6 +16,11 @@
 		'label' => array('class' => 'control-label', 'text' => __('Alt.title')),
 		'div' => array('class' => 'control-group bannerOptions bannerType-'.BannerType::IMAGE)
 	));
+	echo $this->PHForm->input('Banner.options.stretch', array(
+		'type' => 'checkbox',
+		'label' => array('class' => 'control-label', 'text' => __('Stretch')),
+		'div' => array('class' => 'control-group bannerOptions bannerType-'.BannerType::IMAGE)
+	));
 	echo $this->PHForm->input('Banner.options.url', array(
 		'label' => array('class' => 'control-label', 'text' => __('URL')),
 		'div' => array('class' => 'control-group bannerOptions bannerType-'.BannerType::SLIDER)

@@ -12,6 +12,8 @@ class AdminBannersController extends AdminController {
     public function beforeRender() {
     	parent::beforeRender();
     	$this->set('objectType', 'Banner');
+		$this->set('bannerTypes', $this->BannerType->getOptions());
+		$this->set('slotPlaces', $this->SlotPlace->getOptions());
     }
     
     public function index() {
@@ -20,7 +22,6 @@ class AdminBannersController extends AdminController {
     	);
     	$aRowset = $this->PCTableGrid->paginate('Banner');
     	$this->set('aRowset', $aRowset);
-    	$this->set('bannerTypes', $this->BannerType->getOptions());
     }
     
     public function edit($id = 0) {
@@ -32,9 +33,6 @@ class AdminBannersController extends AdminController {
 		if (!$id) {
 			$this->request->data('Banner.sorting', 1);
 		}
-		
-		$this->set('bannerTypes', $this->BannerType->getOptions());
-		$this->set('slotPlaces', $this->SlotPlace->getOptions());
     }
 }
 
