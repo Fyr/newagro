@@ -268,7 +268,7 @@ class AppController extends Controller {
 			unset($this->aBottomLinks['motor']);
 			unset($this->aNavBar['machinetool']);
 			unset($this->aBottomLinks['machinetool']);
-			unset($this->aNavBar['dealer']);
+			unset($this->aNavBar['home']);
 			unset($this->aBottomLinks['dealer']);
 		} else {
 			unset($this->aNavBar['home']);
