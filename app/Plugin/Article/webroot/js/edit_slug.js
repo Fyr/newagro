@@ -1,11 +1,11 @@
-function article_onChangeTitle() {
+function article_onChangeTitle(eTitle, eSlug) {
 	if (!slug_EditMode) {
-		$('#ArticleSlug').val(translit($('#ArticleTitle').val()));
+		$(eSlug).val(translit($(eTitle).val()));
 	}
 }
 
-function article_onChangeSlug() {
-	slug_EditMode = ($('#ArticleSlug').val() && true);
+function article_onChangeSlug(eSlug) {
+	slug_EditMode = ($(eSlug).val() && true);
 }
 
 function translit(str) {

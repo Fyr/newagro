@@ -1,11 +1,12 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('Media', 'Media.Model');
 App::uses('AppModel', 'Model');
 App::uses('Catalog', 'Model');
 
 class CatalogController extends AppController {
 	public $name = 'Catalog';
-	public $uses = array('Catalog', 'Media.Media');
+	public $uses = array('Media.Media', 'Catalog');
 	public $helpers = array('Media');
 
 	const PER_PAGE = 100;
@@ -20,7 +21,39 @@ class CatalogController extends AppController {
 		$aArticles = $this->paginate('Catalog');
 		$this->set('aArticles', $aArticles);
 	}
-	
+
+	function viewPdf($slug) {
+		$this->autoRender = false;
+		$this->layout = false;
+
+		$row = $this->Catalog->findBySlug($slug);
+		if ($row && $row['Catalog']['published']) {
+			$conditions = array('media_type' => 'raw_file', 'object_type' => 'Catalog', 'object_id' => $row['Catalog']['id']);
+			$media = $this->Media->find('first', compact('conditions'));
+			if ($media) {
+				$media = $media['Media'];
+
+				App::uses('MediaPath', 'Media.Vendor');
+				$this->PHMedia = new MediaPath();
+
+				$file = $this->PHMedia->getPath($media['object_type'], $media['id']).$media['file'].$media['ext'];
+				if ($file && file_exists($file)) {
+					header('Content-Type: application/pdf');
+					header('Expires: 0');
+					header('Cache-Control: must-revalidate');
+					header('Pragma: public');
+					readfile($file);
+					return;
+				}
+			}
+		}
+		$this->redirect404();
+	}
+
+	/**
+	 * Action to force download PDF
+	 * @param $id - catalog ID
+	 */
 	function download($id) {
 		$this->autoRender = false;
 		$conditions = array('Media.media_type' => 'raw_file', 'Media.object_type' => 'Catalog', 'Media.object_id' => $id);

@@ -20,9 +20,14 @@
         echo $this->element('sitemap_url', compact('url'));
     }
 
-    foreach($aCatalogFiles as $url) {
-        $url = 'http://'.Configure::read('domain.url').$url;
-        echo $this->element('sitemap_url', compact('url'));
+    // Generate URLs only for PDFs
+    foreach($aCatalogFiles as $catalog) {
+        foreach($catalog['Media'] as $media) {
+            if ($media['media_type'] == 'raw_file') {
+                $url = $this->Html->url(array('controller' => 'Catalog', 'action' => 'viewPdf', 'slug' => $catalog['Catalog']['slug']), true);
+                echo $this->element('sitemap_url', compact('url'));
+            }
+        }
     }
 ?>
 </urlset>

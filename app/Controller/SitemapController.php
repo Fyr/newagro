@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SiteRouter', 'Lib/Routing');
+App::uses('Media', 'Media.Model');
 App::uses('Article', 'Article.Model');
 App::uses('Product', 'Model');
 App::uses('SectionArticle', 'Model');
@@ -168,9 +169,8 @@ class SitemapController extends AppController {
 		} else {
 			$aRegions = $this->Region->getOptions();
 
-			$aCatalog = $this->Catalog->findAllByPublished(1);
-			$aCatalogFiles = Hash::extract($aCatalog, '{n}.Media.{n}.url_download');
-
+			$this->loadModel('Media.Media'); // loadMedia before Catalog !!!
+			$aCatalogFiles = $this->Catalog->findAllByPublished(1);
 			$this->set(compact('aRegions', 'aCatalogFiles'));
 		}
 		$this->render($tpl);

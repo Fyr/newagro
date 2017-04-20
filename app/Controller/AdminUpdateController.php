@@ -176,4 +176,17 @@ class AdminUpdateController extends AdminController {
 		echo 'Processed '.$count['Product'].' products, '.$count['Param'].' params <br>';
 	}
 
+	function update5() {
+		App::uses('Translit', 'Article.Vendor');
+		App::uses('Catalog', 'Model');
+		$this->loadModel('Catalog');
+
+		$aRows = $this->Catalog->find('all');
+		foreach($aRows as $row) {
+			$this->Catalog->clear();
+			$this->Catalog->save(array('id' => $row['Catalog']['id'], 'slug' => Translit::convert($row['Catalog']['title'], true)));
+		}
+		echo 'Processed '.count($aRows).' rows';
+	}
+
 }

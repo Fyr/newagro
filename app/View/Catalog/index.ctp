@@ -11,7 +11,8 @@
 				if ($media['media_type'] == 'image') {
 					$src = $this->Media->imageUrl(array('Media' => $media), '150x');
 				} elseif ($media['media_type'] == 'raw_file') {
-					$doc = $media['url_download'];
+					// $doc = $media['url_download'];
+					$doc = $this->Html->url(array('controller' => 'Catalog', 'action' => 'viewPdf', 'slug' => $article['Catalog']['slug']));
 				}
 			}
 		}
