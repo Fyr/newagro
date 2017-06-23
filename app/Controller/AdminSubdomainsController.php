@@ -15,7 +15,7 @@ class AdminSubdomainsController extends AdminController {
 
 	public function index() {
 		$this->paginate = array(
-			'fields' => array('name', 'title', 'region_id', 'email', 'skype'),
+			'fields' => array('name', 'title', 'region_id', 'email', 'skype', 'sorting'),
 			'order' => array('region_id' => 'ASC')
 		);
 		$this->PCTableGrid->paginate('Subdomain');
@@ -33,8 +33,10 @@ class AdminSubdomainsController extends AdminController {
 		}
 
 		$this->currMenu = 'Settings';
-		if (!$this->request->data('Subdomain.sorting')) {
+		if (!$id) {
 			$this->request->data('Subdomain.sorting', '0');
+			$this->request->data('Subdomain.marker_x', '0');
+			$this->request->data('Subdomain.marker_y', '0');
 		}
 	}
 }
