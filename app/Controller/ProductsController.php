@@ -32,6 +32,22 @@ class ProductsController extends AppController {
 	}
 */
 	public function index() {
+		if (!Configure::read('domain.category') && strpos($this->request->here, '/zapchasti') === 0) {
+			// в URL есть /zapchasti (роут с субдоменом), но нет субдомена
+			$conditions = array('slug' => $this->request->param('subcategory'), 'is_subdomain' => 1); // согласно роута передали подкатегорию
+			$_category = $this->Category->find('first', compact('conditions'));
+			if ($_category) {
+				// найдена категория с субдоменом по адресу /zapchasti/subdomain-cat - возможно просто старый URL из индекса поисковика
+				return $this->redirect(SiteRouter::url($_category));
+			}
+			return $this->redirect404();
+		}
+
+		if (Configure::read('domain.category') && strpos($this->request->here, '/autozapchasti') === 0) {
+			// был баг с битыми урлами в постраничке
+			return $this->redirect(str_replace('/autozapchasti', '/zapchasti', $this->request->here));
+		}
+
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
 			'limit' => self::PER_PAGE, 
@@ -75,6 +91,7 @@ class ProductsController extends AppController {
 				);
 			}
 		}
+		// редирект если для продукта есть только категория, значит второй slug - это slug продукта
 		if (($catSlug && !$category) || ($subcatSlug && !$subcategory)) {
 			$slug = ($subcatSlug) ? $subcatSlug : $catSlug;
 			$product = $this->Product->findBySlugAndPublished($slug, 1);

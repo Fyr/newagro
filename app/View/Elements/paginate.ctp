@@ -5,6 +5,9 @@
 			'category' => $this->request->param('category'),
 			'subcategory' => $this->request->param('subcategory')
 		);
+		if ($objectType == 'products' && Configure::read('domain.category')) {
+			$options['subdomain'] = 1;
+		}
 		if ($this->request->query) {
 			$options['?'] = $this->request->query;
 		}

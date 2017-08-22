@@ -63,7 +63,7 @@ Router::connect('/autozapchasti/:category/:subcategory/:slug',
 	array('pass' => array('slug'))
 );
 
-/* -= Роуты для категорий-субдоменов (без категории в URL, новая схема), нидексируется на субдоменах =- */
+/* -= Роуты для категорий-субдоменов (без категории в URL, новая схема), индексируется на субдоменах =- */
 Router::connect('/zapchasti',
 	array(
 		'controller' => 'Products',

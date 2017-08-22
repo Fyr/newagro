@@ -57,7 +57,8 @@
 		echo $this->Html->div('block main clearfix', $this->element('gpz_search'));
 	}
 
-	if ($relatedArticle) {
-		echo $this->Html->div('block main article clearfix', $this->ArticleVars->body($relatedArticle));
+	if ($html = trim($this->ArticleVars->body($relatedArticle))) {
+		echo '<br>';
+		echo $this->Html->div('block main article clearfix', $html);
 	}
 ?>

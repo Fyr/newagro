@@ -61,7 +61,7 @@ class AppController extends Controller {
 			if ($category) {
 				Configure::write('domain.category', Configure::read('domain.subdomain'));
 				Configure::write('domain.category_id', Hash::get($category, 'Category.id'));
-				Configure::write('domain.subdomain', 'www');
+				Configure::write('domain.subdomain', 'www'); // брать все статьи с www для продуктовых субдоменов
 			}
 
 			App::uses('Subdomain', 'Model');
