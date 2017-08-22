@@ -16,7 +16,8 @@ class AdminCatalogsController extends AdminController {
     
     public function index() {
     	$this->paginate = array(
-    		'fields' => array('title', 'url', 'published', 'sorting')
+    		'fields' => array('title', 'url', 'published', 'sorting'),
+			'order' => array('Catalog.sorting' => 'asc'),
     	);
     	$aRowset = $this->PCTableGrid->paginate('Catalog');
     	$this->set('aRowset', $aRowset);
