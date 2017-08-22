@@ -23,10 +23,16 @@ class AjaxController extends PAjaxController {
 		}
 		$object_type = $this->request->data('object_type');
 		$object_id = $this->request->data('object_id');
+
+		setlocale(LC_ALL, 'ru_RU.utf8'); // fix for rus file names
 		$path = pathinfo($tmp_name);
+		$ext = strtolower('.'.$path['extension']);
 		$file = $media_type; // $path['filename'];
-		$ext = '.'.$path['extension'];
-		
+		if (in_array($ext, array('.doc', '.docx', '.pdf', '.xls'))) {
+			App::uses('Translit', 'Article.Vendor');
+			$file = Translit::convert($path['filename'], true);
+		}
+
 		if ($crop = $this->request->data('crop')) {
 			$crop = (is_array($crop)) ? implode(',', $crop): $crop;
 		}

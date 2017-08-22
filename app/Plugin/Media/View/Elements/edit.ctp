@@ -46,7 +46,7 @@
 				<br/>
 				<h5><?=__d('media', 'Original file')?></h5>
 				<?=__d('media', 'Uploaded')?>: {%=o.created%}<br/>
-				<?=__d('media', 'File name')?>: {%=o.orig_fname%}<br/>
+				<?=__d('media', 'File name')?>: <i><small>{%=o.orig_fname%}</small></i><br/>
 				<?=__d('media', 'File size')?>: {%=Format.fileSize(o.orig_fsize)%}<br/>
 				{% if (o.media_type == 'image') { %}
 				<?=__d('media', 'Resolution')?>: {%=o.orig_w%}x{%=o.orig_h%}px<br/>
