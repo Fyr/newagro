@@ -26,8 +26,9 @@ class PagesController extends AppController {
 		$this->set('aHomePageNews', $aNews);
 
 		if ($cat_id = Configure::read('domain.category_id')) {
-			$aArticle = $this->Category->findById($cat_id);
-			$aArticle['Page'] = $aArticle['Category'];
+			// $aArticle = $this->Category->findById($cat_id);
+			// $aArticle['Page'] = $aArticle['Category'];
+			$aArticle = array('Page' => array('title' => '', 'body' => ''));
 		} else {
 			$aArticle = $this->Page->getBySlug('home');
 		}
