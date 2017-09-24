@@ -64,16 +64,27 @@ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = 
         </noscript>
 <?
     } else if (Configure::read('domain.zone') == 'ru') {
+        if (Configure::read('domain.subdomain') !== 'nn') {
 ?>
-<!-- BEGIN JIVOSITE CODE {literal} -->
-<script type='text/javascript'>
-(function(){ var widget_id = 'z8unW7ZOIo';
-var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
-<!-- {/literal} END JIVOSITE CODE -->
-<!-- CallbackKILLER -->
-    <link rel="stylesheet" href="https://cdn.callbackkiller.com/widget/cbk.css">
-    <script type="text/javascript" src="https://cdn.callbackkiller.com/widget/cbk.js?cbk_code=20575" charset="UTF-8" async></script>
-<!-- /CallbackKILLER -->
+            <!-- BEGIN JIVOSITE CODE {literal} -->
+            <script type='text/javascript'>
+                (function () {
+                    var widget_id = 'z8unW7ZOIo';
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = '//code.jivosite.com/script/widget/' + widget_id;
+                    var ss = document.getElementsByTagName('script')[0];
+                    ss.parentNode.insertBefore(s, ss);
+                })();</script>
+            <!-- {/literal} END JIVOSITE CODE -->
+            <!-- CallbackKILLER -->
+                <link rel="stylesheet" href="https://cdn.callbackkiller.com/widget/cbk.css">
+                <script type="text/javascript" src="https://cdn.callbackkiller.com/widget/cbk.js?cbk_code=20575" charset="UTF-8" async></script>
+            <!-- /CallbackKILLER -->
+<?
+        }
+?>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
