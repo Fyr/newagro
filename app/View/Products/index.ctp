@@ -10,6 +10,7 @@
 	$title = 'Результаты поиска';
 	$aBreadCrumbs = array();
 	$relatedArticle = array();
+
 	if (isset($subcategory)) {
 		$title = $subcategory['Subcategory']['title'];
 		$aBreadCrumbs = array(
@@ -17,14 +18,18 @@
 			$subcategory['Category']['title'] => SiteRouter::url(array('Category' => $subcategory['Category'])),
 			$title => ''
 		);
-		$relatedArticle = $subcategory;
+		if (intval(Hash::get($this->request->params, 'page')) < 2) {
+			$relatedArticle = $subcategory;
+		}
 	} elseif (isset($category)) {
 		$title = $category['Category']['title'];
 		$aBreadCrumbs = array(
 			__('Home') => $homeUrl,
 			$title => ''
 		);
-		$relatedArticle = $category;
+		if (intval(Hash::get($this->request->params, 'page')) < 2) {
+			$relatedArticle = $category;
+		}
 	}
 	if ($aBreadCrumbs) {
 		echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
