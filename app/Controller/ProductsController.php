@@ -106,6 +106,7 @@ class ProductsController extends AppController {
 			$this->logSearch($q);
 			$this->processFilter($q);
 			$this->set('directSearch', true);
+			/*
 			if ($this->searchNumber && $this->_filterGpzSearch($this->searchNumber)) {
 				try {
 					App::uses('GpzApi', 'Model');
@@ -116,6 +117,7 @@ class ProductsController extends AppController {
 					$this->set('gpzError', $e->getMessage());
 				}
 			}
+			*/
 		} else {
 			$this->Product->unbindModel(array('hasOne' => array('Search'))); // нужно для поиска по тексту
 		}
@@ -139,7 +141,13 @@ class ProductsController extends AppController {
 	}
 
 	public function view($slug) {
-		$article = $this->Product->findBySlug($slug);
+		if (Configure::read('domain.category_id')) {
+			$catSlug = Configure::read('domain.category');
+		} else {
+			$catSlug = $this->request->param('category');
+		}
+		$conditions = array('Product.slug' => $slug, 'Category.slug' => $catSlug, 'Product.published' => 1); // prevent equal slugs
+		$article = $this->Product->find('first', compact('conditions'));
 		if (!$article) {
 			return $this->redirect404();
 		}

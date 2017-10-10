@@ -93,6 +93,10 @@ $(document).ready(function(){
 			return '<a class="fancybox" href="' + this.src.replace(/\d+x\d*/g, 'noresize') + '" rel="photoalbum"></a>';
 		});
 	});
+	$('.block.main img.no-fancybox').each(function(){
+		$(this).unwrap();
+	});
+
 	if ($('.fancybox').length) {
 		$('.fancybox').fancybox({
 			padding: 5

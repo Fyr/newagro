@@ -71,7 +71,30 @@ body { font-size: 14px; }
 	font-size: 12px;
 }
 */
-.sbr-offers .headBlock .text, .sbr-offers .block .more a, .sbr-offers .block .more a:visited {
+.add_cart, .check_cart {
+	display: inline-block;
+	width: 140px;
+}
+.check_cart {
+	width: 180px;
+}
+.add_cart .more, .check_cart .more {
+	padding: 0;
+	position: relative;
+	top: 2px;
+}
+.add_cart .more a, .check_cart .more a {
+	font-size: 18px;
+	padding: 2px 13px 4px 13px;
+}
+.add_cart .more a img, .check_cart .more a img {
+	height: 22px;
+	float: left;
+	position: relative;
+	top: 3px;
+	left: -2px;
+}
+.sbr-offers .headBlock .text, .sbr-offers .block .more a, .sbr-offers .block .more a:visited, .add_cart .more a {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ab51f+0,8ab51e+50,659322+50,659322+100 */
 	background: #7ab51f; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -89,7 +112,7 @@ body { font-size: 14px; }
 	color: #79b41e;
 }
 
-.sbr-offers .block .more a:hover, .sbr-offers .block .more a:active {
+.sbr-offers .block .more a:hover, .sbr-offers .block .more a:active, .add_cart .more a:hover, .add_cart .more a:active {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#84c924+0,90bc20+50,549122+50,549122+100 */
 	background: #84c924; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -101,6 +124,20 @@ body { font-size: 14px; }
 	background: -ms-linear-gradient(top,  #84c924 0%,#90bc20 50%,#549122 50%,#549122 100%); /* IE10 preview */
 	background: linear-gradient(to bottom,  #84c924 0%,#90bc20 50%,#549122 50%,#549122 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84c924', endColorstr='#549122',GradientType=0 ); /* IE6-8 */
+}
+
+.add_cart .more a:hover, .add_cart .more a:active {
+	color: #eee;
+}
+.add_cart .more a:hover img, .add_cart .more a:active img {
+	opacity: 0.75;
+}
+
+.check_cart .more a:hover, .check_cart .more a:active {
+	color: #eee;
+}
+.check_cart .more a:hover img, .check_cart .more a:active img {
+	opacity: 0.75;
 }
 
 .catalogContent .block .title { height: 60px; overflow-y: hidden; }
