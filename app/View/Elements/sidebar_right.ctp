@@ -1,6 +1,6 @@
 <?
-	if (isset($aSlot[4])) {
-		foreach($aSlot[4] as $banner) {
+	if (isset($aSlot[5])) {
+		foreach($aSlot[5] as $banner) {
 			$min_w = 228;
 			echo $this->element('banner', compact('banner', 'min_w'));
 		}
@@ -15,8 +15,8 @@
 	</div>
 <?
 	}
-	if (isset($aSlot[5])) {
-		foreach($aSlot[5] as $banner) {
+	if (isset($aSlot[6])) {
+		foreach($aSlot[6] as $banner) {
 			$min_w = 228;
 			echo $this->element('banner', compact('banner', 'min_w'));
 		}
