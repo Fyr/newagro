@@ -1,5 +1,6 @@
 <?
 	$this->Html->css('grid', array('inline' => false));
+	$this->Html->script(array('cart', 'vendor/jquery/jquery.cookie'), array('inline' => false));
 	$title = $article['Product']['code'].' '.$article['Product']['title_rus'];
 	
 	$indexUrl = array(
@@ -43,15 +44,35 @@
 		}
 	}
 	if ($article['Product']['active']) {
-?>
-											<img class="floatR" src="/img/active_yes.png" alt="В наличии" />
-<?
+		$src = '/img/active_yes.png';
+		$alt = 'В наличии';
 	} else {
-?>
-											<img class="floatR" src="/img/active_no.png" alt="Не на складе" />
-<?
+		$src = '/img/active_no.png';
+		$alt = 'Не на складе';
 	}
+	$lShowCart = (isset($cartItems[$article['Product']['id']]));
+	$cartQty = ($lShowCart) ? $cartItems[$article['Product']['id']] : '';
 ?>
+
+							<div class="floatR" style="width: 250px;">
+								<img class="no-fancybox" src="<?=$src?>" alt="<?=$alt?>" style="height: 35px;" />
+								<div class="check_cart" style="<?=($lShowCart) ? '' : 'display: none;'?>">
+									<div class="more">
+										<a href="javascript:" onclick="Cart.checkout()">
+											<img class="no-fancybox" src="/img/cart_checked.png" alt="" style="" />&nbsp;В корзине: <span class="in-cart-qty"><?=$cartQty?></span>
+										</a>
+									</div>
+								</div>
+
+								<input type="text" class="cart-qty" name="qty" value="1" onfocus="this.select()" style="<?=($lShowCart) ? 'display: none;' : ''?>">
+								<div class="add_cart" style="<?=($lShowCart) ? 'display: none;' : ''?>">
+									<div class="more">
+										<a href="javascript:" onclick="Cart.add(<?=$article['Product']['id']?>)">
+											<img class="no-fancybox" src="/img/cart_add.png" alt="" style="" />&nbsp;Купить
+										</a>
+									</div>
+								</div>
+							</div>
 							<b><?=__('Brand')?></b> : <?=$brand['Brand']['title']?><br />
 							<!--b><?=__('Type')?></b> : <?=$article['Category']['title']?><br /-->
 <?
@@ -148,7 +169,7 @@
 			if ($value) {
 				$class = ($class == 'odd') ? 'even' : 'odd';
 ?>
-	<tr class="gridRow <?=$class?> td">
+	<tr class="gridRow <?=$class?>">
 		<td nowrap="nowrap" align="right"><?=$field['label']?></td>
 		<td><b><?=$value?></b></td>
 	</tr>

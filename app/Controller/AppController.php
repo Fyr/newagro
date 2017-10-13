@@ -41,7 +41,6 @@ class AppController extends Controller {
 		$this->Settings = new Settings();
 		// $this->Settings->setDataSource('default');
 		$this->Settings->initData();
-
 	}
 	
 	public function isAuthorized($user) {
@@ -147,6 +146,7 @@ class AppController extends Controller {
 		
 		$this->set('aFilters', array());
 		$this->set('isHomePage', false);
+		$this->set('cartItems', $this->getCartItems());
 	}
 	
 	protected function _getCurrMenu() {
@@ -313,5 +313,9 @@ class AppController extends Controller {
 
 	protected function getSubdomainId() {
 		return Configure::read('domain.subdomain_id');
+	}
+
+	protected function getCartItems() {
+		return json_decode(isset($_COOKIE['cart']) ? $_COOKIE['cart'] : '{}', true);
 	}
 }

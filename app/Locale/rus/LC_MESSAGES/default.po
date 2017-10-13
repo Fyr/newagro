@@ -334,8 +334,8 @@ msgstr "Редактировать Пользователя"
 msgid "Field is mandatory"
 msgstr "Поле обязательно для заполнения"
 
-msgid "The name must be between 5 and 15 characters"
-msgstr "Имя должно быть от 5 до 15 символов"
+msgid "The name must be between 3 and 50 characters"
+msgstr "Имя должно быть от 3 до 50 символов"
 
 msgid "That name has already been taken"
 msgstr "Такое имя уже существует"
@@ -789,3 +789,13 @@ msgstr "URL"
 
 msgid "Stretch"
 msgstr "Растянуть"
+
+msgid "Cart"
+msgstr "Корзина"
+
+msgid "New order has been accepted"
+msgstr "Получен новый заказ"
+
+msgid "Мessage from Contacts page"
+msgstr "Сообщение со страницы `Контакты`"
+

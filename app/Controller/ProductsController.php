@@ -9,12 +9,12 @@ App::uses('Category', 'Model');
 App::uses('Subcategory', 'Model');
 App::uses('SiteRouter', 'Lib/Routing');
 App::uses('PHTimeHelper', 'Core.View/Helper');
-
+App::uses('CakeEmail', 'Network/Email');
 class ProductsController extends AppController {
 	public $name = 'Products';
 	public $uses = array('Category', 'Subcategory', 'Product', 'Seo.Seo', 'Search', 'DetailNum');
 	public $components = array('Recaptcha.Recaptcha');
-	public $helpers = array('Media.PHMedia', 'Core.PHTime', 'Price');
+	public $helpers = array('Media.PHMedia', 'Core.PHTime', 'Price', 'Form.PHForm');
 	
 	const PER_PAGE = 51;
 
@@ -310,4 +310,52 @@ class ProductsController extends AppController {
 		}
 	}
 
+	public function cart() {
+		$this->loadModel('SiteOrder');
+		$this->loadModel('SiteOrderDetails');
+
+		$cartItems = $this->getCartItems();
+		$aProducts = $this->Product->findAllByIdAndPublished(array_keys($cartItems), 1);
+
+		if ($this->request->is(array('put', 'post'))) {
+			if ($this->SiteOrder->save($this->request->data)) {
+				$site_order_id = $this->SiteOrder->id;
+				foreach($this->getCartItems() as $product_id => $qty) {
+					$this->SiteOrderDetails->clear();
+					$this->SiteOrderDetails->save(compact('site_order_id', 'product_id', 'qty'));
+				}
+
+				$order = $this->SiteOrder->findById($site_order_id);
+
+				$cartItems = $this->getCartItems();
+
+				$this->loadModel('Brand');
+				$this->Brand->unbindModel(array('hasOne' => array('Seo')));
+				$aBrands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
+
+				/*
+				$Email = new CakeEmail();
+				$Email->template('site_order')->viewVars(compact('aProducts', 'order', 'cartItems', 'aBrands'))
+					->emailFormat('html')
+					->from(array($this->request->data('SiteOrder.email') => $this->request->data('SiteOrder.username')))
+					->to(Configure::read('Settings.orders_email'))
+					->cc(Configure::read('Settings.admin_email'))
+					->bcc('fyr.work@gmail.com')
+					->subject(Configure::read('domain.title').': '.__('New order has been accepted'))
+					->send();
+*/
+				$this->redirect('http://'.Configure::read('domain.url').Router::url(array('action' => 'success', $site_order_id)));
+			}
+		}
+
+		$this->set(compact('aProducts'));
+		$this->disableCopy = false;
+	}
+
+	public function success($id) {
+		$this->loadModel('SiteOrder');
+		$this->set('order', $this->SiteOrder->findById($id));
+		$this->set('cartItems', array());
+		$this->disableCopy = false;
+	}
 }

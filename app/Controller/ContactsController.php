@@ -15,10 +15,11 @@ class ContactsController extends AppController {
 			}
 			if ($this->Contact->validates() && $lCaptchaValid) { // 
 				$Email = new CakeEmail();
-				$Email->template('contact_message')->viewVars(compact('aRowset', 'aParams'))
+				$Email->template('contact_message')->viewVars(compact('aRowset'))
 					->emailFormat('html')
 					->from('info@'.Configure::read('domain.url'))
-					->to(Configure::read('Settings.admin_email'))
+					->to(Configure::read('Settings.contacts_email'))
+					->cc(Configure::read('Settings.admin_email'))
 					->bcc('fyr.work@gmail.com')
 					->subject(Configure::read('domain.title').': '.__('Мessage from Contacts page'))
 					->send();

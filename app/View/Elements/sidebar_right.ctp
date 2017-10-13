@@ -1,4 +1,6 @@
 <?
+	echo $this->element('cart');
+
 	if (isset($aSlot[5])) {
 		foreach($aSlot[5] as $banner) {
 			$min_w = 228;

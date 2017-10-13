@@ -33,7 +33,8 @@
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
         'vendor/jquery/jquery.dotdotdot',
-		'doc_ready'
+		'doc_ready',
+        'cart'
     ));
 	echo $this->Html->script($scripts);
 	
@@ -41,17 +42,35 @@
 	echo $this->fetch('css');
 	echo $this->fetch('script');
 ?>
-
-<?
-    if (isset($cat_autoOpen)) {
-?>
 <script type="text/javascript">
+var Cart;
 $(document).ready(function(){
-	$('#cat-nav<?=$cat_autoOpen?> > a').click();
-});
-</script>
+<?
+    if ($disableCopy) {
+?>
+    $('.innerMainContent').click(function(e){
+        if ($(e.target).hasClass('cart-qty')) {
+            $(e.target).focus();
+            $(e.target).select();
+            return true;
+        } else {
+            $('.cart-qty').blur();
+        }
+        return false;
+    });
 <?
     }
+    if (isset($cat_autoOpen)) {
+?>
+	$('#cat-nav<?=$cat_autoOpen?> > a').click();
+<?
+    }
+?>
+    Cart = new CartObject(".<?=Configure::read('domain.url')?>", "http://<?=Configure::read('domain.url').$this->Html->url(array('controller' => 'Products', 'action' => 'cart'))?>");
+});
+</script>
+
+    <?
     if (!TEST_ENV && Configure::read('domain.zone') == 'ru') {
 ?>
         <meta name="google-site-verification" content="YXFvRWAoMnA2e-QGhv6Sh90HCB3IXQfUlVLQp3Fa8nk"/>
@@ -120,7 +139,7 @@ $(document).ready(function(){
 
             <div class="mainColomn clearfix">
                 <div id="mainContent" class="mainContent">
-                    <div class="innerMainContent" <? if ($disableCopy) { ?>oncopy="return false;" onmousedown="return false;" onclick="return true;"<? } ?>>
+                    <div class="innerMainContent" <? if ($disableCopy) { ?>oncopy="return false;" onmousedown="return false;" <? }?>>
 <?
 	if (isset($aSlot[1])) {
 		foreach($aSlot[1] as $banner) {

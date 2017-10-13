@@ -119,7 +119,7 @@ a:hover { text-decoration: none;}
 
 
 .leftSidebar {  margin-top: -69px;}
-.rightSidebar { float: right; width: 228px; margin-top: -79px;}
+.rightSidebar { float: right; width: 228px; margin-top: -69px;}
 .mainContent { /*margin: 0 271px 0 238px;*/ margin-right: -239px; float: left; width: 100%;  }
 .innerMainContent { margin-right: 239px;}
 .mainColomn { margin-left: 238px;}

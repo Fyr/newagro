@@ -111,3 +111,10 @@ Router::connect('/zapchasti/:subcategory/:slug',
 	),
 	array('pass' => array('slug'))
 );
+
+Router::connect('/cart',
+	array(
+		'controller' => 'Products',
+		'action' => 'cart',
+	)
+);

@@ -71,9 +71,21 @@ body { font-size: 14px; }
 	font-size: 12px;
 }
 */
+
+input.cart-qty {
+	width: 20px;
+	display: inline-block;
+	position: relative;
+	top: -15px;
+	left: 15px;
+	text-align: right;
+}
+
 .add_cart, .check_cart {
 	display: inline-block;
 	width: 140px;
+	position: relative;
+	top: -15px;
 }
 .check_cart {
 	width: 180px;
