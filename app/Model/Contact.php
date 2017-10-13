@@ -11,13 +11,19 @@ class Contact extends AppModel {
 			),
 			'checkNameLen' => array(
 				'rule' => array('between', 5, 15),
-				'message' => 'The name must be between 5 and 15 characters.'
+				'message' => 'The name must be between 3 and 50 characters'
 			),
 		),
 		'email' => array(
 			'checkEmail' => array(
 				'rule' => 'email',
 				'message' => 'Email is incorrect'
+			)
+		),
+		'body' => array(
+			'checkNotEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Field cannot be blank',
 			)
 		)
 	);
