@@ -188,24 +188,16 @@
 ?>
 	<br />
 	<a href="/zapchasti/"><?=__('Back to catalog')?></a>
-<?
-/*
-	if ($aSimilar) {
-?>
-	<div class="line" style="width: 100%"></div>
-	<h3><?=__('Similar products')?></h3>
-<?
-		foreach($aSimilar as $article) {
-			$this->ArticleVars->init($article, $url, $title, $teaser, $src, '150x', $featured);
-?>
-	<a href="<?=$url?>"><?=$title?></a><br />
-<?
-		}
-	}
-	*/
-?>
-<div style="margin-top: 20px">
-	<div class="article">
-		<?=$this->ArticleVars->body($article)?>
+	<div style="margin-top: 20px">
+		<div class="article">
+			<?=$this->ArticleVars->body($article)?>
+		</div>
 	</div>
-</div>
+<script>
+$(function(){
+	$('.cart-qty').click(function(){
+		$(this).focus();
+		$(this).select();
+	});
+});
+</script>

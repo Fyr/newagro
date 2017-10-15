@@ -333,7 +333,6 @@ class ProductsController extends AppController {
 				$this->Brand->unbindModel(array('hasOne' => array('Seo')));
 				$aBrands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
 
-				/*
 				$Email = new CakeEmail();
 				$Email->template('site_order')->viewVars(compact('aProducts', 'order', 'cartItems', 'aBrands'))
 					->emailFormat('html')
@@ -343,7 +342,6 @@ class ProductsController extends AppController {
 					->bcc('fyr.work@gmail.com')
 					->subject(Configure::read('domain.title').': '.__('New order has been accepted'))
 					->send();
-*/
 				$this->redirect('http://'.Configure::read('domain.url').Router::url(array('action' => 'success', $site_order_id)));
 			}
 		}
