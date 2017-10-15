@@ -46,20 +46,6 @@
 var Cart;
 $(document).ready(function(){
 <?
-    if ($disableCopy) {
-?>
-    $('.innerMainContent').click(function(e){
-        if ($(e.target).hasClass('cart-qty')) {
-            $(e.target).focus();
-            $(e.target).select();
-            return true;
-        } else {
-            $('.cart-qty').blur();
-        }
-        return false;
-    });
-<?
-    }
     if (isset($cat_autoOpen)) {
 ?>
 	$('#cat-nav<?=$cat_autoOpen?> > a').click();
