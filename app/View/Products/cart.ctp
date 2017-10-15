@@ -1,10 +1,12 @@
 <?
-	$this->Html->css(array('grid', '/Icons/css/icons'), array('inline' => false));
-	$this->Html->script(array('cart', 'vendor/jquery/jquery.cookie'), array('inline' => false));
+$this->Html->css(array('grid', '/Icons/css/icons'), array('inline' => false));
+$this->Html->script(array('cart', 'vendor/jquery/jquery.cookie'), array('inline' => false));
 
-	$aBreadCrumbs = array(__('Home') => '/', __('Cart') => '');
-	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
-	echo $this->element('title', array('title' => __('Cart')));
+$aBreadCrumbs = array(__('Home') => '/', __('Cart') => '');
+echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
+echo $this->element('title', array('title' => __('Cart')));
+
+if ($cartItems) {
 ?>
 <div class="block main clearfix">
 	<table class="grid" width="100%" cellpadding="0" cellspacing="0">
@@ -91,24 +93,16 @@
 		?>
 	</div>
 </form>
-<script>
-	/*
-$(function(){
-	$('.innerMainContent .cart-qty').click(function(e){
-		console.log('#');
-	});
-});
-function changeCartQty(id) {
-	var cart = Cart.getData();
-	var qty = parseInt($('#cart-item_' + id + ' input[name="cart-qty"]').val());
-	if (!qty) {
-		return false;
-	}
-	cart[id] = qty;
-	Cart.setData(cart);
-	Cart.updateTotal();
-
-	console.log(Cart.getData());
+<?
+} else {
+?>
+<div class="block main clearfix">
+	<p>
+		Корзина пуста.<br />
+		<br />
+		<a href="/"><?=__('Back to home page')?></a>
+	</p>
+</div>
+<?
 }
-*/
-</script>
+?>
