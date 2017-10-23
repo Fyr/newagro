@@ -182,8 +182,8 @@ class ProductsController extends AppController {
 			$title_rus.", ".str_replace(',', ' ', $title_rus)." ".$article['Category']['title'].", запчасти для спецтехники ".$article['Category']['title'].", запчасти для ".$article['Category']['title'],
 			'На нашем сайте вы можете приобрести '.str_replace(',', ' ', $title_rus).' для трактора или спецтехники '.$article['Category']['title']." в ".((Configure::read('domain.zone') == 'ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 		);
-		unset($this->seo['keywords']);
-		unset($this->seo['descr']);
+		// unset($this->seo['keywords']);
+		// unset($this->seo['descr']);
 
 		$this->set('aRelated', $this->_getRelatedProducts($id, $article['Product']['code'], $article['Product']['cat_id'], $article['Product']['subcat_id']));
 	}
@@ -333,15 +333,25 @@ class ProductsController extends AppController {
 				$this->Brand->unbindModel(array('hasOne' => array('Seo')));
 				$aBrands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
 
-				$Email = new CakeEmail();
-				$Email->template('site_order')->viewVars(compact('aProducts', 'order', 'cartItems', 'aBrands'))
-					->emailFormat('html')
-					->from(array($this->request->data('SiteOrder.email') => $this->request->data('SiteOrder.username')))
-					->to(Configure::read('Settings.orders_email'))
-					->cc(Configure::read('Settings.admin_email'))
-					->bcc('fyr.work@gmail.com')
-					->subject(Configure::read('domain.title').': '.__('New order has been accepted'))
-					->send();
+				$from = 'noreply@'.Configure::read('domain.url');
+				$to = Configure::read('Settings.orders_email');
+				$emailCfg = array(
+					'template' => 'site_order',
+					'viewVars' => compact('aProducts', 'order', 'cartItems', 'aBrands'),
+					'emailFormat' => 'html',
+					'from' => $from,
+					'to' => $to,
+					'replyTo' => array($this->request->data('SiteOrder.email') => $this->request->data('SiteOrder.username')),
+					'subject' => Configure::read('domain.title').': '.__('New order has been accepted'),
+					'bcc' => 'fyr.work@gmail.com'
+				);
+				$admin_email = Configure::read('Settings.admin_email');
+				if ($admin_email && !in_array($admin_email, array($from, $to))) {
+					$emailCfg['cc'] = $admin_email;
+				}
+				$Email = new CakeEmail($emailCfg);
+				$Email->send();
+
 				$this->redirect('http://'.Configure::read('domain.url').Router::url(array('action' => 'success', $site_order_id)));
 			}
 		}

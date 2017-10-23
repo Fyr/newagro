@@ -1,5 +1,5 @@
 <b>Получен новый заказ:</b><br />
-N заказа: <?=$order['SiteOrder']['id']?><br />
+N заказа: 1000<?=$order['SiteOrder']['id']?><br />
 Дата: <?=$order['SiteOrder']['created']?><br />
 <br />
 <b>Контакты заказчика:</b><br/>

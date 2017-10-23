@@ -13,17 +13,26 @@ class ContactsController extends AppController {
 			if (!$lCaptchaValid) {
 				$this->set('recaptchaError', $this->Recaptcha->error);
 			}
-			if ($this->Contact->validates() && $lCaptchaValid) { // 
-				$Email = new CakeEmail();
-				$Email->template('contact_message')->viewVars(compact('aRowset'))
-					->emailFormat('html')
-					->from('info@'.Configure::read('domain.url'))
-					->to(Configure::read('Settings.contacts_email'))
-					->cc(Configure::read('Settings.admin_email'))
-					->bcc('fyr.work@gmail.com')
-					->subject(Configure::read('domain.title').': '.__('Мessage from Contacts page'))
-					->send();
-				
+			if ($this->Contact->validates() && $lCaptchaValid) { //
+				$from = 'noreply@'.Configure::read('domain.url');
+				$to = Configure::read('Settings.contacts_email');
+				$emailCfg = array(
+					'template' => 'contact_message',
+					'emailFormat' => 'html',
+					'from' => $from,
+					'to' => $to,
+					'replyTo' => array($this->request->data('Contact.email') => $this->request->data('Contact.username')),
+					'subject' => Configure::read('domain.title').': '.__('Мessage from Contacts page'),
+					'bcc' => 'fyr.work@gmail.com'
+				);
+				$admin_email = Configure::read('Settings.admin_email');
+				if ($admin_email && !in_array($admin_email, array($from, $to))) {
+					$emailCfg['cc'] = $admin_email;
+				}
+
+				$Email = new CakeEmail($emailCfg);
+				$Email->send();
+
 				$this->redirect(array('action' => 'success'));
 			} else {
 				// captcha is invalid
