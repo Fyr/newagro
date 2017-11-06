@@ -25,6 +25,7 @@
 	$brand = $aBrands[$article['Product']['brand_id']];
 
 	$price_by = Configure::read('params.price_by');
+	$price2_by = Configure::read('params.price2_by');
 	$price_ru = Configure::read('params.price_ru');
 	$price2_ru = Configure::read('params.price2_ru');
 ?>
@@ -77,16 +78,17 @@
 							<!--b><?=__('Type')?></b> : <?=$article['Category']['title']?><br /-->
 <?
 	$price = 0;
+	$aParamFields = Hash::combine($article['PMFormField'], '{n}.id', '{n}');
 	if (Configure::read('domain.zone') == 'ru') {
-		if (isset($aParamValues[$price_ru]) && $aParamValues[$price_ru]) {
-			$price = $aParamValues[$price_ru]['ParamValue']['value'];
-		} elseif (isset($aParamValues[$price2_ru]) && $aParamValues[$price2_ru]) {
-			$price = $aParamValues[$price2_ru]['ParamValue']['value'];
+		if (isset($aParamFields[$price_ru]) && $aParamFields[$price_ru]) {
+			$price = $aParamFields[$price_ru]['ParamValue']['value'];
+		} elseif (isset($aParamFields[$price2_ru]) && $aParamFields[$price2_ru]) {
+			$price = $aParamFields[$price2_ru]['ParamValue']['value'];
 		}
-	} else {
-		if (isset($aParamValues[$price_by]) && $aParamValues[$price_by]) {
-			$price = $aParamValues[$price_by]['ParamValue']['value'];
-		}
+	} elseif (Configure::read('domain.zone') == 'by') {
+		$price = (isset($aParamFields[$price_by])) ? floatval(Hash::get($article, 'PMFormData.fk_'.$price_by)): 0;
+		$price2 = (isset($aParamFields[$price2_by])) ? floatval(Hash::get($article, 'PMFormData.fk_'.$price2_by)): 0;
+		$price = ($price2) ? $price2 : $price;
 	}
 
 	if ($price) {
@@ -159,7 +161,7 @@
 		$class = '';
 
 		foreach($article['PMFormField'] as $field) {
-			if (in_array($field['id'], array($price_by, $price_ru, $price2_ru))) {
+			if (in_array($field['id'], array($price_by, $price2_by, $price_ru, $price2_ru))) {
 				continue;
 			}
 			$value = $article['PMFormData']['fk_'.$field['id']];
