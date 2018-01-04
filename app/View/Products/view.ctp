@@ -87,9 +87,10 @@
 	$title_rus = $article['Product']['title_rus'];
 	$code = $article['Product']['code'];
 	$alt = (Configure::read('domain.zone') == 'ru') ? $code.' '.$title_rus : $title_rus.' '.$code;
+	$zone = Configure::read('domain.zone');
 	if (isset($article['Media']) && $article['Media']) {
 		foreach($article['Media'] as $i => $media) {
-			$_alt = (isset($media['alt']) && $media['alt']) ? $media['alt'] : $alt.' Вид '.($i + 1);
+			$_alt = (isset($media['alt_'.$zone]) && $media['alt_'.$zone]) ? $media['alt_'.$zone] : $alt.' Вид '.($i + 1);
 			$src = $this->Media->imageUrl(array('Media' => $media), '400x'); // $this->Media->imageUrl($media['object_type'], $media['id'], '400x', $media['file'].$media['ext'].'.png');
 			$orig = $media['url_img']; // $this->Media->imageUrl($media['object_type'], $media['id'], 'noresize', $media['file'].$media['ext'].'.png');
 ?>
