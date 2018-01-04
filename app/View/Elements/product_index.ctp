@@ -28,21 +28,9 @@
 					<img src="<?=($src) ? $src : '/img/default_product100.png'?>" alt="<?=$title?>" />
 				</div>
 <?
-			$price = 0;
-			$prod_id = $article['Product']['id'];
-			if (Configure::read('domain.zone') == 'ru') {
-				if (isset($prices_ru[$prod_id])) {
-					$price = $prices_ru[$prod_id]['value'];
-				} elseif (isset($prices2_ru[$prod_id])) {
-					$price = $prices2_ru[$prod_id]['value'];
-				}
-			} else {
-				if (isset($prices_by[$prod_id])) {
-					$price = $prices_by[$prod_id]['value'];
-				}
-			}
+			$price = $this->Price->getPrice($article);
 			if ($price) {
-				echo '<div class="price">'.$this->element('price', compact('price')).'</div>';
+				echo '<div class="price">'.$this->Price->format($price).'</div>';
 			}
 ?>
 			</a>

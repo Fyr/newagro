@@ -2,19 +2,29 @@
 App::uses('AppHelper', 'View/Helper');
 class PriceHelper extends AppHelper {
 
-	public function format($sum, $currency = '') {
-		$currency = ($currency) ? $currency : Configure::read('Settings.price_currency');
-		$sum = number_format(
-			$sum,
-			Configure::read('Settings.decimals_'.$currency),
-			Configure::read('Settings.float_div_'.$currency),
-			Configure::read('Settings.int_div_'.$currency)
+	public function format($sum, $lFull = true) {
+		$sum = number_format($sum,
+			Configure::read('Settings.decimals'),
+			Configure::read('Settings.float_div'),
+			' '
 		);
-		$sum = Configure::read('Settings.price_prefix_'.$currency).$sum.Configure::read('Settings.price_postfix_'.$currency);
+		$sum = str_replace(' ', Configure::read('Settings.int_div'), $sum); // fix for multibyte int_div (PHP v5.3)
+		if ($lFull) {
+			$sum = Configure::read('Settings.price_prefix').$sum.Configure::read('Settings.price_postfix');
+		}
 		return str_replace('$P', $this->symbolP(), $sum);
 	}
 
 	public function symbolP() {
 		return '<span class="rubl">₽</span>';
+	}
+
+	public function getPrice($product) {
+		if (!in_array($product['Product']['brand_id'], explode(',', Configure::read('Settings.brand_prices'))) ) {
+			return null;
+		}
+		$price = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price')]);
+		$price2 = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price2')]);
+		return ($price) ? $price : $price2;
 	}
 }

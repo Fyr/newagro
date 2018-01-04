@@ -1,1 +1,0 @@
-<?=Configure::read('Settings.price_prefix').$price.Configure::read('Settings.price_postfix')?>

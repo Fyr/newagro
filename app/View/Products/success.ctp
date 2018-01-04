@@ -15,3 +15,8 @@
 		<a href="/"><?=__('Back to home page')?></a>
 	</p>
 </div>
+<script>
+$(function(){
+	Cart.setData({});
+});
+</script>

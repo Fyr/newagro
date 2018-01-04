@@ -41,15 +41,16 @@ var CartObject = function(domain, url) {
 	this.checkout = function () {
 		window.location.href = this.url;
 	}
-
+/*
 	this.updateTotal = function () {
-		var total = 0;
+		var sum, total = 0;
 		$('input[name="cart-qty"]').each(function(){
-			total+= parseInt($(this).val());
+			sum = parseInt($(this).val());
+			total+= sum;
 		});
 		$('#cart-total').html(total);
 	}
-
+*/
 	this.remove = function (id) {
 		var cart = this.getData();
 		delete cart[id];
@@ -58,10 +59,14 @@ var CartObject = function(domain, url) {
 		this.update();
 		this.updateTotal();
 	}
-
+/*
 	this.edit = function (id) {
 		var cart = this.getData();
-		var qty = parseInt($('#cart-item_' + id + ' input[name="cart-qty"]').val());
+		var qty = $('#cart-item_' + id + ' input[name="cart-qty"]').val();
+		if (isNaN(qty)) {
+			alert('Введите целое кол-во!');
+			return false;
+		}
 		if (!qty) {
 			return false;
 		}
@@ -69,4 +74,5 @@ var CartObject = function(domain, url) {
 		this.setData(cart);
 		this.updateTotal();
 	}
+	*/
 }

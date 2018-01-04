@@ -23,11 +23,6 @@
 	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 	echo $this->element('title', compact('title'));
 	$brand = $aBrands[$article['Product']['brand_id']];
-
-	$price_by = Configure::read('params.price_by');
-	$price2_by = Configure::read('params.price2_by');
-	$price_ru = Configure::read('params.price_ru');
-	$price2_ru = Configure::read('params.price2_ru');
 ?>
 						<div class="block main clearfix">
 
@@ -77,23 +72,10 @@
 							<b><?=__('Brand')?></b> : <?=$brand['Brand']['title']?><br />
 							<!--b><?=__('Type')?></b> : <?=$article['Category']['title']?><br /-->
 <?
-	$price = 0;
-	$aParamFields = Hash::combine($article['PMFormField'], '{n}.id', '{n}');
-	if (Configure::read('domain.zone') == 'ru') {
-		if (isset($aParamFields[$price_ru]) && $aParamFields[$price_ru]) {
-			$price = $aParamFields[$price_ru]['ParamValue']['value'];
-		} elseif (isset($aParamFields[$price2_ru]) && $aParamFields[$price2_ru]) {
-			$price = $aParamFields[$price2_ru]['ParamValue']['value'];
-		}
-	} elseif (Configure::read('domain.zone') == 'by') {
-		$price = (isset($aParamFields[$price_by])) ? floatval(Hash::get($article, 'PMFormData.fk_'.$price_by)): 0;
-		$price2 = (isset($aParamFields[$price2_by])) ? floatval(Hash::get($article, 'PMFormData.fk_'.$price2_by)): 0;
-		$price = ($price2) ? $price2 : $price;
-	}
-
+	$price = $this->Price->getPrice($article);
 	if ($price) {
 ?>
-							<b><?=__('Price')?></b> : <?=$this->element('price', compact('price'))?><br />
+							<b><?=__('Price')?></b> : <?=$this->Price->format($price)?><br />
 <?
 	}
 ?>
@@ -161,9 +143,6 @@
 		$class = '';
 
 		foreach($article['PMFormField'] as $field) {
-			if (in_array($field['id'], array($price_by, $price2_by, $price_ru, $price2_ru))) {
-				continue;
-			}
 			$value = $article['PMFormData']['fk_'.$field['id']];
 			if ($field['id'] == Configure::read('params.motor')) {
 				$value = str_replace(',', ', ', $value);
