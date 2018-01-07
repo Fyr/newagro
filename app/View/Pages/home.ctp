@@ -74,9 +74,27 @@
 		</div>
 	</div>
 </div>
+<?
+	fdebug(compact('contentArticle', 'contentArticle2', 'aFeaturedProducts'));
+	if (!$aFeaturedProducts && $contentArticle2) {
+		$contentArticle['Page']['body'].= $contentArticle2['Page']['body']; // сливаем 2 блока в 1 т.к. нет разрывов
+		$contentArticle2 = array();
+	}
+?>
+
 <div class="block main article clearfix">
 	<?=$this->ArticleVars->body($contentArticle)?>
 </div>
+<?
+	if ($aFeaturedProducts) {
+?>
+		<!-- Featured products slider -->
+<?
+	}
+	if ($contentArticle2) {
+		echo $this->Html->div('block main article clearfix', $this->ArticleVars->body($contentArticle2));
+	}
+?>
 <script type="text/javascript">
 function calcProp(k, prop) {
 	return Math.round(prop.replace(/px/, '') * k) + 'px';

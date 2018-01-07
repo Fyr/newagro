@@ -1,12 +1,12 @@
 	<div class="catalogContent clearfix<?=(isset($directSearch) && $directSearch) ? ' brands' : ''?>">
 <?
 		foreach($aArticles as $article) {
-			$this->ArticleVars->init($article, $url, $title, $teaser, $src, '130x100', $featured);
+			$this->ArticleVars->init($article, $url, $title, $teaser, $src, '190x145', $featured);
 			$title = $article['Product']['code'].' '.$article['Product']['title_rus'];
 			$brand_id = $article['Product']['brand_id'];
 			if (!$src) {
 				if (isset($aBrands[$brand_id])) {
-					$src = $this->Media->imageUrl($aBrands[$brand_id], '130x100');
+					$src = $this->Media->imageUrl($aBrands[$brand_id], '190x145');
 				}
 			}
 			

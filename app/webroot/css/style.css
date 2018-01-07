@@ -441,8 +441,8 @@ img.grayscale {
     .catalogContent .block .title { margin: 0 0 10px 0;}
     .catalogContent .block .price { font-size: 12px; text-align: center; }
     .catalogContent .brand { font-size: 14px;}
-    .catalogContent .top { height: 60px; text-align: left;}
-	.catalogContent.brands .top { height: 85px;}
+    .catalogContent .top { height: 30px; text-align: left;}
+	.catalogContent.brands .top { height: 50px;}
 	.catalogContent.brands .block { height: 230px;}
 
 @media (max-width: 1050px) { 

@@ -6,9 +6,10 @@ App::uses('News', 'Model');
 App::uses('SiteArticle', 'Model');
 App::uses('Region', 'Model');
 App::uses('Category', 'Model');
+App::uses('Product', 'Model');
 class PagesController extends AppController {
 	public $name = 'Pages';
-	public $uses = array('Page', 'News', 'Region', 'Marker', 'Category');
+	public $uses = array('Page', 'News', 'Region', 'Marker', 'Category', 'Product');
 	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media');
 
 	public function home() {
@@ -25,14 +26,20 @@ class PagesController extends AppController {
 		));
 		$this->set('aHomePageNews', $aNews);
 
+		$conditions = array('Product.published' => 1, 'Product.featured' => 1);
+		$order = array('Product.modified' => 'DESC');
+		$aFeaturedProducts = $this->Product->find('all', compact('conditions', 'order'));
+		$aArticle2 = array();
 		if ($cat_id = Configure::read('domain.category_id')) {
 			// $aArticle = $this->Category->findById($cat_id);
 			// $aArticle['Page'] = $aArticle['Category'];
 			$aArticle = array('Page' => array('title' => '', 'body' => ''));
 		} else {
 			$aArticle = $this->Page->getBySlug('home');
+			$aArticle2 = $this->Page->getBySlug('home2');
 		}
 		$this->set('contentArticle', $aArticle);
+		$this->set('contentArticle2', $aArticle2);
 		
 		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
 			$aArticle['Seo']['title'] = $aArticle['Page']['title'];
@@ -42,7 +49,7 @@ class PagesController extends AppController {
 		$aRegions = Hash::combine($this->Region->find('all'), '{n}.Region.id', '{n}.Region');
 		$aMarkers = $this->Marker->find('all');
 		$aMarkers = Hash::combine($aMarkers, '{n}.Marker.id', '{n}.Marker', '{n}.Marker.region_id'); // group by region
-		$this->set(compact('aRegions', 'aMarkers'));
+		$this->set(compact('aRegions', 'aMarkers', 'aFeaturedProducts'));
 	}
 	
 	public function show($slug) {
