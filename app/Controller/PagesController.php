@@ -26,7 +26,7 @@ class PagesController extends AppController {
 		));
 		$this->set('aHomePageNews', $aNews);
 
-		$conditions = array('Product.published' => 1, 'Product.featured' => 1);
+		$conditions = array('Product.published' => 1, 'Product.featured_'.Configure::read('domain.zone') => 1);
 		$order = array('Product.modified' => 'DESC');
 		$aFeaturedProducts = $this->Product->find('all', compact('conditions', 'order'));
 		$aArticle2 = array();

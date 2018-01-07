@@ -103,9 +103,34 @@ $(document).ready(function(){
 		});
 	}
 
-	$('.ellipsis').dotdotdot();
+	$('.ellipsis').dotdotdot({
+		watch: 'window'
+	});
 
 	$('.article table > tbody > tr > td').each(function(){
 		$(this).html($('p', this).html());
 	});
+
+	$(".catalogSlider").smoothDivScroll({
+		autoScrollingMode: "onStart",
+		autoScrollingStep: 1,
+		autoScrollingInterval: 40,
+		manualContinuousScrolling: true,
+		visibleHotSpotBackgrounds: "always",
+		hotSpotScrollingInterval: 30,
+		autoScrollingDirection: "endlessLoopRight",
+		mouseOverLeftHotSpot: function(eventObj, data) {
+			$(this).smoothDivScroll("option","autoScrollingDirection","endlessLoopLeft");
+		},
+		mouseOverRightHotSpot: function(eventObj, data) {
+			$(this).smoothDivScroll("option","autoScrollingDirection","endlessLoopRight");
+		}
+	});
+
+	$(".catalogSlider").bind("mouseover", function() {
+		$(this).smoothDivScroll("stopAutoScrolling");
+	}).bind("mouseout", function() {
+		$(this).smoothDivScroll("startAutoScrolling");
+	});
+
 });

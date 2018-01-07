@@ -152,7 +152,6 @@ input.cart-qty {
 	opacity: 0.75;
 }
 
-.catalogContent .block .title { height: 28px; overflow-y: hidden; }
 
 .article ul {
 	list-style: disc inside;
@@ -170,11 +169,3 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 
 .social a { margin-right: 0px; }
 .social a > img { width: 27px; }
-
-.catalogContent a.block .brand {
-	font-size: 12px;
-}
-.catalogContent a.block .title {
-	font-size: 12px;
-	line-height: 1;
-}

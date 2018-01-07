@@ -17,10 +17,21 @@ div.scrollingHotSpotLeft
 }
 
 /* Visible left hotspot */
-div.scrollingHotSpotLeftVisible
-{
-	background-image: url(../img/arrows/arrow_left.png);				
-	background-repeat: no-repeat;
+div.scrollingHotSpotLeftVisible {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7f7f7+0,f7f7f7+100&1+77,0.9+81,0.8+85,0.6+90,0.4+93,0.2+97,0+100 */
+	background: -moz-linear-gradient(left, rgba(247,247,247,1) 0%, rgba(247,247,247,1) 77%, rgba(247,247,247,0.9) 81%, rgba(247,247,247,0.8) 85%, rgba(247,247,247,0.6) 90%, rgba(247,247,247,0.4) 93%, rgba(247,247,247,0.2) 97%, rgba(247,247,247,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(247,247,247,1) 0%,rgba(247,247,247,1) 77%,rgba(247,247,247,0.9) 81%,rgba(247,247,247,0.8) 85%,rgba(247,247,247,0.6) 90%,rgba(247,247,247,0.4) 93%,rgba(247,247,247,0.2) 97%,rgba(247,247,247,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(247,247,247,1) 0%,rgba(247,247,247,1) 77%,rgba(247,247,247,0.9) 81%,rgba(247,247,247,0.8) 85%,rgba(247,247,247,0.6) 90%,rgba(247,247,247,0.4) 93%,rgba(247,247,247,0.2) 97%,rgba(247,247,247,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#00f7f7f7',GradientType=1 ); /* IE6-9 */
+	
+}
+
+div.scrollingHotSpotLeftVisible:before {
+	content: '';
+	background: url(../img/arrows/arrow_left.png) no-repeat left top;
+	display: block;
+	width: 28px; 
+	height: 60px;
 }
 
 /* Invisible right hotspot */
@@ -37,10 +48,20 @@ div.scrollingHotSpotRight
 }
 
 /* Visible right hotspot */
-div.scrollingHotSpotRightVisible
-{
-	background-image: url(../img/arrows/arrow_right.png);
-	background-repeat: no-repeat;
+div.scrollingHotSpotRightVisible { text-align: right;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7f7f7+0,f7f7f7+100&0+0,0.2+3,0.4+7,0.6+10,0.8+15,0.9+19,1+23 */
+	background: -moz-linear-gradient(left, rgba(247,247,247,0) 0%, rgba(247,247,247,0.2) 3%, rgba(247,247,247,0.4) 7%, rgba(247,247,247,0.6) 10%, rgba(247,247,247,0.8) 15%, rgba(247,247,247,0.9) 19%, rgba(247,247,247,1) 23%, rgba(247,247,247,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(247,247,247,0) 0%,rgba(247,247,247,0.2) 3%,rgba(247,247,247,0.4) 7%,rgba(247,247,247,0.6) 10%,rgba(247,247,247,0.8) 15%,rgba(247,247,247,0.9) 19%,rgba(247,247,247,1) 23%,rgba(247,247,247,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(247,247,247,0) 0%,rgba(247,247,247,0.2) 3%,rgba(247,247,247,0.4) 7%,rgba(247,247,247,0.6) 10%,rgba(247,247,247,0.8) 15%,rgba(247,247,247,0.9) 19%,rgba(247,247,247,1) 23%,rgba(247,247,247,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f7f7f7', endColorstr='#f7f7f7',GradientType=1 ); /* IE6-9 */
+}
+
+div.scrollingHotSpotRightVisible:before {
+	content: '';
+	background: url(../img/arrows/arrow_right.png) no-repeat right top;
+	display: inline-block;
+	width: 28px; 
+	height: 60px;
 }
 
 /* The scroll wrapper is always the same width and height as the containing element (div).

@@ -1,4 +1,3 @@
-	<div class="catalogContent clearfix<?=(isset($directSearch) && $directSearch) ? ' brands' : ''?>">
 <?
 		foreach($aArticles as $article) {
 			$this->ArticleVars->init($article, $url, $title, $teaser, $src, '190x145', $featured);
@@ -11,7 +10,7 @@
 			}
 			
 ?>
-			<a id="product_<?=$article['Product']['id']?>" class="block" href="<?=$url?>">
+			<a id="product_<?=$article['Product']['id']?>" class="catalog__block" href="<?=$url?>">
 				<div class="top">
 <?
 			if (isset($directSearch) && $directSearch) {
@@ -37,4 +36,3 @@
 <?
 		}
 ?>                            
-	</div>

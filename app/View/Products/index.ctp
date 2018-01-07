@@ -47,13 +47,8 @@
 	</div>
 <?
 	} else {
-		echo $this->element('product_index');
-		/*
-		if (isset($directSearch) && $directSearch) {
-			// echo $this->element('pagination2', array('filterURL' => $aFilters['url']));
-		} else {
-		}
-		*/
+		$class = (isset($directSearch) && $directSearch) ? ' brands' : '';
+		echo $this->Html->div('catalogContent clearfix'.$class, $this->element('product_index'));
 		echo $this->element('paginate', array('objectType' => 'products'));
 	}
 

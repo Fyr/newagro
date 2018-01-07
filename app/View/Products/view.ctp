@@ -165,7 +165,7 @@
 	}
 	if ($aRelated) {
 		echo $this->Html->tag('h3', __('Related products'));
-		echo $this->element('product_index', array('aArticles' => $aRelated));
+		echo $this->Html->div('catalogContent clearfix', $this->element('product_index', array('aArticles' => $aRelated)));
 	}
 ?>
 	<br />

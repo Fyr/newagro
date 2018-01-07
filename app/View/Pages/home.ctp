@@ -75,7 +75,6 @@
 	</div>
 </div>
 <?
-	fdebug(compact('contentArticle', 'contentArticle2', 'aFeaturedProducts'));
 	if (!$aFeaturedProducts && $contentArticle2) {
 		$contentArticle['Page']['body'].= $contentArticle2['Page']['body']; // сливаем 2 блока в 1 т.к. нет разрывов
 		$contentArticle2 = array();
@@ -87,9 +86,7 @@
 </div>
 <?
 	if ($aFeaturedProducts) {
-?>
-		<!-- Featured products slider -->
-<?
+		echo $this->Html->div('catalogSlider', $this->element('product_index', array('aArticles' => $aFeaturedProducts)));
 	}
 	if ($contentArticle2) {
 		echo $this->Html->div('block main article clearfix', $this->ArticleVars->body($contentArticle2));

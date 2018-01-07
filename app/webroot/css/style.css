@@ -392,6 +392,36 @@ button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
     .footer .footerSkypeEmail .email { margin-right: 8px;}
     .footer .footerSkypeEmail .letter { margin-top: 5px;}
 
+
+.catalogSlider  { height: 210px;  width: 100%; position: relative; margin-bottom: 20px; }
+.catalogSlider .catalog__block { width: 200px; margin-bottom: 0;  float: left; display: block; margin-left: 10px; margin-right: 10px;
+
+}
+.catalogSlider .catalog__block .title { color: #d4a126; }
+.catalogSlider .catalog__block .price { font-weight: 700; }
+.catalogSlider div.scrollingHotSpotLeft { height: 100%; top: 0;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&1+77,0.9+81,0.8+85,0.6+90,0.4+93,0.2+97,0+100 */
+background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 77%, rgba(255,255,255,0.9) 81%, rgba(255,255,255,0.8) 85%, rgba(255,255,255,0.6) 90%, rgba(255,255,255,0.4) 93%, rgba(255,255,255,0.2) 97%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 77%,rgba(255,255,255,0.9) 81%,rgba(255,255,255,0.8) 85%,rgba(255,255,255,0.6) 90%,rgba(255,255,255,0.4) 93%,rgba(255,255,255,0.2) 97%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 77%,rgba(255,255,255,0.9) 81%,rgba(255,255,255,0.8) 85%,rgba(255,255,255,0.6) 90%,rgba(255,255,255,0.4) 93%,rgba(255,255,255,0.2) 97%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+	
+}
+.catalogSlider div.scrollingHotSpotLeft:before { content: ''; display: block; display: inline-block; vertical-align: middle;  }
+.catalogSlider div.scrollingHotSpotLeft:after { content: ''; height: 100%; display: inline-block; vertical-align: middle;}
+
+.catalogSlider div.scrollingHotSpotRight { height: 100%; top: 0; text-align: right;
+
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,0.2+3,0.4+7,0.6+10,0.8+15,0.9+19,1+23 */
+background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 3%, rgba(255,255,255,0.4) 7%, rgba(255,255,255,0.6) 10%, rgba(255,255,255,0.8) 15%, rgba(255,255,255,0.9) 19%, rgba(255,255,255,1) 23%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.2) 3%,rgba(255,255,255,0.4) 7%,rgba(255,255,255,0.6) 10%,rgba(255,255,255,0.8) 15%,rgba(255,255,255,0.9) 19%,rgba(255,255,255,1) 23%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,0.2) 3%,rgba(255,255,255,0.4) 7%,rgba(255,255,255,0.6) 10%,rgba(255,255,255,0.8) 15%,rgba(255,255,255,0.9) 19%,rgba(255,255,255,1) 23%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
+}
+
+.catalogSlider div.scrollingHotSpotRight:before { content: ''; display: block; margin: 0; display: inline-block; vertical-align: middle;  }
+.catalogSlider div.scrollingHotSpotRight:after { content: ''; height: 100%; display: inline-block; vertical-align: middle;}
+
 @media (max-width: 1100px) {  
     .footer .menu { margin-left: 30px; width: 260px;}
     .footer .menu li { width: 130px;}
@@ -431,37 +461,54 @@ img.grayscale {
 }
 
 .news .block { margin-bottom: 20px;}
+
+
 .catalogContent { }
-    .catalogContent .block { float: left; width: 32%; margin-left: 2%; box-sizing: border-box; padding: 10px 10px 20px 10px; height:  210px;  text-align: center; text-decoration: none; display: block; }
-    .catalogContent .block:nth-child(3n+1) { margin-left: 0;}
-    .catalogContent .block .ava { display: inline-block; position: relative; }
-    .catalogContent .block .ava img { max-width: 100%; height: auto; display: block; border: 1px solid #eee; }
-    .catalogContent .block:hover .ava img { opacity: 0.5; filter: alpha(opacity=50); }
-    .catalogContent .block .available, .catalogContent .block .noAvailable { position: absolute; left: 0; top: 0; opacity: 0.7; filter: alpha(opacity=70);}
-    .catalogContent .block .title { margin: 0 0 10px 0;}
-    .catalogContent .block .price { font-size: 12px; text-align: center; }
-    .catalogContent .brand { font-size: 14px;}
-    .catalogContent .top { height: 30px; text-align: left;}
-	.catalogContent.brands .top { height: 50px;}
-	.catalogContent.brands .block { height: 230px;}
+.catalogContent .catalog__block:nth-child(3n+1) { margin-left: 0;}
+
+
+.catalog__block { float: left; width: 32%; margin-left: 2%; box-sizing: border-box; padding: 10px 10px 20px 10px; height:  210px;  text-align: center; text-decoration: none; display: block; border: 1px solid #e9e9e9; border-radius: 0px; color: #262626; margin-bottom: 20px;
+	background: #ffffff; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOWY4ZjgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f9f8f8 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f9f8f8)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f9f8f8 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#f9f8f8 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#f9f8f8 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#f9f8f8 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f8f8',GradientType=0 ); /* IE6-8 */
+}
+.catalogContent.brands .catalog__block { height: 230px; }
+    
+.catalog__block .ava { display: inline-block; position: relative; }
+.catalog__block .ava img { max-width: 100%; height: auto; display: block; border: 1px solid #eee; border-radius: 6px; }
+.catalog__block:hover .ava img { opacity: 0.5; filter: alpha(opacity=50); }
+.catalog__block .available, .catalog__block .noAvailable { position: absolute; left: 0; top: 0; opacity: 0.7; filter: alpha(opacity=70);}
+.catalog__block .title {margin:0; display: block; color: #d4a126; text-transform: uppercase; font-weight: 700; font-size: 12px; height: 25px; line-height: 1; padding-bottom: 5px; }
+.catalog__block .title:hover { text-decoration: underline;}
+.catalog__block .price { font-size: 12px; text-align: center; }
+.catalog__block .brand { font-size: 12px;}
+.catalog__block .top {  text-align: left;}
+	
 
 @media (max-width: 1050px) { 
-    .catalogContent .block .title { font-size: 12px;}
+    .catalog__block .title { font-size: 12px;}
 }
 
 @media (max-width: 863px) { 
-    .catalogContent .block { height: 220px;}
-    .catalogContent .top { height: 60px;}
+    .catalog__block .block { height: 220px;}
+    .catalog__block .top { height: 60px;}
 }
 
 @media (max-width: 720px) { 
-    .catalogContent .block .title { text-align: center; }
-	.catalogContent .brand { text-align: center; }
+    .catalog__block .title { text-align: center; }
+	.catalog__block .brand { text-align: center; }
 }
 
 @media (max-width: 480px) {
-    .catalogContent .top { height: 40px;}
-    .catalogContent .block { float: none; width: auto; margin-left: 0; height: 210px;  }
+    .catalog__block .top { height: 40px;}
+    .catalog__block { float: none; width: auto; margin-left: 0; height: 210px;  }
 }
 
 .pagination { font-size: 14px; text-align: center;}
