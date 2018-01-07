@@ -27,7 +27,7 @@
 					<img src="<?=($src) ? $src : '/img/default_product100.png'?>" alt="<?=$title?>" />
 				</div>
 <?
-			$price = $this->Price->getPrice($article);
+			$price = $this->Price->getPrice($article, isset($lForcePrice) && $lForcePrice);
 			if ($price) {
 				echo '<div class="price">'.$this->Price->format($price).'</div>';
 			}

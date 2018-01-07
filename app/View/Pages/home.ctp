@@ -86,7 +86,7 @@
 </div>
 <?
 	if ($aFeaturedProducts) {
-		echo $this->Html->div('catalogSlider', $this->element('product_index', array('aArticles' => $aFeaturedProducts)));
+		echo $this->Html->div('catalogSlider', $this->element('product_index', array('aArticles' => $aFeaturedProducts, 'lForcePrice' => true)));
 	}
 	if ($contentArticle2) {
 		echo $this->Html->div('block main article clearfix', $this->ArticleVars->body($contentArticle2));

@@ -26,6 +26,12 @@ class PagesController extends AppController {
 		));
 		$this->set('aHomePageNews', $aNews);
 
+		$this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
+			'className' => 'Form.PMFormData',
+			'foreignKey' => 'object_id',
+			'conditions' => array('PMFormData.object_type' => 'ProductParam'),
+			'dependent' => true
+		))), false);
 		$conditions = array('Product.published' => 1, 'Product.featured_'.Configure::read('domain.zone') => 1);
 		$order = array('Product.modified' => 'DESC');
 		$aFeaturedProducts = $this->Product->find('all', compact('conditions', 'order'));

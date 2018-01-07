@@ -19,12 +19,12 @@ class PriceHelper extends AppHelper {
 		return '<span class="rubl">₽</span>';
 	}
 
-	public function getPrice($product) {
-		if (!in_array($product['Product']['brand_id'], explode(',', Configure::read('Settings.brand_prices'))) ) {
-			return null;
+	public function getPrice($product, $lForce = false) {
+		if ($lForce || in_array($product['Product']['brand_id'], explode(',', Configure::read('Settings.brand_prices'))) ) {
+			$price = floatval($product['PMFormData']['fk_' . Configure::read('Settings.fk_price')]);
+			$price2 = floatval($product['PMFormData']['fk_' . Configure::read('Settings.fk_price2')]);
+			return ($price) ? $price : $price2;
 		}
-		$price = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price')]);
-		$price2 = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price2')]);
-		return ($price) ? $price : $price2;
+		return null;
 	}
 }
