@@ -52,11 +52,6 @@
 		echo $this->element('paginate', array('objectType' => 'products'));
 	}
 
-	if (isset($gpzData) || isset($gpzError)) {
-		echo '<br/><br/>'.$this->element('title', array('title' => 'Региональные склады'));
-		echo $this->Html->div('block main clearfix', $this->element('gpz_search'));
-	}
-
 	if ($relatedArticle) {
 		if ($html = trim($this->ArticleVars->body($relatedArticle))) {
 			echo '<br>';

@@ -35,10 +35,6 @@ class AppController extends Controller {
 		$this->Settings->initData();
 
 		$this->Settings = new Settings();
-		$this->Settings->setDataSource('giperzap'); // load settings from GiperZap
-		$this->Settings->initData();
-
-		$this->Settings = new Settings();
 		// $this->Settings->setDataSource('default');
 		$this->Settings->initData();
 	}

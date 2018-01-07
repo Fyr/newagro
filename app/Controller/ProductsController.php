@@ -113,18 +113,6 @@ class ProductsController extends AppController {
 			$this->logSearch($q);
 			$this->processFilter($q);
 			$this->set('directSearch', true);
-			/*
-			if ($this->searchNumber && $this->_filterGpzSearch($this->searchNumber)) {
-				try {
-					App::uses('GpzApi', 'Model');
-					$this->GpzApi = new GpzApi();
-					$gpzData = $this->GpzApi->search($q);
-					$this->set(compact('gpzData'));
-				} catch (Exception $e) {
-					$this->set('gpzError', $e->getMessage());
-				}
-			}
-			*/
 		} else {
 			$this->Product->unbindModel(array('hasOne' => array('Search'))); // нужно для поиска по тексту
 		}
@@ -136,15 +124,6 @@ class ProductsController extends AppController {
 		$aProducts = $this->paginate('Product');
 		$this->set('aArticles', $aProducts);
 		$this->set('objectType', 'Product');
-	}
-
-	private function _filterGpzSearch($number) {
-		$aBrands = explode(',', Configure::read('Settings.gpz_brands'));
-		$this->DetailNum->bindModel(array('belongsTo' => array('Product')));
-		$fields = array('DetailNum.detail_num');
-		$conditions = array('Product.brand_id' => $aBrands, 'DetailNum.detail_num' => $number);
-		$aRows = $this->DetailNum->find('all', compact('conditions', 'fields'));
-		return !$aRows;
 	}
 
 	public function view($slug) {
@@ -203,30 +182,6 @@ class ProductsController extends AppController {
 	}
 
 	private function _getRelatedProducts($id, $code, $cat_id, $subcat_id) {
-		/*
-		$limit = 6;
-		$value = $this->DetailNum->strip($code);
-		$product_ids = $this->DetailNum->findDetails($this->DetailNum->stripList('*'.$value.'*'), true, DetailNum::ORIG);
-		if (!$product_ids)  {
-			$product_ids = $this->DetailNum->findDetails('*'.$this->DetailNum->stripList($value).'*', true);
-		}
-		$product_ids = array_diff($product_ids, array($id)); // исключаем текущий продукт
-		$products = array();
-		if ($product_ids && count($product_ids) >= 6) {
-			$conditions = array('Product.id' => $product_ids);
-		} else {
-			if ($product_ids) { // не хватает продуктов
-				$products = $this->Product->findAllById($product_ids);
-				// добавляем из той же подкатегории
-				$conditions = array('Product.subcat_id' => $subcat_id, 'Product.published' => 1, 'NOT' => array('Product.id' => am($product_ids, array($id))));
-				$limit = 6 - count($product_ids);
-			} else {
-				$conditions = array('Product.subcat_id' => $subcat_id, 'Product.published' => 1, 'Product.id <> ' => $id);
-			}
-		}
-		$products = am($products, $this->Product->find('all', compact('conditions', 'limit')));
-		*/
-
 		$conditions = array('Product.published' => 1, 'Product.code <> ' => $code);
 		if ($subcat_id) {
 			$conditions['Product.subcat_id'] = $subcat_id;
@@ -270,58 +225,6 @@ class ProductsController extends AppController {
 			$order[] = 'Product.id = ' . $id . ' DESC';
 		}
 		$this->paginate['order'] = implode(', ', $order);
-	}
-
-	public function price() {
-		$number = $this->request->query('number');
-		$brand = $this->request->query('brand');
-
-		$aSorting = array(
-			'brand' => 'Производитель',
-			'partnumber' => 'Номер',
-			'image' => 'Фото',
-			'title' => 'Наименование',
-			'qty' => 'Наличие',
-			// 'price2' => 'Цена'
-		);
-		$this->set('aSorting', $aSorting);
-		$aOrdering = array(
-			'asc' => 'по возрастанию',
-			'desc' => 'по убыванию'
-		);
-		$this->set('aOrdering', $aOrdering);
-
-		$sort = $this->request->query('sort');
-		if (!$sort || !in_array($sort, array_keys($aSorting))) {
-			$sort = 'brand';
-		}
-		$order = $this->request->query('order');
-		if (!$order || !in_array($order, array_keys($aOrdering))) {
-			$order = 'asc';
-		}
-		$this->set('sort', $sort);
-		$this->set('order', $order);
-
-		$lFullInfo = false;
-		try {
-			App::uses('GpzApi', 'Model');
-			$this->GpzApi = new GpzApi();
-			$gpzData = $this->GpzApi->getPrices($brand, $number, $sort, $order, $lFullInfo);
-
-			$title = $number.' '.$brand;
-			/*
-			foreach($gpzData as $row) {
-				if ($row['title'] != '(БЕЗ НАЗВАНИЯ)' && $row['title']) {
-					$title = $row['title'];
-					break;
-				}
-			}
-			*/
-			$this->set(compact('gpzData', 'lFullInfo', 'title'));
-			$this->set('aOfferTypeOptions', GpzOffer::options());
-		}  catch (Exception $e){
-			$this->set('gpzError', $e->getMessage());
-		}
 	}
 
 	public function cart() {
