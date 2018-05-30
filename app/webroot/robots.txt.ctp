@@ -4,5 +4,6 @@ Disallow: /js/
 Disallow: /files/
 Disallow: /products/
 Disallow: /zapchasti$
+Disallow: /autozapchasti
 Sitemap: http://<?=Configure::read('domain.url')?>/sitemap.xml
 Host: <?=Configure::read('domain.url')?>

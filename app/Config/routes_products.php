@@ -2,13 +2,10 @@
 
 /* -= Роуты для филиалов (старая схема), не индексируются поисковиками =- */
 Router::connect('/autozapchasti',
-	array(
-		'controller' => 'Products',
-		'action' => 'index',
-		'objectType' => 'Product',
-	),
-	array('named' => array('page' => 1))
+	array('controller' => 'Pages', 'action' => 'redirect404')
 );
+
+/*
 Router::connect('/autozapchasti/:category',
 	array(
 		'controller' => 'Products',
@@ -62,7 +59,7 @@ Router::connect('/autozapchasti/:category/:subcategory/:slug',
 	),
 	array('pass' => array('slug'))
 );
-
+*/
 /* -= Роуты для категорий-субдоменов (без категории в URL, новая схема), индексируется на субдоменах =- */
 Router::connect('/zapchasti',
 	array(
