@@ -23,13 +23,19 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
-//Configure::write('Exception.renderer', 'SiteExceptionRenderer');
+Configure::write('Exception.renderer', 'SiteExceptionRenderer');
 Configure::write('Config.language', 'rus');
 
-// define('PATH_FILES_UPLOAD', $_SERVER['DOCUMENT_ROOT'].'/files/');
+/*
 Configure::write('media', array(
-	'path' => $_SERVER['DOCUMENT_ROOT'].'/files/',
+	'path' => WWW_ROOT.'files'.DS,
 	'path2' => 'D:/Projects/vitacars.dev/wwwroot/app/webroot/files/'
+	
+));
+*/
+Configure::write('media', array(
+	'path' => WWW_ROOT.'files'.DS,
+	'path2' => '/home/fyre/domains/vitacars.ru/public_html/app/webroot/files/'
 ));
 
 Configure::write('params.motor', 6);
@@ -80,8 +86,6 @@ define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '192.168.1.22');
 
 define('EMAIL_ADMIN', 'fyr.work@gmail.com');
 define('EMAIL_ADMIN_CC', 'fyr.work@gmail.com');
-
-require_once('api.php');
 
 CakePlugin::loadAll();
 
