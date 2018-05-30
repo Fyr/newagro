@@ -2,11 +2,14 @@
 	$this->Html->css(array('regions-map'), array('inline' => false));
 ?>
 <?=$this->element('title', array('title' => $contentArticle['Page']['title']))?>
+<?
+	if (Configure::read('domain.zone') == 'ru') {
+?>
 <div id="preload" style="display: none">
 <?
-	foreach($aRegions as $id => $region) {
-		echo $this->Html->image('/img/regions/h'.$id.'.png');
-	}
+		foreach($aRegions as $id => $region) {
+			echo $this->Html->image('/img/regions/h'.$id.'.png');
+		}
 ?>
 </div>
 <div id="wrap-map" style="display: none">
@@ -16,22 +19,22 @@
 			<a class="small-map" href="javascript:;" title="Назад к карте"><img src="/img/regions/regions_all.png" alt="Назад к карте" /></a>
 			<span style="display: inline-block; position: relative;">
 <?
-	foreach($aRegions as $id => $region) {
-		echo $this->Html->image('/img/regions/region'.$id.'.png', array('id' => 'region'.$id, 'class' => 'region', 'style' => 'display: none'));
-		if (isset($aMarkers[$id])) {
-			foreach($aMarkers[$id] as $marker) {
-				$marker = $marker;
-				// $url = 'http://'.$marker['name'].'.'.Configure::read('domain.url');
-				echo $this->Html->link($this->Html->image('/img/pointer.png'), $marker['url'], array(
-					'escape' => false,
-					'id' => 'marker'.$id,
-					'class' => 'marker rm'.$id,
-					'title' => $marker['title'],
-					'style' => 'display: none; position: absolute; left: '.$marker['marker_x'].'px; top: '.$marker['marker_y'].'px'
-				));
+		foreach($aRegions as $id => $region) {
+			echo $this->Html->image('/img/regions/region'.$id.'.png', array('id' => 'region'.$id, 'class' => 'region', 'style' => 'display: none'));
+			if (isset($aMarkers[$id])) {
+				foreach($aMarkers[$id] as $marker) {
+					$marker = $marker;
+					// $url = 'http://'.$marker['name'].'.'.Configure::read('domain.url');
+					echo $this->Html->link($this->Html->image('/img/pointer.png'), $marker['url'], array(
+						'escape' => false,
+						'id' => 'marker'.$id,
+						'class' => 'marker rm'.$id,
+						'title' => $marker['title'],
+						'style' => 'display: none; position: absolute; left: '.$marker['marker_x'].'px; top: '.$marker['marker_y'].'px'
+					));
+				}
 			}
 		}
-	}
 ?>
 			</span>
 		</div>
@@ -49,32 +52,34 @@
 				<area class="r8" shape="poly" coords="266,148,279,225,276,259,242,255,226,275,210,270,203,294,214,312,235,318,243,343,285,360,342,349,347,335,413,345,456,319,456,286,407,242,383,263,368,221,358,221,350,179,363,158,350,138,350,110,300,70" href="#2" alt="Центральный регион" >
 				<area class="r9" shape="poly" coords="456,286,407,242,383,263,368,221,358,221,350,179,363,158,350,138,422,108,395,89,427,74,430,100,545,0,558,166,10,185,546,153,508,193,509,239,537,219,590,270,545,345,478,283" href="#2" alt="Центральный регион" >
 	*/
-	foreach($aRegions as $id => $region) {
-		echo $this->Html->tag('area', '', array(
-			'alt' => $region['title'],
-			'title' => $region['title'],
-			'class' => 'r',
-			'data-region' => $id,
-			'shape' => 'poly',
-			'coords' => $region['area_map'],
-			'href' => 'javascript:;',
-		));
-		if ($region['marker_x'] && $region['marker_y']) {
-			echo $this->Html->link('', 'javascript:;', array(
-				'escape' => false,
+		foreach($aRegions as $id => $region) {
+			echo $this->Html->tag('area', '', array(
+				'alt' => $region['title'],
+				'title' => $region['title'],
+				'class' => 'r',
 				'data-region' => $id,
-				'class' => 'r region-point',
-				'title' => $region['marker_title'],
-				'style' => 'left: ' . $region['marker_x'] . 'px; top: ' . $region['marker_y'] . 'px;'
+				'shape' => 'poly',
+				'coords' => $region['area_map'],
+				'href' => 'javascript:;',
 			));
+			if ($region['marker_x'] && $region['marker_y']) {
+				echo $this->Html->link('', 'javascript:;', array(
+					'escape' => false,
+					'data-region' => $id,
+					'class' => 'r region-point',
+					'title' => $region['marker_title'],
+					'style' => 'left: ' . $region['marker_x'] . 'px; top: ' . $region['marker_y'] . 'px;'
+				));
+			}
 		}
-	}
 ?>
 			</map>
 		</div>
 	</div>
 </div>
 <?
+	}
+
 	if (!$aFeaturedProducts && $contentArticle2) {
 		$contentArticle['Page']['body'].= $contentArticle2['Page']['body']; // сливаем 2 блока в 1 т.к. нет разрывов
 		$contentArticle2 = array();
