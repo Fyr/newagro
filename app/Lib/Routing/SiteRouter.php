@@ -29,11 +29,15 @@ class SiteRouter extends Router {
 				'objectType' => 'Product',
 				'slug' => $article['Product']['slug']
 			);
+			$url['subdomain'] = 1;
+			/*
 			if (Configure::read('domain.subdomain') == 'www') {
 				$url['subdomain'] = 1;
 			} else {
 				$url['category'] = $article['Category']['slug'];
 			}
+			*/
+			return self::fullUrl($article['Category']['slug'], $url);
 		} elseif ($objectType == 'Category') {
 			$url = array(
 				'controller' => 'Products',
@@ -80,7 +84,7 @@ class SiteRouter extends Router {
 			);
 		}
 
-		if (in_array($objectType, array('Product', 'Category', 'Subcategory')) && Hash::get($article, 'Category.is_subdomain') && Configure::read('domain.subdomain') == 'www') {
+		if (in_array($objectType, array('Category', 'Subcategory')) && Hash::get($article, 'Category.is_subdomain') && Configure::read('domain.subdomain') == 'www') {
 			return self::fullUrl($article['Category']['slug'], $url);
 		} elseif (Configure::read('domain.category')) {
 			return self::fullUrl('', $url);
