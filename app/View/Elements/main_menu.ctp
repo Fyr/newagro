@@ -1,4 +1,15 @@
-<ul class="menu clearfix menuDesktop">
+<?
+	if ($enPage) {
+		$zone = Configure::read('domain.zone');
+		$domainUrl = 'http://' . Configure::read('domain.url');
+?>
+<span class="floatR langSwitch">
+	<?=$this->Html->link('EN', $enPage)?> | <?=$this->Html->link(strtoupper($zone), $domainUrl)?>
+</span>
+<?
+	}
+?>
+<ul class="menu clearfix menuDesktop" style="overflow: hidden">
 <?
 	foreach($aMenu as $id => $menu) {
 		$href = (isset($menu['submenu'])) ? 'javascript: void(0)' : $menu['href'];

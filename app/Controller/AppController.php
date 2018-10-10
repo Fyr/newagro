@@ -255,9 +255,13 @@ class AppController extends Controller {
 		$this->aNavBar['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 
+		$pageEn = $this->Page->findBySlug('en-version');
+		$this->set('enPage', ($pageEn) ? $this->getUrl('/pages/show/en-version') : '');
+
 		if (Configure::read('domain.zone') == 'ru') {
 			unset($this->aNavBar['home']);
 			unset($this->aNavBar['brand']);
+			unset($this->aNavBar['machinetool']);
 			unset($this->aBottomLinks['brand']);
 		} elseif (Configure::read('domain.zone') == 'ua') {
 			unset($this->aNavBar['motor']);
