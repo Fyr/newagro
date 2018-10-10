@@ -50,14 +50,20 @@ $(document).ready(function(){
 
 	if ($(window).width() <= 983 && $(window).width() > 703 ) {
 		$(".rightSidebar").appendTo($(".oneLeftSide"));
+	} else if ($(window).width() <= 703) {
+		$('.rightSidebar').before($('.oneLeftSide'));
+		//$('.oneLeftSide:first').remove();
 	}
-	flag = true;        
+	flag = true;
     $(window).resize(function() {
         if ($(window).width() <= 983 && $(window).width() > 703 ) {
-            if (flag) {
-			    $(".rightSidebar").appendTo($(".oneLeftSide"));
-                flag = false;
-            }
+			if (flag) {
+				$(".rightSidebar").appendTo($(".oneLeftSide"));
+				flag = false;
+			}
+		} else if ($(window).width() <= 703) {
+			$('.rightSidebar').before($('.oneLeftSide'));
+			flag = false;
         } else {
 			$(".rightSidebar").appendTo($(".mainColomn"));
             flag = true;
