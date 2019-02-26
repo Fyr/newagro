@@ -2,6 +2,7 @@ User-agent: *
 Disallow: /admin/
 Disallow: /js/
 Disallow: /files/
+Disallow: /Products*
 Disallow: /products/
 Disallow: /zapchasti$
 Disallow: /autozapchasti

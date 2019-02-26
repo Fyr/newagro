@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /
+Disallow: /Products*
 Allow: /$
 Allow: /contacts
 Allow: /sitemap
