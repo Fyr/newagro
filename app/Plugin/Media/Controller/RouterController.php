@@ -39,7 +39,6 @@ class RouterController extends AppController {
 		$method = $this->PHMedia->getResizeMethod($size);
 		$origImg = $this->PHMedia->getFileName($type, $id, null, $aFName['fname'].'.'.$aFName['orig_ext']);
 
-		fdebug(compact('fname', 'aFName', 'origImg'));
 		if ($method == 'thumb') {
 			$thumb = $this->PHMedia->getFileName($type, $id, null, 'thumb.png');
 			if (file_exists($thumb)) {
@@ -66,7 +65,7 @@ class RouterController extends AppController {
 
 			// если лого меньше чем фотка
 			if ($logo->getSizeX() < $image->getSizeX() && $logo->getSizeY() < $image->getSizeY()) {
-				fdebug(array('few logo', $logo->getSizeX().'x'.$logo->getSizeY(), $image->getSizeX().'x'.$image->getSizeY()));
+
 				// накладываем водяные знаки в несколько колонок и строк
 				$nX = floor($image->getSizeX() / $logo->getSizeX());
 				$nY = floor($image->getSizeY() / $logo->getSizeY());
@@ -88,12 +87,11 @@ class RouterController extends AppController {
 				$logo = new Image();
 				$logo->load('./img/logo_wmtr2_'.$zone.'.png');
 				if ($logo->getSizeX() < $image->getSizeX() && $logo->getSizeY() < $image->getSizeY()) {
-					fdebug(array('normal logo', $logo->getSizeX().'x'.$logo->getSizeY(), $image->getSizeX().'x'.$image->getSizeY()));
 					$x = round(($image->getSizeX()) / 2, 0) - round($logo->getSizeX() / 2, 0);
 					$y = round(($image->getSizeY()) / 2, 0) - round($logo->getSizeY() / 2, 0);
 					imagecopy($image->getImage(), $logo->getImage(), $x, $y, 0, 0, $logo->getSizeX(), $logo->getSizeY());
 				} else { // если и уменьшенное лого больше чем размеры фотки после ресайза (т.е. еще меньше чем 150x100)
-					fdebug(array('resized logo', $logo->getSizeX().'x'.$logo->getSizeY(), $image->getSizeX().'x'.$image->getSizeY()));
+
 					// т.к. есть баг с ресайзом лого (при ресайзе исчезает прозрачность и появляется фон),
 					// то ресайзим саму картинку, а потом возвращаем ее в исх. размер
 					// при таких мелких размерах качество конечного изображения уже неважно - все и так слишком мелко
@@ -109,7 +107,6 @@ class RouterController extends AppController {
 			}
 		}
 
-		
 		if ($aFName['ext'] == 'jpg') {
 			$image->outputJpg($fname);
 			$image->outputJpg();
