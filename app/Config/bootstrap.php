@@ -26,18 +26,18 @@ CakeLog::config('error', array(
 Configure::write('Exception.renderer', 'SiteExceptionRenderer');
 Configure::write('Config.language', 'rus');
 
-/*
 Configure::write('media', array(
 	'path' => WWW_ROOT.'files'.DS,
 	'path2' => 'D:/Projects/vitacars.dev/wwwroot/app/webroot/files/'
 	
 ));
-*/
+
+/*
 Configure::write('media', array(
 	'path' => WWW_ROOT.'files'.DS,
 	'path2' => '/home/fyre/domains/vitacars.ru/public_html/app/webroot/files/'
 ));
-
+*/
 Configure::write('params.motor', 6);
 Configure::write('params.price_by', 47);
 Configure::write('params.price2_by', 18);
@@ -53,6 +53,12 @@ define('RECAPTCHA_PRIVATE_KEY', '6Lezy-QSAAAAACCM1hh6ceRr445OYU_D_uA79UFZ');
 
 Configure::write('Recaptcha.publicKey', RECAPTCHA_PUBLIC_KEY);
 Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
+
+Configure::write('RecaptchaV3', array(
+	'publicKey' => '6LdNRqoUAAAAALjyfvoIPyoaPDFOR-YT-e4_Y-SA',
+	'privateKey' => '6LdNRqoUAAAAAIPOtb2EnIh19s7hBIaSpwJTGewI',
+	'apiURL' => 'https://www.google.com/recaptcha/api/siteverify'
+));
 
 $domain = explode('.', $_SERVER['HTTP_HOST']);
 
