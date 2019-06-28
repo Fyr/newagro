@@ -16,6 +16,10 @@ class Image
 		$this->rImage = imagecreatetruecolor($iSizeX, $iSizeY);
 	}
 
+	public function __destruct() {
+		fdebug("\r\n__destruct\r\n");
+		imagedestroy($this->rImage);
+	}
 	/**
 		Loads image into inner buffer to work with. If image cannot be loaded, 'false' is returned.
 		@param (string) $_inFile - image file name with path
@@ -28,8 +32,7 @@ class Image
 		}
 		
 		imagedestroy($this->rImage);
-		
-		switch ($src_type) 
+		switch ($src_type)
 		{
 			case "1":  // GIF
 				$this->rImage = imagecreatefromgif($_inFile);
