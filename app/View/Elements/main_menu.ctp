@@ -9,7 +9,7 @@
 <?
 	}
 ?>
-<ul class="menu clearfix menuDesktop" style="overflow: hidden">
+<ul class="menu clearfix menuDesktop" style="">
 <?
 	foreach($aMenu as $id => $menu) {
 		$href = (isset($menu['submenu'])) ? 'javascript: void(0)' : $menu['href'];
