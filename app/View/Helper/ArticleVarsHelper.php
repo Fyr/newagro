@@ -24,4 +24,9 @@ class ArticleVarsHelper extends AppHelper {
 		$field = ($zone != 'by' && in_array($objectType, array('Brand', 'Category', 'Subcategory', 'Product'))) ? 'body_'.$zone : 'body';
 		return $article[$this->getObjectType($article)][$field];
 	}
+
+	public function httpsUrl($url) {
+		$https = (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ? 'https' : 'http';
+		return str_replace('http://', $https.'://', $url);
+	}
 }

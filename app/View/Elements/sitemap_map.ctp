@@ -1,4 +1,4 @@
 <sitemap>
-    <loc><?=$url?></loc>
+    <loc><?=$this->ArticleVars->httpsUrl($url)?></loc>
     <lastmod><?=$date?></lastmod>
 </sitemap>
