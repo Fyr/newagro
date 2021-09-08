@@ -57,16 +57,11 @@ $(document).ready(function(){
 </script>
 
     <?
-    if (!TEST_ENV) {
-        if (Configure::read('domain.zone') == 'ru') {
+    if (!TEST_ENV && Configure::read('domain.zone') == 'ru') {
 ?>
-        <meta name="google-site-verification" content="YXFvRWAoMnA2e-QGhv6Sh90HCB3IXQfUlVLQp3Fa8nk" />
+        <meta name="google-site-verification" content="YXFvRWAoMnA2e-QGhv6Sh90HCB3IXQfUlVLQp3Fa8nk"/>
+	<script src="https://msto.me/widget.js?user=card1624353752" async></script>
 <?
-        } elseif (Configure::read('domain.zone') == 'ua') {
-?>
-        <meta name="google-site-verification" content="qM5LIlCJK0DTjf-9cwFGmyPYdbbLIwWYuYfAyIJfLHk" />
-<?
-        }
     }
 ?>
 </head>
