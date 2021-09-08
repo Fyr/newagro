@@ -130,9 +130,33 @@ class AppModel extends Model {
 		if (!$ip) {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
-		$hostname = gethostbyaddr($ip);
-		return ($hostname === 'spider-'.str_replace('.', '-', $ip).'.yandex.com') 
-			|| ($hostname === 'crawl-'.str_replace('.', '-', $ip).'.googlebot.com');
+		$referer = gethostbyaddr($ip);
+
+		// blacklist must have * to work correctly
+		$aBlackList = array(
+			'fetcher*.go.mail.ru',
+			'*.bot.semrush.com',
+			'*.spider.yandex.com',
+			'*.googlebot.com',
+			'*.applebot.apple.com',
+			'*.search.msn.com',
+			'petalbot*.petalsearch.com'
+		);
+
+		foreach($aBlackList as $mask) {
+			$pos = strpos($mask, '*');
+			if ($pos !== false) {
+				$_black = substr($mask, 0, $pos);
+				$_black2 = substr($mask, $pos + 1);
+				$_ref = substr($referer, 0, strlen($_black));
+				$_ref2 = substr($referer, -strlen($_black2));
+				if ($mask === $_ref.'*'.$_ref2) {
+					return true;
+				}
+			}
+		}
+		fdebug($referer."\r\n", 'is_bot.log');
+		return false;
 	}
 
 	public function getDomain() {

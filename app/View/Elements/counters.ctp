@@ -85,6 +85,10 @@ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = 
 <?
         }
 ?>
+
+<meta name="google-site-verification" content="YXFvRWAoMnA2e-QGhv6Sh90HCB3IXQfUlVLQp3Fa8nk"/>
+<!-- script src="https://msto.me/widget.js?user=card1624353752" async></script-->
+
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
@@ -123,22 +127,24 @@ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = 
   ga('send', 'pageview');
 
 </script>
-        <!-- Код тега ремаркетинга Google -->
-        <script type="text/javascript">
-            /* <![CDATA[ */
-            var google_conversion_id = 940736125;
-            var google_custom_params = window.google_tag_params;
-            var google_remarketing_only = true;
-            /* ]]> */
-        </script>
-        <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-        </script>
-        <noscript>
-            <div style="display:inline;">
-                <img height="1" width="1" style="border-style:none;" alt=""
-                     src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/940736125/?value=0&amp;guid=ON&amp;script=0"/>
-            </div>
-        </noscript>
+
+<!-- Код тега ремаркетинга Google -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 940736125;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt=""
+                src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/940736125/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+
 <?
     } elseif (Configure::read('domain.zone') == 'ua') {
 ?>

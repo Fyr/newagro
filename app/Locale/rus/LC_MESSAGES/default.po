@@ -802,3 +802,17 @@ msgstr "Получен новый заказ"
 msgid "Мessage from Contacts page"
 msgstr "Сообщение со страницы `Контакты`"
 
+msgid "Have a question? Call us!"
+msgstr "Мы работаем для вас"
+
+msgid "Messengers"
+msgstr "Мессенджеры"
+
+msgid "Create messenger"
+msgstr "Создать мессенджер"
+
+msgid "Edit messenger"
+msgstr "Редактировать мессенджер"
+
+msgid "Used"
+msgstr "Использовано"

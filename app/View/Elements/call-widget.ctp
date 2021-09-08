@@ -1,40 +1,41 @@
-<?php
-
-$wm_heading = __('Have a question? Call us!');
-$wm_viber = '+237489203458273';
-$wm_telegram = '@asiudfhapsid';
-$wm_whatsapp = '+w934879wfaasdkfapd';
-$messenger_skype = 'ldsakjfls';
-
-$messenger_viber = $wm_viber;
-$messenger_telegram = $wm_telegram;
-$messenger_whatsapp = $wm_whatsapp; 
-
-$aLinks = array(
-    'Viber' => 'viber://chat?number=',
-    'Telegram' => 'tg://resolve?domain=',
-    'WhatsApp' => 'https://api.whatsapp.com/send?phone=',
-    'Skype' => 'callto:'
-);
+<?
+if ($aMessengers) {
 ?>
 <div class="widget-messengers">
+    <div class="widget-messengers-header"><?=Configure::read('domain.title')?></div>
     <div class="widget-messengers-container">
-        <div class="widget-messengers-heading"><? echo $wm_heading; ?></div>
+        <div class="widget-messengers-logo"></div>
+        <div class="widget-messengers-heading"><?=__('Have a question? Call us!')?></div>
         <div class="widget-messengers-avatar"></div>
         <div class="widget-messengers-content">
 <?
-foreach($aLinks as $title => $url) {
-    $type = strtolower($title);
-    $uid = Configure::read('Settings.'.$type);
-    if ($uid) {
+    $aLinks = array(
+        'viber' => array('title' => 'Viber', 'url' => 'viber://chat?number='),
+        'telegram' => array('title' => 'Telegram', 'url' => 'tg://resolve?domain='),
+        'whatsapp' => array('title' => 'WhatsApp', 'url' => 'https://api.whatsapp.com/send?phone='),
+        'skype' => array('title' => 'Skype', 'url' => 'callto:')
+    );
+    foreach($aMessengers as $app) {
+        $type = $app['Messenger']['type'];
+        $uid = $app['Messenger']['uid'];
+        $url = $aLinks[$type]['url'];
+        $title = $app['Messenger']['title'];
 ?>            
-            <a target="_blank" href="<?=$url.$uid?>" data-title="<?=$title?>" class="widget-messengers-icon widget-messengers-icon--<?=$type?>"></a>
+            <div class="widget-messengers-icon-wrap">
+                <a target="_blank" href="<?=$url.$uid?>" title="<?=$title?>" data-title="<?=$title?>" class="widget-messengers-icon widget-messengers-icon--<?=$type?>"></a>
+                <span><?=$title?></span>
+            </div>
 <?
     }
-}
 ?>
-            <a href="javascript:;" data-title="Закрыть" class="widget-messengers-icon widget-messengers-icon--close"></a>
+            <div class="widget-messengers-icon-wrap">
+                <a href="javascript:;" title="Закрыть" data-title="Закрыть" class="widget-messengers-icon widget-messengers-icon--close"></a>
+                <span>&nbsp;</span>
+            </div>
         </div>
         <div class="widget-messengers-description"></div>
     </div>
 </div>
+<?
+}
+?>

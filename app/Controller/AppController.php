@@ -70,11 +70,12 @@ class AppController extends Controller {
 			Configure::write('domain.subdomain_id', $subdomain['id']);
 			Configure::write('Settings.address', nl2br($subdomain['address']));
 
-			$aContacts = array('phone1', 'phone2', 'email', 'skype', 'viber', 'telegram', 'whatsapp');
+			$aContacts = array('phone1', 'phone2', 'email', 'skype');
 			foreach($aContacts as $type) {
 				Configure::write('Settings.'.$type, trim($subdomain[$type]));
 			}
 			Configure::write('subdomains', $this->Subdomain->getOptions());
+
 		// }
 
 		if (isset($this->request->url) && $this->request->url) {
@@ -289,6 +290,10 @@ class AppController extends Controller {
 			$aSlot[$slot_id] = $this->Banner->find('all', compact('conditions', 'order'));
 		}
 		$this->set('aSlot', $aSlot);
+
+		$this->loadModel('Messenger');
+		$aMessengers = $this->Messenger->getUsedList();
+		$this->set(compact('aMessengers'));
 	}
 	
 	/**

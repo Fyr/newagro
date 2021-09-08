@@ -93,7 +93,6 @@ class Curl {
 		$this->status['errCode'] = curl_errno($curl);
 		$this->status['errMsg'] = curl_error($curl);
 		$this->status['info'] = curl_getinfo($curl);
-		fdebug($response, 'curl.log');
 		curl_close($curl);
 		if ($this->status['errMsg']) {
 	    	throw new Exception($this->status['errMsg'], $this->status['errCode']);

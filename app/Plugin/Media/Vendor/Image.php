@@ -17,7 +17,6 @@ class Image
 	}
 
 	public function __destruct() {
-		fdebug("\r\n__destruct\r\n");
 		imagedestroy($this->rImage);
 	}
 	/**

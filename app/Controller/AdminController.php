@@ -53,7 +53,8 @@ class AdminController extends AppController {
 				'SectionSettings' => array('label' => __('Sectionizer'), 'href' => array('controller' => 'AdminSections', 'action' => 'index')),
 				'Regions' => array('label' => __('Regions'), 'href' => array('controller' => 'AdminRegions', 'action' => 'index')),
 				'Subdomains' => array('label' => __('Subdomains (Contacts)'), 'href' => array('controller' => 'AdminSubdomains', 'action' => 'index')),
-				'Markers' => array('label' => __('Markers'), 'href' => array('controller' => 'AdminMarkers', 'action' => 'index'))
+				'Markers' => array('label' => __('Markers'), 'href' => array('controller' => 'AdminMarkers', 'action' => 'index')),
+				'Messengers' => array('label' => __('Messengers'), 'href' => array('controller' => 'AdminMessengers', 'action' => 'index'))
 			))
 		);
 		$this->aBottomLinks = $this->aNavBar;
