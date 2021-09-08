@@ -33,6 +33,9 @@
 			.$this->PHForm->input('phone2', array('class' => 'input-large'))
 			.$this->PHForm->input('email', array('class' => 'input-large'))
 			.$this->PHForm->input('skype', array('class' => 'input-large'))
+			.$this->PHForm->input('viber', array('class' => 'input-large'))
+			.$this->PHForm->input('telegram', array('class' => 'input-large'))
+			.$this->PHForm->input('whatsapp', array('class' => 'input-large'))
 	);
 	echo $this->element('admin_tabs', compact('aTabs'));
 	echo $this->element('Form.form_actions', array('backURL' => $this->Html->url(array('action' => 'index'))));

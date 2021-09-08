@@ -23,7 +23,7 @@ class AdminSettingsController extends AdminController {
     }
 
     /*
-     * Настройки контактов перенесены в субдомены
+     * РќР°СЃС‚СЂРѕР№РєРё РєРѕРЅС‚Р°РєС‚РѕРІ РїРµСЂРµРЅРµСЃРµРЅС‹ РІ СЃСѓР±РґРѕРјРµРЅС‹
     public function contacts() {
     }
     */

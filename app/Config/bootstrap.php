@@ -28,16 +28,9 @@ Configure::write('Config.language', 'rus');
 
 Configure::write('media', array(
 	'path' => WWW_ROOT.'files'.DS,
-	'path2' => 'D:/Projects/vitacars.dev/wwwroot/app/webroot/files/'
-	
+	'path2' => WWW_ROOT.'../../../../vitacars.loc/public_html/app/webroot/files/'
 ));
 
-/*
-Configure::write('media', array(
-	'path' => WWW_ROOT.'files'.DS,
-	'path2' => '/home/fyre/domains/vitacars.ru/public_html/app/webroot/files/'
-));
-*/
 Configure::write('params.motor', 6);
 Configure::write('params.price_by', 47);
 Configure::write('params.price2_by', 18);
@@ -54,28 +47,15 @@ define('RECAPTCHA_PRIVATE_KEY', '6Lezy-QSAAAAACCM1hh6ceRr445OYU_D_uA79UFZ');
 Configure::write('Recaptcha.publicKey', RECAPTCHA_PUBLIC_KEY);
 Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
 
-Configure::write('RecaptchaV3', array(
-	'publicKey' => '6LdNRqoUAAAAALjyfvoIPyoaPDFOR-YT-e4_Y-SA',
-	'privateKey' => '6LdNRqoUAAAAAIPOtb2EnIh19s7hBIaSpwJTGewI',
-	'apiURL' => 'https://www.google.com/recaptcha/api/siteverify'
-));
-
 $domain = explode('.', $_SERVER['HTTP_HOST']);
 
 Configure::write('domain', array(
 	'url' => 'agromotors.loc',
-	'title' => 'agromotors.loc',
-	'zone' => 'by',
+	'title' => 'AgroMotors.loc',
+	'zone' => 'ru',
 	'subdomain' => (count($domain) > 2) ? $domain[0] : 'www'
 ));
-/*
-Configure::write('domain', array(
-	'url' => 'deutzua.com.dev',
-	'title' => 'agromotors.dev',
-	'zone' => 'by',
-	'subdomain' => (count($domain) > 3) ? $domain[0] : 'www'
-));
-*/
+
 define('SUBDOMAIN_ALL', 0);
 define('SUBDOMAIN_WWW', 1);
 
@@ -88,7 +68,7 @@ Configure::write('sitemap', array(
 	'prefix' => 'sitemap_'
 ));
 define('AUTH_ERROR', __('Invalid username or password, try again'));
-define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '192.168.1.22');
+define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '127.0.0.1');
 
 define('EMAIL_ADMIN', 'fyr.work@gmail.com');
 define('EMAIL_ADMIN_CC', 'fyr.work@gmail.com');

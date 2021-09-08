@@ -56,7 +56,7 @@ class AppController extends Controller {
 			if ($category) {
 				Configure::write('domain.category', Configure::read('domain.subdomain'));
 				Configure::write('domain.category_id', Hash::get($category, 'Category.id'));
-				Configure::write('domain.subdomain', 'www'); // áðàòü âñå ñòàòüè ñ www äëÿ ïðîäóêòîâûõ ñóáäîìåíîâ
+				Configure::write('domain.subdomain', 'www'); // Ð±Ñ€Ð°Ñ‚ÑŒ Ð²ÑÐµ ÑÑ‚Ð°Ñ‚ÑŒÐ¸ Ñ www Ð´Ð»Ñ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚Ð¾Ð²Ñ‹Ñ… ÑÑƒÐ±Ð´Ð¾Ð¼ÐµÐ½Ð¾Ð²
 			}
 
 			App::uses('Subdomain', 'Model');
@@ -69,11 +69,11 @@ class AppController extends Controller {
 			$subdomain = $subdomain['Subdomain'];
 			Configure::write('domain.subdomain_id', $subdomain['id']);
 			Configure::write('Settings.address', nl2br($subdomain['address']));
-			Configure::write('Settings.phone1', $subdomain['phone1']);
-			Configure::write('Settings.phone2', $subdomain['phone2']);
-			Configure::write('Settings.email', $subdomain['email']);
-			Configure::write('Settings.skype', $subdomain['skype']);
 
+			$aContacts = array('phone1', 'phone2', 'email', 'skype', 'viber', 'telegram', 'whatsapp');
+			foreach($aContacts as $type) {
+				Configure::write('Settings.'.$type, trim($subdomain[$type]));
+			}
 			Configure::write('subdomains', $this->Subdomain->getOptions());
 		// }
 

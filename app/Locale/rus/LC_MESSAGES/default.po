@@ -730,6 +730,9 @@ msgstr "Субдомены"
 msgid "Subdomain"
 msgstr "Субдомен"
 
+msgid "Subdomains (Contacts)"
+msgstr "Субдомены (Контакты)"
+
 msgid "Site"
 msgstr "Сайт"
 

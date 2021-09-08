@@ -28,7 +28,7 @@ foreach($aLinks as $title => $url) {
     $uid = Configure::read('Settings.'.$type);
     if ($uid) {
 ?>            
-            <a target="_blank" href="<?$url.$uid?>" data-title="<?=$title?>" class="widget-messengers-icon widget-messengers-icon--<?=$type?>"></a>
+            <a target="_blank" href="<?=$url.$uid?>" data-title="<?=$title?>" class="widget-messengers-icon widget-messengers-icon--<?=$type?>"></a>
 <?
     }
 }
