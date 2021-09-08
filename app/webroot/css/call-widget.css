@@ -1,0 +1,134 @@
+.widget-messengers {
+    position: fixed;
+    bottom: 20px;
+    right: -300px;    
+    -webkit-font-smoothing: auto;
+    font-size: 14px;
+    -webkit-transition: opacity .2s ease-in-out,-webkit-transform .2s ease-in-out;
+    transition: opacity .2s ease-in-out,-webkit-transform .2s ease-in-out;
+    transition: transform .2s ease-in-out,opacity .2s ease-in-out;
+    transition: transform .2s ease-in-out,opacity .2s ease-in-out,-webkit-transform .2s ease-in-out;    
+    z-index: 11000;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    display: none;   
+}
+    .widget-messengers-container {
+        background-color: hsla(0,0%,94%,.7);
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        padding: 10px;
+        border-radius: 3px;     
+    }
+        .widget-messengers-heading {
+            color: #3D4445;
+            padding-bottom: 10px;
+        }
+        .widget-messengers-content {
+        
+        }
+            .widget-messengers-icon {
+                display: inline-block;
+                width: 36px;
+                height: 36px;
+                margin-right: 10px;
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: contain;
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                -webkit-transition-property: -webkit-transform;
+                transition-property: -webkit-transform;
+                transition-property: transform;
+                transition-property: transform,-webkit-transform;
+                -webkit-transition-duration: .3s;
+                transition-duration: .3s;    
+                position: relative;            
+            }            
+            .widget-messengers-icon:last-of-type {
+                margin-right: 0;
+            }    
+            .widget-messengers-icon:hover {
+                -webkit-transform: scale(1.05);
+                transform: scale(1.05);
+                -webkit-transition-property: -webkit-transform;
+                transition-property: -webkit-transform;
+                transition-property: transform;
+                transition-property: transform,-webkit-transform;
+                -webkit-transition-duration: .3s;
+                transition-duration: .3s;
+            }
+            .widget-messengers-icon--viber {
+                background-image: url('/img/call-widget/vb_public.png');        
+            }            
+            .widget-messengers-icon--telegram {
+                background-image: url('/img/call-widget/tg.png');
+            }            
+            .widget-messengers-icon--whatsapp {
+                background-image: url('/img/call-widget/wa.png');
+            }
+            .widget-messengers-icon--skype {
+                background-image: url('/img/call-widget/skype-logo.png');
+            }
+            .widget-messengers-icon--close {
+                border: 0;
+                outline: 0;
+                background: 0 0;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                font-size: 16px;
+                font-size: 1rem;
+                vertical-align: top;
+                border-radius: 100%;
+                background-color: #fff;
+                cursor: pointer;
+            }    
+            .widget-messengers-icon--close:before,
+            .widget-messengers-icon--close:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                display: block;
+                background-color: #fe5322;
+                -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                -webkit-transform-origin: center center;
+                transform-origin: center center;
+            }                    
+            .widget-messengers-icon--close:after {
+                width: 2px;
+                height: 55%;
+            }            
+            .widget-messengers-icon--close:before {
+                height: 2px;
+                width: 55%;
+            }
+
+#scroll_to_top {
+    right: inherit;
+    left: 15px;
+}
+
+@media (max-width: 768px) {
+    .widget-messengers-heading {
+        display: none;
+    }
+    .widget-messengers-icon--close {
+        display: none;
+    }
+    .widget-messengers {
+        bottom: 10px !important;
+        right: 10px !important;
+    }
+    .widget-messengers-icon:nth-child(3) {
+        margin-right: 0;
+    }
+}

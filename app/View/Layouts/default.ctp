@@ -11,7 +11,7 @@
 <?
 	echo $this->element('Seo.seo_info', array('data' => $seo));
 	
-	echo $this->Html->css(array('style', 'fonts', 'smoothDivScroll', 'extra', 'jquery.fancybox'));
+	echo $this->Html->css(array('style', 'fonts', 'smoothDivScroll', 'extra', 'jquery.fancybox', 'call-widget'));
 ?>
 <!--[if gte IE 9]>
 <style type="text/css">
@@ -34,7 +34,8 @@
 		'vendor/jquery/jquery.fancybox.pack',
         'vendor/jquery/jquery.dotdotdot',
 		'doc_ready',
-        'cart'
+        'cart',
+        'call-widget'
     ));
 	echo $this->Html->script($scripts);
 	
@@ -249,6 +250,7 @@ $(document).ready(function(){
         <div class="footerLine"></div>
 <?
     // echo $this->element('sql_dump');
+    echo $this->element('call-widget');
     echo $this->element('sql_stats');
 ?>
 	</body>
