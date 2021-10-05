@@ -9,3 +9,5 @@ app/[Cc]onfig/database.php
 files
 .idea
 *.bak
+*.log
+*.ctp_bak
