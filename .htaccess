@@ -5,7 +5,14 @@
    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
 
    RewriteCond %{HTTP_HOST} ^www\.(.*)$
-   RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
+   RewriteRule ^(.*)$ https://%1/$1 [L,R=301]
+
+   RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(php|html|htm)\ HTTP/ 
+   RewriteRule ^(.*)index\.(php|html|htm)$ https://agromotors.ru/$1 [R=301,L]
+
+   RewriteCond %{REQUEST_URI} /home.html
+   RewriteCond %{QUERY_STRING} ^\z
+   RewriteRule ^(.*)$ https://agromotors.ru/? [R=301,L]
 
    RewriteRule    ^$ app/webroot/    [L]
    RewriteRule    (.*) app/webroot/$1 [L]
