@@ -23,7 +23,7 @@ class AppController extends Controller {
 	}
 	
 	protected function _beforeInit() {
-	    $this->helpers = array_merge(array('Html', 'Form', 'Paginator', 'ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media', 'ObjectType'), $this->helpers);
+	    $this->helpers = array_merge(array('Html', 'Form', 'Paginator', 'ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media', 'ObjectType', 'Seo.PHSeo'), $this->helpers);
 	}
 
 	protected function _afterInit() {

@@ -4,23 +4,13 @@
  * @param $data
  */
 
-	if (isset($data['title']) && $data['title']) {
-?>
-	<title><?=$data['title']?></title>
-<?
-	} else {
-?>
-	<title><?=Configure::read('domain.title')?></title>
-<?
-	}
+	$title = (isset($data['title']) && $data['title']) ? $data['title'] : Configure::read('domain.title');
+	echo $this->Html->tag('title', $this->PHSeo->addPagingTitle($title))."\n";
+
 	if (isset($data['descr']) && $data['descr']) {
-?>
-	<meta name="description" content="<?=$data['descr']?>">
-<?
+		echo $this->Html->meta('description', $this->PHSeo->addPagingTitle($data['descr']))."\n";
 	}
+
 	if (isset($data['keywords']) && $data['keywords']) {
-?>
-	<meta name="keywords" content="<?=$data['keywords']?>">
-<?
+		echo $this->Html->meta('keywords', $data['keywords'])."\n";
 	}
-?>

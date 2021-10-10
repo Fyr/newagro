@@ -190,3 +190,7 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 @media (max-width: 720px) {
 	.langSwitch { margin-top: 31px; margin-right: 15px; }
 }
+
+.paging-title {
+	color: #ccc;
+}

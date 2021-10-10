@@ -1,0 +1,2 @@
+msgid " | Page %s"
+msgstr " | Страница %s"
