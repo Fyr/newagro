@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 	<meta name="language" content="ru" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, initial-scale=1.0, minimum-scale=1.0">
 <?
 	echo $this->Html->charset()."\n";
@@ -39,6 +39,18 @@
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');
+
+	if (Configure::read('domain.zone') == 'ru') {
+?>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MQ7QR43');</script>
+<!-- End Google Tag Manager -->	
+<?
+	}
 ?>
 <script type="text/javascript">
 var Cart;
@@ -56,6 +68,17 @@ $(document).ready(function(){
 
 </head>
 	<body>
+<?
+	if (Configure::read('domain.zone') == 'ru') {
+?>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQ7QR43"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<?
+	}
+?>
+
 		<div class="header">
             <div class="header_back">
                 <div class="inner clearfix">
@@ -77,13 +100,7 @@ $(document).ready(function(){
             </div>
             <div class="inner promoContent">
                 <div class="right">
-                    <div class="phones">
-                        <span class="icon phone"></span>
-                        <span class="numbers">
-                            <?=Configure::read('Settings.phone1')?><br />
-                            <?=Configure::read('Settings.phone2')?>
-                        </span>
-                    </div>
+                    <?=$this->element('phones')?>
                     <div class="address clearfix">
                         <a href="/contacts/#map" class="icon map"></a>
                         <span class="text"><?=Configure::read('Settings.address')?></span>
@@ -91,8 +108,8 @@ $(document).ready(function(){
                 </div>
                 <div class="left">
                     <div class="skypeName">
-                        <a href="callto:<?=Configure::read('Settings.skype')?>" class="icon skype"></a>
-                        <a href="callto:<?=Configure::read('Settings.skype')?>"><?=Configure::read('Settings.skype')?></a>
+                        <a href="skype:<?=Configure::read('Settings.skype')?>" class="icon skype"></a>
+                        <a href="skype:<?=Configure::read('Settings.skype')?>"><?=Configure::read('Settings.skype')?></a>
                     </div>
                     <div class="letter">
                         <a href="mailto:<?=Configure::read('Settings.email')?>" class="icon email"></a>
@@ -204,13 +221,7 @@ $(document).ready(function(){
                     <a href="/" class="logo"></a>
                     <?=$this->element('bottom_links')?>
                     <div class="footerAddress">
-                        <div class="phones">
-                            <span class="icon phone"></span>
-                            <span class="numbers">
-                                <?=Configure::read('Settings.phone1')?><br />
-                                <?=Configure::read('Settings.phone2')?>
-                            </span>
-                        </div>
+                        <?=$this->element('phones')?>
                         <div class="address clearfix">
                         	<a href="/contacts/#map" class="icon map"></a>
                         	<span class="text"><?=Configure::read('Settings.address')?></span>
@@ -218,8 +229,8 @@ $(document).ready(function(){
                     </div>
                     <div class="footerSkypeEmail">
 	                    <div class="skypeName">
-	                        <a href="callto:<?=Configure::read('Settings.skype')?>" class="icon skype"></a>
-	                        <a href="callto:<?=Configure::read('Settings.skype')?>"><?=Configure::read('Settings.skype')?></a>
+	                        <a href="skype:<?=Configure::read('Settings.skype')?>" class="icon skype"></a>
+	                        <a href="skype:<?=Configure::read('Settings.skype')?>"><?=Configure::read('Settings.skype')?></a>
 	                    </div>
 	                    <div class="letter" style="margin-bottom: 10px;">
 	                        <a href="mailto:<?=Configure::read('Settings.email')?>" class="icon email"></a>
