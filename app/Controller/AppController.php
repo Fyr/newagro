@@ -45,7 +45,7 @@ class AppController extends Controller {
 	}
 	
 	public function beforeFilter() {
-		$this->disableCopy = !TEST_ENV;
+		$this->disableCopy = false; // !TEST_ENV;
 
 		// if (Configure::read('domain.zone') == 'ru') {
 			$this->loadModel('Category');
@@ -96,10 +96,10 @@ class AppController extends Controller {
 		// if (Configure::read('domain.zone') == 'ru') {
 			$subdomain = (($subdomain = Configure::read('domain.subdomain')) && $subdomain <> 'www') ? $subdomain . '.' : '';
 			return (Configure::read('domain.category'))
-				? 'http://' . Configure::read('domain.url') . $url
-				: 'http://' . $subdomain . Configure::read('domain.url') . $url;
+				? HTTP . Configure::read('domain.url') . $url
+				: HTTP . $subdomain . Configure::read('domain.url') . $url;
 		//}
-		return 'http://'.Configure::read('domain.url').$url;
+		return HTTP.Configure::read('domain.url').$url;
 	}
 	
 	protected function beforeFilterLayout() {

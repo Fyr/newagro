@@ -9,20 +9,13 @@ if ($aMessengers) {
         <div class="widget-messengers-avatar"></div>
         <div class="widget-messengers-content">
 <?
-    $aLinks = array(
-        'viber' => array('title' => 'Viber', 'url' => 'viber://chat?number='),
-        'telegram' => array('title' => 'Telegram', 'url' => 'tg://resolve?domain='),
-        'whatsapp' => array('title' => 'WhatsApp', 'url' => 'https://api.whatsapp.com/send?phone='),
-        'skype' => array('title' => 'Skype', 'url' => 'callto:')
-    );
     foreach($aMessengers as $app) {
         $type = $app['Messenger']['type'];
-        $uid = $app['Messenger']['uid'];
-        $url = $aLinks[$type]['url'];
         $title = $app['Messenger']['title'];
+        $options = array('target' => '_blank', 'title' => $title, 'data-title' => $title, 'class' => 'widget-messengers-icon widget-messengers-icon--'.$type);
 ?>            
             <div class="widget-messengers-icon-wrap">
-                <a target="_blank" href="<?=$url.$uid?>" title="<?=$title?>" data-title="<?=$title?>" class="widget-messengers-icon widget-messengers-icon--<?=$type?>"></a>
+                <?=$this->ArticleVars->callableLink($type, $app['Messenger']['uid'], $options)?>
                 <span><?=$title?></span>
             </div>
 <?

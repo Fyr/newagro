@@ -275,7 +275,7 @@ class ProductsController extends AppController {
 					$Email = new CakeEmail($emailCfg);
 					$Email->send();
 				}
-				$this->redirect('http://'.Configure::read('domain.url').Router::url(array('action' => 'success', $site_order_id)));
+				$this->redirect(HTTP.Configure::read('domain.url').Router::url(array('action' => 'success', $site_order_id)));
 			}
 		}
 

@@ -2,7 +2,7 @@
 App::uses('AppHelper', 'View/Helper');
 App::uses('SiteRouter', 'Lib/Routing');
 class ArticleVarsHelper extends AppHelper {
-	public $helpers = array('Media');
+	public $helpers = array('Html', 'Media');
 
 	public function init($article, &$url, &$title, &$teaser = '', &$src = '', $size = 'noresize', &$featured = false, &$id = '') {
 		$objectType = $this->getObjectType($article);
@@ -26,7 +26,37 @@ class ArticleVarsHelper extends AppHelper {
 	}
 
 	public function httpsUrl($url) {
-		$https = (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ? 'https' : 'http';
-		return str_replace('http://', $https.'://', $url);
+		// TODO: протестить
+		if (strpos($url, 'http') === false) {
+			$url.= HTTP;
+		}
+		return str_replace('http://', HTTP, $url);
+	}
+
+	private function fixPhone($phone) {
+		return str_replace(array('-', ' ', '(' , ')', '+'), '', $phone);
+	}
+
+	public function callableLink($type, $phoneOrUID, $xOptions = array()) {
+		$options = array_merge(array('class' => "callable ${type}"), $xOptions);
+		$url = $phoneOrUID;
+		switch ($type) {
+			case 'tel': 
+				$url = 'tel:'.$this->fixPhone(str_replace('+7', '8', $phoneOrUID));
+				break;
+			case 'whatsapp': 
+				$url = 'https://api.whatsapp.com/send?phone='.$this->fixPhone($phoneOrUID);
+				break;
+			case 'viber':
+				$url = 'viber://chat?number='.$phoneOrUID;
+				break;
+			case 'telegram':
+				$url = 'tg://resolve?domain='.$phoneOrUID;
+				break;
+			case 'skype':
+				$url = 'skype:'.$phoneOrUID;
+				break;
+		}
+		return $this->Html->link($phoneOrUID, $url, $options);
 	}
 }

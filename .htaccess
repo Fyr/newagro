@@ -1,11 +1,11 @@
 <IfModule mod_rewrite.c>
    RewriteEngine on
 
-   RewriteCond %{HTTPS} =off 
-   RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+#   RewriteCond %{HTTPS} =off 
+#   RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
 
-   RewriteCond %{HTTP_HOST} ^www\.(.*)$
-   RewriteRule ^(.*)$ https://%1/$1 [L,R=301]
+#   RewriteCond %{HTTP_HOST} ^www\.(.*)$
+#   RewriteRule ^(.*)$ https://%1/$1 [L,R=301]
 
    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(php|html|htm)\ HTTP/ 
    RewriteRule ^(.*)index\.(php|html|htm)$ https://agromotors.ru/$1 [R=301,L]

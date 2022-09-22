@@ -48,6 +48,7 @@ Configure::write('Recaptcha.publicKey', RECAPTCHA_PUBLIC_KEY);
 Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
 
 $domain = explode('.', $_SERVER['HTTP_HOST']);
+define('HTTP', ($_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://');
 
 Configure::write('domain', array(
 	'url' => 'agromotors.loc',

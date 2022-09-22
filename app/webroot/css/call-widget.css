@@ -77,7 +77,8 @@
                 transition-property: transform,-webkit-transform;
                 -webkit-transition-duration: .3s;
                 transition-duration: .3s;    
-                position: relative;            
+                position: relative;  
+                font-size: 0;
             }            
             .widget-messengers-icon:last-of-type {
                 margin-right: 0;

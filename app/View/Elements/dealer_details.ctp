@@ -34,7 +34,7 @@
 ?>
 	<div>
 		<span>Сайт:</span>
-		<a href="http://<?=$article['DealerTable']['site_url']?>"><?=$article['DealerTable']['site_url']?></a>
+		<a href="<?=HTTP.$article['DealerTable']['site_url']?>"><?=$article['DealerTable']['site_url']?></a>
 	</div>
 <?
 		}

@@ -13,7 +13,7 @@ class SiteRouter extends Router {
 		} elseif (strpos($subdomain, '.') === false) {
 			$subdomain.= '.'.Configure::read('domain.url');
 		}
-		return 'http://'.$subdomain.parent::url($url, false);
+		return HTTP.$subdomain.parent::url($url, false);
 	}
 	
 	static public function url($article, $lFull = false) {

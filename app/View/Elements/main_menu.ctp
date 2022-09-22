@@ -1,7 +1,7 @@
 <?
 	if ($enPage) {
 		$zone = Configure::read('domain.zone');
-		$domainUrl = 'http://' . Configure::read('domain.url');
+		$domainUrl = HTTP . Configure::read('domain.url');
 ?>
 <span class="floatR langSwitch">
 	<?=$this->Html->link('EN', $enPage)?> | <?=$this->Html->link(strtoupper($zone), $domainUrl)?>
