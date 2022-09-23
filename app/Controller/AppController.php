@@ -226,8 +226,9 @@ class AppController extends Controller {
 
 		$this->loadModel('Category');
 		$this->Category->unbindModel(array('hasOne' => array('Seo')));
-		// $aTypes = $this->Category->getTypesList();
-		$aCategories = $this->Category->getObjectList('Category', '', array('Category.sorting' => 'ASC'));
+		$conditions = array('Category.object_type' => 'Category', 'is_subdomain' => 1);
+		$order = array('Category.sorting' => 'ASC');
+		$aCategories = $this->Category->find('all', compact('conditions', 'order'));
 		// $aCategories = $this->Category->findAllByObjectType('Category', array('id', 'title', 'slug', 'is_subdomain', 'Seo.*'), array('Category.sorting' => 'ASC'));
 		$aCategories = Hash::combine($aCategories, '{n}.Category.id', '{n}');
 		$this->set('aCategories', array(0 => $aCategories));
