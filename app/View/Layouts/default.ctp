@@ -101,20 +101,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="inner promoContent">
                 <div class="right">
                     <?=$this->element('phones')?>
-                    <div class="address clearfix">
-                        <a href="/contacts/#map" class="icon map"></a>
-                        <span class="text"><?=Configure::read('Settings.address')?></span>
-                    </div>
                 </div>
                 <div class="left">
-                    <div class="skypeName">
-                        <a href="skype:<?=Configure::read('Settings.skype')?>" class="icon skype"></a>
-                        <a href="skype:<?=Configure::read('Settings.skype')?>"><?=Configure::read('Settings.skype')?></a>
-                    </div>
-                    <div class="letter">
-                        <a href="mailto:<?=Configure::read('Settings.email')?>" class="icon email"></a>
-                        <a href="mailto:<?=Configure::read('Settings.email')?>"><?=Configure::read('Settings.email')?></a>
-                    </div>
+                    <?=$this->element('contacts')?>
                 </div>
                 <img src="/img/header.png" alt="" class="promoPicture" />
             </div>
@@ -222,21 +211,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <?=$this->element('bottom_links')?>
                     <div class="footerAddress">
                         <?=$this->element('phones')?>
-                        <div class="address clearfix">
-                        	<a href="/contacts/#map" class="icon map"></a>
-                        	<span class="text"><?=Configure::read('Settings.address')?></span>
-                        </div>
                     </div>
                     <div class="footerSkypeEmail">
-	                    <div class="skypeName">
-	                        <a href="skype:<?=Configure::read('Settings.skype')?>" class="icon skype"></a>
-	                        <a href="skype:<?=Configure::read('Settings.skype')?>"><?=Configure::read('Settings.skype')?></a>
-	                    </div>
-	                    <div class="letter" style="margin-bottom: 10px;">
-	                        <a href="mailto:<?=Configure::read('Settings.email')?>" class="icon email"></a>
-	                        <a href="mailto:<?=Configure::read('Settings.email')?>"><?=Configure::read('Settings.email')?></a>
-	                    </div>
 <?
+    echo $this->element('contacts');
     if (Configure::read('domain.zone') == 'ru' || TEST_ENV) {
         echo $this->element('social');
     }
