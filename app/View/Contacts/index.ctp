@@ -6,13 +6,18 @@
 		'https://www.google.com/recaptcha/api.js?render='.$captchaKey
 	), array('inline' => false));
 	*/
+	if ($article2) {
+		echo $this->element('title', array('title' => $article2['Page']['title']));
 ?>
-<?=$this->element('title', array('title' => $article2['Page']['title']))?>
 <div class="block main">
 	<div class="article">
 		<?=$this->ArticleVars->body($article2)?>
 	</div>
 </div>
+<?
+	}
+	if ($article) {
+?>
 <a name="map"></a>
 <?=$this->element('title', array('title' => $article['Page']['title']))?>
 <div class="block main">
@@ -21,6 +26,7 @@
 	</div>
 </div>
 <?
+	}
 /*
 	echo $this->element('title', array('title' => __('Send message')))
 ?>
