@@ -53,7 +53,7 @@ define('HTTP', ($_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://');
 Configure::write('domain', array(
 	'url' => 'agromotors.loc',
 	'title' => 'AgroMotors.loc',
-	'zone' => 'ru',
+	'zone' => 'by',
 	'subdomain' => (count($domain) > 2) ? $domain[0] : 'www'
 ));
 

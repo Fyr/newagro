@@ -50,19 +50,24 @@ class AppController extends Controller {
 		// if (Configure::read('domain.zone') == 'ru') {
 			$this->loadModel('Category');
 			$this->Category->unbindModel(array('hasOne' => array('Seo')));
-			$fields = array('Category.id');
+			$fields = array('Category.id', 'Category.export_by');
 			$conditions = array('slug' => Configure::read('domain.subdomain'), 'is_subdomain' => 1);
 			$category = $this->Category->find('first', compact('fields', 'conditions'));
 			if ($category) {
 				Configure::write('domain.category', Configure::read('domain.subdomain'));
 				Configure::write('domain.category_id', Hash::get($category, 'Category.id'));
 				Configure::write('domain.subdomain', 'www'); // брать все статьи с www для продуктовых субдоменов
+				if (Configure::read('domain.zone') == 'by' && !Hash::get($category, 'Category.export_by')) {
+					$this->redirect404();
+					return false;
+				}
 			}
 
 			App::uses('Subdomain', 'Model');
 			$this->Subdomain = new Subdomain();
 			$subdomain = $this->Subdomain->findByName(Configure::read('domain.subdomain'));
 			if (!$subdomain) {
+				// $this->redirectNotFound();
 				$this->redirect404();
 				return false;
 			}
@@ -227,6 +232,9 @@ class AppController extends Controller {
 		$this->loadModel('Category');
 		$this->Category->unbindModel(array('hasOne' => array('Seo')));
 		$conditions = array('Category.object_type' => 'Category', 'is_subdomain' => 1);
+		if (Configure::read('domain.zone') == 'by') {
+			$conditions['Category.export_by'] = 1;
+		}
 		$order = array('Category.sorting' => 'ASC');
 		$aCategories = $this->Category->find('all', compact('conditions', 'order'));
 		// $aCategories = $this->Category->findAllByObjectType('Category', array('id', 'title', 'slug', 'is_subdomain', 'Seo.*'), array('Category.sorting' => 'ASC'));
@@ -314,6 +322,7 @@ class AppController extends Controller {
 	
 	public function redirect404() {
 		// return $this->redirect(array('controller' => 'pages', 'action' => 'notExists'), 404);
+		$this->beforeFilterLayout();
 		throw new NotFoundException();
 	}
 
