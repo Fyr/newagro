@@ -39,18 +39,6 @@
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');
-
-	if (Configure::read('domain.zone') == 'ru') {
-?>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MQ7QR43');</script>
-<!-- End Google Tag Manager -->	
-<?
-	}
 ?>
 <script type="text/javascript">
 var Cart;
@@ -65,20 +53,28 @@ $(document).ready(function(){
     Cart = new CartObject(".<?=Configure::read('domain.url')?>", "http://<?=Configure::read('domain.url').$this->Html->url(array('controller' => 'Products', 'action' => 'cart'))?>");
 });
 </script>
-
-</head>
-	<body>
+<!-- START: Counters for HEAD -->
 <?
-	if (Configure::read('domain.zone') == 'ru') {
-?>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQ7QR43"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<?
+	if (isset($aSlot[7]) && !TEST_ENV) {
+		foreach($aSlot[7] as $banner) {
+			echo $banner['Banner']['options']['html']."\n";
+		}
 	}
 ?>
 
+<!-- END: Counters for HEAD -->
+</head>
+	<body>
+        <!-- Counters for BODY TOP: START -->
+<?
+	if (isset($aSlot[8]) && !TEST_ENV) {
+		foreach($aSlot[8] as $banner) {
+			echo $banner['Banner']['options']['html']."\n";
+		}
+	}
+?>
+
+        <!-- Counters for BODY TOP: END -->
 		<div class="header">
             <div class="header_back">
                 <div class="inner clearfix">
@@ -221,7 +217,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 ?>
                     </div>
                 </div>
-				<?=$this->element('counters')?>
+                <!-- Counters for BODY BOTTOM: START -->
+<?
+	if (isset($aSlot[9]) && !TEST_ENV) {
+		foreach($aSlot[9] as $banner) {
+			echo $banner['Banner']['options']['html']."\n";
+		}
+	}
+?>
+
+                <!-- Counters for BODY BOTTOM: END -->
                 <img src="/img/footer_promo.png" class="footerPromo" alt="" />
             </div>
         </div>

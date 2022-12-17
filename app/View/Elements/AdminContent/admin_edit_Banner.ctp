@@ -1,7 +1,7 @@
 <?	
 	echo $this->PHForm->input('status', array('label' => false, 'multiple' => 'checkbox', 'options' => array('active' => __('Active')), 'class' => 'checkbox inline'));
 	echo $this->PHForm->input('title');
-	echo $this->PHForm->input('slot', array('options' => $slotPlaces));
+	echo $this->PHForm->input('slot', array('options' => $slotPlaces, 'class' => 'input-xxlarge'));
 	echo $this->PHForm->input('type', array('options' => $bannerTypes));
 	echo $this->PHForm->input('Banner.options.html', array(
 		'type' => 'textarea', 
