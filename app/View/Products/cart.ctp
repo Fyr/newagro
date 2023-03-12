@@ -96,7 +96,7 @@ if ($cartItems) {
 		echo $this->Form->input('SiteOrder.address', array('type' => 'textarea', 'label' => array('text' => '<span class="star">*</span> Адрес')));
 		echo $this->Form->input('SiteOrder.comment', array('type' => 'textarea', 'label' => array('text' => 'Комментарий к заказу')));
 		// echo $this->Form->input('captcha', array('type' => 'hidden', 'label' => array('text' => '<span class="star">*</span> '.__('Spam protection'))));
-		echo $this->Form->button('Заказать', array('class' => 'submit', 'type' => 'submit'));
+		echo $this->Form->button('Заказать', array('class' => 'submit', 'type' => 'submit', 'onclick' => "console.log('submit'); this.disabled=true; $('#SiteOrderCartForm').submit()"));
 		echo $this->Form->end();
 		?>
 	</div>

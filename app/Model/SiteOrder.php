@@ -14,6 +14,10 @@ class SiteOrder extends AppModel {
 			),
 		),
 		'email' => array(
+			'checkNotEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Field cannot be blank',
+			),
 			'checkEmail' => array(
 				'rule' => 'email',
 				'message' => 'Email is incorrect'

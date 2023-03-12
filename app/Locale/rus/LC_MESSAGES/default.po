@@ -816,3 +816,9 @@ msgstr "Редактировать мессенджер"
 
 msgid "Used"
 msgstr "Использовано"
+
+msgid "Field cannot be blank"
+msgstr "Поле должно быть заполнено"
+
+msgid "Email is incorrect"
+msgstr "Некорректный e-mail адрес"
