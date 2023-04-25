@@ -8,7 +8,7 @@
 	echo $this->Html->charset()."\n";
 	echo $this->Html->meta('icon')."\n";
 	echo $this->element('Seo.seo_info', array('data' => $seo))."\n";
-	echo $this->Html->css(array('style', 'fonts', 'smoothDivScroll', 'extra', 'jquery.fancybox', 'call-widget'));
+	echo $this->Html->css(array('style', 'fonts', 'smoothDivScroll', 'extra.css?v=4', 'jquery.fancybox', 'call-widget'));
 ?>
 <!--[if gte IE 9]>
 <style type="text/css">
@@ -30,7 +30,7 @@
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
         'vendor/jquery/jquery.dotdotdot',
-		'doc_ready',
+		'doc_ready.js?v=1',
         'cart',
         'call-widget'
     ));

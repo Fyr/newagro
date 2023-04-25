@@ -232,9 +232,9 @@ class AppController extends Controller {
 		$this->loadModel('Category');
 		$this->Category->unbindModel(array('hasOne' => array('Seo')));
 		$conditions = array('Category.object_type' => 'Category', 'is_subdomain' => 1);
-		if (Configure::read('domain.zone') == 'by') {
-			$conditions['Category.export_by'] = 1;
-		}
+		// if (Configure::read('domain.zone') == 'by') {
+			$conditions['Category.export_'.Configure::read('domain.zone')] = 1;
+		// }
 		$order = array('Category.sorting' => 'ASC');
 		$aCategories = $this->Category->find('all', compact('conditions', 'order'));
 		// $aCategories = $this->Category->findAllByObjectType('Category', array('id', 'title', 'slug', 'is_subdomain', 'Seo.*'), array('Category.sorting' => 'ASC'));
@@ -267,6 +267,7 @@ class AppController extends Controller {
 
 		$pageEn = $this->Page->findBySlug('en-version');
 		$this->set('enPage', ($pageEn) ? $this->getUrl('/pages/show/en-version') : '');
+		$this->set('isEN', $pageEn && isset($this->request->pass[0]) && $this->request->pass[0] == 'en-version');
 
 		if (Configure::read('domain.zone') == 'ru') {
 			unset($this->aNavBar['home']);

@@ -1,5 +1,9 @@
 <?php
 $time = microtime(true);
+if (isBotBlackListed()) {
+	exit('Website is temporary unavailable');
+}
+
 /**
  * Index
  *
@@ -107,5 +111,55 @@ $Dispatcher->dispatch(
 	new CakeRequest(),
 	new CakeResponse()
 );
+
 $time = microtime(true) - $time;
-fdebug("{$time},{$_SERVER['REQUEST_URI']}\r\n", 'web_stats.log');
+// fdebug("{$time},{$_SERVER['REQUEST_URI']}\r\n", 'web_stats.log');
+
+function isBotBlackListed($ip = '') {
+	if (!$ip) {
+		$ip = $_SERVER['REMOTE_ADDR'];
+	}
+	$referer = gethostbyaddr($ip);
+
+	// blacklist must have * to work correctly
+	$aBlackList = array(
+		'*.go.mail.ru',
+		'*.bot.semrush.com',
+		'*.applebot.apple.com',
+		'*.search.msn.com',
+		'*.petalsearch.com',
+		'*.webmeup.com',
+		'*.your-server.de',
+		'*.dataforseo.com',
+		'*.babbar.eu',
+		'*.amazonaws.com',
+		'*.lyse.net',
+		'*.r00tbase.de',
+		'*.kabel-deutschland.de',
+		'*.tiss.fun',
+		'*.tiss.xyz',
+		'*.kiev.ua',
+		'ip-*.net',
+		'ip-*.eu',
+		'*.businessesforsale.ru',
+		'*.triolan.net',
+		'*.ahrefs.com',
+		'ns3*.eu',
+		'ns5*.net',
+		'vdsl*.encoline.de'
+	);
+
+	foreach($aBlackList as $mask) {
+		$pos = strpos($mask, '*');
+		if ($pos !== false) {
+			$_black = substr($mask, 0, $pos);
+			$_black2 = substr($mask, $pos + 1);
+			$_ref = substr($referer, 0, strlen($_black));
+			$_ref2 = substr($referer, -strlen($_black2));
+			if ($mask === $_ref.'*'.$_ref2) {
+				return true;
+			}
+		}
+	}
+	return false;
+}

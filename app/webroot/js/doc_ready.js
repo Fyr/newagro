@@ -52,6 +52,8 @@ $(document).ready(function(){
 		$(".rightSidebar").appendTo($(".oneLeftSide"));
 	} else if ($(window).width() <= 703) {
 		$('.rightSidebar').before($('.oneLeftSide'));
+		console.log('!');
+		$('.mainContent').before($('.oneLeftSide'));
 		//$('.oneLeftSide:first').remove();
 	}
 	flag = true;
@@ -63,6 +65,7 @@ $(document).ready(function(){
 			}
 		} else if ($(window).width() <= 703) {
 			$('.rightSidebar').before($('.oneLeftSide'));
+			$('.mainContent').before($('.oneLeftSide'));
 			flag = false;
         } else {
 			$(".rightSidebar").appendTo($(".mainColomn"));

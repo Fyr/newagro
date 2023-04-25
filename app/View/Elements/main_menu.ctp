@@ -1,10 +1,32 @@
+<ul class="menu menuMobile clearfix menuBurger">
+   <li>
+       <a href="javascript: void(0)"><span>&equiv;</span></a>
+       <ul style="display: none">
+<?
+	foreach($aMenu as $id => $menu) {
+?>
+	<li>
+		<a href="<?=$menu['href']?>"><?=$menu['title']?></a>
+	</li>
+<?
+	}
+?>
+      </ul>
+   </li>
+</ul>
 <?
 	if ($enPage) {
-		$zone = Configure::read('domain.zone');
 		$domainUrl = HTTP . Configure::read('domain.url');
+		if ($isEN) {
+			$classEN = array('class' => 'currLang');
+			$classRU = array();
+		} else {
+			$classRU = array('class' => 'currLang');
+			$classEN = array();
+		}
 ?>
 <span class="floatR langSwitch">
-	<?=$this->Html->link('EN', $enPage)?> | <?=$this->Html->link(strtoupper($zone), $domainUrl)?>
+	<?=$this->Html->link('EN', $enPage, $classEN)?> | <?=$this->Html->link('RU', $domainUrl, $classRU)?>
 </span>
 <?
 	}
@@ -38,17 +60,6 @@
 </ul>
 <ul class="menu menuMobile clearfix">
    <li>
-       <a href="javascript: void(0)"><span>Меню</span></a>
-       <ul style="display: none">
-<?
-	foreach($aMenu as $id => $menu) {
-?>
-	<li>
-		<a href="<?=$menu['href']?>"><?=$menu['title']?></a>
-	</li>
-<?
-	}
-?>
-      </ul>
+       <a href="<?=$aMenu['contacts']['href']?>"><span><?=$aMenu['contacts']['title']?></span></a>
    </li>
 </ul>
