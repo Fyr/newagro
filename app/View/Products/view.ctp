@@ -22,7 +22,7 @@
 
 	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 	echo $this->element('title', compact('title'));
-	$brand = $aBrands[$article['Product']['brand_id']];
+	$brand = ($article['Product']['is_fake']) ? $aFakeBrands[$article['Product']['brand_id']] : $aBrands[$article['Product']['brand_id']];
 ?>
 						<div class="block main clearfix">
 
@@ -146,7 +146,11 @@
 		foreach($article['PMFormField'] as $field) {
 			$value = $article['PMFormData']['fk_'.$field['id']];
 			if ($field['id'] == Configure::read('params.motor')) {
-				$value = str_replace(',', ', ', $value);
+				if ($article['Product']['is_fake']) {
+					$value = '';
+				} else {
+					$value = str_replace(',', ', ', $value);
+				}
 			}
 			if ($value) {
 				$class = ($class == 'odd') ? 'even' : 'odd';

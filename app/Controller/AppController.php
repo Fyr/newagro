@@ -188,6 +188,9 @@ class AppController extends Controller {
 		$brands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
 		$this->set('aBrands', $brands);
 
+		$brands = Hash::combine($this->Brand->findAllByIsFake(1), '{n}.Brand.id', '{n}');
+		$this->set('aFakeBrands', $brands);
+
 		$aFilter = array();
 		if (isset($this->params['url']['data']['filter']['Article.title']) && $this->params['url']['data']['filter']['Article.title']) {
 			$aFilter['Article.title'] = $this->params['url']['data']['filter']['Article.title'];
