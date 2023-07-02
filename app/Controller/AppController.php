@@ -185,11 +185,16 @@ class AppController extends Controller {
 		
 		$this->loadModel('Brand');
 		$this->Brand->unbindModel(array('hasOne' => array('Seo')));
-		$brands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
-		$this->set('aBrands', $brands);
+		$aBrands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
+		$this->set('aBrands', $aBrands);
 
-		$brands = Hash::combine($this->Brand->findAllByIsFake(1), '{n}.Brand.id', '{n}');
-		$this->set('aFakeBrands', $brands);
+		$aBrands = Hash::combine($this->Brand->findAllByIsFake(1), '{n}.Brand.id', '{n}');
+		$this->set('aFakeBrands', $aBrands);
+
+		/*
+		$aCategories = Hash::combine($this->Category->findAllByIsFake(1), '{n}.Category.id', '{n}');
+		$this->set('aFakeCategories', $aCategories);
+		*/
 
 		$aFilter = array();
 		if (isset($this->params['url']['data']['filter']['Article.title']) && $this->params['url']['data']['filter']['Article.title']) {
@@ -234,7 +239,7 @@ class AppController extends Controller {
 
 		$this->loadModel('Category');
 		$this->Category->unbindModel(array('hasOne' => array('Seo')));
-		$conditions = array('Category.object_type' => 'Category', 'is_subdomain' => 1);
+		$conditions = array('Category.object_type' => 'Category', 'is_subdomain' => 1, 'is_fake' => 0);
 		// if (Configure::read('domain.zone') == 'by') {
 			$conditions['Category.export_'.Configure::read('domain.zone')] = 1;
 		// }
