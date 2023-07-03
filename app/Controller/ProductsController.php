@@ -149,7 +149,13 @@ class ProductsController extends AppController {
 		$zone = Configure::read('domain.zone');
 		$conditions = array('object_type' => 'Product', 'object_id' => $id, 'show_'.$zone => 1);
 		$order = array('main_'.$zone => 'DESC', 'id' => 'ASC');
-		$aMedia = $this->MediaArticle->find('all', compact('conditions', 'order')); // $this->Media->getList(array('object_type' => 'Product', 'object_id' => $id));
+		$limit = 50; // max - 50 media for detail
+		if ($article['Product']['is_fake'] && $article['Product']['orig_id']) {
+			$conditions['object_id'] = $article['Product']['orig_id'];
+			$order = array('main_'.$zone => 'ASC', 'id' => 'DESC');
+			$limit = 1;
+		}
+		$aMedia = $this->MediaArticle->find('all', compact('conditions', 'order', 'limit')); // $this->Media->getList(array('object_type' => 'Product', 'object_id' => $id));
 		$article['Media'] = Hash::extract($aMedia, '{n}.MediaArticle');
 
 		/*
