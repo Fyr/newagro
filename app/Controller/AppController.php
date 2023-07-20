@@ -45,6 +45,13 @@ class AppController extends Controller {
 	}
 	
 	public function beforeFilter() {
+		if ($this->viewPath == 'Errors') {
+			Configure::write('domain.subdomain', 'www');
+			$this->layout = 'error-page';
+			$this->initNavBar();
+			$this->initNavBarView();
+			return;
+		}
 		$this->disableCopy = false; // !TEST_ENV;
 
 		// if (Configure::read('domain.zone') == 'ru') {
@@ -106,8 +113,8 @@ class AppController extends Controller {
 		//}
 		return HTTP.Configure::read('domain.url').$url;
 	}
-	
-	protected function beforeFilterLayout() {
+
+	protected function initNavBar() {
 		$this->aNavBar = $this->aBottomLinks = array(
 			'home' => array('href' => $this->getUrl('/'), 'title' => __('Home')),
 			'news' => array('href' => $this->getUrl('/news'), 'title' => __('News')),
@@ -121,6 +128,10 @@ class AppController extends Controller {
 			'dealer' => array('href' => $this->getUrl('/magazini-zapchastei'), 'title' => ''),
 			'contacts' => array('href' => $this->getUrl('/contacts'), 'title' => __('Contacts'))
 		);
+	}
+	
+	protected function beforeFilterLayout() {
+		$this->initNavBar();
 
 		$this->currMenu = $this->_getCurrMenu();
 	    $this->currLink = $this->currMenu;
@@ -155,15 +166,21 @@ class AppController extends Controller {
 		$curr_menu = strtolower(str_ireplace('Site', '', $this->request->controller)); // By default curr.menu is the same as controller name
 		return $curr_menu;
 	}
-	
-	public function beforeRender() {
+
+	protected function initNavBarView() {
 		$this->set('aNavBar', $this->aNavBar);
 		$this->set('currMenu', $this->currMenu);
 		$this->set('aBottomLinks', $this->aBottomLinks);
 		$this->set('currLink', $this->currLink);
 		$this->set('pageTitle', $this->pageTitle);
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
-		
+	}
+	
+	public function beforeRender() {
+		if ($this->viewPath == 'Errors') {
+			fdebug($this->viewVars, 'view-vars.log');
+		}
+		$this->initNavBarView();
 		$this->beforeRenderLayout();
 	}
 	
