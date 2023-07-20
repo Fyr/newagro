@@ -103,12 +103,6 @@ class ProductsController extends AppController {
 			}
 		}
 
-		$this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
-			'className' => 'Form.PMFormData',
-			'foreignKey' => 'object_id',
-			'conditions' => array('PMFormData.object_type' => 'ProductParam'),
-			'dependent' => true
-		))), false);
 		if ($q) {
 			$this->logSearch($q);
 			$this->processFilter($q);
@@ -120,8 +114,29 @@ class ProductsController extends AppController {
 			$this->paginate['conditions'] = array_merge($this->paginate['conditions'], $this->postConditions($data));
 		}
 
-		$this->Product->unbindModel(array('hasOne' => array('Seo')));
+		// remove associations with all models
+		// get product IDs then link it again
+		$belongsTo = $this->Product->belongsTo;
+		$hasOne = $this->Product->hasOne;
+		$this->Product->unbindModel(array(
+			'belongsTo' => array('Category', 'Subcategory'),
+			'hasOne' => array('MediaArticle', 'Seo', 'Search')
+		), false); // need permanent unbind for COUNT(*) query
+
+		$this->paginate['fields'] = array('Product.id');
 		$aProducts = $this->paginate('Product');
+
+		$this->Product->bindModel(compact('belongsTo', 'hasOne'), false);
+
+		$product_ids = Hash::extract($aProducts, '{n}.Product.id');
+		$conditions = array('Product.id' => $product_ids);
+		$order = array();
+		foreach ($product_ids as $id) {
+			$order[] = 'Product.id = '.$id.' DESC';
+		}
+		$order = implode(', ', $order);
+		$aProducts = $this->Product->find('all', compact('conditions', 'order'));
+
 		$this->set('aArticles', $aProducts);
 		$this->set('objectType', 'Product');
 	}
@@ -228,7 +243,7 @@ class ProductsController extends AppController {
 		$this->paginate['conditions'] = array('Product.id' => $product_ids);
 		$order = array();
 		foreach ($product_ids as $id) {
-			$order[] = 'Product.id = ' . $id . ' DESC';
+			$order[] = 'Product.id = '.$id.' DESC';
 		}
 		$this->paginate['order'] = implode(', ', $order);
 	}
