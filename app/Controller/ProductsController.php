@@ -203,13 +203,16 @@ class ProductsController extends AppController {
 	}
 
 	private function _getRelatedProducts($id, $code, $cat_id, $subcat_id) {
-		$conditions = array('Product.published' => 1, 'Product.code <> ' => $code);
-		if ($subcat_id) {
-			$conditions['Product.subcat_id'] = $subcat_id;
-		} else {
-			$conditions['Product.cat_id'] = $cat_id;
+		$conditions = array('Product.published' => 1);
+		$conditions['Product.subcat_id'] = $subcat_id;
+		$conditions['Product.cat_id'] = $cat_id;
+		$aProducts = $this->Product->getRandomRows(6, $conditions);
+		foreach($aProducts as $i => $row) {
+			if ($row['Product']['code'] === $code) {
+				unset($aProducts[$i]);
+			}
 		}
-		return $this->Product->getRandomRows(6, $conditions);
+		return $aProducts;
 	}
 
 	private function logSearch($q) {
