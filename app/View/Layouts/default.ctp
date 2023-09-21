@@ -8,7 +8,7 @@
 	echo $this->Html->charset()."\n";
 	echo $this->Html->meta('icon')."\n";
 	echo $this->element('Seo.seo_info', array('data' => $seo))."\n";
-	echo $this->Html->css(array('style', 'fonts', 'smoothDivScroll', 'extra.css?v=4', 'jquery.fancybox', 'call-widget'));
+	echo $this->Html->css(array('style.css?v=1', 'fonts', 'smoothDivScroll', 'extra.css?v=4', 'jquery.fancybox', 'call-widget'));
 ?>
 <!--[if gte IE 9]>
 <style type="text/css">
@@ -18,19 +18,19 @@
 <?
 	$scripts = array(
 		'vendor/jquery/jquery-1.10.2.min',
-        'vendor/jquery/jquery-ui-1.10.3.custom.min',
+	        'vendor/jquery/jquery-ui-1.10.3.custom.min',
 	);
 	if ($disableCopy) {
 		$scripts[] = 'vendor/jquery/jquery.select.js';
 	}
-    $scripts = array_merge($scripts, array(
+	$scripts = array_merge($scripts, array(
 		'vendor/jquery/jquery.mousewheel.min',
 		'vendor/jquery/jquery.kinetic.min',
 		'vendor/jquery/jquery.smoothdivscroll-1.3-min',
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
-        'vendor/jquery/jquery.dotdotdot',
-		'doc_ready.js?v=1',
+		'vendor/jquery/jquery.dotdotdot',
+		'doc_ready.js?v=2',
         'cart',
         'call-widget'
     ));
@@ -231,6 +231,21 @@ $(document).ready(function(){
             </div>
         </div>
         <div class="footerLine"></div>
+
+        <div class="mobileCatalogeBtn" id="mobile-cataloge-btn">
+            <div class="text">Каталог</div>
+        </div>
+
+        <div class="mobileCataloge" id="mobile-cataloge">
+            <div class="mm__bg mm__close"></div>
+            <div class="mm__wrapper" id="mm__wrapper">
+                <div class="close-btn mm__close"></div>
+                <div class="mobileCataloge__inner">
+                    <?=$this->element('sidebar_left')?> 
+                </div>
+            </div>
+        </div>
+
 <?
     // echo $this->element('sql_dump');
     echo $this->element('call-widget');

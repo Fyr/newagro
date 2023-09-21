@@ -550,3 +550,75 @@ img.grayscale {
 	.formItem .formName { float: none; widows: auto; }
 	.formItem .formField { margin-left: 0;}
 }
+
+.mobileCatalogeBtn { display: none; }
+@media (max-width: 720px)  { 
+    .mobileCatalogeBtn { display: block; position: fixed; border: 1px solid black; left: 0; top: 200px; width: 30px; padding: 10px 0 10px 0; z-index:300; 
+        background: #f4d451; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y0ZDQ1MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2U0YmEzYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2Q0YTEyNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkNGExMjYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: -moz-linear-gradient(top, #f4d451 0%, #e4ba3c 50%, #d4a126 51%, #d4a126 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4d451), color-stop(50%,#e4ba3c), color-stop(51%,#d4a126),  color-stop(100%,#d4a126)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, #f4d451 0%,#e4ba3c 50%,#d4a126 51%,#d4a126 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, #f4d451 0%,#e4ba3c 50%,#d4a126 51%,#d4a126 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, #f4d451 0%,#e4ba3c 50%,#d4a126 51%,#d4a126 100%); /* IE10+ */
+		background: linear-gradient(to bottom, #f4d451 0%,#e4ba3c 50%,#d4a126 51%,#d4a126 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4d451', endColorstr='#d4a126',GradientType=0 ); /* IE6-8 */
+        opacity: 0.7;
+    }
+
+    .mobileCatalogeBtn:before {
+        content: '';
+        background: url(../img/arrows/arrow_right.png) no-repeat center center;
+        background-size: contain;
+        display: block;
+        margin: 0 auto 20px auto;
+        width: 18px; 
+        height: 30px;
+    }
+
+
+    .mobileCatalogeBtn .text { writing-mode: vertical-lr; text-orientation: upright; font-weight: bold; font-size: 20px; text-align: center; display: block; margin: 0 auto; letter-spacing: -2px;}
+}
+
+
+.mobileCataloge { display: none; position: fixed; top: 0; left: 0; height: 100%; width: 100%; z-index: 400; }
+@media (min-width: 768px) { .mobileCataloge { padding-top: 0; } }
+    
+/*получпрозрачный фон*/
+.mobileCataloge .mm__bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgba(20, 20, 20, 0.8); z-index: 100; }
+    
+/*Контейнер мобильного меню, именно он выезжает слева*/
+.mobileCataloge .mm__wrapper {
+    visibility: hidden;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    transition: all .4s ease-in-out;
+    overflow-y: auto;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 400;
+    touch-action: auto;
+    -ms-touch-action: auto;
+    background: #fff; 
+}
+
+@media (min-width: 768px) { .mobileCataloge .mm__wrapper { width: 35%; } }
+@media (min-width: 1200px) { .mobileCataloge .mm__wrapper { width: 25%; } }
+
+.mobileCataloge__inner { margin-top: -60px;}
+   
+      
+/*Стили крестика закрытия меню*/
+.mobileCataloge  .close-btn { display: block; position: sticky; top: 15px; right: 0; left:100%; margin-right: 15px; margin-top: 15px; width: 45px; height: 45px; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); cursor: pointer; }
+.mobileCataloge  .close-btn {
+    background: #f4d451;
+    border-radius: 50%;
+}
+
+.close-btn:before { width: 2px; height: 30px; left: 22px; top: 8px; }
+.close-btn:after { height: 2px; width: 30px; top: 22px; left: 8px; }
+.close-btn:before, .close-btn:after { content: ""; background: #000;position: absolute; }
+
+@media (max-width: 720px)  { .leftSidebar .catalogBlock { display: none; } }

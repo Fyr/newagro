@@ -52,8 +52,6 @@ $(document).ready(function(){
 		$(".rightSidebar").appendTo($(".oneLeftSide"));
 	} else if ($(window).width() <= 703) {
 		$('.rightSidebar').before($('.oneLeftSide'));
-		console.log('!');
-		$('.mainContent').before($('.oneLeftSide'));
 		//$('.oneLeftSide:first').remove();
 	}
 	flag = true;
@@ -65,7 +63,6 @@ $(document).ready(function(){
 			}
 		} else if ($(window).width() <= 703) {
 			$('.rightSidebar').before($('.oneLeftSide'));
-			$('.mainContent').before($('.oneLeftSide'));
 			flag = false;
         } else {
 			$(".rightSidebar").appendTo($(".mainColomn"));
@@ -140,6 +137,25 @@ $(document).ready(function(){
 		$(this).smoothDivScroll("stopAutoScrolling");
 	}).bind("mouseout", function() {
 		$(this).smoothDivScroll("startAutoScrolling");
+	});
+
+	$('#mobile-cataloge-btn').click( function(event){
+		event.preventDefault();
+		$('#mobile-cataloge').fadeIn();
+		$('#mm__wrapper')
+			.css('visibility', 'visible')
+			.css('transform', 'translateX(0)');
+
+		$("body").css("overflow","hidden");
+	});
+
+	$('.mm__close').click( function(){
+		$('#mobile-cataloge').fadeOut();
+		$('#mm__wrapper')
+			.css('visibility', 'hidden')
+			.css('transform', 'translateX(-100%)');
+
+		$("body").css("overflow","auto");
 	});
 
 });
