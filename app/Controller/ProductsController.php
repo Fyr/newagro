@@ -120,7 +120,7 @@ class ProductsController extends AppController {
 		$hasOne = $this->Product->hasOne;
 		$this->Product->unbindModel(array(
 			'belongsTo' => array('Category', 'Subcategory'),
-			'hasOne' => array('MediaArticle', 'Seo', 'Search')
+			'hasOne' => array('MediaArticle', 'Seo')
 		), false); // need permanent unbind for COUNT(*) query
 
 		$this->paginate['fields'] = array('Product.id');
@@ -130,11 +130,16 @@ class ProductsController extends AppController {
 
 		$product_ids = Hash::extract($aProducts, '{n}.Product.id');
 		$conditions = array('Product.id' => $product_ids);
-		$order = array();
-		foreach ($product_ids as $id) {
-			$order[] = 'Product.id = '.$id.' DESC';
+		$zone = Configure::read('domain.zone');
+		$order = array("MediaArticle.main_$zone DESC");
+		// $order = array();
+		if ($q) {
+			// keep order of search relevant
+			foreach ($product_ids as $id) {
+				$order[] = 'Product.id = '.$id.' DESC';
+			}
+			$order = implode(', ', $order);
 		}
-		$order = implode(', ', $order);
 		$aProducts = $this->Product->find('all', compact('conditions', 'order'));
 
 		$this->set('aArticles', $aProducts);
