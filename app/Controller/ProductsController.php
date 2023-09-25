@@ -127,7 +127,12 @@ class ProductsController extends AppController {
 		$aProducts = $this->paginate('Product');
 
 		$this->Product->bindModel(compact('belongsTo', 'hasOne'), false);
-
+		$this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
+			'className' => 'Form.PMFormData',
+			'foreignKey' => 'object_id',
+			'conditions' => array('PMFormData.object_type' => 'ProductParam'),
+			'dependent' => true
+		))), false);
 		$product_ids = Hash::extract($aProducts, '{n}.Product.id');
 		$conditions = array('Product.id' => $product_ids);
 		$zone = Configure::read('domain.zone');
