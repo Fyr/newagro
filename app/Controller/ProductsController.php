@@ -49,11 +49,12 @@ class ProductsController extends AppController {
 			return $this->redirect(str_replace('/autozapchasti', '/zapchasti', $this->request->here));
 		}
 
+		$zone = Configure::read('domain.zone');
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
 			'limit' => self::PER_PAGE, 
 			'page' => $this->request->param('page'),
-			// 'order' => 'Product.created DESC'
+			'order' => "MediaArticle.main_$zone DESC"
 		);
 		$q = $this->request->query('q');
 		if (Configure::read('domain.category_id')) {
@@ -120,7 +121,7 @@ class ProductsController extends AppController {
 		$hasOne = $this->Product->hasOne;
 		$this->Product->unbindModel(array(
 			'belongsTo' => array('Category', 'Subcategory'),
-			'hasOne' => array('MediaArticle', 'Seo')
+			'hasOne' => array('Seo')
 		), false); // need permanent unbind for COUNT(*) query
 
 		$this->paginate['fields'] = array('Product.id');
@@ -135,7 +136,6 @@ class ProductsController extends AppController {
 		))), false);
 		$product_ids = Hash::extract($aProducts, '{n}.Product.id');
 		$conditions = array('Product.id' => $product_ids);
-		$zone = Configure::read('domain.zone');
 		$order = array("MediaArticle.main_$zone DESC");
 		// $order = array();
 		if ($q) {
