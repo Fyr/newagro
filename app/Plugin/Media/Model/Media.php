@@ -30,7 +30,7 @@ class Media extends AppModel {
 	    		if ($row['media_type'] == 'image') {
 	    			$file = $row['file'].$row['ext'];
 	    			if ($row['object_type'] == 'Product') {
-	    				$file.= '.png';
+	    				$file.= '.jpg';
 	    			}
 	            	$_row[$this->alias]['url_img'] = $this->PHMedia->getImageUrl($row['object_type'], $row['id'], 'noresize', $file);
 	    		}
