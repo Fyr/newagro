@@ -259,7 +259,7 @@ class Image
 			imagejpeg($rImage);
 		} 
 		else 
-			imagejpeg($rImage, $sOutFile, 90);
+			imagejpeg($rImage, $sOutFile, 75);
 	}
 	
 	public function outputPng($sOutFile = false, $rImage = false) 
