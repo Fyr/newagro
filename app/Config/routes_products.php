@@ -1,12 +1,16 @@
 <?
 
-/* -= Роуты для филиалов (старая схема), не индексируются поисковиками =- */
-Router::connect('/autozapchasti',
+/* -= Роуты для продуктов (старая схема) =- */
+/*
+Router::connect('/zapchasti',
+	array('controller' => 'Products', 'action' => 'redirect404')
+);
+*/
+Router::connect('/zapchasti',
 	array('controller' => 'Pages', 'action' => 'redirect404')
 );
 
-/*
-Router::connect('/autozapchasti/:category',
+Router::connect('/zapchasti/:category',
 	array(
 		'controller' => 'Products',
 		'action' => 'index',
@@ -14,7 +18,7 @@ Router::connect('/autozapchasti/:category',
 	),
 	array('named' => array('category'))
 );
-Router::connect('/autozapchasti/page/:page',
+Router::connect('/zapchasti/page/:page',
 	array(
 		'controller' => 'Products',
 		'action' => 'index',
@@ -22,7 +26,7 @@ Router::connect('/autozapchasti/page/:page',
 	),
 	array('named' => array('page' => '[\d]*'))
 );
-Router::connect('/autozapchasti/:category/page/:page',
+Router::connect('/zapchasti/:category/page/:page',
 	array(
 		'controller' => 'Products',
 		'action' => 'index',
@@ -33,7 +37,7 @@ Router::connect('/autozapchasti/:category/page/:page',
 	)
 );
 
-Router::connect('/autozapchasti/:category/:subcategory',
+Router::connect('/zapchasti/:category/:subcategory',
 	array(
 		'controller' => 'Products',
 		'action' => 'index',
@@ -41,7 +45,7 @@ Router::connect('/autozapchasti/:category/:subcategory',
 	),
 	array('named' => array('category', 'subcategory'))
 );
-Router::connect('/autozapchasti/:category/:subcategory/page/:page',
+Router::connect('/zapchasti/:category/:subcategory/page/:page',
 	array(
 		'controller' => 'Products',
 		'action' => 'index',
@@ -51,7 +55,7 @@ Router::connect('/autozapchasti/:category/:subcategory/page/:page',
 		'named' => array('category', 'subcategory', 'page' => '[\d]*')
 	)
 );
-Router::connect('/autozapchasti/:category/:subcategory/:slug',
+Router::connect('/zapchasti/:category/:subcategory/:slug',
 	array(
 		'controller' => 'Products',
 		'action' => 'view',
@@ -59,8 +63,9 @@ Router::connect('/autozapchasti/:category/:subcategory/:slug',
 	),
 	array('pass' => array('slug'))
 );
-*/
+
 /* -= Роуты для категорий-субдоменов (без категории в URL, новая схема), индексируется на субдоменах =- */
+/*
 Router::connect('/zapchasti',
 	array(
 		'controller' => 'Products',
@@ -115,3 +120,4 @@ Router::connect('/cart',
 		'action' => 'cart',
 	)
 );
+*/

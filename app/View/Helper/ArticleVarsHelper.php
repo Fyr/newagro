@@ -33,7 +33,7 @@ class ArticleVarsHelper extends AppHelper {
 		return str_replace('http://', HTTP, $url);
 	}
 
-	private function fixPhone($phone) {
+	public function fixPhone($phone) {
 		return str_replace(array('-', ' ', '(' , ')', '+'), '', $phone);
 	}
 

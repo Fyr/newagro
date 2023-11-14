@@ -6,9 +6,12 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <?
-	foreach($aArticles as $article) {
-		$url = SiteRouter::url($article, true);
-		echo $this->element('sitemap_url', compact('url'));
+    $date = date('c');
+	foreach($aCategories as $category) {
+		for($i = 1; $i <= $category['Product']['pages']; $i++) {
+			$url = SiteRouter::url($category).'/sitemap_'.$i.'.xml.gz';
+			echo $this->element('sitemap_map', compact('url', 'date'));
+		}
 	}
 ?>
 

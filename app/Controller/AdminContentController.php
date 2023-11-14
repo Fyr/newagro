@@ -77,6 +77,10 @@ class AdminContentController extends AdminController {
 		$objectType = $this->request->data('Article.object_type');
 		
 		if ($lSaved) {
+			// clean articles cache
+			$cacheKey = ($objectType == 'Page') ? 'plain.xml' : 'articles_'.$objectType.'.xml';
+			$this->_cleanCache($cacheKey);
+
 			$indexRoute = array('action' => 'index', $objectType, $objectID);
 			$editRoute = array('action' => 'edit', $id, $objectType, $objectID);
 			return $this->redirect(($this->request->data('apply')) ? $indexRoute : $editRoute);

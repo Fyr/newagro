@@ -43,8 +43,14 @@ class ContactsController extends AppController {
 			}
 		}
 		*/
-		$this->set('article', $this->Page->getBySlug('contacts1'));
-		$this->set('article2', $this->Page->getBySlug('contacts2'));
+		$article = $this->Page->getBySlug('contacts1');
+		$article2 = $this->Page->getBySlug('contacts2');
+		if ($article2) {
+			$this->seo = $article2['Seo'];
+		} else if ($article) {
+			$this->seo = $article['Seo'];
+		}
+		$this->set(compact('article', 'article2'));
 		// $this->set('recaptchaError', $recaptchaError);
 		$this->disableCopy = false;
 	}

@@ -56,12 +56,13 @@ Router::connect('/articles/sitemap',
 		'objectType' => 'SectionArticle'
 	)
 );
-Router::connect('/sitemap_plain',
+Router::connect('/plain/sitemap',
 	array(
 		'controller' => 'sitemap',
 		'action' => 'plain',
 	)
 );
+/*
 Router::connect('/zapchasti/sitemap_:page.xml.gz',
 	array(
 		'controller' => 'sitemap',
@@ -69,10 +70,17 @@ Router::connect('/zapchasti/sitemap_:page.xml.gz',
 	),
 	array('pass' => array('page'))
 );
+*/
+Router::connect('/zapchasti/sitemap',
+	array(
+		'controller' => 'sitemap',
+		'action' => 'product_categories',
+	)
+);
 Router::connect('/zapchasti/:slug/sitemap_:page.xml.gz',
 	array(
 		'controller' => 'sitemap',
-		'action' => 'category_products',
+		'action' => 'products',
 	),
 	array('pass' => array('slug', 'page'))
 );

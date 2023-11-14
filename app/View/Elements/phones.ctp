@@ -1,9 +1,12 @@
 <?
     $phone = Configure::read('Settings.phone1');
     $phone2 = Configure::read('Settings.phone2');
+
+    $url = 'tel:'.$this->ArticleVars->fixPhone(str_replace('+7', '8', Configure::read('Settings.phone1')));
+    // array('class' => "callable ${type}")
 ?>
 <div class="phones">
-    <span class="icon phone"></span>
+    <a href="<?=$url?>"><span class="icon phone"></span></a>
     <span class="numbers">
         <?=$this->ArticleVars->callableLink('tel', Configure::read('Settings.phone1'))?><br />
         <?=$this->ArticleVars->callableLink('tel', Configure::read('Settings.phone2'))?>

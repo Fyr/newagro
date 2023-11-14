@@ -25,10 +25,14 @@ class AdminMarkersController extends AdminController {
 
 	public function edit($id = 0) {
 		if ($this->request->is(array('put', 'post'))) {
-			$this->Marker->save($this->request->data);
-			$id = $this->Marker->id;
-			$baseRoute = array('action' => 'index');
-			return $this->redirect(($this->request->data('apply')) ? $baseRoute : array($id));
+			if ($this->Marker->save($this->request->data)) {
+				// clean plain pages cache
+				$this->_cleanCache('plain.xml');
+
+				$id = $this->Marker->id;
+				$baseRoute = array('action' => 'index');
+				return $this->redirect(($this->request->data('apply')) ? $baseRoute : array($id));
+			}
 		} else {
 			$this->request->data = $this->Marker->findById($id);
 		}

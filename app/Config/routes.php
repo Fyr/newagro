@@ -4,6 +4,7 @@ Router::connect('/', array('controller' => 'Pages', 'action' => 'home'));
 
 require_once('routes_sitemap.php');
 require_once('routes_products.php');
+require_once('routes_filials.php');
 
 /* -= News =- */
 Router::connect('/news', array(

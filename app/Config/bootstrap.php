@@ -53,7 +53,7 @@ define('HTTP', ($_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://');
 Configure::write('domain', array(
 	'url' => 'agromotors.loc',
 	'title' => 'AgroMotors.loc',
-	'zone' => 'by',
+	'zone' => 'ru',
 	'subdomain' => (count($domain) > 2) ? $domain[0] : 'www'
 ));
 
@@ -66,7 +66,8 @@ Configure::write('search', array(
 Configure::write('sitemap', array(
 	'cache' => true,
 	'dir' => ROOT.DS.APP_DIR.DS.'tmp'.DS.'cache'.DS,
-	'prefix' => 'sitemap_'
+	'prefix' => 'sitemap_',
+	'per_page' => 5000
 ));
 define('AUTH_ERROR', __('Invalid username or password, try again'));
 define('TEST_ENV', $_SERVER['SERVER_ADDR'] == '127.0.0.1');

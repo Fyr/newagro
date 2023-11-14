@@ -63,6 +63,9 @@ class AdminSectionizerController extends AdminController {
 		$this->PCArticle->edit(&$id, &$lSaved);
 
 		if ($lSaved) {
+			// clean articles cache
+			$this->_cleanCache('articles_SectionArticle.xml');
+
 			$cat_id = $this->request->data('Article.cat_id');
             $subcat_id = $this->request->data('Article.subcat_id');
 			$indexRoute = array('action' => 'index', $cat_id, $subcat_id);

@@ -37,6 +37,9 @@ class AdminDealersController extends AdminController {
 		$this->PCArticle->setModel('Dealer')->edit(&$id, &$lSaved);
 		
 		if ($lSaved) {
+			// clean articles cache
+			$this->_cleanCache('articles_Dealer.xml');
+
 			$indexRoute = array('action' => 'index');
 			$editRoute = array('action' => 'edit', $id);
 			return $this->redirect(($this->request->data('apply')) ? $indexRoute : $editRoute);

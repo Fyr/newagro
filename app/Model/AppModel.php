@@ -169,7 +169,7 @@ class AppModel extends Model {
 	}
 
 	public function getBySlug($slug) {
-		$conditions = array('slug' => $slug, 'subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
+		$conditions = array('slug' => $slug, 'subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId(), SUBDOMAIN_WWW));
 		$order = array('subdomain_id' => 'DESC');
 		return $this->find('first', compact('conditions', 'order'));
 	}

@@ -14,8 +14,8 @@ class PagesController extends AppController {
 
 	public function home() {
 		$this->set('isHomePage', true);
-		
-		$conditions = array('News.published' => 1, 'News.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
+		$subdomain = $this->getSubdomainId();
+		$conditions = array('News.published' => 1, 'News.subdomain_id' => array(SUBDOMAIN_ALL, $subdomain));
 		if ($this->aEvents) {
 			$conditions['NOT'] = array('News.id' => Hash::extract($this->aEvents, '{n}.News.id'));
 		}
@@ -35,15 +35,9 @@ class PagesController extends AppController {
 		$conditions = array('Product.published' => 1, 'Product.featured_'.Configure::read('domain.zone') => 1);
 		$order = array('Product.modified' => 'DESC');
 		$aFeaturedProducts = $this->Product->find('all', compact('conditions', 'order'));
-		$aArticle2 = array();
-		if ($cat_id = Configure::read('domain.category_id')) {
-			// $aArticle = $this->Category->findById($cat_id);
-			// $aArticle['Page'] = $aArticle['Category'];
-			$aArticle = array('Page' => array('title' => '', 'body' => ''));
-		} else {
-			$aArticle = $this->Page->getBySlug('home');
-			$aArticle2 = $this->Page->getBySlug('home2');
-		}
+
+		$aArticle = $this->Page->getBySlug('home');
+		$aArticle2 = $this->Page->getBySlug('home2');
 		$this->set('contentArticle', $aArticle);
 		$this->set('contentArticle2', $aArticle2);
 		

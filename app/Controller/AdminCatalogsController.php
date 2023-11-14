@@ -24,8 +24,12 @@ class AdminCatalogsController extends AdminController {
     }
     
     public function edit($id = 0) {
+		$oldID = $id;
     	$this->PCArticle->setModel('Catalog')->edit(&$id, &$lSaved);
 		if ($lSaved) {
+			// clean cache if catalog article was added or changed (published)
+			$this->_cleanCache('plain.xml');
+			
 			$baseRoute = array('action' => 'index');
 			return $this->redirect(($this->request->data('apply')) ? $baseRoute : array($id));
 		}

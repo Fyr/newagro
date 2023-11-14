@@ -21,34 +21,7 @@ class ProductsController extends AppController {
 
 	private $searchNumber = '';
 
-	/*
-	public function index($subcatSlug = '') {
-		$this->products_index($this->Category->findBySlug($catSlug), $subcatSlug);
-	}
-*/
-	/*
-	public function subdomain_index($subcatSlug = '') {
-		$cat_id = Configure::read('domain.category_id');
-		$this->products_index($this->Category->findById($cat_id), $subcatSlug);
-	}
-*/
-	public function index() {
-		if (!Configure::read('domain.category') && strpos($this->request->here, '/zapchasti') === 0) {
-			// в URL есть /zapchasti (роут с субдоменом), но нет субдомена
-			$conditions = array('slug' => $this->request->param('subcategory'), 'is_subdomain' => 1); // согласно роута передали подкатегорию
-			$_category = $this->Category->find('first', compact('conditions'));
-			if ($_category) {
-				// найдена категория с субдоменом по адресу /zapchasti/subdomain-cat - возможно просто старый URL из индекса поисковика
-				return $this->redirect(SiteRouter::url($_category));
-			}
-			return $this->redirect404();
-		}
-
-		if (Configure::read('domain.category') && strpos($this->request->here, '/autozapchasti') === 0) {
-			// был баг с битыми урлами в постраничке
-			return $this->redirect(str_replace('/autozapchasti', '/zapchasti', $this->request->here));
-		}
-
+	public function index($catSlug = '', $subcatSlug = '') {
 		$zone = Configure::read('domain.zone');
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
@@ -57,16 +30,14 @@ class ProductsController extends AppController {
 			'order' => "MediaArticle.main_$zone DESC"
 		);
 		$q = $this->request->query('q');
-		if (Configure::read('domain.category_id')) {
-			$catSlug = Configure::read('domain.category');
-		} else {
-			$catSlug = $this->request->param('category');
-		}
+		$catSlug = $this->request->param('category');
 		$category = array();
 		if ($catSlug && !$q) {
 			$category = $this->Category->findBySlug($catSlug);
-			if ($category) {
-				$this->request->data('Product.cat_id', $category['Category']['id']);
+			if (!$category || !Hash::get($category, "Category.export_$zone")) {
+				return $this->redirect404();
+			}
+			$this->request->data('Product.cat_id', $category['Category']['id']);
 				$this->set('category', $category);
 				$page_title = $category['Category']['title'];
 				$this->seo = $this->Seo->defaultSeo($category['Seo'],
@@ -74,7 +45,6 @@ class ProductsController extends AppController {
 					"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
 					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в ".((Configure::read('domain.zone') == 'ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 				);
-			}
 		}
 
 		$subcatSlug = $this->request->param('subcategory');
@@ -91,6 +61,8 @@ class ProductsController extends AppController {
 					"каталог продукции {$page_title}, запчасти для тракторов {$page_title}, запчасти для спецтехники {$page_title}, запчасти для {$page_title}",
 					"На нашем сайте вы можете приобрести лучшие запчасти {$page_title} в ".((Configure::read('domain.zone') == 'ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 				);
+			} else {
+				return $this->redirect404();
 			}
 		}
 		// редирект если для продукта есть только категория, значит второй slug - это slug продукта
@@ -152,11 +124,7 @@ class ProductsController extends AppController {
 	}
 
 	public function view($slug) {
-		if (Configure::read('domain.category_id')) {
-			$catSlug = Configure::read('domain.category');
-		} else {
-			$catSlug = $this->request->param('category');
-		}
+		$catSlug = $this->request->param('category');
 		$conditions = array('Product.slug' => $slug, 'Category.slug' => $catSlug, 'Product.published' => 1); // prevent equal slugs
 		$this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
 			'className' => 'Form.PMFormData',

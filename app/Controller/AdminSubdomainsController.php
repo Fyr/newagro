@@ -24,10 +24,14 @@ class AdminSubdomainsController extends AdminController {
 
 	public function edit($id = 0) {
 		if ($this->request->is(array('put', 'post'))) {
-			$this->Subdomain->save($this->request->data);
-			$id = $this->Subdomain->id;
-			$baseRoute = array('action' => 'index');
-			return $this->redirect(($this->request->data('apply')) ? $baseRoute : array($id));
+			if ($this->Subdomain->save($this->request->data)) {
+				// clean plain pages cache
+				$this->_cleanCache('plain.xml');
+				
+				$id = $this->Subdomain->id;
+				$baseRoute = array('action' => 'index');
+				return $this->redirect(($this->request->data('apply')) ? $baseRoute : array($id));
+			}
 		} else {
 			$this->request->data = $this->Subdomain->findById($id);
 		}

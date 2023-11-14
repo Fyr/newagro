@@ -6,10 +6,6 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <?
-    $aURL = array(
-        array('controller' => 'pages', 'action' => 'show', 'about-us'),
-        array('controller' => 'contacts', 'action' => 'index')
-    );
     foreach($aURL as $url) {
         $url = $this->Html->url($url, true);
         echo $this->element('sitemap_url', compact('url'));
@@ -25,7 +21,7 @@
         foreach($catalog['Media'] as $media) {
             if ($media['media_type'] == 'raw_file') {
                 $url = $this->Html->url(array('controller' => 'Catalog', 'action' => 'viewPdf', 'slug' => $catalog['Catalog']['slug']), true);
-                echo $this->element('sitemap_url', compact('url'));
+                // echo $this->element('sitemap_url', compact('url'));
             }
         }
     }

@@ -4,9 +4,6 @@
 	$date = date('c');
 
 	$aObjectTypes = array('News', 'RepairArticle', 'Offer', 'Brand', 'Motor', 'Dealer', 'SectionArticle', 'MachineTool');
-	if (Configure::read('domain.zone') == 'ua') {
-		$aObjectTypes = array('News', 'RepairArticle', 'Offer', 'SectionArticle');
-	}
 	foreach($aObjectTypes as $objectType) {
 		$url = Router::url(array('action' => 'articles', 'objectType' => $objectType, 'ext' => 'xml'), true);
 		echo $this->element('sitemap_map', compact('url', 'date'));
@@ -15,13 +12,18 @@
 	$url = Router::url(array('action' => 'plain', 'ext' => 'xml'), true);
 	echo $this->element('sitemap_map', compact('url', 'date'));
 
+	/*
 	foreach($aCategories as $category) {
 		for($i = 1; $i <= $category['Product']['pages']; $i++) {
 			$url = SiteRouter::url($category).'/sitemap_'.$i.'.xml.gz';
 			echo $this->element('sitemap_map', compact('url', 'date'));
 		}
 	}
+	*/
+	$url = Router::url(array('action' => 'product_categories', 'ext' => 'xml'), true);
+	echo $this->element('sitemap_map', compact('url', 'date'));
+
 ?>
 </sitemapindex>
 <?//$this->element('sql_dump')?>
-<?=$this->element('sql_stats')?>
+<?//$this->element('sql_stats')?>

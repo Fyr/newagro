@@ -12,6 +12,7 @@ class ArticlesController extends AppController {
 	public $components = array('Table.PCTableGrid');
 	// public $uses = array('News', 'Offer', 'Motor');
 	
+	// const PER_PAGE = 3;
 	const PER_PAGE = 21;
 	
 	protected $objectType;
@@ -58,8 +59,8 @@ class ArticlesController extends AppController {
 	
 	public function view($slug) {
 		$this->loadModel($this->objectType);
-		$method = (in_array($this->objectType, array('News', 'Offer'))) ? 'getBySlug' : 'findBySlug';
-		$aArticle = $this->{$this->objectType}->{$method}($slug);
+		// $method = (in_array($this->objectType, array('News', 'Offer'))) ? 'getBySlug' : 'findBySlug';
+		$aArticle = $this->{$this->objectType}->getBySlug($slug);
 		
 		if (!$aArticle && !TEST_ENV) {
 			return $this->redirect404();

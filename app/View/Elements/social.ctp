@@ -1,4 +1,4 @@
-<div class="social">
+<div class="social" style="margin-top: 10px;">
 <?
     $aSocial = array(
         'vk' => 'https://vk.com/club114320957',

@@ -46,7 +46,6 @@ class AppController extends Controller {
 	
 	public function beforeFilter() {
 		if ($this->viewPath == 'Errors') {
-			Configure::write('domain.subdomain', 'www');
 			$this->layout = 'error-page';
 			$this->initNavBar();
 			$this->initNavBarView();
@@ -54,31 +53,38 @@ class AppController extends Controller {
 		}
 		$this->disableCopy = false; // !TEST_ENV;
 
-		// if (Configure::read('domain.zone') == 'ru') {
+		$slug = Configure::read('domain.subdomain');
+		if (!in_array($_SERVER['SERVER_PORT'], array('80', '443'))) { 
+			// avoid any ports except std
+			$subdomain = $slug === 'www' ? '' : $slug.'.';
+			$this->redirect('https://'.$subdomain.Configure::read('domain.url').$_SERVER['REQUEST_URI']);
+		}
+
+		if ($slug <> 'www') {
 			$this->loadModel('Category');
-			$this->Category->unbindModel(array('hasOne' => array('Seo')));
-			$fields = array('Category.id', 'Category.export_by');
-			$conditions = array('slug' => Configure::read('domain.subdomain'), 'is_subdomain' => 1);
-			$category = $this->Category->find('first', compact('fields', 'conditions'));
+			$category = $this->Category->findBySlug($slug);
 			if ($category) {
-				Configure::write('domain.category', Configure::read('domain.subdomain'));
-				Configure::write('domain.category_id', Hash::get($category, 'Category.id'));
-				Configure::write('domain.subdomain', 'www'); // брать все статьи с www для продуктовых субдоменов
-				if (Configure::read('domain.zone') == 'by' && !Hash::get($category, 'Category.export_by')) {
-					$this->redirect404();
-					return false;
-				}
+				return $this->redirect($this->getUrl('/zapchasti/'.$slug));
 			}
 
-			App::uses('Subdomain', 'Model');
-			$this->Subdomain = new Subdomain();
-			$subdomain = $this->Subdomain->findByName(Configure::read('domain.subdomain'));
-			if (!$subdomain) {
-				// $this->redirectNotFound();
-				$this->redirect404();
-				return false;
+			$this->loadModel('Subdomain');
+			$subdomain = $this->Subdomain->findByName($slug);
+			if ($subdomain) {
+				return $this->redirect($this->getUrl('/filial/'.$slug));
 			}
-			$subdomain = $subdomain['Subdomain'];
+
+			return $this->redirect404();
+			// TODO: redirect on filial if subdomain
+		}
+
+		if ($slug = $this->request->param('filial')) {
+			$this->loadModel('Subdomain');
+			$aSubdomain = $this->Subdomain->findByName($slug);
+			if (!$aSubdomain) {
+				return $this->redirect404();
+			}
+			$subdomain = $aSubdomain['Subdomain'];
+			Configure::write('domain.filial', $slug);
 			Configure::write('domain.subdomain_id', $subdomain['id']);
 			Configure::write('Settings.address', nl2br($subdomain['address']));
 
@@ -86,47 +92,39 @@ class AppController extends Controller {
 			foreach($aContacts as $type) {
 				Configure::write('Settings.'.$type, trim($subdomain[$type]));
 			}
-			Configure::write('subdomains', $this->Subdomain->getOptions());
-
-		// }
+		}
 
 		if (isset($this->request->url) && $this->request->url) {
-			
 			if (strpos($this->request->url, '.html') !== false) {
-				$this->redirect('/'.str_replace('.html', '', $this->request->url));
-				return;
+				return $this->redirect('/'.str_replace('.html', '', $this->request->url));
 			}
 			if ($this->request->url !== '/' && substr($this->request->url, -1) == '/' && !$this->request->query) {
-				$this->redirect('/'.substr($this->request->url, 0, -1));
-				return;
+				return $this->redirect('/'.substr($this->request->url, 0, -1));
 			}
 		}
 		$this->beforeFilterLayout();
 	}
 
-	protected function getUrl($url) {
-		// if (Configure::read('domain.zone') == 'ru') {
-			$subdomain = (($subdomain = Configure::read('domain.subdomain')) && $subdomain <> 'www') ? $subdomain . '.' : '';
-			return (Configure::read('domain.category'))
-				? HTTP . Configure::read('domain.url') . $url
-				: HTTP . $subdomain . Configure::read('domain.url') . $url;
-		//}
+	protected function getUrl($url, $slug = '') {
+		if ($slug) {
+			return HTTP.Configure::read('domain.url').'/filial/'.$slug.$url;
+		}
 		return HTTP.Configure::read('domain.url').$url;
 	}
 
 	protected function initNavBar() {
 		$this->aNavBar = $this->aBottomLinks = array(
 			'home' => array('href' => $this->getUrl('/'), 'title' => __('Home')),
-			'news' => array('href' => $this->getUrl('/news'), 'title' => __('News')),
+			'news' => array('href' => $this->getUrl('/news', $this->request->param('filial')), 'title' => __('News')),
 			'products' => array('href' => $this->getUrl('/zapchasti'), 'title' => __('Spares')),
 			'remont' => array('href' => $this->getUrl('/remont'), 'title' => __('Repair')),
-			'offer' => array('href' => $this->getUrl('/offers'), 'title' => __('Hot Offers')),
+			'offer' => array('href' => $this->getUrl('/offers', $this->request->param('filial')), 'title' => __('Hot Offers')),
 			'brand' => array('href' => $this->getUrl('/brand'), 'title' => __('Brands')),
 			'machinetool' => array('href' => $this->getUrl('/stanki'), 'title' => __('Machine tools')),
 			'motor' => array('href' => $this->getUrl('/motors'), 'title' => __('Machinery')),
-			'about-us' => array('href' => $this->getUrl('/pages/show/about-us'), 'title' => ''),
+			'about-us' => array('href' => $this->getUrl('/pages/show/about-us', $this->request->param('filial')), 'title' => ''),
 			'dealer' => array('href' => $this->getUrl('/magazini-zapchastei'), 'title' => ''),
-			'contacts' => array('href' => $this->getUrl('/contacts'), 'title' => __('Contacts'))
+			'contacts' => array('href' => $this->getUrl('/contacts', $this->request->param('filial')), 'title' => __('Contacts'))
 		);
 	}
 	
@@ -256,13 +254,10 @@ class AppController extends Controller {
 
 		$this->loadModel('Category');
 		$this->Category->unbindModel(array('hasOne' => array('Seo')));
-		$conditions = array('Category.object_type' => 'Category', 'is_subdomain' => 1, 'is_fake' => 0);
-		// if (Configure::read('domain.zone') == 'by') {
-			$conditions['Category.export_'.Configure::read('domain.zone')] = 1;
-		// }
+		$conditions = array('Category.object_type' => 'Category', 'is_fake' => 0);
+		$conditions['Category.export_'.Configure::read('domain.zone')] = 1;
 		$order = array('Category.sorting' => 'ASC');
 		$aCategories = $this->Category->find('all', compact('conditions', 'order'));
-		// $aCategories = $this->Category->findAllByObjectType('Category', array('id', 'title', 'slug', 'is_subdomain', 'Seo.*'), array('Category.sorting' => 'ASC'));
 		$aCategories = Hash::combine($aCategories, '{n}.Category.id', '{n}');
 		$this->set('aCategories', array(0 => $aCategories));
 		foreach ($aCategories as $article) {
@@ -299,13 +294,6 @@ class AppController extends Controller {
 			unset($this->aNavBar['brand']);
 			unset($this->aNavBar['machinetool']);
 			unset($this->aBottomLinks['brand']);
-		} elseif (Configure::read('domain.zone') == 'ua') {
-			unset($this->aNavBar['motor']);
-			unset($this->aBottomLinks['motor']);
-			unset($this->aNavBar['machinetool']);
-			unset($this->aBottomLinks['machinetool']);
-			unset($this->aNavBar['home']);
-			unset($this->aBottomLinks['dealer']);
 		} else {
 			unset($this->aNavBar['home']);
 			unset($this->aNavBar['brand']);
@@ -353,10 +341,22 @@ class AppController extends Controller {
 	}
 
 	protected function getSubdomainId() {
-		return Configure::read('domain.subdomain_id');
+		return Configure::Read('domain.subdomain_id');
 	}
 
 	protected function getCartItems() {
 		return json_decode(isset($_COOKIE['cart']) ? $_COOKIE['cart'] : '{}', true);
+	}
+
+	protected function _getCacheFilename($key) {
+		return Configure::read('sitemap.dir').Configure::read('sitemap.prefix').$key;
+	}
+
+	protected function _cleanCache($key) {
+		$fname = $this->_getCacheFilename($key);
+		if (Configure::read('sitemap.cache') && file_exists($fname)) {
+			return unlink($fname);
+		}
+		return '';
 	}
 }

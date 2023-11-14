@@ -15,9 +15,13 @@
 			//$this->ObjectType->getTitle('view', $objectType) => ''
 		}
 	} else {
+		$route = array('controller' => 'Articles', 'action' => 'index', 'objectType' => $objectType);
+		if (in_array($objectType, array('News', 'Offer')) && ($filial = Configure::read('domain.filial'))) {
+			$route['filial'] = $filial;
+		}
 		$breadcrumbs = array(
 			__('Home') => '/',
-			$this->ObjectType->getTitle('index', $objectType) => array('controller' => 'Articles', 'action' => 'index', 'objectType' => $objectType),
+			$this->ObjectType->getTitle('index', $objectType) => $route,
 			$this->ObjectType->getTitle('view', $objectType) => ''
 		);
 	}

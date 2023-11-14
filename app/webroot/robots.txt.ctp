@@ -1,10 +1,9 @@
 User-agent: *
+Allow: *
 Disallow: /admin/
-Disallow: /js/
 Disallow: /files/
 Disallow: /Products*
-Disallow: /products/
-Disallow: /zapchasti$
-Disallow: /autozapchasti
-Sitemap: http://<?=Configure::read('domain.url')?>/sitemap.xml
+Disallow: /products*
+Allow: /zapchasti*
+Sitemap: https://<?=Configure::read('domain.url')?>/sitemap.xml
 Host: <?=Configure::read('domain.url')?>

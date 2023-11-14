@@ -79,18 +79,9 @@ $(document).ready(function(){
             <div class="header_back">
                 <div class="inner clearfix">
 <?
-	if ($isHomePage) {
+    $homeURL = HTTP.Configure::read('domain.url');
 ?>
-                   	<span class="logo"></span>
-<?
-	} else {
-        $subdomain = Configure::read('domain.subdomain');
-        $domainUrl = ($subdomain == 'www') ? Configure::read('domain.url') : $subdomain.'.'.Configure::read('domain.url');
-?>
-					<a href="http://<?=$domainUrl?>" class="logo"></a>
-<?
-	}
-?>
+					<a href="<?=$homeURL?>" class="logo"></a>
                    	<?=$this->element('main_menu')?>
                 </div>
             </div>
