@@ -44,7 +44,7 @@ class ArticlesController extends AppController {
 			'page' => $this->request->param('page')
 		);
 		if (in_array($this->objectType, array('News', 'Offer'))) {
-			$this->paginate['conditions'][$this->objectType.'.subdomain_id'] = array(SUBDOMAIN_ALL, $this->getSubdomainId());
+			$this->paginate['conditions'][$this->objectType.'.subdomain_id'] = array(SUBDOMAIN_ALL, $this->getSubdomainId(), SUBDOMAIN_WWW);
 			$this->paginate['order'] = array(
 				$this->objectType.'.subdomain_id' => 'DESC',
 				$this->objectType.'.sorting' => 'ASC',
