@@ -26,27 +26,6 @@ class AdminController extends AppController {
 			'Dealers' => array('label' => __('Dealers'), 'href' => array('controller' => 'AdminDealers', 'action' => 'index')),
 			'Banners' => array('label' => __('Banners'), 'href' => array('controller' => 'AdminBanners', 'action' => 'index')),
 			'Catalogs' => array('label' => __('Catalogs'), 'href' => array('controller' => 'AdminCatalogs', 'action' => 'index')),
-			/*
-			'Catalogs' => array('label' => __('Catalogs'), 'href' => '', 'submenu' => array(
-				array('label' => __('Categories'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'CategoryProduct')),
-				array('label' => __('Products'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Product')),
-			)),
-			*/
-			/*[
-			'Products' => array('label' => __('Products'), 'href' => '', 'submenu' => array(
-				'Category' => array('label' => __('Categories'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Category')),
-				'Brands' => array('label' => __('Brands'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Brand')),
-				'Forms' => array('label' => __('Tech.params'), 'href' => array('controller' => 'AdminForms', 'action' => 'index')),
-				'Products' => array('label' => __('Products'), 'href' => array('controller' => 'AdminProducts', 'action' => 'index')),
-			)),
-			
-			'Users' => array('label' => __('Users'), 'href' => array('controller' => 'AdminUsers', 'action' => 'index')),
-			// 'slider' => array('label' => __('Slider'), 'href' => array('controller' => 'AdminSlider', 'action' => 'index')),
-			'Upload' => array('label' => __('Uploadings'), 'href' => '', 'submenu' => array(
-				array('label' => __('Upload counters'), 'href' => array('controller' => 'AdminUploadCsv', 'action' => 'index')),
-				array('label' => __('Upload new products'), 'href' => array('controller' => 'AdminUploadCsv', 'action' => 'uploadNewProducts')),
-			)),
-			*/
 			'Settings' => array('label' => __('Settings'), 'href' => '', 'submenu' => array(
 				'SystemSettings' => array('label' => __('System'), 'href' => array('controller' => 'AdminSettings', 'action' => 'index')),
 				'PriceSettings' => array('label' => __('Prices'), 'href' => array('controller' => 'AdminSettings', 'action' => 'prices')),
@@ -57,6 +36,11 @@ class AdminController extends AppController {
 				'Messengers' => array('label' => __('Messengers'), 'href' => array('controller' => 'AdminMessengers', 'action' => 'index'))
 			))
 		);
+		if (Configure::read('domain.zone') != 'ru') {
+			unset($this->aNavBar['Settings']['submenu']['Regions']);
+			unset($this->aNavBar['Settings']['submenu']['Subdomains']);
+			unset($this->aNavBar['Settings']['submenu']['Markers']);
+		}
 		$this->aBottomLinks = $this->aNavBar;
 	}
 	
