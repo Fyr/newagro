@@ -3,13 +3,12 @@
 /* -= Роуты для продуктов (старая схема) =- */
 /*
 Router::connect('/zapchasti',
-	array('controller' => 'Products', 'action' => 'redirect404')
+	array('controller' => 'Pages', 'action' => 'redirect404')
 );
 */
 Router::connect('/zapchasti',
-	array('controller' => 'Pages', 'action' => 'redirect404')
+	array('controller' => 'Products', 'action' => 'index')
 );
-
 Router::connect('/zapchasti/:category',
 	array(
 		'controller' => 'Products',
