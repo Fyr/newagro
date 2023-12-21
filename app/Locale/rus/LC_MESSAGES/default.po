@@ -725,22 +725,22 @@ msgid "Our experts are fixing it right now. It will be fixed as soon as possible
 msgstr "Наши специалисты уже занимаются ей, в ближайее время ошибка будет исправлена."
 
 msgid "Subdomains"
-msgstr "Субдомены"
+msgstr "Представительства"
 
 msgid "Subdomain"
-msgstr "Субдомен"
+msgstr "Представительство"
 
 msgid "Subdomains (Contacts)"
-msgstr "Субдомены (Контакты)"
+msgstr "Представительства"
 
 msgid "Site"
 msgstr "Сайт"
 
 msgid "Create subdomain"
-msgstr "Создать субдомен"
+msgstr "Создать представительство"
 
 msgid "Edit subdomain"
-msgstr "Редактировать субдомен"
+msgstr "Редактировать представительство"
 
 msgid "Name"
 msgstr "Название"
@@ -762,9 +762,6 @@ msgstr "Похожие запчасти"
 
 msgid "Map"
 msgstr "Карта"
-
-msgid "Subdomains"
-msgstr "Субдомены"
 
 msgid "Regions"
 msgstr "Регионы"

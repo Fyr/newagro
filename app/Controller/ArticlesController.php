@@ -44,7 +44,7 @@ class ArticlesController extends AppController {
 			'page' => $this->request->param('page')
 		);
 		if (in_array($this->objectType, array('News', 'Offer'))) {
-			$this->paginate['conditions'][$this->objectType.'.subdomain_id'] = array(SUBDOMAIN_ALL, $this->getSubdomainId(), SUBDOMAIN_WWW);
+			$this->paginate['conditions'][$this->objectType.'.subdomain_id'] = array(SUBDOMAIN_ALL, $this->getSubdomainId());
 			$this->paginate['order'] = array(
 				$this->objectType.'.subdomain_id' => 'DESC',
 				$this->objectType.'.sorting' => 'ASC',
@@ -54,7 +54,22 @@ class ArticlesController extends AppController {
 		if ($this->objectType == 'Dealer') {
 			$this->paginate['limit'] = 100;
 		}
-		$this->set('aArticles', $this->paginate($this->objectType));
+
+		$aArticles = $this->paginate($this->objectType);
+		$this->set('aArticles', $aArticles);
+		if ($this->objectType == 'News') {
+			$ids = Hash::extract($aArticles, '{n}.News.id');
+			// exclude featured news from the main news list
+			$conditions = array(
+				'News.featured' => 1,
+				'News.published' => 1,
+				'News.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()),
+				'News.id NOT' => $ids
+			);
+			$order = array('News.subdomain_id' => 'DESC', 'News.sorting' => 'ASC', 'News.created' => 'DESC');
+			$this->aEvents = $this->News->find('all', compact('fields','conditions', 'order'));
+			$this->set('featuredEvents', $this->aEvents);
+		}
 	}
 	
 	public function view($slug) {

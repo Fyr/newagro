@@ -139,7 +139,7 @@ class AppController extends Controller {
 		$conditions = array(
 			'News.featured' => 1,
 			'News.published' => 1,
-			'News.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId(), SUBDOMAIN_WWW)
+			'News.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId())
 		);
 		$order = array('News.subdomain_id' => 'DESC', 'News.sorting' => 'ASC', 'News.created' => 'DESC');
 		$this->aEvents = $this->News->find('all', compact('fields','conditions', 'order'));
@@ -150,7 +150,7 @@ class AppController extends Controller {
 		$conditions = array(
 			'Offer.featured' => 1,
 			'Offer.published' => 1,
-			'Offer.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId(), SUBDOMAIN_WWW)
+			'Offer.subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId())
 		);
 		$order = array('Offer.sorting' => 'ASC', 'Offer.created' => 'DESC');
 		$this->set('featuredOffers', $this->Offer->find('all', compact('conditions', 'order')));

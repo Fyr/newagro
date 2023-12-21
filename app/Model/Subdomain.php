@@ -6,9 +6,9 @@ class Subdomain extends AppModel {
 		$fields = array('id', 'name');
 		$order = 'sorting';
 		$aRowset = $this->find('list', compact('fields', 'order'));
-		$aData = array('0' => __('- all sites -'));
+		$aData = array('0' => __('- www -'));
 		foreach($aRowset as $id => $name) {
-			$aData[$id] = $name.'.'.Configure::read('domain.url');
+			$aData[$id] = Configure::read('domain.url').'/filial/'.$name;
 		}
 		return $aData;
 	}
