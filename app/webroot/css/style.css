@@ -82,7 +82,7 @@ a:hover { text-decoration: none;}
     .header .promoContent .left { width: 100px; }
 }
 
-.phones { font-size: 18px; font-weight: 700; color: #363636;}
+.phones { font-size: 14px; font-weight: 700; color: #363636;}
     .phones .numbers { display: inline-block; vertical-align: middle; }
     .phones .phone { margin-right: 10px;}
 .address { margin-top: 10px; color: #363636; padding-left: 2px;}

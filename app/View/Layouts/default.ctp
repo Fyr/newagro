@@ -8,7 +8,7 @@
 	echo $this->Html->charset()."\n";
 	echo $this->Html->meta('icon')."\n";
 	echo $this->element('Seo.seo_info', array('data' => $seo))."\n";
-	echo $this->Html->css(array('style.css?v=1', 'fonts', 'smoothDivScroll', 'extra.css?v=4', 'jquery.fancybox', 'call-widget'));
+	echo $this->Html->css(array('style.css?v=2', 'fonts', 'smoothDivScroll', 'extra.css?v=4', 'jquery.fancybox', 'call-widget'));
 ?>
 <!--[if gte IE 9]>
 <style type="text/css">
