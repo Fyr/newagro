@@ -26,15 +26,16 @@ class Media extends AppModel {
     			$_row[$this->alias]['orig_h'] = $row['orig_h'];
     			$_row[$this->alias]['orig_fsize'] = $row['orig_fsize'];
     		}
-    		if (isset($row['id']) && $row['id']) {
-	    		if ($row['media_type'] == 'image') {
-	    			$file = $row['file'].$row['ext'];
-	    			if ($row['object_type'] == 'Product') {
-	    				$file.= '.jpg';
-	    			}
-	            	$_row[$this->alias]['url_img'] = $this->PHMedia->getImageUrl($row['object_type'], $row['id'], 'noresize', $file);
-	    		}
-	    		$_row[$this->alias]['url_download'] = $this->PHMedia->getRawUrl($row['object_type'], $row['id'], $row['file'].$row['ext']);
+			// if record is removed, only ID present
+    		if (isset($row['id']) && $row['id'] && isset($row['media_type']) && $row['media_type']) {
+				if ($row['media_type'] == 'image') {
+					$file = $row['file'].$row['ext'];
+					if ($row['object_type'] == 'Product') {
+						$file.= '.jpg';
+					}
+					$_row[$this->alias]['url_img'] = $this->PHMedia->getImageUrl($row['object_type'], $row['id'], 'noresize', $file);
+				}
+				$_row[$this->alias]['url_download'] = $this->PHMedia->getRawUrl($row['object_type'], $row['id'], $row['file'].$row['ext']);
     		} else  {
     			$_row[$this->alias]['url_img'] = ''; // '/img/no-photo.jpg';
     			$_row[$this->alias]['url_download'] = '';
