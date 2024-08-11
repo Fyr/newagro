@@ -81,6 +81,7 @@ class AdminController extends AppController {
 			if (strpos($model, '.') !== false) {
 				list($plugin, $model) = explode('.',$model);
 			}
+
 			$this->{$model}->delete($id);
 		}
 		if ($backURL = $this->request->query('backURL')) {

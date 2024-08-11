@@ -14,3 +14,17 @@
 	if (isset($data['keywords']) && $data['keywords']) {
 		echo $this->Html->meta('keywords', $data['keywords'])."\n";
 	}
+
+	$ogTags = array(
+		'og:title' => $title,
+		'og:type' => 'website',
+		'og:url' => HTTP.Configure::read('domain.url').'/',
+		'og:image' => HTTP.Configure::read('domain.url').'/img/logo2_footer.png',
+		'og:description' => (isset($data['descr']) && $data['descr']) ? $data['descr'] : ''
+	);
+
+	foreach($ogTags as $property => $content) {
+		echo $this->Html->tag('meta', null, compact('property', 'content'))."\n";
+	}
+	
+	echo $this->Html->tag('link', null, array('rel' => 'image_src', 'href' => $ogTags['og:image']))."\n";
