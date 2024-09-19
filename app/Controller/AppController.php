@@ -14,7 +14,7 @@ App::uses('SiteRouter', 'Lib/Routing');
 class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '';
-	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true;
+	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true, $leftSidebar = true, $rightSidebar = true;
 
 	public function __construct($request = null, $response = null) {
 		$this->_beforeInit();
@@ -197,6 +197,8 @@ class AppController extends Controller {
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
 		
 		$this->set('disableCopy', $this->disableCopy);
+		$this->set('leftSidebar', $this->leftSidebar);
+		$this->set('rightSidebar', $this->rightSidebar);
 		
 		$this->loadModel('Brand');
 		$this->Brand->unbindModel(array('hasOne' => array('Seo')));

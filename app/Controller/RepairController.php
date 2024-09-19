@@ -34,6 +34,9 @@ class RepairController extends AppController {
 		$conditions = array('cat_id' => $cat_id, 'published' => 1);
 		$order = 'sorting';
 		$this->set('articles', $this->RepairArticle->find('all', compact('conditions', 'order')));
+
 		$this->currMenu = 'remont';
+		$this->leftSidebar = false;
+		$this->rightSidebar = false;
 	}
 }
