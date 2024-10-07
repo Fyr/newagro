@@ -11,14 +11,36 @@ class RouterController extends AppController {
 	
 	public function beforeRender() {
 	}
-	
+
+	private function isWatermarkNeeded($type, $id) {
+		if ($type == 'product') {
+			return true;
+		}
+		if ($type == 'page') {
+			// set watermark for news photos
+			App::uses('media', 'Media.Model');
+			$this->loadModel('Media.Media');
+			$media = $this->Media->findById($id);
+
+			App::uses('Article', 'Article.Model');
+			$this->loadModel('Article.Article');
+			$articleID = Hash::get($media, 'Media.object_id');
+			$news = $this->Article->findById($articleID, array('id', 'object_type'));
+			return Hash::get($news, 'Article.object_type') == 'News';
+		} 
+		return false;
+	}
+
 	public function index($type, $id, $size, $filename) {
 		App::uses('MediaPath', 'Media.Vendor');
 		$this->PHMedia = new MediaPath();
 		
 		$aFName = $this->PHMedia->getFileInfo($filename);
 		$fname = $this->PHMedia->getFileName($type, $id, $size, $filename);
-		if ($type == 'product') {
+
+		$hasWatermark = $this->isWatermarkNeeded($type, $id);
+		
+		if ($hasWatermark) {
 			$zone = Configure::read('domain.zone');
 			$fname = str_replace('.'.$aFName['ext'], '_'.$zone.'.'.$aFName['ext'], $fname);
 			if (TEST_ENV) {
@@ -52,8 +74,7 @@ class RouterController extends AppController {
 			$image->{$method}($aSize['w'], $aSize['h']);
 		}
 		
-		if ($type == 'product') {
-
+		if ($hasWatermark) {
 			$logo = new Image();
 			$logo->load('./img/logo_wmtr_'.$zone.'.png'); // берем сразу полупрозрачную картинку 300х200
 
