@@ -181,15 +181,26 @@ class ProductsController extends AppController {
 	}
 
 	private function _getRelatedProducts($id, $code, $cat_id, $subcat_id) {
+		$zone = Configure::read('domain.zone');
+
+		// find products with photos
+		$this->Product->unbindModel(array(
+			'belongsTo' => array('Category', 'Subcategory'),
+			'hasOne' => array('Seo', 'Search', 'PMFormData')
+		), true);
 		$conditions = array('Product.published' => 1);
 		$conditions['Product.subcat_id'] = $subcat_id;
 		$conditions['Product.cat_id'] = $cat_id;
+		$conditions["Product.code !="] = $code;
+		$conditions["MediaArticle.main_$zone"] = 1;
+		
+		$fields = array('id');
+		$products = $this->Product->find('all', compact('fields', 'conditions'));
+		$ids = Hash::extract($products, '{n}.Product.id');
+
+		// find random products
+		$conditions = array('Product.id' => $ids);
 		$aProducts = $this->Product->getRandomRows(6, $conditions);
-		foreach($aProducts as $i => $row) {
-			if ($row['Product']['code'] === $code) {
-				unset($aProducts[$i]);
-			}
-		}
 		return $aProducts;
 	}
 
