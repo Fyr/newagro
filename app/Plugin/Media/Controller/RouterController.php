@@ -18,6 +18,7 @@ class RouterController extends AppController {
 		}
 		if ($type == 'page') {
 			// set watermark for news photos
+			/*
 			App::uses('media', 'Media.Model');
 			$this->loadModel('Media.Media');
 			$media = $this->Media->findById($id);
@@ -27,6 +28,8 @@ class RouterController extends AppController {
 			$articleID = Hash::get($media, 'Media.object_id');
 			$news = $this->Article->findById($articleID, array('id', 'object_type'));
 			return Hash::get($news, 'Article.object_type') == 'News';
+			*/
+			return true;
 		} 
 		return false;
 	}
