@@ -18,16 +18,18 @@ class PHTimeHelper extends TimeHelper {
 		$month = ' '.__(date('M', $date), true);
 		$year = ' '.date('Y', $date).'г.'; // (date('Y') == date('Y', $date)) 2014-09-29 20:54:38
 		$time = '';
-		if (date('d') == date('d', $date)) {
-			$day = __('Today', true);
-			$month = '';
-			$year = '';
-			$time = ', '.date('H:i', $date);
-		} elseif ((date('d') - 1) == date('d', $date)) {
-			$day = __('Yesterday', true);
-			$month = '';
-			$year = '';
-			$time = ', '.date('H:i', $date);
+		if (date('Y') == date('Y', $date) && date('M') == date('M', $date)) {
+			if (date('d') == date('d', $date)) {
+				$day = __('Today', true);
+				$month = '';
+				$year = '';
+				$time = ', '.date('H:i', $date);
+			} elseif ((date('d') - 1) == date('d', $date)) {
+				$day = __('Yesterday', true);
+				$month = '';
+				$year = '';
+				$time = ', '.date('H:i', $date);
+			}
 		}
 		return $day.$month.$year.$time;
 	}
