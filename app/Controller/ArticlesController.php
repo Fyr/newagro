@@ -80,6 +80,18 @@ class ArticlesController extends AppController {
 		if (!$aArticle && !TEST_ENV) {
 			return $this->redirect404();
 		}
+
+		if ($this->objectType == 'News') {
+			// check if it is "www" news and redirect on correct link
+			if ($this->request->param('filial') && !Hash::get($aArticle, 'News.subdomain_id')) {
+				return $this->redirect(array(
+					'controller' => 'Articles', 
+					'action' => 'view',
+					'objectType' => 'News',
+					'slug' => $slug
+				));
+			}
+		}
 		
 		$this->set('article', $aArticle);
 		
