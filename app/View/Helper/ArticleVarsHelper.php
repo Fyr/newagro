@@ -34,7 +34,7 @@ class ArticleVarsHelper extends AppHelper {
 	}
 
 	public function fixPhone($phone) {
-		return str_replace(array('-', ' ', '(' , ')', '+'), '', $phone);
+		return str_replace(array('-', ' ', '(' , ')', '+'), '', preg_replace('/[^0-9]/', '', $phone));
 	}
 
 	public function callableLink($type, $phoneOrUID, $xOptions = array()) {
@@ -42,7 +42,7 @@ class ArticleVarsHelper extends AppHelper {
 		$url = $phoneOrUID;
 		switch ($type) {
 			case 'tel': 
-				$url = 'tel:'.$this->fixPhone(str_replace('+7', '8', $phoneOrUID));
+				$url = 'tel:'.str_replace('375', '+375', $this->fixPhone(str_replace('+7', '8', $phoneOrUID)));
 				break;
 			case 'whatsapp': 
 				$url = 'https://api.whatsapp.com/send?phone='.$this->fixPhone($phoneOrUID);
