@@ -12,13 +12,13 @@ class RouterController extends AppController {
 	public function beforeRender() {
 	}
 
+	/*
 	private function isWatermarkNeeded($type, $id) {
 		if ($type == 'product') {
 			return true;
 		}
 		if ($type == 'page') {
 			// set watermark for news photos
-			/*
 			App::uses('media', 'Media.Model');
 			$this->loadModel('Media.Media');
 			$media = $this->Media->findById($id);
@@ -28,11 +28,11 @@ class RouterController extends AppController {
 			$articleID = Hash::get($media, 'Media.object_id');
 			$news = $this->Article->findById($articleID, array('id', 'object_type'));
 			return Hash::get($news, 'Article.object_type') == 'News';
-			*/
 			return true;
 		} 
 		return false;
 	}
+	*/
 
 	public function index($type, $id, $size, $filename) {
 		App::uses('MediaPath', 'Media.Vendor');
@@ -41,7 +41,7 @@ class RouterController extends AppController {
 		$aFName = $this->PHMedia->getFileInfo($filename);
 		$fname = $this->PHMedia->getFileName($type, $id, $size, $filename);
 
-		$hasWatermark = $this->isWatermarkNeeded($type, $id);
+		$hasWatermark = true; // $this->isWatermarkNeeded($type, $id);
 		
 		if ($hasWatermark) {
 			$zone = Configure::read('domain.zone');
