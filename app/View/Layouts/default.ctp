@@ -30,7 +30,7 @@
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
 		'vendor/jquery/jquery.dotdotdot',
-		'doc_ready.js?v=2',
+		'doc_ready.js?v=3',
         'cart',
         'call-widget'
     ));

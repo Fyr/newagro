@@ -96,7 +96,9 @@ $(document).ready(function(){
 	// auto fancy-box for images
 	$('.block.main img').each(function(){
 		$(this).wrap(function(){
-			return '<a class="fancybox" href="' + this.src.replace(/\d+x\d*/g, 'noresize') + '" rel="photoalbum"></a>';
+			var url = this.src.replace(/\d+x\d*/g, 'noresize');
+			var ext = '.' + url.split('image.')[1];
+			return '<a class="fancybox" href="' + url + ext + '" rel="photoalbum"></a>';
 		});
 	});
 	$('.block.main img.no-fancybox').each(function(){
