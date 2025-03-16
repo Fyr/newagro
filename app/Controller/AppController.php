@@ -15,6 +15,7 @@ class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '';
 	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true, $leftSidebar = true, $rightSidebar = true;
+	public $stylesVersion = 6;
 
 	public function __construct($request = null, $response = null) {
 		$this->_beforeInit();
@@ -175,14 +176,12 @@ class AppController extends Controller {
 	}
 	
 	public function beforeRender() {
-		if ($this->viewPath == 'Errors') {
-			fdebug($this->viewVars, 'view-vars.log');
-		}
 		$this->initNavBarView();
 		$this->beforeRenderLayout();
 	}
 	
 	protected function beforeRenderLayout() {
+		$this->set('stylesVersion', $this->stylesVersion);
 		$this->pageTitle = ($this->pageTitle) ? $this->pageTitle.' - '.Configure::read('domain.title') : Configure::read('domain.title');
 		$this->set('pageTitle', $this->pageTitle);
 		

@@ -174,7 +174,7 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 	/* position: relative;
 	top: 36px;
 	left: -40px; */
-	margin-top: 36px;
+	margin-top: 24px;
 	margin-right: 35px;
 	color: #d4a126; /* 7ab51f */
 }
@@ -212,4 +212,10 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 	font-size: 22px;
 	position: relative;
 	top: -4px;
+}
+
+.floatR.langSwitch .login {
+	color: #fff;
+	display: block;
+	margin-bottom: 6px;
 }

@@ -316,6 +316,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efc004', end
 }
 
 input[type=text], input[type=email], input[type=password], textarea { border: 1px solid #e7e7e7; background: #fff; padding: 0 5px 0 5px; border-radius: 3px; display: block; width: 100%; font-family: 'Open Sans'; font-size: 11px; margin: 0; height: 30px; outline: none; resize: none;    }
+input[type=radio], .feedback .radio label { display: inline-block; }
+.feedback .radio label { position: relative; top: -1px ; margin-right: 15px; }
+fieldset { margin-top: 10px; }
 
 textarea { height: auto;}
 

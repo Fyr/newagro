@@ -169,8 +169,13 @@ class AppModel extends Model {
 	}
 
 	public function getBySlug($slug) {
-		$conditions = array('slug' => $slug, 'subdomain_id' => array(SUBDOMAIN_ALL, $this->getSubdomainId()));
-		$order = array('subdomain_id' => 'DESC');
+		$conditions = array('slug' => $slug);
+		$order = array('sorting' => 'DESC');
+		if (in_array($this->objectType, array('Page', 'News', 'Offer'))) {
+			$conditions['subdomain_id'] = array(SUBDOMAIN_ALL, $this->getSubdomainId());
+			$order = array('subdomain_id' => 'DESC');
+		}
+		
 		return $this->find('first', compact('conditions', 'order'));
 	}
 }
