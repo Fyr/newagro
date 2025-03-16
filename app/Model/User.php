@@ -1,40 +1,43 @@
 <?php
 App::uses('AppModel', 'Model');
 class User extends AppModel {
-	
+
+	const GROUP_USER = 1;
+	const GROUP_COMPANY = 2;
+	const GROUP_ADMIN = 10;
+
+	public $hasOne = array(
+        'UserCompany' => array(
+            'className' => 'UserCompany',
+            'foreignKey' => 'user_id',
+            'conditions' => array('User.group_id' => self::GROUP_COMPANY),
+            'dependent' => true
+        ),
+    );
+
 	public $validate = array(
-		'username' => array(
+		'email' => array(
 			'checkNotEmpty' => array(
 				'rule' => 'notEmpty',
 				'message' => 'Field is mandatory',
 			),
-			'checkNameLen' => array(
-				'rule' => array('between', 5, 15),
-				'message' => 'The name must be between 5 and 15 characters'
-			),
-			'checkIsUnique' => array(
-				'rule' => 'isUnique',
-				'message' => 'That name has already been taken'
-			)
-		),
-		'email' => array(
 			'checkEmail' => array(
 				'rule' => 'email',
 				'message' => 'Email is incorrect'
 			),
 			'checkIsUnique' => array(
 				'rule' => 'isUnique',
-				'message' => 'This email has already been used'
+				'message' => 'This email is already in use'
 			)
 		),
 		'password' => array(
 			'checkNotEmpty' => array(
-				'rule' => array('notEmpty'),
+				'rule' => 'notEmpty',
 				'message' => 'Field is mandatory'
 			),
-			'checkPswLen' => array(
-				'rule' => array('between', 5, 15),
-				'message' => 'The password must be between 5 and 15 characters'
+			'checkMinLen' => array(
+				'rule' => array('minLength', '10'),
+				'message' => 'The password must be minimum 10 characters'
 			),
 			'checkMatchPassword' => array(
 				'rule' => array('matchPassword'),
@@ -42,28 +45,50 @@ class User extends AppModel {
 			)
 		),
 		'password_confirm' => array(
-			'notempty' => array(
-				'rule' => array('notEmpty'),
+			'checkNotEmpty' => array(
+				'rule' => 'notEmpty',
 				'message' => 'Field is mandatory',
 			)
-		)
+		),
+		'fio' => array(
+            'checkNotEmpty' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Field is mandatory',
+            )
+        ),
+        'phone' => array(
+            'checkNotEmpty' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Field is mandatory',
+            ),
+            'checkIsUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'This phone is already in use'
+            )
+        ),
 	);
 
-	public function matchPassword($data){
+	public function matchPassword($data) {
 		if($data['password'] == $this->data['User']['password_confirm']){
 			return true;
 		}
-		$this->invalidate('password_confirm', 'Your password and its confirmation do not match');
+		$this->invalidate('password_confirm', __('Your password and its confirmation do not match'));
 		return false;
 	}
-	
+
 	public function beforeValidate($options = array()) {
 		if (Hash::get($options, 'validate')) {
 			if (!Hash::get($this->data, 'User.password')) {
-				$this->validator()->remove('password');
-				$this->validator()->remove('password_confirm');
+				$this->validator()->remove('User.password');
+				$this->validator()->remove('User.password_confirm');
+			}
+			if (Hash::get($this->data, 'User.group_id') == self::GROUP_COMPANY) {
+			    // remove user profile validators
+			    $this->validator()->remove('fio');
+			    $this->validator()->remove('phone');
 			}
 		}
+		return true;
 	}
 
 	public function beforeSave($options = array()) {
@@ -73,4 +98,10 @@ class User extends AppModel {
 		return true;
 	}
 
+	public function getAccountTypeOptions() {
+		return array(
+			self::GROUP_USER => __('Regular user'),
+			self::GROUP_COMPANY => __('Legal entity'),
+		);
+	}
 }

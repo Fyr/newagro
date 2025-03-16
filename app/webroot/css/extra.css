@@ -8,23 +8,15 @@
 .nav ul {
 	display: none;
 }
-.error, .errNote {
-	color: #f00;
-	font-weight: bold;
-}
-
 .pad5 td, .pad5 th {
 	padding: 3px 5px;
 }
-
-
 .floatR {
 	float: right;
 }
 .floatL {
 	float: left;
 }
-
 .dealer-info {
     font-size: 0.8em;
     margin-bottom: 7px;
@@ -33,7 +25,6 @@
 .dealer-info span {
     font-weight: bold;
 }
-
 p {  text-align: justify }
 
 
@@ -218,4 +209,12 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 	color: #fff;
 	display: block;
 	margin-bottom: 6px;
+}
+
+/* Form styles */
+.error-message {
+	color: #f00;
+}
+legend {
+	padding: 0 5px;
 }

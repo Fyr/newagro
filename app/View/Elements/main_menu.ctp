@@ -26,6 +26,7 @@
 		}
 ?>
 <span class="floatR langSwitch">
+	<?=$this->Html->link(__('Log in'), array('controller' => 'user', 'action' => 'login'), array('class' => 'login'))?>
 	<?=$this->Html->link('EN', $enPage, $classEN)?> | <?=$this->Html->link('RU', $domainUrl, $classRU)?>
 </span>
 <?

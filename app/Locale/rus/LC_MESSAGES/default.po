@@ -181,6 +181,9 @@ msgstr "Запомнить"
 msgid "Login"
 msgstr "Вход"
 
+msgid "Log in"
+msgstr "Войти"
+
 msgid "Utils"
 msgstr "Утилиты"
 
@@ -317,7 +320,7 @@ msgid "Required"
 msgstr "Обязательно"
 
 msgid "Password Confirm"
-msgstr "Подтверждение"
+msgstr "Подтверждение пароля"
 
 msgid "Active"
 msgstr "Активен"
@@ -337,11 +340,14 @@ msgstr "Поле обязательно для заполнения"
 msgid "The name must be between 3 and 50 characters"
 msgstr "Имя должно быть от 3 до 50 символов"
 
-msgid "That name has already been taken"
-msgstr "Такое имя уже существует"
+msgid "This email is already in use"
+msgstr "Такой email уже существует"
 
-msgid "The password must be between 5 and 15 characters"
-msgstr "Пароль должен быть от 5 до 15 символов"
+msgid "This phone is already in use"
+msgstr "Такой номер телефона уже существует"
+
+msgid "The password must be minimum 10 characters"
+msgstr "Пароль должен быть от 10 или больше символов"
 
 msgid "Your password and its confirmation do not match"
 msgstr "Пароль и подтверждение пароля не совпадают"
@@ -819,3 +825,42 @@ msgstr "Поле должно быть заполнено"
 
 msgid "Email is incorrect"
 msgstr "Некорректный e-mail адрес"
+
+msgid "User area login"
+msgstr "Вход в личный кабинет"
+
+msgid "If you have no account, please %s"
+msgstr "Если у вас нет учетной записи, пожалуйста %s"
+
+msgid "register yourself"
+msgstr "зарегистрируйтесь"
+
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+msgid "Registration"
+msgstr "Регистрация"
+
+msgid "Choose your account type"
+msgstr "Выберите тип вашей учетной записи"
+
+msgid "Regular user"
+msgstr "Физическое лицо"
+
+msgid "Legal entity"
+msgstr "Юридическое лицо"
+
+msgid "Company name"
+msgstr "Название юр.лица"
+
+msgid "Company UUID"
+msgstr "ИНН"
+
+msgid "Contact Person"
+msgstr "Контактное лицо (Ф.И.О.)"
+
+msgid "Contact Phone"
+msgstr "Телефон для связи"
+
+msgid "Fio"
+msgstr "Ф.И.О."

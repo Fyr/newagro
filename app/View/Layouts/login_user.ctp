@@ -75,7 +75,7 @@ $(document).ready(function(){
 ?>
 
         <!-- Counters for BODY TOP: END -->
-		<div class="header">
+		<div class="header" style="background: none; padding-bottom: 20px;">
             <div class="header_back">
                 <div class="inner clearfix">
 <?
@@ -85,25 +85,15 @@ $(document).ready(function(){
                    	<?=$this->element('main_menu')?>
                 </div>
             </div>
-            <div class="inner promoContent">
-                <div class="right">
-                    <?=$this->element('phones')?>
-                </div>
-                <div class="left">
-                    <?=$this->element('contacts')?>
-                </div>
-                <img src="/img/header.png" alt="" class="promoPicture" />
-            </div>
-
         </div>
         <div class="wrapper clearfix">
-            <form class="searchBlock" action="/products" method="get">
+            <!--form class="searchBlock" action="/products" method="get">
                 <button class="submit"><?=__('search')?></button>
                 <div class="outerSearch"><input type="text" name="q" value="<?=$this->request->query('q')?>" placeholder="<?=__('Enter spare number or its name...')?>" /></div>
-            </form>
+            </form-->
             <div class="oneLeftSide">
-                <div class="leftSidebar">
-                    <?=($leftSidebar) ? $this->element('sidebar_left') : ''?>
+                <div class="leftSidebar" style="margin-top: 0px">
+                    <?=($leftSidebar) ? $this->element('userbar_left') : ''?>
                 </div>
             </div>
 
@@ -111,64 +101,20 @@ $(document).ready(function(){
                 <div id="mainContent" class="mainContent">
                     <div class="innerMainContent" <? if ($disableCopy) { ?>oncopy="return false;" onmousedown="return false;" <? }?>>
 <?
-	if (isset($aSlot[1])) {
-		foreach($aSlot[1] as $banner) {
-			$min_w = 1980;
-			echo $this->element('banner', compact('banner', 'min_w'));
-		}
-	}
 	// echo $this->element('bread_crumbs');
 	echo $this->fetch('content');
-	if (isset($aSlot[2])) {
-		foreach($aSlot[2] as $banner) {
-			$min_w = 1980;
-			echo $this->element('banner', compact('banner', 'min_w'));
-		}
-	}
 ?>
                     </div>
                 </div>
+<? /*
                 <div class="rightSidebar">
                     <?=($rightSidebar) ? $this->element('sidebar_right') : ''?>
                 </div>
+*/ ?>
             </div>
         </div>
         <div class="wrapper">
-<?
-	if (isset($aHomePageNews)) {
-?>
 
-            <div class="headBlock">
-                <div class="text"><?=__('News of our company')?></div>
-                <span class="corner"></span>
-            </div>
-            <div class="block clearfix">
-<?
-		foreach($aHomePageNews as $article) {
-			$this->ArticleVars->init($article, $url, $title, $teaser, $src, '400x');
-?>
-                <div class="companyNews">
-<?
-			if ($src) {
-?>
-                    <img class="img-responsive" src="<?=$src?>" alt="<?=$title?>" />
-<?
-			}
-?>
-                    <div class="time"><span class="icon clock"></span><?=$this->PHTime->niceShort($article['News']['created'])?></div>
-                    <a href="<?=$url?>" class="title"><?=$title?></a>
-                    <div class="description"><p><?=$teaser?></p></div>
-                    <div class="more">
-                        <?=$this->element('more', compact('url'))?>
-                    </div>
-                </div>
-<?
-		}
-?>
-            </div>
-<?
-	}
-?>
             <div class="headBlock" style="margin-top: 14px">
                 <a class="our-partners" href="<?=$this->Html->url(array('controller' => 'Articles', 'action' => 'index', 'objectType' => 'Brand'))?>">
                     <div class="text"><?=__('Our partners')?></div>
@@ -222,9 +168,11 @@ $(document).ready(function(){
             </div>
         </div>
         <div class="footerLine"></div>
-
+<?
+    if ($leftSidebar) {
+?>
         <div class="mobileCatalogeBtn" id="mobile-cataloge-btn">
-            <div class="text">Каталог</div>
+            <div class="text">Кабинет</div>
         </div>
 
         <div class="mobileCataloge" id="mobile-cataloge">
@@ -232,15 +180,15 @@ $(document).ready(function(){
             <div class="mm__wrapper" id="mm__wrapper">
                 <div class="close-btn mm__close"></div>
                 <div class="mobileCataloge__inner">
-                    <?=$this->element('sidebar_left')?>
+                    <?=$this->element('userbar_left')?>
                 </div>
             </div>
         </div>
-
 <?
+    }
     // echo $this->element('sql_dump');
-    echo $this->element('call-widget');
-    echo $this->element('sql_stats');
+    // echo $this->element('call-widget');
+    // echo $this->element('sql_stats');
 ?>
 	</body>
 </html>

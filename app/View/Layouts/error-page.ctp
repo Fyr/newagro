@@ -7,7 +7,7 @@
 <?
 	echo $this->Html->charset()."\n";
 	echo $this->Html->meta('icon')."\n";
-	echo $this->Html->css(array('style.css?v='.$stylesVersion, 'fonts', 'smoothDivScroll', 'extra.css?v=4', 'jquery.fancybox', 'call-widget'));
+	echo $this->Html->css(array('style.css?v='.$stylesVersion, 'fonts', 'smoothDivScroll', 'extra.css?v='.$stylesVersion, 'jquery.fancybox', 'call-widget'));
 ?>
 <!--[if gte IE 9]>
 <style type="text/css">
@@ -28,7 +28,7 @@
         'call-widget'
     ));
 	echo $this->Html->script($scripts);
-	
+
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');
@@ -55,7 +55,7 @@
                 </div>
                 <img src="/img/header.png" alt="" class="promoPicture" />
             </div>
-            
+
         </div>
         <div class="wrapper clearfix">
             <form class="searchBlock" action="/products" method="get">
