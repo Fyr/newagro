@@ -18,7 +18,7 @@ class Brand extends AppModel {
 		'MediaArticle' => array(
 			'className' => 'MediaArticle',
 			'foreignKey' => 'object_id',
-			'conditions' => array('MediaArticle.media_type' => 'image', 'MediaArticle.object_type' => 'Brand', 'MediaArticle.main_by' => 1),
+			'conditions' => array('MediaArticle.media_type' => 'image', 'MediaArticle.object_type' => 'Brand', 'MediaArticle.main_$zone' => 1),
 			'dependent' => true
 		)
 	);
