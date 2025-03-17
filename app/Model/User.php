@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel {
 
 	const GROUP_USER = 1;

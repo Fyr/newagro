@@ -215,7 +215,7 @@ msgid "Go to Site"
 msgstr "Перейти к сайту"
 
 msgid "Log out"
-msgstr "Выход"
+msgstr "Выйти"
 
 msgid "Category"
 msgstr "Категория"
