@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('AuthComponent', 'Controller/Component');
 App::uses('Sections', 'Model');
 class AdminController extends AppController {
 	public $name = 'Admin';
@@ -11,7 +12,7 @@ class AdminController extends AppController {
 	    // auto-add included modules - did not included if child controller extends AdminController
 	    $this->components = array_merge(array('Auth', 'Core.PCAuth', 'Table.PCTableGrid'), $this->components);
 	    $this->helpers = array_merge(array('Html', 'Table.PHTableGrid', 'Form.PHForm'), $this->helpers);
-	    
+
 		$this->aNavBar = array(
 			'Content' => array('label' => __('Content'), 'href' => '', 'submenu' => array(
 				array('label' => __('Static pages'), 'href' => array('controller' => 'AdminContent', 'action' => 'index', 'Page')),
@@ -43,8 +44,11 @@ class AdminController extends AppController {
 		}
 		$this->aBottomLinks = $this->aNavBar;
 	}
-	
+
 	public function beforeFilter() {
+	    if (AuthComponent::user('id') && !$this->isAdmin()) {
+	        return $this->redirect('/');
+	    }
 		$this->loadModel('Section');
 		foreach($this->Section->getOptions() as $id => $title) {
 			$this->aNavBar['SectionArticle']['submenu'][] = array(
@@ -54,11 +58,11 @@ class AdminController extends AppController {
 	    $this->currMenu = $this->_getCurrMenu();
 	    $this->currLink = $this->currMenu;
 	}
-	
+
 	public function beforeRenderLayout() {
 		$this->set('isAdmin', $this->isAdmin());
 	}
-	
+
 	public function isAdmin() {
 		return AuthComponent::user('id') == 1;
 	}
@@ -66,7 +70,7 @@ class AdminController extends AppController {
 	public function index() {
 		//$this->redirect(array('controller' => 'AdminProducts'));
 	}
-	
+
 	protected function _getCurrMenu() {
 		$curr_menu = str_ireplace('Admin', '', $this->request->controller); // By default curr.menu is the same as controller name
 		return $curr_menu;
@@ -90,5 +94,5 @@ class AdminController extends AppController {
 		}
 		$this->redirect(array('controller' => 'Admin', 'action' => 'index'));
 	}
-	
+
 }

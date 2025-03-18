@@ -9,8 +9,9 @@ App::uses('Brand', 'Model');
 App::uses('Product', 'Model');
 App::uses('Category', 'Model');
 App::uses('Subcategory', 'Model');
+App::uses('User', 'Model');
 App::uses('SiteRouter', 'Lib/Routing');
-
+App::uses('AuthComponent', 'Controller/Component');
 class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '';
@@ -22,7 +23,7 @@ class AppController extends Controller {
 		parent::__construct($request, $response);
 		$this->_afterInit();
 	}
-	
+
 	protected function _beforeInit() {
 	    $this->helpers = array_merge(array('Html', 'Form', 'Paginator', 'ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media', 'ObjectType', 'Seo.PHSeo'), $this->helpers);
 	}
@@ -39,12 +40,12 @@ class AppController extends Controller {
 		// $this->Settings->setDataSource('default');
 		$this->Settings->initData();
 	}
-	
+
 	public function isAuthorized($user) {
-    	$this->set('currUser', $user);
+    	// $this->set('currUser', $user);
 		return Hash::get($user, 'active');
 	}
-	
+
 	public function beforeFilter() {
 		if ($this->viewPath == 'Errors') {
 			$this->layout = 'error-page';
@@ -55,7 +56,7 @@ class AppController extends Controller {
 		$this->disableCopy = false; // !TEST_ENV;
 
 		$slug = Configure::read('domain.subdomain');
-		if (!in_array($_SERVER['SERVER_PORT'], array('80', '443'))) { 
+		if (!in_array($_SERVER['SERVER_PORT'], array('80', '443'))) {
 			// avoid any ports except std
 			$subdomain = $slug === 'www' ? '' : $slug.'.';
 			$this->redirect('https://'.$subdomain.Configure::read('domain.url').$_SERVER['REQUEST_URI']);
@@ -128,7 +129,7 @@ class AppController extends Controller {
 			'contacts' => array('href' => $this->getUrl('/contacts', $this->request->param('filial')), 'title' => __('Contacts'))
 		);
 	}
-	
+
 	protected function beforeFilterLayout() {
 		$this->initNavBar();
 
@@ -155,12 +156,12 @@ class AppController extends Controller {
 		);
 		$order = array('Offer.sorting' => 'ASC', 'Offer.created' => 'DESC');
 		$this->set('featuredOffers', $this->Offer->find('all', compact('conditions', 'order')));
-		
+
 		$this->set('aFilters', array());
 		$this->set('isHomePage', false);
 		$this->set('cartItems', $this->getCartItems());
 	}
-	
+
 	protected function _getCurrMenu() {
 		$curr_menu = strtolower(str_ireplace('Site', '', $this->request->controller)); // By default curr.menu is the same as controller name
 		return $curr_menu;
@@ -173,18 +174,27 @@ class AppController extends Controller {
 		$this->set('currLink', $this->currLink);
 		$this->set('pageTitle', $this->pageTitle);
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
+		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
+
+		// refresh authorized user
+		$this->loadModel('User');
+		$userID = AuthComponent::user('id');
+		if ($userID) {
+		    $user = $this->User->findById($userID);
+		    $this->set('currUser', $user);
+		}
 	}
-	
+
 	public function beforeRender() {
 		$this->initNavBarView();
 		$this->beforeRenderLayout();
 	}
-	
+
 	protected function beforeRenderLayout() {
 		$this->set('stylesVersion', $this->stylesVersion);
 		$this->pageTitle = ($this->pageTitle) ? $this->pageTitle.' - '.Configure::read('domain.title') : Configure::read('domain.title');
 		$this->set('pageTitle', $this->pageTitle);
-		
+
 		$this->set('seo', $this->seo); // TODO
 
 		$this->errMsg = (is_array($this->errMsg)) ? implode('<br/>', $this->errMsg) : $this->errMsg;
@@ -194,11 +204,11 @@ class AppController extends Controller {
 		$this->set('errMsg', $this->errMsg);
 		$this->set('aErrFields', $this->aErrFields);
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
-		
+
 		$this->set('disableCopy', $this->disableCopy);
 		$this->set('leftSidebar', $this->leftSidebar);
 		$this->set('rightSidebar', $this->rightSidebar);
-		
+
 		$this->loadModel('Brand');
 		$this->Brand->unbindModel(array('hasOne' => array('Seo')));
 		$aBrands = Hash::combine($this->Brand->findAllByPublished(1), '{n}.Brand.id', '{n}');
@@ -319,7 +329,7 @@ class AppController extends Controller {
 		$aMessengers = $this->Messenger->getUsedList();
 		$this->set(compact('aMessengers'));
 	}
-	
+
 	/**
 	 * Sets flashing message
 	 *
@@ -334,7 +344,7 @@ class AppController extends Controller {
 		$objectType = $this->request->param('objectType');
 		return ($objectType) ? $objectType : 'SiteArticle';
 	}
-	
+
 	public function redirect404() {
 		// return $this->redirect(array('controller' => 'pages', 'action' => 'notExists'), 404);
 		$this->beforeFilterLayout();

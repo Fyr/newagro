@@ -8,10 +8,21 @@ class UserController extends AppController {
 	public $uses = array('User');
 	public $layout = 'login_user';
 
+	protected function beforeFilterLayout() {
+		$this->initNavBar();
+
+		$this->currMenu = $this->_getCurrMenu();
+	    $this->currLink = $this->currMenu;
+
+		$this->set('isHomePage', false);
+		$this->set('cartItems', $this->getCartItems());
+		$this->set('userGroups', $this->User->getAccountTypeOptions());
+	}
+
 	public function login() {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
-				return $this->redirect($this->Auth->redirect());
+				return $this->redirect($this->Auth->loginRedirect);
 			} else {
 				$this->Session->setFlash(AUTH_ERROR, null, null, 'auth');
 			}
