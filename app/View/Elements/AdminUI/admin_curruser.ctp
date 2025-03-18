@@ -1,1 +1,1 @@
-<p class="navbar-text text-right small-text right-top">Welcome, <b><?=$currUser['username']?></b>!</p>
+<p class="navbar-text text-right small-text right-top">Welcome, <b><?=$currUser['User']['username']?></b>!</p>

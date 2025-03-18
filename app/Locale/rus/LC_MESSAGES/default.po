@@ -845,10 +845,10 @@ msgid "Choose your account type"
 msgstr "Выберите тип вашей учетной записи"
 
 msgid "Regular user"
-msgstr "Физическое лицо"
+msgstr "Физ.лицо"
 
 msgid "Legal entity"
-msgstr "Юридическое лицо"
+msgstr "Юр.лицо"
 
 msgid "Company name"
 msgstr "Название юр.лица"
