@@ -12,7 +12,7 @@
 			Заказано <a class="cart_items" href="javascript:" onclick="Cart.checkout()"><?=count($cartItems)?></a> позиции
 		</div>
 		<div class="more">
-			<a href="javascript:" onclick="Cart.checkout()">Оформить заказ</a>
+			<a href="javascript:" onclick="Cart.checkout()"><?=__('Checkout')?></a>
 		</div>
 	</div>
 </div>

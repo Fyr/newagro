@@ -28,12 +28,12 @@
 <span class="floatR langSwitch">
 <?
     if (isset($currUser)) {
-        echo $this->Html->link(__('Log out'), array('controller' => 'user', 'action' => 'logout'), array('class' => 'login'));
+        echo $this->Html->link(__('User%sarea', '<br/>'), array('controller' => 'user', 'action' => 'index'), array('class' => 'login userarea', 'escape' => false));
     } else {
         echo $this->Html->link(__('Log in'), array('controller' => 'user', 'action' => 'login'), array('class' => 'login'));
+        echo $this->Html->link('EN', $enPage, $classEN)?> | <?=$this->Html->link('RU', $domainUrl, $classRU);
     }
 ?>
-	<?=$this->Html->link('EN', $enPage, $classEN)?> | <?=$this->Html->link('RU', $domainUrl, $classRU)?>
 </span>
 <?
 	}

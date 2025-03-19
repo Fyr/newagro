@@ -8,5 +8,5 @@
     <b><?=$userName?></b>
 </p>
 <?
-    echo $this->element('sbl_block', array('title' => __('User area'), 'content' => $this->element('user_menu')));
+    echo $this->element('sbl_block', array('title' => __('User%sarea', ' '), 'content' => $this->element('user_menu')));
 ?>

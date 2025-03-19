@@ -829,6 +829,9 @@ msgstr "Некорректный e-mail адрес"
 msgid "User area login"
 msgstr "Вход в личный кабинет"
 
+msgid "User%sarea"
+msgstr "Личный%sкабинет"
+
 msgid "If you have no account, please %s"
 msgstr "Если у вас нет учетной записи, пожалуйста %s"
 
@@ -864,3 +867,18 @@ msgstr "Телефон для связи"
 
 msgid "Fio"
 msgstr "Ф.И.О."
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "My orders"
+msgstr "Мои заказы"
+
+msgid "Change password"
+msgstr "Сменить пароль"
+
+msgid "Delivery address"
+msgstr "Адрес доставки"
+
+msgid "Checkout"
+msgstr "Оформить заказ"
