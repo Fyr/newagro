@@ -1,6 +1,9 @@
 <?
 	echo $this->element('title', array('title' => __('User area login')))
 ?>
+<p>
+    <?=__('If you have no account, please %s', $this->Html->link(__('register yourself'), array('controller' => 'pages', 'action' => 'register')))?>.
+</p>
 <form method="post" action="" id="postForm" class="feedback">
 	<div class="block main">
 <?
@@ -16,7 +19,7 @@
 	echo $this->Form->button(__('Login'), array('class' => 'submit', 'type' => 'submit'));
 ?>
 	</div>
-	<p>
-        <?=__('If you have no account, please %s', $this->Html->link(__('register yourself'), array('controller' => 'pages', 'action' => 'register')))?>.
-    </p>
 </form>
+<p>
+    <?=$this->Html->link(__('Forgot password'), array('controller' => 'pages', 'action' => 'forgotPassword'))?>
+</p>

@@ -70,7 +70,7 @@ class User extends AppModel {
 	);
 
 	public function matchPassword($data) {
-		if($data['password'] == $this->data['User']['password_confirm']){
+		if ($data['password'] == $this->data['User']['password_confirm']) {
 			return true;
 		}
 		$this->invalidate('password_confirm', __('Your password and its confirmation do not match'));

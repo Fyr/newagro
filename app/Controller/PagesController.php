@@ -87,7 +87,7 @@ class PagesController extends AppController {
 
     public function register() {
         $this->loadModel('User');
-		if ($this->request->is(array('post', 'put'))) {
+		if ($this->request->is('post')) {
 		    $this->request->data('User.username', $this->request->data('User.email'));
 		    $isValid = false;
 		    if ($this->request->data('User.group_id') == User::GROUP_COMPANY) {
@@ -106,5 +106,32 @@ class PagesController extends AppController {
 		$this->set('accountTypeOptions', $this->User->getAccountTypeOptions());
 		$this->layout = 'login_user';
 		$this->leftSidebar = false;
+	}
+
+	public function forgotPassword() {
+	    $this->loadModel('PasswordRecover');
+	    $this->loadModel('User');
+        if ($this->request->is('post')) {
+            $this->PasswordRecover->set($this->request->data);
+            if ($this->PasswordRecover->validates()) {
+                $password = str_shuffle(substr(md5(Configure::read('Security.salt').date("Y-m-d H:i:s")), 0, 10).'-!$#');
+                $id = $this->PasswordRecover->id;
+                $data = compact('id', 'password');
+                fdebug($data);
+                $this->User->save($data, false);
+                // TODO: send email to user with new password
+            }
+        /*
+
+            fdebug("New pasw: $newPassword\r\n");
+            // $this->request->data('PasswordRecover.id', 2);
+            // $this->request->data('PasswordRecover.password', $newPassword);
+
+            fdebug($this->request->data, 'tmp2.log');
+
+            // $this->PasswordRecover->save($this->request->data('PasswordRecover'));
+            // if ($this->User->save($this->request->data, t))
+            */
+        }
 	}
 }
