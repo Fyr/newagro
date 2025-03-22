@@ -880,6 +880,9 @@ msgstr "Сменить пароль"
 msgid "Delivery address"
 msgstr "Адрес доставки"
 
+msgid "Legal address"
+msgstr "Юр.адрес"
+
 msgid "Checkout"
 msgstr "Оформить заказ"
 
