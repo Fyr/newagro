@@ -16,7 +16,7 @@ class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '', $currUser = false;
 	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true, $leftSidebar = true, $rightSidebar = true;
-	public $stylesVersion = 6;
+	public $stylesVersion = 7;
 
 	public function __construct($request = null, $response = null) {
 		$this->_beforeInit();

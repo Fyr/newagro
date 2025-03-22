@@ -877,7 +877,7 @@ msgstr "Мои заказы"
 msgid "Change password"
 msgstr "Сменить пароль"
 
-msgid "Delivery address"
+msgid "Delivery Address"
 msgstr "Адрес доставки"
 
 msgid "Legal address"
@@ -889,8 +889,12 @@ msgstr "Оформить заказ"
 msgid "Forgot password"
 msgstr "Восстановить пароль"
 
-msgid "Next"
-msgstr "Далее"
 
 msgid "Email is not registered"
 msgstr "Данный емейл не зарегистрирован"
+
+msgid "Profile has been successfully saved"
+msgstr "Профиль успешно сохранен"
+
+msgid "Delivery address has been successfully saved"
+msgstr "Адрес доставки успешно сохранен"

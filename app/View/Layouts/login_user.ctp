@@ -30,7 +30,7 @@
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
 		'vendor/jquery/jquery.dotdotdot',
-		'doc_ready.js?v=3',
+		'doc_ready.js?v='.$stylesVersion,
         'cart',
         'call-widget'
     ));
@@ -102,6 +102,7 @@ $(document).ready(function(){
                     <div class="innerMainContent" <? if ($disableCopy) { ?>oncopy="return false;" onmousedown="return false;" <? }?>>
 <?
 	// echo $this->element('bread_crumbs');
+    echo $this->element('user_alert');
 	echo $this->fetch('content');
 ?>
                     </div>

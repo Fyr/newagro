@@ -3,7 +3,7 @@
     $style = ($active) ? '' : 'style="display: none"';
     $aUserMenu = array(
         'profile' => array('title' => __('Profile'), 'action' => 'profile'),
-        'delivery' => array('title' => __('Delivery address'), 'action' => 'delivery'),
+        'delivery' => array('title' => __('Delivery Address'), 'action' => 'delivery'),
         'checkout' => array('title' => __('Checkout'), 'action' => 'checkout'),
         'orders' => array('title' => __('My orders'), 'action' => 'orders'),
         'changePassword' => array('title' => __('Change password'), 'action' => 'changePassword'),

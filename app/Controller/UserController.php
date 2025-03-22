@@ -20,6 +20,10 @@ class UserController extends AppController {
 		$this->set('userGroups', $this->User->getAccountTypeOptions());
 	}
 
+	protected function setAlert($message, $type = 'info') {
+	    $this->Session->setFlash($message, null, null, 'info');
+	}
+
 	public function login() {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
@@ -51,14 +55,21 @@ class UserController extends AppController {
                 $isValid = $this->User->save($this->request->data);
             }
             if ($isValid) {
-	            return $this->redirect(array('controller' => 'User', 'action' => 'index'));
+                $this->setAlert(__('Profile has been successfully saved'));
+	            return $this->redirect(array('controller' => 'User', 'action' => 'profile'));
 	        }
 	    }
 	    $this->request->data = $this->currUser;
 	}
 
-/*
 	public function delivery() {
+	    if ($this->request->is(array('post', 'put'))) {
+	        $id = Hash::get($this->currUser, 'User.id');
+	        $delivery_address = $this->request->data('User.delivery_address');
+	        $this->User->save(compact('id', 'delivery_address'));
+	        $this->setAlert(__('Delivery address has been successfully saved'));
+	        return $this->redirect(array('controller' => 'User', 'action' => 'delivery'));
+	    }
+	    $this->request->data = $this->currUser;
 	}
-	*/
 }
