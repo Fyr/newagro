@@ -14,7 +14,7 @@ App::uses('SiteRouter', 'Lib/Routing');
 App::uses('AuthComponent', 'Controller/Component');
 class AppController extends Controller {
 	public $paginate;
-	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '';
+	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '', $currUser = false;
 	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true, $leftSidebar = true, $rightSidebar = true;
 	public $stylesVersion = 6;
 
@@ -104,6 +104,7 @@ class AppController extends Controller {
 				return $this->redirect('/'.substr($this->request->url, 0, -1));
 			}
 		}
+
 		$this->beforeFilterLayout();
 	}
 
@@ -174,14 +175,13 @@ class AppController extends Controller {
 		$this->set('currLink', $this->currLink);
 		$this->set('pageTitle', $this->pageTitle);
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
-		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
 
-		// refresh authorized user
+		// always refresh authorized user
 		$this->loadModel('User');
 		$userID = AuthComponent::user('id');
 		if ($userID) {
-		    $user = $this->User->findById($userID);
-		    $this->set('currUser', $user);
+		    $this->currUser = $this->User->findById($userID);
+		    $this->set('currUser', $this->currUser);
 		}
 	}
 

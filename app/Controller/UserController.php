@@ -10,6 +10,7 @@ class UserController extends AppController {
 
 	protected function beforeFilterLayout() {
 		$this->initNavBar();
+		$this->initNavBarView();
 
 		$this->currMenu = $this->_getCurrMenu();
 	    $this->currLink = $this->currMenu;
@@ -36,4 +37,28 @@ class UserController extends AppController {
 
 	public function index() {
 	}
+
+	public function profile() {
+	    if ($this->request->is(array('post', 'put'))) {
+	        // to correct save and prevent client's POST data corrupting
+	        $this->request->data('User.id', Hash::get($this->currUser, 'User.id'));
+            $userGroup = Hash::get($this->currUser, 'User.group_id');
+            $isValid = false;
+            if ($userGroup == User::GROUP_COMPANY) {
+                $this->request->data('UserCompany.id', Hash::get($this->currUser, 'UserCompany.id'));
+                $isValid = $this->User->saveAll($this->request->data);
+            } else {
+                $isValid = $this->User->save($this->request->data);
+            }
+            if ($isValid) {
+	            return $this->redirect(array('controller' => 'User', 'action' => 'index'));
+	        }
+	    }
+	    $this->request->data = $this->currUser;
+	}
+
+/*
+	public function delivery() {
+	}
+	*/
 }

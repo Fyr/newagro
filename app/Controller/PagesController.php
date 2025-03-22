@@ -121,17 +121,6 @@ class PagesController extends AppController {
                 $this->User->save($data, false);
                 // TODO: send email to user with new password
             }
-        /*
-
-            fdebug("New pasw: $newPassword\r\n");
-            // $this->request->data('PasswordRecover.id', 2);
-            // $this->request->data('PasswordRecover.password', $newPassword);
-
-            fdebug($this->request->data, 'tmp2.log');
-
-            // $this->PasswordRecover->save($this->request->data('PasswordRecover'));
-            // if ($this->User->save($this->request->data, t))
-            */
         }
 	}
 }
