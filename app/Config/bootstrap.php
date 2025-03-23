@@ -46,6 +46,7 @@ define('RECAPTCHA_PRIVATE_KEY', '6Lezy-QSAAAAACCM1hh6ceRr445OYU_D_uA79UFZ');
 
 Configure::write('Recaptcha.publicKey', RECAPTCHA_PUBLIC_KEY);
 Configure::write('Recaptcha.privateKey', RECAPTCHA_PRIVATE_KEY);
+Configure::write('RecaptchaV3.apiURL', 'http://www.google.com/recaptcha/api/verify');
 
 $domain = explode('.', $_SERVER['HTTP_HOST']);
 define('HTTP', ($_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://');

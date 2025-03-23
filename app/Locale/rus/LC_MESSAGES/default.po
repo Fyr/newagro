@@ -874,8 +874,11 @@ msgstr "Профиль"
 msgid "My orders"
 msgstr "Мои заказы"
 
-msgid "Change password"
+msgid "Change Password"
 msgstr "Сменить пароль"
+
+msgid "New password"
+msgstr "Новый пароль"
 
 msgid "Delivery Address"
 msgstr "Адрес доставки"
@@ -889,7 +892,6 @@ msgstr "Оформить заказ"
 msgid "Forgot password"
 msgstr "Восстановить пароль"
 
-
 msgid "Email is not registered"
 msgstr "Данный емейл не зарегистрирован"
 
@@ -898,3 +900,6 @@ msgstr "Профиль успешно сохранен"
 
 msgid "Delivery address has been successfully saved"
 msgstr "Адрес доставки успешно сохранен"
+
+msgid "New password has been successfully saved"
+msgstr "Новый пароль успешно сохранен"

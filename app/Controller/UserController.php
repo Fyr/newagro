@@ -67,9 +67,22 @@ class UserController extends AppController {
 	        $id = Hash::get($this->currUser, 'User.id');
 	        $delivery_address = $this->request->data('User.delivery_address');
 	        $this->User->save(compact('id', 'delivery_address'));
+
 	        $this->setAlert(__('Delivery address has been successfully saved'));
 	        return $this->redirect(array('controller' => 'User', 'action' => 'delivery'));
 	    }
 	    $this->request->data = $this->currUser;
 	}
+
+	public function changePassword() {
+        if ($this->request->is(array('post', 'put'))) {
+            $id = Hash::get($this->currUser, 'User.id');
+            $password = $this->request->data('User.password');
+            $password_confirm = $this->request->data('User.password_confirm');
+            if ($this->User->save(compact('id', 'password', 'password_confirm'))) {
+                $this->setAlert(__('New password has been successfully saved'));
+                return $this->redirect(array('controller' => 'User', 'action' => 'changePassword'));
+            }
+        }
+    }
 }

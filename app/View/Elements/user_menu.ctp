@@ -6,7 +6,7 @@
         'delivery' => array('title' => __('Delivery Address'), 'action' => 'delivery'),
         'checkout' => array('title' => __('Checkout'), 'action' => 'checkout'),
         'orders' => array('title' => __('My orders'), 'action' => 'orders'),
-        'changePassword' => array('title' => __('Change password'), 'action' => 'changePassword'),
+        'changePassword' => array('title' => __('Change Password'), 'action' => 'changePassword'),
         'logout' => array('title' => __('Log out'), 'action' => 'logout'),
     );
 ?>

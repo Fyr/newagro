@@ -1,4 +1,10 @@
 <?
+    $captchaKey = Configure::read('RecaptchaV3.publicKey');
+    $this->Html->script(array(
+        '/core/js/json_handler',
+        'https://www.google.com/recaptcha/api.js?render='.$captchaKey
+    ), array('inline' => false));
+
 	echo $this->element('title', array('title' => __('Registration')));
 	$selected = $this->request->data('User.group_id');
 	if (!$selected) {
@@ -32,8 +38,18 @@
 			<legend>Профиль: <?=$accountTypeOptions[User::GROUP_COMPANY]?></legend>
             <?=$this->element('user_company')?>
 		</fieldset>
+		<fieldset>
+            <legend>Адрес доставки для заказов</legend>
+            <p>
+                Данный адрес будет автоматически подставляться в ваш каждый заказ<br/>
+                Вы также сможете изменить его позже из меню
+            </p>
+            <?=$this->Form->input('User.delivery_address', array('label' => false))?>
+        </fieldset>
 
 <?
+    // echo $this->Form->hidden('User.token');
+    // echo $this->element('recaptcha');
 	echo $this->Form->submit(__('Register'), array('class' => 'submit', 'div' => false));
 	//
 ?>
@@ -51,16 +67,14 @@ function onChooseAccountType(accType) {
 
 $(function() {
 	onChooseAccountType(<?=$selected?>);
-	<?/*
 	grecaptcha.ready(function() {
 		$('#postForm .submit').click(function () {
 			grecaptcha.execute('<?=$captchaKey?>', {action: 'contacts'}).then(function(token) {
-				$('#ContactToken').val(token);
-				$('#postForm').submit();
+				$('#UserToken').val(token);
+				// $('#postForm').submit();
 			});
 		});
 	});
-	*/ ?>
 });
 
 </script>
