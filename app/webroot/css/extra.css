@@ -255,3 +255,6 @@ button.close {
 	opacity: 0.2;
 	filter: alpha(opacity=20);
 }
+.catalog.usermenu li a.active {
+	padding-left: 42px;
+}
