@@ -105,6 +105,14 @@ class AppController extends Controller {
 			}
 		}
 
+        // always refresh authorized user
+        $this->loadModel('User');
+        $userID = AuthComponent::user('id');
+        if ($userID) {
+            $this->currUser = $this->User->findById($userID);
+            $this->set('currUser', $this->currUser);
+        }
+
 		$this->beforeFilterLayout();
 	}
 
@@ -175,14 +183,6 @@ class AppController extends Controller {
 		$this->set('currLink', $this->currLink);
 		$this->set('pageTitle', $this->pageTitle);
 		$this->set('aBreadCrumbs', $this->aBreadCrumbs);
-
-		// always refresh authorized user
-		$this->loadModel('User');
-		$userID = AuthComponent::user('id');
-		if ($userID) {
-		    $this->currUser = $this->User->findById($userID);
-		    $this->set('currUser', $this->currUser);
-		}
 	}
 
 	public function beforeRender() {
@@ -369,5 +369,71 @@ class AppController extends Controller {
 			return unlink($fname);
 		}
 		return '';
+	}
+
+	protected function getCartProducts() {
+	    $this->loadModel('Product');
+	    $cartItems = $this->getCartItems();
+        $this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
+            'className' => 'Form.PMFormData',
+            'foreignKey' => 'object_id',
+            'conditions' => array('PMFormData.object_type' => 'ProductParam'),
+            'dependent' => true
+        ))), false);
+        return $this->Product->findAllByIdAndPublished(array_keys($cartItems), 1);
+	}
+
+	protected function saveSiteOrder($data) {
+	    $this->loadModel('SiteOrder');
+	    $this->loadModel('SiteOrderDetails');
+	    if (!$this->SiteOrder->save($data)) {
+	        return false;
+	    }
+
+	    $site_order_id = $this->SiteOrder->id;
+        foreach($this->getCartItems() as $product_id => $qty) {
+            $this->SiteOrderDetails->clear();
+            $this->SiteOrderDetails->save(compact('site_order_id', 'product_id', 'qty'));
+        }
+
+        $order = $this->SiteOrder->findById($site_order_id);
+
+        $aProducts = $this->getCartProducts();
+
+        $this->loadModel('Brand');
+        $this->Brand->unbindModel(array('hasOne' => array('Seo')));
+        $aBrands = Hash::combine($this->Brand->findAllById(Hash::extract($aProducts, '{n}.Product.brand_id')), '{n}.Brand.id', '{n}');
+
+        $subject = Configure::read('domain.title') . ': ' . __('New order has been accepted');
+        $viewVars = compact('aProducts', 'order', 'cartItems', 'aBrands');
+
+        // create a notify message for Vcars admin
+        $View = $this->_getViewObject();
+        $body = $View->element('../Emails/html/site_order', $viewVars);
+        $this->loadModel('NotifyMessage');
+        $this->NotifyMessage->save(array('user_id' => 1, 'title' => $subject, 'body' => $body, 'active' => 1, 'notify_id' => 0));
+
+        if (!TEST_ENV) {
+            // send email from site
+            $from = 'noreply@' . Configure::read('domain.url');
+            $to = Configure::read('Settings.orders_email');
+            $emailCfg = array(
+                'template' => 'site_order',
+                'viewVars' => $viewVars,
+                'emailFormat' => 'html',
+                'from' => $from,
+                'to' => $to,
+                'replyTo' => array(Hash::get($data, 'SiteOrder.email') => Hash::get($data, 'SiteOrder.username')),
+                'subject' => $subject,
+                'bcc' => 'fyr.work@gmail.com'
+            );
+            $admin_email = Configure::read('Settings.admin_email');
+            if ($admin_email && !in_array($admin_email, array($from, $to))) {
+                $emailCfg['cc'] = $admin_email;
+            }
+            $Email = new CakeEmail($emailCfg);
+            $Email->send();
+        }
+        return $site_order_id;
 	}
 }

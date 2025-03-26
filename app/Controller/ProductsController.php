@@ -16,7 +16,7 @@ class ProductsController extends AppController {
 	public $uses = array('Category', 'Subcategory', 'Product', 'Seo.Seo', 'Search', 'DetailNum');
 	public $components = array('Recaptcha.Recaptcha');
 	public $helpers = array('Media.PHMedia', 'Core.PHTime', 'Price', 'Form.PHForm', 'Price');
-	
+
 	const PER_PAGE = 51;
 
 	private $searchNumber = '';
@@ -25,7 +25,7 @@ class ProductsController extends AppController {
 		$zone = Configure::read('domain.zone');
 		$this->paginate = array(
 			'conditions' => array('Product.published' => 1),
-			'limit' => self::PER_PAGE, 
+			'limit' => self::PER_PAGE,
 			'page' => $this->request->param('page'),
 			'order' => "MediaArticle.main_$zone DESC"
 		);
@@ -137,7 +137,7 @@ class ProductsController extends AppController {
 			return $this->redirect404();
 		}
 		$id = $article['Product']['id'];
-		
+
 		$this->loadModel('MediaArticle');
 		$zone = Configure::read('domain.zone');
 		$conditions = array('object_type' => 'Product', 'object_id' => $id, 'show_'.$zone => 1);
@@ -193,7 +193,7 @@ class ProductsController extends AppController {
 		$conditions['Product.cat_id'] = $cat_id;
 		$conditions["Product.code !="] = $code;
 		$conditions["MediaArticle.main_$zone"] = 1;
-		
+
 		$fields = array('id');
 		$products = $this->Product->find('all', compact('fields', 'conditions'));
 		$ids = Hash::extract($products, '{n}.Product.id');
@@ -241,69 +241,19 @@ class ProductsController extends AppController {
 	}
 
 	public function cart() {
-		$this->loadModel('SiteOrder');
-		$this->loadModel('SiteOrderDetails');
-
-		$cartItems = $this->getCartItems();
-		$this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
-			'className' => 'Form.PMFormData',
-			'foreignKey' => 'object_id',
-			'conditions' => array('PMFormData.object_type' => 'ProductParam'),
-			'dependent' => true
-		))), false);
-		$aProducts = $this->Product->findAllByIdAndPublished(array_keys($cartItems), 1);
-
+	    if ($this->currUser) {
+	        return $this->redirect(array('controller' => 'user', 'action' => 'cart'));
+	    }
 		if ($this->request->is(array('put', 'post'))) {
-			if ($this->SiteOrder->save($this->request->data)) {
-				$site_order_id = $this->SiteOrder->id;
-				foreach($this->getCartItems() as $product_id => $qty) {
-					$this->SiteOrderDetails->clear();
-					$this->SiteOrderDetails->save(compact('site_order_id', 'product_id', 'qty'));
-				}
+		    $this->request->data('SiteOrder.zone', Configure::read('domain.zone'));
 
-				$order = $this->SiteOrder->findById($site_order_id);
-
-				$cartItems = $this->getCartItems();
-
-				$this->loadModel('Brand');
-				$this->Brand->unbindModel(array('hasOne' => array('Seo')));
-				$aBrands = Hash::combine($this->Brand->findAllById(Hash::extract($aProducts, '{n}.Product.brand_id')), '{n}.Brand.id', '{n}');
-
-				$subject = Configure::read('domain.title') . ': ' . __('New order has been accepted');
-				$viewVars = compact('aProducts', 'order', 'cartItems', 'aBrands');
-
-				// create a notify message for Vcars admin
-				$View = $this->_getViewObject();
-				$body = $View->element('../Emails/html/site_order', $viewVars);
-				$this->loadModel('NotifyMessage');
-				$this->NotifyMessage->save(array('user_id' => 1, 'title' => $subject, 'body' => $body, 'active' => 1, 'notify_id' => 0));
-
-				if (!TEST_ENV) {
-					// send email from site
-					$from = 'noreply@' . Configure::read('domain.url');
-					$to = Configure::read('Settings.orders_email');
-					$emailCfg = array(
-						'template' => 'site_order',
-						'viewVars' => $viewVars,
-						'emailFormat' => 'html',
-						'from' => $from,
-						'to' => $to,
-						'replyTo' => array($this->request->data('SiteOrder.email') => $this->request->data('SiteOrder.username')),
-						'subject' => $subject,
-						'bcc' => 'fyr.work@gmail.com'
-					);
-					$admin_email = Configure::read('Settings.admin_email');
-					if ($admin_email && !in_array($admin_email, array($from, $to))) {
-						$emailCfg['cc'] = $admin_email;
-					}
-					$Email = new CakeEmail($emailCfg);
-					$Email->send();
-				}
-				$this->redirect(HTTP.Configure::read('domain.url').Router::url(array('action' => 'success', $site_order_id)));
+		    $site_order_id = $this->saveSiteOrder($this->request->data);
+			if ($site_order_id) {
+				return $this->redirect(array('controller' => 'products', 'action' => 'success', $site_order_id));
 			}
 		}
 
-		$this->set(compact('aProducts'));
+		$this->set('aProducts', $this->getCartProducts());
 		$this->disableCopy = false;
 	}
 

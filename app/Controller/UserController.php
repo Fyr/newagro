@@ -85,4 +85,43 @@ class UserController extends AppController {
             }
         }
     }
+
+    public function cart() {
+        if ($this->request->is(array('post', 'put'))) {
+            $user_id = Hash::get($this->currUser, 'User.id');
+            $this->request->data('SiteOrder.user_id', $user_id);
+
+            $zone = Configure::read('domain.zone');
+            $this->request->data('SiteOrder.zone', Configure::read('domain.zone'));
+
+            $email = Hash::get($this->currUser, 'User.email');
+
+            if (Hash::get($this->currUser, 'User.group_id') == User::GROUP_COMPANY) {
+                $username = Hash::get($this->currUser, 'UserCompany.contact_person');
+                $phone = Hash::get($this->currUser, 'UserCompany.contact_phone');
+            } else {
+                $username = Hash::get($this->currUser, 'User.fio');
+                $phone = Hash::get($this->currUser, 'User.phone');
+            }
+
+            $address = $this->request->data('SiteOrder.address');
+            $comment = $this->request->data('SiteOrder.comment');
+
+            $data = compact('user_id', 'zone', 'email', 'username', 'phone', 'address', 'comment');
+            $site_order_id = $this->saveSiteOrder(array('SiteOrder' => $data));
+            if ($site_order_id) {
+                return $this->redirect(array('controller' => 'user', 'action' => 'success', $site_order_id));
+            }
+        } else {
+            $this->request->data('SiteOrder.address', Hash::get($this->currUser, 'User.delivery_address'));
+        }
+
+        $this->set('aProducts', $this->getCartProducts());
+    }
+
+    public function success($id) {
+        $this->loadModel('SiteOrder');
+        $this->set('order', $this->SiteOrder->findById($id));
+        $this->set('cartItems', array());
+    }
 }

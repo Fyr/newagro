@@ -8,10 +8,11 @@ App::uses('Region', 'Model');
 App::uses('Category', 'Model');
 App::uses('Product', 'Model');
 App::uses('User', 'Model');
+// App::uses('Curl', 'Vendor');
 class PagesController extends AppController {
 	public $name = 'Pages';
 	public $uses = array('Page', 'News', 'Region', 'Marker', 'Category', 'Product');
-	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media');
+	public $helpers = array('ArticleVars', 'Media.PHMedia', 'Core.PHTime', 'Media' /*, 'Recaptcha.Recaptcha'*/);
 
 	public function home() {
 		$this->set('isHomePage', true);
@@ -88,6 +89,15 @@ class PagesController extends AppController {
     public function register() {
         $this->loadModel('User');
 		if ($this->request->is('post')) {
+            try {
+                if (!$this->_verifyToken($this->request->data('User.token'))) {
+                    $recaptchaError = __('Spam protection! Reload page and repeat your actions');
+                }
+            } catch (Exception $e) {
+                $recaptchaError = $e->getMessage();
+            }
+
+
 		    $this->request->data('User.username', $this->request->data('User.email'));
 		    $isValid = false;
 		    if ($this->request->data('User.group_id') == User::GROUP_COMPANY) {
@@ -123,4 +133,47 @@ class PagesController extends AppController {
             }
         }
 	}
+
+/*
+	private function _verifyToken($token) {
+        $pre = 'Google reCaptcha API';
+
+        $params = array(
+            'secret' => Configure::read('RecaptchaV3.privateKey'),
+            'response' => $token,
+            'remoteip' => $_SERVER['REMOTE_ADDR']
+        );
+
+        // integrate Google Recaptcha v.3
+        $api = new Curl(Configure::read('RecaptchaV3.apiURL'));
+        if (TEST_ENV) {
+            // disable SSL for test.env
+            $api->setOptions(array(
+                    CURLOPT_SSL_VERIFYPEER => 0,
+                    CURLOPT_SSL_VERIFYHOST => 0)
+            );
+        }
+        $_response = $api->setMethod(Curl::POST)
+            ->setParams($params)
+            ->sendRequest();
+
+        $response = json_decode($_response, true);
+        fdebug(compact('_response', 'response'), 'curl.log');
+        if (!$response || !isset($response['success'])) {
+            throw new Exception(__('%s: Bad server response (%s)', $pre, $_response));
+        }
+        // response is not empty and contains 'success'
+        $score = (isset($response['score'])) ? floatval($response['score']) : 0;
+        $human_factor = 0.7;
+        if ($response['success']) {
+            return $score > $human_factor && false;
+        }
+
+        if (isset($response['error-codes']) && is_array($response['error-codes'])) {
+            throw new Exception(__('%s: Integration error! Error codes: %s', $pre, implode(', ', $response['error-codes'])));
+        }
+
+        throw new Exception(__('%s: Unknown server error (%s)', $pre, $_response));
+    }
+    */
 }

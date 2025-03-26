@@ -6,84 +6,16 @@ $aBreadCrumbs = array(__('Home') => '/', __('Cart') => '');
 echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 echo $this->element('title', array('title' => __('Cart')));
 
+$loginLink = $this->Html->link(__('User%sarea', ' '), array('controller' => 'user', 'action' => 'login'));
+$registerLink = $this->Html->link(__('register yourself'), array('controller' => 'pages', 'action' => 'register'));
+?>
+    <p>Войдите в <?=$loginLink?>, чтобы ускорить оформление заказа</p>
+    <p>Если у вас нет учетной записи, <?=$registerLink?>, чтобы получить доступ в Личный кабинет</p>
+<?
 if ($cartItems) {
+    echo $this->element('cart_items');
+    echo $this->element('title', array('title' => 'Ваши данные для заказа'));
 ?>
-<div class="block main clearfix">
-	<table class="grid" width="100%" cellpadding="0" cellspacing="0">
-		<thead>
-		<tr>
-			<th>N п/п</th>
-			<th>Фото</th>
-			<th>Бренд</th>
-			<th width="50%">Код детали / Название</th>
-			<th>Кол-во</th>
-			<th>Цена</th>
-			<th>Сумма</th>
-			<th></th>
-		</tr>
-		</thead>
-		<tbody>
-<?
-	$class = '';
-	// $total = 0;
-	$aPrices = array();
-	foreach($aProducts as $i => $article) {
-		$this->ArticleVars->init($article, $url, $title, $teaser, $src, '130x100', $featured, $id);
-		if (!($title = Hash::get($article, 'Product.title_rus'))) {
-			$title = Hash::get($article, 'Product.title');
-		}
-
-		$brand_id = Hash::get($article, 'Product.brand_id');
-		if (!$src) {
-			if (isset($aBrands[$brand_id])) {
-				$src = $this->Media->imageUrl($aBrands[$brand_id], '130x100');
-			}
-		}
-		$class = ($class == 'odd') ? 'even' : 'odd';
-		$aPrices[$id] = $this->Price->getPrice($article);
-		// $total+= intval($cartItems[$id]);
-		$asterix = ($aPrices[$id]) ? '' : '<span style="font-size: 14px; font-weight: bold;">*</span>';
-?>
-			<tr id="cart-item_<?=$id?>" class="gridRow <?=$class?>">
-				<td align="right"><?=$asterix?><?=$i + 1?></td>
-				<td>
-					<a href="<?=$this->Html->url($url)?>">
-						<img class="no-fancybox" src="<?=$src?>" alt="<?=$title?>" style="width: 50px"/>
-					</a>
-				</td>
-				<td nowrap="nowrap"><?=Hash::get($aBrands[$brand_id], 'Brand.title')?></td>
-				<td>
-					<?=Hash::get($article, 'Product.code')?><br/>
-					<?=$this->Html->link($title, $url)?>
-				</td>
-				<td align="center">
-					<input type="text" autocomplete="off" name="cart-qty" value="<?=$cartItems[$id]?>" style="width: 20px; text-align: center"
-						   onclick="this.focus()" onfocus="this.select()" onkeyup="Cart_edit(<?=$id?>)" onchange="Cart_edit(<?=$id?>)"
-					/>
-				</td>
-				<td class="cart-price" align="right" nowrap="nowrap"></td>
-				<td class="cart-sum" align="right" nowrap="nowrap"></td>
-				<td class="nowrap text-center">
-					<a class="icon-color icon-delete" href="javascript:;" title="Удалить из корзины" onclick="Cart.remove(<?=$id?>)" style="display: inline-block"></a>
-				</td>
-			</tr>
-<?
-	}
-	$class = ($class == 'odd') ? 'even' : 'odd';
-?>
-			<tr class="gridRow <?=$class?>">
-				<td colspan="4" align="right" style="padding: 13px 5px"><b>Итого:</b></td>
-				<td id="cart-total" colspan="3" align="right" nowrap="nowrap"></td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
-	Для позиций, помеченных знаком <span><b>*</b></span>, уточняйте цены у менеджера по продажам.
-	<!--div class="more">
-		<a href="#">Пересчитать</a>
-	</div-->
-</div>
-<?=$this->element('title', array('title' => 'Ваши данные для заказа'))?>
 	<div class="block main feedback">
 		<p>
 			<?=__('Fields with %s are mandatory.', '<span class="star">*</span>')?><br/>
@@ -102,15 +34,7 @@ if ($cartItems) {
 	</div>
 <?
 } else {
-?>
-<div class="block main clearfix">
-	<p>
-		Корзина пуста.<br />
-		<br />
-		<a href="/"><?=__('Back to home page')?></a>
-	</p>
-</div>
-<?
+    echo $this->element('cart_empty');
 }
 ?>
 <script>
