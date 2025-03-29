@@ -89,6 +89,7 @@ class PagesController extends AppController {
     public function register() {
         $this->loadModel('User');
 		if ($this->request->is('post')) {
+		    /*
             try {
                 if (!$this->_verifyToken($this->request->data('User.token'))) {
                     $recaptchaError = __('Spam protection! Reload page and repeat your actions');
@@ -96,6 +97,7 @@ class PagesController extends AppController {
             } catch (Exception $e) {
                 $recaptchaError = $e->getMessage();
             }
+            */
 
 
 		    $this->request->data('User.username', $this->request->data('User.email'));
@@ -114,7 +116,7 @@ class PagesController extends AppController {
 		}
 
 		$this->set('accountTypeOptions', $this->User->getAccountTypeOptions());
-		$this->layout = 'login_user';
+		$this->layout = 'user_area';
 		$this->leftSidebar = false;
 	}
 
@@ -127,11 +129,12 @@ class PagesController extends AppController {
                 $password = str_shuffle(substr(md5(Configure::read('Security.salt').date("Y-m-d H:i:s")), 0, 10).'-!$#');
                 $id = $this->PasswordRecover->id;
                 $data = compact('id', 'password');
-                fdebug($data);
                 $this->User->save($data, false);
                 // TODO: send email to user with new password
             }
         }
+        $this->layout = 'user_area';
+        $this->leftSidebar = false;
 	}
 
 /*

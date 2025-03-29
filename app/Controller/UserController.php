@@ -6,7 +6,7 @@ class UserController extends AppController {
 	public $name = 'User';
 	public $components = array('UserAuth');
 	public $uses = array('User');
-	public $layout = 'login_user';
+	public $layout = 'user_area';
 
 	protected function beforeFilterLayout() {
 		$this->initNavBar();

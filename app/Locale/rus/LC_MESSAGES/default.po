@@ -887,7 +887,7 @@ msgid "Legal address"
 msgstr "Юр.адрес"
 
 msgid "Checkout"
-msgstr "Оформить заказ"
+msgstr "Корзина"
 
 msgid "Forgot password"
 msgstr "Восстановить пароль"
