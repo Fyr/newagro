@@ -12,7 +12,7 @@
 		Дата: <?=$order['SiteOrder']['created']?><br />
 		На имя: <?=$order['SiteOrder']['username']?><br />
 		<br />
-		Перейти в <?=$this->Html->link(__('My orders'), array('controller' => 'user', 'action' => 'orders'))?>
+		Просмотр заказа N <?=$this->Html->link('1000'.$order['SiteOrder']['id'], array('controller' => 'user', 'action' => 'orderview', $order['SiteOrder']['id']))?>
 	</p>
 </div>
 <script>

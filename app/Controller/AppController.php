@@ -116,6 +116,10 @@ class AppController extends Controller {
 		$this->beforeFilterLayout();
 	}
 
+	protected function currUser($key) {
+	    return Hash::get($this->currUser, 'User.'.$key);
+	}
+
 	protected function getUrl($url, $slug = '') {
 		if ($slug) {
 			return HTTP.Configure::read('domain.url').'/filial/'.$slug.$url;
@@ -371,16 +375,20 @@ class AppController extends Controller {
 		return '';
 	}
 
-	protected function getCartProducts() {
+	protected function getProducts($product_ids) {
 	    $this->loadModel('Product');
-	    $cartItems = $this->getCartItems();
-        $this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
+	    $this->Product->bindModel(array('hasOne' => array('PMFormData' => array(
             'className' => 'Form.PMFormData',
             'foreignKey' => 'object_id',
             'conditions' => array('PMFormData.object_type' => 'ProductParam'),
             'dependent' => true
         ))), false);
-        return $this->Product->findAllByIdAndPublished(array_keys($cartItems), 1);
+        return $this->Product->findAllByIdAndPublished($product_ids, 1);
+	}
+
+	protected function getCartProducts() {
+	    $cartItems = $this->getCartItems();
+        return $this->getProducts(array_keys($cartItems));
 	}
 
 	protected function saveSiteOrder($data) {

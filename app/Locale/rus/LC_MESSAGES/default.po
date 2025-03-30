@@ -874,6 +874,9 @@ msgstr "Профиль"
 msgid "My orders"
 msgstr "Мои заказы"
 
+msgid "View Order"
+msgstr "Посмотреть заказ"
+
 msgid "Change Password"
 msgstr "Сменить пароль"
 

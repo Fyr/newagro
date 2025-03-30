@@ -6,6 +6,7 @@
 	vertical-align: middle;
 	margin-top: 0px;
 	margin-right: 2px;
+	display: inline-block;
 }
 .icon-color.icon-accept-filter {
 	background-image: url("/Icons/img/filter_accept.png") !important;
