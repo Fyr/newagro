@@ -57,6 +57,10 @@ class AdminController extends AppController {
 		}
 	    $this->currMenu = $this->_getCurrMenu();
 	    $this->currLink = $this->currMenu;
+
+	    $this->loadModel('User');
+        $userID = AuthComponent::user('id');
+        $this->set('currUser', $this->User->findById($userID));
 	}
 
 	public function beforeRenderLayout() {
