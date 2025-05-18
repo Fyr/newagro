@@ -11,25 +11,25 @@ class ArticlesController extends AppController {
 	public $name = 'Articles';
 	public $components = array('Table.PCTableGrid');
 	// public $uses = array('News', 'Offer', 'Motor');
-	
+
 	// const PER_PAGE = 3;
 	const PER_PAGE = 21;
-	
+
 	protected $objectType;
 
 	public function beforeFilter() {
 		$this->objectType = $this->getObjectType();
-		
+
 		parent::beforeFilter();
 	}
-	
+
 	public function beforeRender() {
 		$this->currMenu = strtolower($this->objectType);
 		$this->set('objectType', $this->objectType);
-		
+
 		parent::beforeRender();
 	}
-	
+
 	public function index() {
 		$this->loadModel($this->objectType);
 		$this->paginate = array(
@@ -71,13 +71,13 @@ class ArticlesController extends AppController {
 			$this->set('featuredEvents', $this->aEvents);
 		}
 	}
-	
+
 	public function view($slug) {
 		$this->loadModel($this->objectType);
 		// $method = (in_array($this->objectType, array('News', 'Offer'))) ? 'getBySlug' : 'findBySlug';
 		$aArticle = $this->{$this->objectType}->getBySlug($slug);
-		
-		if (!$aArticle && !TEST_ENV) {
+
+		if (!$aArticle || !Hash::get($aArticle, $this->objectType.'.published')) {
 			return $this->redirect404();
 		}
 
@@ -85,16 +85,16 @@ class ArticlesController extends AppController {
 			// check if it is "www" news and redirect on correct link
 			if ($this->request->param('filial') && !Hash::get($aArticle, 'News.subdomain_id')) {
 				return $this->redirect(array(
-					'controller' => 'Articles', 
+					'controller' => 'Articles',
 					'action' => 'view',
 					'objectType' => 'News',
 					'slug' => $slug
 				));
 			}
 		}
-		
+
 		$this->set('article', $aArticle);
-		
+
 		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
 			$aArticle['Seo']['title'] = $aArticle[$this->objectType]['title'];
 		}
