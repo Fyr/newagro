@@ -1,7 +1,8 @@
 <?
 App::uses('AppModel', 'Model');
 class UserCompany extends AppModel {
-	// var $useTable = false;
+	public $useDbConfig = 'vitacars';
+    public $useTable = 'clients_companies';
 
 	public $validate = array(
         // Username is already email

@@ -2,6 +2,8 @@
 App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel {
+    public $useDbConfig = 'vitacars';
+    public $useTable = 'clients';
 
 	const GROUP_USER = 1;
 	const GROUP_COMPANY = 2;
@@ -52,21 +54,21 @@ class User extends AppModel {
 			)
 		),
 		'fio' => array(
-            'checkNotEmpty' => array(
-                'rule' => 'notEmpty',
-                'message' => 'Field is mandatory',
-            )
-        ),
-        'phone' => array(
-            'checkNotEmpty' => array(
-                'rule' => 'notEmpty',
-                'message' => 'Field is mandatory',
-            ),
-            'checkIsUnique' => array(
-                'rule' => 'isUnique',
-                'message' => 'This phone is already in use'
-            )
-        ),
+			'checkNotEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Field is mandatory',
+			)
+		),
+		'phone' => array(
+			'checkNotEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Field is mandatory',
+			),
+			'checkIsUnique' => array(
+				'rule' => 'isUnique',
+				'message' => 'This phone is already in use'
+			)
+		),
 	);
 
 	public function matchPassword($data) {
@@ -92,9 +94,21 @@ class User extends AppModel {
 		return true;
 	}
 
+	private function getZone() {
+	    return Configure::read('domain.zone');
+	}
+
+	public function beforeFind($query) {
+        $query['conditions']['User.zone'] = $this->getZone();
+        return $query;
+    }
+
 	public function beforeSave($options = array()) {
-		if (isset($this->data['User']['password'])) {
-			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+	    if (isset($this->data['User'])) {
+            if (isset($this->data['User']['password'])) {
+                $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+            }
+            $this->data['User']['zone'] = $this->getZone();
 		}
 		return true;
 	}
