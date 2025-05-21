@@ -105,6 +105,7 @@ class PagesController extends AppController {
 		    if ($this->request->data('User.group_id') == User::GROUP_COMPANY) {
 		        $this->request->data('User.fio', '');
 		        $this->request->data('User.phone', '');
+		        $this->request->data('User.active', 0);
 		        $isValid = $this->User->saveAll($this->request->data);
             } else {
 		        $isValid = $this->User->save($this->request->data('User'));

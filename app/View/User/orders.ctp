@@ -11,7 +11,7 @@
 	<table class="grid" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
             <tr>
-                <th>N заказа</th>
+                <th>&numero; заказа</th>
                 <th>Дата</th>
                 <th>На адрес</th>
                 <th>Комментарий</th>
@@ -22,12 +22,13 @@
 <?
     $class = '';
     foreach($aOrders as $order) {
+        $uuid = $this->Order->getUuid($order);
         $order = $order['SiteOrder'];
         $class = ($class == 'odd') ? 'even' : 'odd';
         $viewURL = $this->Html->url(array('controller' => 'user', 'action' => 'orderview', $order['id']));
 ?>
             <tr class="gridRow <?=$class?>">
-                <td><?=$order['id']?></td>
+                <td><a href="<?=$viewURL?>" title="<?=__('View Order')?>"><?=$uuid?></a></td>
                 <td><?=$this->PHTime->niceShort($order['created'])?></td>
                 <td><?=$order['address']?></td>
                 <td><?=$order['comment']?></td>

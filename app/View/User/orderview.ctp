@@ -3,7 +3,7 @@
 	$this->Html->script(array('cart', 'vendor/jquery/jquery.cookie'), array('inline' => false));
 	// $order = $order['SiteOrder'];
 ?>
-<?=$this->element('title', array('title' => 'Просмотр заказа N 1000'.$order['SiteOrder']['id']))?>
+<?=$this->element('title', array('title' => 'Просмотр заказа &numero;'.$this->Order->getUuid($order)))?>
 <div class="block main clearfix">
 	<p>
 		<b>Данные заказа:</b><br />

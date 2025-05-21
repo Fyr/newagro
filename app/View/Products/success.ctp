@@ -8,7 +8,7 @@
 		Наш менеджер свяжется с вами в ближайшее время.<br />
 		<br />
 		<b>Ваши данные для заказа:</b><br />
-		N заказа: 1000<?=$order['SiteOrder']['id']?><br />
+		&numero; заказа: <?=$this->Order->getUuid($order)?><br />
 		Дата: <?=$order['SiteOrder']['created']?><br />
 		На имя: <?=$order['SiteOrder']['username']?><br />
 		<br />
