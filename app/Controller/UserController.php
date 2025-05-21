@@ -2,11 +2,13 @@
 App::uses('AppController', 'Controller');
 App::uses('UserAuthComponent', 'Controller/Component');
 App::uses('User', 'Model');
+App::uses('OrderHelper', 'View/Helper');
 class UserController extends AppController {
 	public $name = 'User';
 	public $components = array('UserAuth');
 	public $uses = array('User');
 	public $layout = 'user_area';
+	public $helpers = array('Order');
 
 	const PER_PAGE = 10;
 
