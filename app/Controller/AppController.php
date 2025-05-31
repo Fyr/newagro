@@ -12,6 +12,7 @@ App::uses('Subcategory', 'Model');
 App::uses('User', 'Model');
 App::uses('SiteRouter', 'Lib/Routing');
 App::uses('AuthComponent', 'Controller/Component');
+App::uses('CakeEmail', 'Network/Email');
 class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '', $currUser = false;
@@ -399,7 +400,8 @@ class AppController extends Controller {
 	    }
 
 	    $site_order_id = $this->SiteOrder->id;
-        foreach($this->getCartItems() as $product_id => $qty) {
+	    $cartItems = $this->getCartItems();
+        foreach($cartItems as $product_id => $qty) {
             $this->SiteOrderDetails->clear();
             $this->SiteOrderDetails->save(compact('site_order_id', 'product_id', 'qty'));
         }
