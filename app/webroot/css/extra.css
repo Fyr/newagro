@@ -97,7 +97,7 @@ input.cart-qty {
 	top: 3px;
 	left: -2px;
 }
-.sbr-offers .headBlock .text, .sbr-offers .block .more a, .sbr-offers .block .more a:visited, .add_cart .more a {
+.sbr-offers .headBlock .text, .sbr-offers .block .more a, .sbr-offers .block .more a:visited, .add_cart .more a, #acceptCookie a.accept {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ab51f+0,8ab51e+50,659322+50,659322+100 */
 	background: #7ab51f; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -115,7 +115,7 @@ input.cart-qty {
 	color: #79b41e;
 }
 
-.sbr-offers .block .more a:hover, .sbr-offers .block .more a:active, .add_cart .more a:hover, .add_cart .more a:active {
+.sbr-offers .block .more a:hover, .sbr-offers .block .more a:active, .add_cart .more a:hover, .add_cart .more a:active, #acceptCookie a.accept:hover {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#84c924+0,90bc20+50,549122+50,549122+100 */
 	background: #84c924; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -162,10 +162,7 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 .social a > img { width: 27px; }
 
 .langSwitch {
-	/* position: relative;
-	top: 36px;
-	left: -40px; */
-	margin-top: 24px;
+	margin-top: 28px;
 	margin-right: 35px;
 	color: #d4a126; /* 7ab51f */
 }
@@ -208,7 +205,6 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 .floatR.langSwitch .login {
 	color: #fff;
 	display: block;
-	margin-bottom: 6px;
 }
 
 /* Form styles */
@@ -257,4 +253,62 @@ button.close {
 }
 .catalog.usermenu li a.active {
 	padding-left: 42px;
+}
+
+#acceptCookie {
+	border-top: 3px solid #ddd;
+	background: #eee;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 1000;
+}
+
+#acceptCookie a.accept {
+	line-height: 32px;
+    font-weight: 700;
+    padding: 0 14px 0 14px;
+    position: relative;
+    top: 1px;
+}
+.widget-messengers-cookie-close {
+	border: 0;
+	outline: 0;
+	background: 0 0;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	font-size: 16px;
+	font-size: 1rem;
+	vertical-align: top;
+	border-radius: 100%;
+	background-color: #747474;
+	cursor: pointer;
+	top: 3px;
+}
+.widget-messengers-cookie-close:before,
+.widget-messengers-cookie-close:after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: block;
+	background-color: #eee;
+	-webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+	transform: translateX(-50%) translateY(-50%) rotate(45deg);
+	-webkit-transform-origin: center center;
+	transform-origin: center center;
+}
+.widget-messengers-cookie-close:after {
+	width: 2px;
+	height: 55%;
+}
+.widget-messengers-cookie-close:before {
+	height: 2px;
+	width: 55%;
+}
+
+.footer .menu li.small {
+	font-size: 12px;
 }

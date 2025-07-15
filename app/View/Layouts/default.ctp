@@ -18,7 +18,7 @@
 <?
 	$scripts = array(
 		'vendor/jquery/jquery-1.10.2.min',
-	        'vendor/jquery/jquery-ui-1.10.3.custom.min',
+        'vendor/jquery/jquery-ui-1.10.3.custom.min',
 	);
 	if ($disableCopy) {
 		$scripts[] = 'vendor/jquery/jquery.select.js';
@@ -30,9 +30,11 @@
 		'vendor/jquery/jquery.nivo.slider.pack',
 		'vendor/jquery/jquery.fancybox.pack',
 		'vendor/jquery/jquery.dotdotdot',
+        'vendor/jquery/jquery.cookie',
 		'doc_ready.js?v=3',
         'cart',
-        'call-widget'
+        'call-widget',
+        'accept-cookies'
     ));
 	echo $this->Html->script($scripts);
 
@@ -41,7 +43,7 @@
 	echo $this->fetch('script');
 ?>
 <script type="text/javascript">
-var Cart;
+var Cart, AcceptCookies;
 $(document).ready(function(){
 <?
     if (isset($cat_autoOpen)) {
@@ -51,6 +53,8 @@ $(document).ready(function(){
     }
 ?>
     Cart = new CartObject(".<?=Configure::read('domain.url')?>", "http://<?=Configure::read('domain.url').$this->Html->url(array('controller' => 'Products', 'action' => 'cart'))?>");
+    AcceptCookies = new AcceptCookiesObject(".<?=Configure::read('domain.url')?>");
+    AcceptCookies.update();
 });
 </script>
 <!-- START: Counters for HEAD -->
@@ -65,6 +69,7 @@ $(document).ready(function(){
 <!-- END: Counters for HEAD -->
 </head>
 	<body>
+        <?=$this->element('accept-cookies')?>
         <!-- Counters for BODY TOP: START -->
 <?
 	if (isset($aSlot[8]) && !TEST_ENV) {

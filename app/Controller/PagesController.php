@@ -67,6 +67,7 @@ class PagesController extends AppController {
 		}
 		$this->seo = $aArticle['Seo'];
 		$this->currMenu = $slug;
+		$this->currLink = $slug;
 	}
 
 	public function nonExist() {

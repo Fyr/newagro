@@ -17,7 +17,7 @@ class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '', $currUser = false;
 	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true, $leftSidebar = true, $rightSidebar = true;
-	public $stylesVersion = 7;
+	public $stylesVersion = 9;
 
 	public function __construct($request = null, $response = null) {
 		$this->_beforeInit();
@@ -142,6 +142,8 @@ class AppController extends Controller {
 			'dealer' => array('href' => $this->getUrl('/magazini-zapchastei'), 'title' => ''),
 			'contacts' => array('href' => $this->getUrl('/contacts', $this->request->param('filial')), 'title' => __('Contacts'))
 		);
+		$this->aBottomLinks['policy'] = array('href' => $this->getUrl('/pages/show/policy'), 'title' => '');
+		$this->aBottomLinks['privacy'] = array('href' => $this->getUrl('/pages/show/privacy'), 'title' => '');
 	}
 
 	protected function beforeFilterLayout() {
@@ -287,17 +289,20 @@ class AppController extends Controller {
 		$aSubcategories = Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.object_id');
 		$this->set('aSubcategories', $aSubcategories);
 
-		// Fixes for menu titles
+		// Load menu titles from articles
 		$this->loadModel('Page');
+		$aSlugs = array('magazini-zapchastei', 'about-us', 'policy', 'privacy');
 		$aArticleTitles = $this->Page->find('list', array(
 			'fields' => array('slug', 'title'),
-			'conditions' => array(
-				'slug' => array('magazini-zapchastei', 'about-us'),
-				'subdomain_id' => 0
-			)
+			'conditions' => array('slug' => $aSlugs, 'subdomain_id' => 0)
 		));
+
+		foreach($aSlugs as $slug) {
+			if (isset($this->aBottomLinks[$slug])) {
+				$this->aBottomLinks[$slug]['title'] = $aArticleTitles[$slug];
+			}
+		}
 		$this->aNavBar['about-us']['title'] = $aArticleTitles['about-us'];
-		$this->aBottomLinks['about-us']['title'] = $aArticleTitles['about-us'];
 		$this->aNavBar['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 		$this->aBottomLinks['dealer']['title'] = $aArticleTitles['magazini-zapchastei'];
 
@@ -332,7 +337,9 @@ class AppController extends Controller {
 
 		$this->loadModel('Messenger');
 		$aMessengers = $this->Messenger->getUsedList();
-		$this->set(compact('aMessengers'));
+
+		$cookiesText = $this->Page->findBySlug('cookies');
+		$this->set(compact('aMessengers', 'cookiesText'));
 	}
 
 	/**
