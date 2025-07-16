@@ -274,6 +274,9 @@ msgstr "Редактировать категорию продукта"
 msgid "Spam protection"
 msgstr "Защита от спама"
 
+msgid "Spam protection! Reload page and repeat your actions"
+msgstr "Защита от спама! Перегрузите страницу и повторите свои действия"
+
 msgid "Send"
 msgstr "Отправить"
 

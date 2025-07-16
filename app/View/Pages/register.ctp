@@ -1,5 +1,5 @@
 <?
-    $captchaKey = Configure::read('RecaptchaV3.publicKey');
+    $captchaKey = Configure::read('Recaptcha.publicKey');
     $this->Html->script(array(
         '/core/js/json_handler',
         'https://www.google.com/recaptcha/api.js?render='.$captchaKey
@@ -15,6 +15,7 @@
 	<div class="block main">
 		<p>
 			<?=__('Fields with %s are mandatory.', '<span class="star">*</span>')?>
+			<div class="error-message"><?=$recaptchaError?></div>
 		</p>
 		<div class="radio">
 			<?=__('Choose your account type')?>:<br/>
@@ -48,9 +49,8 @@
         </fieldset>
 
 <?
-    // echo $this->Form->hidden('User.token');
-    // echo $this->element('recaptcha');
-	echo $this->Form->submit(__('Register'), array('class' => 'submit', 'div' => false));
+    echo $this->Form->hidden('User.token');
+	echo $this->Form->button(__('Register'), array('type' => 'button', 'class' => 'submit', 'div' => false));
 	//
 ?>
 	</div>
@@ -68,10 +68,10 @@ function onChooseAccountType(accType) {
 $(function() {
 	onChooseAccountType(<?=$selected?>);
 	grecaptcha.ready(function() {
-		$('#postForm .submit').click(function () {
-			grecaptcha.execute('<?=$captchaKey?>', {action: 'contacts'}).then(function(token) {
+		$('#UserRegisterForm .submit').click(function () {
+			grecaptcha.execute('<?=$captchaKey?>', { action: 'register' }).then(function(token) {
 				$('#UserToken').val(token);
-				// $('#postForm').submit();
+				$('#UserRegisterForm').submit();
 			});
 		});
 	});

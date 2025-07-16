@@ -211,6 +211,9 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 .error-message {
 	color: #f00;
 }
+.input .error-message {
+	font-size: 13px;
+}
 legend {
 	padding: 0 5px;
 }

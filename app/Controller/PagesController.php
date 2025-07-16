@@ -8,7 +8,7 @@ App::uses('Region', 'Model');
 App::uses('Category', 'Model');
 App::uses('Product', 'Model');
 App::uses('User', 'Model');
-// App::uses('Curl', 'Vendor');
+App::uses('Curl', 'Vendor');
 class PagesController extends AppController {
 	public $name = 'Pages';
 	public $uses = array('Page', 'News', 'Region', 'Marker', 'Category', 'Product');
@@ -89,35 +89,34 @@ class PagesController extends AppController {
 
     public function register() {
         $this->loadModel('User');
+        $recaptchaError = '';
 		if ($this->request->is('post')) {
-		    /*
             try {
-                if (!$this->_verifyToken($this->request->data('User.token'))) {
-                    $recaptchaError = __('Spam protection! Reload page and repeat your actions');
-                }
+                $this->_verifyToken($this->request->data('User.token'));
             } catch (Exception $e) {
-                $recaptchaError = $e->getMessage();
-            }
-            */
-
-
-		    $this->request->data('User.username', $this->request->data('User.email'));
-		    $isValid = false;
-		    if ($this->request->data('User.group_id') == User::GROUP_COMPANY) {
-		        $this->request->data('User.fio', '');
-		        $this->request->data('User.phone', '');
-		        $this->request->data('User.active', 0);
-		        $isValid = $this->User->saveAll($this->request->data);
-            } else {
-		        $isValid = $this->User->save($this->request->data('User'));
+                $recaptchaError = __('Spam protection! Reload page and repeat your actions');
             }
 
-			if ($isValid) {
-			    return $this->redirect(array('controller' => 'user', 'action' => 'login'));
+            if (!$recaptchaError) {
+                $this->request->data('User.username', $this->request->data('User.email'));
+                $isValid = false;
+                if ($this->request->data('User.group_id') == User::GROUP_COMPANY) {
+                    $this->request->data('User.fio', '');
+                    $this->request->data('User.phone', '');
+                    $this->request->data('User.active', 0);
+                    $isValid = $this->User->saveAll($this->request->data);
+                } else {
+                    $isValid = $this->User->save($this->request->data('User'));
+                }
+
+                if ($isValid) {
+                    return $this->redirect(array('controller' => 'user', 'action' => 'login'));
+                }
 			}
 		}
 
 		$this->set('accountTypeOptions', $this->User->getAccountTypeOptions());
+		$this->set('recaptchaError', $recaptchaError);
 		$this->layout = 'user_area';
 		$this->leftSidebar = false;
 	}
@@ -139,18 +138,15 @@ class PagesController extends AppController {
         $this->leftSidebar = false;
 	}
 
-/*
 	private function _verifyToken($token) {
-        $pre = 'Google reCaptcha API';
+        $pre = 'Google reCaptcha V.3 API';
 
         $params = array(
-            'secret' => Configure::read('RecaptchaV3.privateKey'),
+            'secret' => Configure::read('Recaptcha.privateKey'),
             'response' => $token,
             'remoteip' => $_SERVER['REMOTE_ADDR']
         );
-
-        // integrate Google Recaptcha v.3
-        $api = new Curl(Configure::read('RecaptchaV3.apiURL'));
+        $api = new Curl(Configure::read('Recaptcha.apiURL'));
         if (TEST_ENV) {
             // disable SSL for test.env
             $api->setOptions(array(
@@ -163,7 +159,6 @@ class PagesController extends AppController {
             ->sendRequest();
 
         $response = json_decode($_response, true);
-        fdebug(compact('_response', 'response'), 'curl.log');
         if (!$response || !isset($response['success'])) {
             throw new Exception(__('%s: Bad server response (%s)', $pre, $_response));
         }
@@ -171,7 +166,7 @@ class PagesController extends AppController {
         $score = (isset($response['score'])) ? floatval($response['score']) : 0;
         $human_factor = 0.7;
         if ($response['success']) {
-            return $score > $human_factor && false;
+            return $score > $human_factor;
         }
 
         if (isset($response['error-codes']) && is_array($response['error-codes'])) {
@@ -180,5 +175,4 @@ class PagesController extends AppController {
 
         throw new Exception(__('%s: Unknown server error (%s)', $pre, $_response));
     }
-    */
 }
