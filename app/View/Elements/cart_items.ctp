@@ -2,7 +2,7 @@
 	<table class="grid" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 		<tr>
-			<th>N п/п</th>
+			<th nowrap="nowrap">N п/п</th>
 			<th>Фото</th>
 			<th>Бренд</th>
 			<th width="50%">Код детали / Название</th>
@@ -18,18 +18,19 @@
 	// $total = 0;
 	$aPrices = array();
 	foreach($aProducts as $i => $article) {
+	    $class = ($class == 'odd') ? 'even' : 'odd';
+
 		$this->ArticleVars->init($article, $url, $title, $teaser, $src, '130x100', $featured, $id);
 		if (!($title = Hash::get($article, 'Product.title_rus'))) {
 			$title = Hash::get($article, 'Product.title');
 		}
-
+        $code = Hash::get($article, 'Product.code');
 		$brand_id = Hash::get($article, 'Product.brand_id');
 		if (!$src) {
 			if (isset($aBrands[$brand_id])) {
 				$src = $this->Media->imageUrl($aBrands[$brand_id], '130x100');
 			}
 		}
-		$class = ($class == 'odd') ? 'even' : 'odd';
 		$aPrices[$id] = $this->Price->getPrice($article);
 		// $total+= intval($cartItems[$id]);
 		$asterix = ($aPrices[$id]) ? '' : '<span style="font-size: 14px; font-weight: bold;">*</span>';
@@ -43,8 +44,7 @@
 				</td>
 				<td nowrap="nowrap"><?=Hash::get($aBrands[$brand_id], 'Brand.title')?></td>
 				<td>
-					<?=Hash::get($article, 'Product.code')?><br/>
-					<?=$this->Html->link($title, $url)?>
+					<?=$this->Html->link($code.' '.$title, $url)?>
 				</td>
 				<td align="center">
 					<input type="text" autocomplete="off" name="cart-qty" value="<?=$cartItems[$id]?>" style="width: 20px; text-align: center"

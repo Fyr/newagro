@@ -2,13 +2,13 @@
 	$this->Html->css('grid', array('inline' => false));
 	$this->Html->script(array('cart', 'vendor/jquery/jquery.cookie'), array('inline' => false));
 	$title = $article['Product']['code'].' '.$article['Product']['title_rus'];
-	
+
 	$indexUrl = array(
-		'controller' => 'Products', 
+		'controller' => 'Products',
 		'action' => 'index',
 		'objectType' => 'Product',
 	);
-	
+
 	$aBreadCrumbs = array(
 		__('Home') => 'http://'.Configure::read('domain.url'),
 		// $this->ObjectType->getTitle('index', 'Product') => $indexUrl,
@@ -70,7 +70,6 @@
 								</div>
 							</div>
 							<b><?=__('Brand')?></b> : <?=$brand['Brand']['title']?><br />
-							<!--b><?=__('Type')?></b> : <?=$article['Category']['title']?><br /-->
 <?
 	$price = $this->Price->getPrice($article);
 	if ($price) {

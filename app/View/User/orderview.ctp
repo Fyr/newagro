@@ -28,7 +28,7 @@
     <table class="grid" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 		<tr>
-			<th>N п/п</th>
+			<th nowrap="nowrap">N п/п</th>
 			<th>Фото</th>
 			<th>Бренд</th>
 			<th width="50%">Код детали / Название</th>
@@ -40,7 +40,7 @@
 		<tbody>
 <?
 	$class = '';
-	// $total = 0;
+	$total = 0;
 	$aPrices = array();
 	foreach($aOrderDetails as $i => $row) {
 	    $detail = $row['SiteOrderDetails'];
@@ -52,9 +52,9 @@
 		}
 
 		$class = ($class == 'odd') ? 'even' : 'odd';
-		// $aPrices[$id] = $this->Price->getPrice($product);
-		// $total+= intval($cartItems[$id]);
-		// $asterix = ($aPrices[$id]) ? '' : '<span style="font-size: 14px; font-weight: bold;">*</span>';
+		$price = $this->Price->getPrice($product);
+		$total+= ($price) ? $price * $detail['qty'] : 0;
+		$asterix = ($price) ? '' : '<span style="font-size: 14px; font-weight: bold;">*</span>';
 ?>
 			<tr id="cart-item_<?=$id?>" class="gridRow <?=$class?>">
 				<td align="center"><?=$i + 1?></td>
@@ -78,8 +78,8 @@
 				<td nowrap="nowrap"><?=Hash::get($aBrands[$brand_id], 'Brand.title')?></td>
 				<td><?=$this->Html->link($code.' '.$title, $url)?></td>
 				<td align="right"><?=$detail['qty']?></td>
-				<td class="cart-price" align="right" nowrap="nowrap"></td>
-				<td class="cart-sum" align="right" nowrap="nowrap"></td>
+				<td class="cart-price" align="right" nowrap="nowrap"><?=($price) ? $this->Price->format($price, false) : ''?></td>
+				<td class="cart-sum" align="right" nowrap="nowrap"><?=($price) ? $this->Price->format($price * $detail['qty'], false) : ''?></td>
 			</tr>
 <?
 	}
@@ -87,7 +87,7 @@
 ?>
 			<tr class="gridRow <?=$class?>">
 				<td colspan="4" align="right" style="padding: 13px 5px"><b>Итого:</b></td>
-				<td id="cart-total" colspan="3" align="right" nowrap="nowrap"></td>
+				<td id="cart-total" colspan="3" align="right" nowrap="nowrap"><?=($total) ? $this->Price->format($total, true) : ''?></td>
 			</tr>
 		</tbody>
 	</table>

@@ -20,9 +20,12 @@ class PriceHelper extends AppHelper {
 	}
 
 	public function getPrice($product, $lForce = false) {
-		if ($lForce || in_array($product['Product']['brand_id'], explode(',', Configure::read('Settings.brand_prices'))) ) {
-			$price = floatval($product['PMFormData']['fk_' . Configure::read('Settings.fk_price')]);
-			$price2 = floatval($product['PMFormData']['fk_' . Configure::read('Settings.fk_price2')]);
+	    $lBrandPrices = Configure::read('Settings.brand_prices')
+	        ? in_array($product['Product']['brand_id'], explode(',', Configure::read('Settings.brand_prices')))
+	        : true; // if no brands selected - show for all brands
+		if (Configure::read('Settings.fk_price') && ($lForce || $lBrandPrices) ) {
+			$price = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price')]);
+			$price2 = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price2')]);
 			return ($price) ? $price : $price2;
 		}
 		return null;
