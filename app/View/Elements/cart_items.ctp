@@ -6,7 +6,7 @@
 			<th>Фото</th>
 			<th>Бренд</th>
 			<th width="50%">Код детали / Название</th>
-			<th>Кол-во</th>
+			<th nowrap="nowrap">Кол-во</th>
 			<th>Цена</th>
 			<th>Сумма</th>
 			<th></th>

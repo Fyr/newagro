@@ -166,7 +166,7 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 	margin-right: 35px;
 	color: #d4a126; /* 7ab51f */
 }
-.langSwitch a, a:visited {
+.langSwitch a, .langSwitch a:visited {
 	color: #d4a126; /* d4a126 */
 	text-decoration: none;
 }
@@ -314,4 +314,9 @@ button.close {
 
 .footer .menu li.small {
 	font-size: 12px;
+}
+
+.main .grid > tbody > tr > td > a {
+	position: relative;
+	top: 0;
 }
