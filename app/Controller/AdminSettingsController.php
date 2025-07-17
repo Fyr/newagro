@@ -27,12 +27,13 @@ class AdminSettingsController extends AdminController {
     public function contacts() {
     }
     */
-    
+
     public function prices() {
-        $fields = array('id', 'label');
-        $conditions = array('is_price' => 1);
-        $order = array('label' => 'ASC');
-        $aPrices = $this->PMFormField->find('list', compact('fields', 'conditions', 'order'));
+        $aPrices = $this->PMFormField->find('list', array(
+            'fields' => array('id', 'label'),
+            'conditions' => array('is_price' => 1),
+            'order' => array('label' => 'ASC')
+        ));
 
         $this->paginate = array(
             'Brand' => array(

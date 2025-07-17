@@ -5,14 +5,16 @@
 <div class="span8 offset2">
 <?
 	echo $this->PHForm->create('Settings');
+	$aPrices = array('' => '- нет -') + $aPrices;
 	$aPricesForm = array(
 		$this->PHForm->input('fk_price', array(
 			'options' => $aPrices,
-			'label' => array('text' => 'Показывать цену', 'class' => 'control-label')
+			'label' => array('text' => 'Показывать цену', 'class' => 'control-label'),
+			'onchange' => 'onChangePrice()'
 		)),
 		$this->PHForm->input('fk_price2', array(
 			'options' => $aPrices,
-			'label' => array('text' => 'Иначе ', 'class' => 'control-label')
+			'label' => array('text' => 'Если не выставлена, то ', 'class' => 'control-label')
 		))
 	);
 	$aFormatForm = array(
@@ -57,7 +59,18 @@
 ?>
 </div>
 <script type="text/javascript">
+function onChangePrice() {
+    var $divPrice2 = $('#SettingsFkPrice2').parent().parent();
+    if ($('#SettingsFkPrice').val()) {
+        $divPrice2.show();
+    } else {
+        $divPrice2.hide();
+    }
+}
+
 $(document).ready(function(){
+    onChangePrice();
+
 	var $grid = $('#grid_Brand');
 
 	var vals = $('#SettingsBrandPrices').val().split(',');
