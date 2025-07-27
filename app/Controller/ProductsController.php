@@ -7,13 +7,16 @@ App::uses('Seo', 'Seo.Model');
 App::uses('Product', 'Model');
 App::uses('Category', 'Model');
 App::uses('Subcategory', 'Model');
+App::uses('Search', 'Model');
+App::uses('DetailNum', 'Model');
+App::uses('UserBrandDiscount', 'Model');
 App::uses('SiteRouter', 'Lib/Routing');
 App::uses('PHTimeHelper', 'Core.View/Helper');
 App::uses('CakeEmail', 'Network/Email');
 App::uses('PriceHelper', 'View/Helper');
 class ProductsController extends AppController {
 	public $name = 'Products';
-	public $uses = array('Category', 'Subcategory', 'Product', 'Seo.Seo', 'Search', 'DetailNum');
+	public $uses = array('Category', 'Subcategory', 'Product', 'Seo.Seo', 'Search', 'DetailNum', 'UserBrandDiscount');
 	public $components = array('Recaptcha.Recaptcha');
 	public $helpers = array('Media.PHMedia', 'Core.PHTime', 'Price', 'Form.PHForm', 'Price');
 
@@ -178,6 +181,15 @@ class ProductsController extends AppController {
 		// unset($this->seo['descr']);
 
 		$this->set('aRelated', $this->_getRelatedProducts($id, $article['Product']['code'], $article['Product']['cat_id'], $article['Product']['subcat_id']));
+
+		$aDiscounts = array();
+		if ($this->currUser('id')) {
+		    $aDiscounts = $this->UserBrandDiscount->find('list', array(
+                'fields' => array('brand_id', 'discount'),
+                'conditions' => array('client_id' => $this->currUser('id'))
+            ));
+        }
+        $this->set(compact('aDiscounts'));
 	}
 
 	private function _getRelatedProducts($id, $code, $cat_id, $subcat_id) {
@@ -255,6 +267,12 @@ class ProductsController extends AppController {
 
 		$this->set('aProducts', $this->getCartProducts());
 		$this->disableCopy = false;
+
+		$aDiscounts = $this->UserBrandDiscount->find('list', array(
+            'fields' => array('brand_id', 'discount'),
+            'conditions' => array('client_id' => $user_id)
+        ));
+        $this->set(compact('aDiscounts'));
 	}
 
 	public function success($id) {

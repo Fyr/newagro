@@ -1,6 +1,5 @@
 <?
     $this->Html->css(array('grid', '/Icons/css/icons'), array('inline' => false));
-    $this->Html->script(array('cart', 'number_format', 'vendor/jquery/jquery.cookie'), array('inline' => false));
 
     // $aBreadCrumbs = array(__('Home') => '/', __('Cart') => '');
     // echo $this->element('bread_crumbs', compact('aBreadCrumbs'));

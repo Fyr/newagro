@@ -320,3 +320,6 @@ button.close {
 	position: relative;
 	top: 0;
 }
+
+.old-price { display: inline; text-decoration: line-through; font-size: 0.8em; }
+.discount-price { display: inline; color: #f00; }

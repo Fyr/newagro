@@ -2,11 +2,12 @@
 App::uses('AppController', 'Controller');
 App::uses('UserAuthComponent', 'Controller/Component');
 App::uses('User', 'Model');
+App::uses('UserBrandDiscount', 'Model');
 App::uses('OrderHelper', 'View/Helper');
 class UserController extends AppController {
 	public $name = 'User';
 	public $components = array('UserAuth');
-	public $uses = array('User');
+	public $uses = array('User', 'UserBrandDiscount');
 	public $layout = 'user_area';
 	public $helpers = array('Order');
 
@@ -91,8 +92,9 @@ class UserController extends AppController {
     }
 
     public function cart() {
+        $user_id = $this->currUser('id');
         if ($this->request->is(array('post', 'put'))) {
-            $user_id = $this->currUser('id');
+
             $this->request->data('SiteOrder.user_id', $user_id);
 
             $zone = Configure::read('domain.zone');
@@ -121,6 +123,12 @@ class UserController extends AppController {
         }
 
         $this->set('aProducts', $this->getCartProducts());
+
+        $aDiscounts = $this->UserBrandDiscount->find('list', array(
+            'fields' => array('brand_id', 'discount'),
+            'conditions' => array('client_id' => $user_id)
+        ));
+        $this->set(compact('aDiscounts'));
     }
 
     public function success($id) {

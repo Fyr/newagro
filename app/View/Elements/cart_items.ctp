@@ -1,3 +1,6 @@
+<?
+    $this->Html->script(array('cart', 'number_format', '/Table/js/format', 'vendor/jquery/jquery.cookie'), array('inline' => false));
+?>
 <div class="block main clearfix">
 	<table class="grid" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
@@ -15,7 +18,6 @@
 		<tbody>
 <?
 	$class = '';
-	// $total = 0;
 	$aPrices = array();
 	foreach($aProducts as $i => $article) {
 	    $class = ($class == 'odd') ? 'even' : 'odd';
@@ -26,13 +28,26 @@
 		}
         $code = Hash::get($article, 'Product.code');
 		$brand_id = Hash::get($article, 'Product.brand_id');
+
+		// detect image for product (fallback to brand logo)
 		if (!$src) {
-			if (isset($aBrands[$brand_id])) {
-				$src = $this->Media->imageUrl($aBrands[$brand_id], '130x100');
-			}
+            $src = (isset($aBrands[$brand_id])) ? $this->Media->imageUrl($aBrands[$brand_id], '130x100') : '';
 		}
-		$aPrices[$id] = $this->Price->getPrice($article);
-		// $total+= intval($cartItems[$id]);
+
+		// detect brand title (fallback to fake brands)
+        $brandTitle = Hash::get(
+            (Hash::get($article, 'Product.is_fake')) ? $aFakeBrands[$brand_id] : $aBrands[$brand_id],
+            'Brand.title'
+        );
+
+		$price = $this->Price->getPrice($article, false); // price is shown dynamically (JS)
+		$finalPrice = $this->Price->getPrice($article, false, $aDiscounts);
+		if ($price !== $finalPrice) { // brand discount for this item is already applied
+		    $brandTitle.= '<br/>'.$this->Html->div('discount-price', $aDiscounts[$brand_id].'%');
+		}
+
+		$aPrices[$id] = $price;
+		$aFinalPrices[$id] = $finalPrice;
 		$asterix = ($aPrices[$id]) ? '' : '<span style="font-size: 14px; font-weight: bold;">*</span>';
 ?>
 			<tr id="cart-item_<?=$id?>" class="gridRow <?=$class?>">
@@ -42,7 +57,7 @@
 						<img class="no-fancybox" src="<?=$src?>" alt="<?=$title?>" style="width: 50px"/>
 					</a>
 				</td>
-				<td nowrap="nowrap"><?=Hash::get($aBrands[$brand_id], 'Brand.title')?></td>
+				<td nowrap="nowrap"><?=$brandTitle?></td>
 				<td>
 					<?=$this->Html->link($code.' '.$title, $url)?>
 				</td>
@@ -90,14 +105,22 @@ function Cart_edit(id) {
 }
 
 function Cart_updateTotal() {
-	var $tr, id, qty, total = 0;
+	var $tr, id, qty, total = 0, price, finalPrice;
 	$('input[name="cart-qty"]').each(function(){
 		qty = parseInt($(this).val());
 		$tr = $(this).parent().parent();
 		id = $tr.get(0).id.replace(/cart-item_/, '');
-		$('.cart-price', $tr).html(price_format(prices[id], false));
-		$('.cart-sum', $tr).html(price_format(prices[id] * qty, false));
-		total+= prices[id] * qty;
+
+		price = price_format(prices[id], false);
+		finalPrice = price_format(finalPrices[id], false);
+		showPrice = finalPrice;
+        if (price !== finalPrice) {
+            showPrice = Format.tag('span', { class: 'old-price' }, price) + '<br/>'
+                + Format.tag('span', { class: 'discount-price' }, finalPrice);
+        }
+		$('.cart-price', $tr).html(showPrice);
+		$('.cart-sum', $tr).html(price_format(finalPrices[id] * qty, false));
+		total+= finalPrices[id] * qty;
 	});
 	$('#cart-total').html(price_format(total, true));
 }
@@ -107,6 +130,7 @@ function price_format(number, lFull) {
 	if (lFull) {
 		price = (prefix + price + postfix);
 	}
+
 	return price.replace(/\$P/ig, '<span class="rubl">₽</span>');
 }
 
@@ -118,7 +142,7 @@ $(function(){
 	prefix = '<?=Configure::read('Settings.price_prefix')?>';
 	postfix = '<?=Configure::read('Settings.price_postfix')?>';
 	prices = <?=json_encode($aPrices)?>;
-
+    finalPrices = <?=json_encode($aFinalPrices)?>;
 	Cart_updateTotal();
 });
 

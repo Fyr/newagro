@@ -22,7 +22,9 @@
 
 	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 	echo $this->element('title', compact('title'));
-	$brand = ($article['Product']['is_fake']) ? $aFakeBrands[$article['Product']['brand_id']] : $aBrands[$article['Product']['brand_id']];
+	$brand_id = $article['Product']['brand_id'];
+	$brand = ($article['Product']['is_fake']) ? $aFakeBrands[$brand_id] : $aBrands[$brand_id];
+	$brandTitle = $brand['Brand']['title'];
 ?>
 						<div class="block main clearfix">
 
@@ -48,6 +50,13 @@
 	}
 	$lShowCart = (isset($cartItems[$article['Product']['id']]));
 	$cartQty = ($lShowCart) ? $cartItems[$article['Product']['id']] : '';
+
+	$price = $this->Price->getPrice($article, false);
+    $finalPrice = $this->Price->getPrice($article, false, $aDiscounts);
+	$brandDiscount = 0;
+	if ($price !== $finalPrice) { // brand discount for this item is already applied
+        $brandTitle.= ' (<span class="discount-price">-'.$aDiscounts[$brand_id].'%</span>)';
+	}
 ?>
 
 							<div class="floatR" style="width: 250px;">
@@ -69,12 +78,14 @@
 									</div>
 								</div>
 							</div>
-							<b><?=__('Brand')?></b> : <?=$brand['Brand']['title']?><br />
+							<b><?=__('Brand')?></b> : <?=$brandTitle?><br />
 <?
-	$price = $this->Price->getPrice($article);
-	if ($price) {
+	if ($finalPrice) {
+	    $showPrice = ($price === $finalPrice)
+	        ? $this->Price->format($finalPrice, true)
+	        : $this->Html->div('old-price', $this->Price->format($price, false)).' '.$this->Html->div('discount-price', $this->Price->format($finalPrice, true));
 ?>
-							<b><?=__('Price')?></b> : <?=$this->Price->format($price)?><br />
+							<b><?=__('Price')?></b> : <?=$showPrice?><br />
 <?
 	}
 ?>
