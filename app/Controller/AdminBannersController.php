@@ -8,14 +8,14 @@ class AdminBannersController extends AdminController {
     public $name = 'AdminBanners';
     public $components = array('Auth', 'Table.PCTableGrid', 'Article.PCArticle');
     public $uses = array('Banner', 'BannerType', 'SlotPlace');
-    
+
     public function beforeRender() {
     	parent::beforeRender();
     	$this->set('objectType', 'Banner');
 		$this->set('bannerTypes', $this->BannerType->getOptions());
 		$this->set('slotPlaces', $this->SlotPlace->getOptions());
     }
-    
+
     public function index() {
     	$this->paginate = array(
     		'fields' => array('id', 'title', 'type', 'slot', 'sorting', 'active')
@@ -23,9 +23,9 @@ class AdminBannersController extends AdminController {
     	$aRowset = $this->PCTableGrid->paginate('Banner');
     	$this->set('aRowset', $aRowset);
     }
-    
+
     public function edit($id = 0) {
-    	$this->PCArticle->setModel('Banner')->edit(&$id, &$lSaved);
+    	$this->PCArticle->setModel('Banner')->edit($id, $lSaved);
 		if ($lSaved) {
 			$baseRoute = array('action' => 'index');
 			return $this->redirect(($this->request->data('apply')) ? $baseRoute : array($id));

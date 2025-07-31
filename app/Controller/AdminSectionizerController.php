@@ -17,7 +17,7 @@ class AdminSectionizerController extends AdminController {
 		$this->set('aCategoryOptions', $this->Section->getOptions());
 		$this->set('aSubcategoryOptions', $this->SectionArticle->getOptions());
 	}
-    
+
     public function index($cat_id = 0, $subcat_id = 0) {
 		$objectType = 'SectionArticle';
         $this->paginate = array(
@@ -27,18 +27,18 @@ class AdminSectionizerController extends AdminController {
 				'order' => 'SectionArticle.sorting'
 			)
         );
-        
+
         $aRowset = $this->PCArticle->setModel($objectType)->index();
         $this->set('objectType', $objectType);
 		$this->set('cat_id', $cat_id);
 		$this->set('subcat_id', $subcat_id);
         $this->set('aRowset', $aRowset);
     }
-    
+
 	public function edit($id = 0, $cat_id = 0, $subcat_id = 0) {
 		$objectType = 'SectionArticle';
 		$this->loadModel('Media.Media');
-		
+
 		if (!$id) {
 			// если не задан ID, то objectType+ObjectID должны передаваться
 			$this->request->data('Article.object_type', $objectType);
@@ -46,21 +46,21 @@ class AdminSectionizerController extends AdminController {
             $this->request->data('Article.subcat_id', $subcat_id);
 			$this->request->data('Seo.object_type', 'Page');
 		}
-		
-		// Здесь работаем с моделью Article, т.к. если задавать только $id, 
+
+		// Здесь работаем с моделью Article, т.к. если задавать только $id,
 		// непонятно какую модель загружать, чтобы определить $objectType
 		$this->Article->bindModel(array(
 			'hasOne' => array(
 				'Seo' => array(
 					'className' => 'Seo.Seo',
 					'foreignKey' => 'object_id',
-					'conditions' => array('Seo.object_type' => 'Page'), // 
+					'conditions' => array('Seo.object_type' => 'Page'), //
 					'dependent' => true
 				)
 			)
 		), false);
-		
-		$this->PCArticle->edit(&$id, &$lSaved);
+
+		$this->PCArticle->edit($id, $lSaved);
 
 		if ($lSaved) {
 			// clean articles cache

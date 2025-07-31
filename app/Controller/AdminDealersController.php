@@ -8,12 +8,12 @@ class AdminDealersController extends AdminController {
     public $components = array('Article.PCArticle');
     public $uses = array('Article.Article', 'Dealer');
     public $helpers = array('ObjectType');
-    
+
     public function beforeFilter() {
     	$this->set('objectType', 'Dealer');
     	return parent::beforeFilter();
     }
-    
+
     public function index() {
         $this->paginate = array(
         	'Dealer' => array(
@@ -23,19 +23,19 @@ class AdminDealersController extends AdminController {
         $aRowset = $this->PCArticle->setModel('Dealer')->index();
         $this->set('aRowset', $aRowset);
     }
-    
+
 	public function edit($id = 0) {
 		$objectType = 'Dealer';
 		$this->loadModel('Media.Media');
-		
+
 		if (!$id) {
 			// если не задан ID, то objectType+ObjectID должны передаваться
 			$this->request->data('Dealer.object_type', 'Dealer');
 			$this->request->data('Seo.object_type', 'Page');
 		}
 
-		$this->PCArticle->setModel('Dealer')->edit(&$id, &$lSaved);
-		
+		$this->PCArticle->setModel('Dealer')->edit($id, $lSaved);
+
 		if ($lSaved) {
 			// clean articles cache
 			$this->_cleanCache('articles_Dealer.xml');

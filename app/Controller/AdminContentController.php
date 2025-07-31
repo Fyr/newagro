@@ -21,7 +21,7 @@ class AdminContentController extends AdminController {
 
 		$this->set('aSubdomainOptions', $this->Subdomain->getOptions());
 	}
-    
+
     public function index($objectType, $objectID = '') {
         $this->paginate = array(
             'Page' => array(
@@ -43,39 +43,39 @@ class AdminContentController extends AdminController {
         		'fields' => array('created', 'title', 'slug', 'featured', 'published')
         	)
         );
-        
+
         $aRowset = $this->PCArticle->setModel($objectType)->index();
         $this->set('objectType', $objectType);
         $this->set('objectID', $objectID);
         $this->set('aRowset', $aRowset);
-        
+
     }
-    
+
 	public function edit($id = 0, $objectType = '', $objectID = '') {
 		$this->loadModel('Media.Media');
-		
+
 		if (!$id) {
 			// если не задан ID, то objectType+ObjectID должны передаваться
 			$this->request->data('Article.object_type', $objectType);
 			$this->request->data('Seo.object_type', 'Page');
 		}
-		
-		// Здесь работаем с моделью Article, т.к. если задавать только $id, 
+
+		// Здесь работаем с моделью Article, т.к. если задавать только $id,
 		// непонятно какую модель загружать, чтобы определить $objectType
 		$this->Article->bindModel(array(
 			'hasOne' => array(
 				'Seo' => array(
 					'className' => 'Seo.Seo',
 					'foreignKey' => 'object_id',
-					'conditions' => array('Seo.object_type' => 'Page'), // 
+					'conditions' => array('Seo.object_type' => 'Page'), //
 					'dependent' => true
 				)
 			)
 		), false);
-		
-		$this->PCArticle->edit(&$id, &$lSaved);
+
+		$this->PCArticle->edit($id, $lSaved);
 		$objectType = $this->request->data('Article.object_type');
-		
+
 		if ($lSaved) {
 			// clean articles cache
 			$cacheKey = ($objectType == 'Page') ? 'plain.xml' : 'articles_'.$objectType.'.xml';

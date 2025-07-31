@@ -68,7 +68,8 @@ class AdminController extends AppController {
 	}
 
 	public function isAdmin() {
-		return AuthComponent::user('id') == 1;
+		$user_id = AuthComponent::user('id');
+		return $user_id == 1 || $user_id == 2;
 	}
 
 	public function index() {
