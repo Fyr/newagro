@@ -1,26 +1,19 @@
 <?php
-$time = microtime(true);
-if (isBotBlackListed()) {
-	exit('Website is temporary unavailable');
-}
-
 /**
- * Index
- *
  * The Front Controller for handling every request
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @package       app.webroot
  * @since         CakePHP(tm) v 0.2.9
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -31,14 +24,13 @@ if (!defined('DS')) {
 }
 
 /**
- * These defines should only be edited if you have cake installed in
+ * These defines should only be edited if you have CakePHP installed in
  * a directory layout other than the way it is distributed.
  * When using custom settings be sure to use the DS and do not add a trailing DS.
  */
 
 /**
  * The full path to the directory which holds "app", WITHOUT a trailing DS.
- *
  */
 if (!defined('ROOT')) {
 	define('ROOT', dirname(dirname(dirname(__FILE__))));
@@ -46,10 +38,16 @@ if (!defined('ROOT')) {
 
 /**
  * The actual directory name for the "app".
- *
  */
 if (!defined('APP_DIR')) {
 	define('APP_DIR', basename(dirname(dirname(__FILE__))));
+}
+
+/**
+ * Config Directory
+ */
+if (!defined('CONFIG')) {
+	define('CONFIG', ROOT . DS . APP_DIR . DS . 'Config' . DS);
 }
 
 /**
@@ -69,9 +67,18 @@ if (!defined('APP_DIR')) {
 //define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'lib');
 
 /**
+ * This auto-detects CakePHP as a composer installed library.
+ * You may remove this if you are not planning to use composer (not recommended, though).
+ */
+$vendorPath = ROOT . DS . APP_DIR . DS . 'Vendor' . DS . 'cakephp' . DS . 'cakephp' . DS . 'lib';
+$dispatcher = 'Cake' . DS . 'Console' . DS . 'ShellDispatcher.php';
+if (!defined('CAKE_CORE_INCLUDE_PATH') && file_exists($vendorPath . DS . $dispatcher)) {
+	define('CAKE_CORE_INCLUDE_PATH', $vendorPath);
+}
+
+/**
  * Editing below this line should NOT be necessary.
  * Change at your own risk.
- *
  */
 if (!defined('WEBROOT_DIR')) {
 	define('WEBROOT_DIR', basename(dirname(__FILE__)));
@@ -80,9 +87,9 @@ if (!defined('WWW_ROOT')) {
 	define('WWW_ROOT', dirname(__FILE__) . DS);
 }
 
-// for built-in server
-if (php_sapi_name() === 'cli-server') {
-	if ($_SERVER['REQUEST_URI'] !== '/' && file_exists(WWW_ROOT . $_SERVER['PHP_SELF'])) {
+// For the built-in server
+if (PHP_SAPI === 'cli-server') {
+	if ($_SERVER['PHP_SELF'] !== '/' . basename(__FILE__) && file_exists(WWW_ROOT . $_SERVER['PHP_SELF'])) {
 		return false;
 	}
 	$_SERVER['PHP_SELF'] = '/' . basename(__FILE__);
@@ -95,10 +102,8 @@ if (!defined('CAKE_CORE_INCLUDE_PATH')) {
 	if (!include 'Cake' . DS . 'bootstrap.php') {
 		$failed = true;
 	}
-} else {
-	if (!include CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'bootstrap.php') {
-		$failed = true;
-	}
+} elseif (!include CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'bootstrap.php') {
+	$failed = true;
 }
 if (!empty($failed)) {
 	trigger_error("CakePHP core could not be found. Check the value of CAKE_CORE_INCLUDE_PATH in APP/webroot/index.php. It should point to the directory containing your " . DS . "cake core directory and your " . DS . "vendors root directory.", E_USER_ERROR);
@@ -111,85 +116,3 @@ $Dispatcher->dispatch(
 	new CakeRequest(),
 	new CakeResponse()
 );
-
-$time = microtime(true) - $time;
-// fdebug("{$time},{$_SERVER['REQUEST_URI']}\r\n", 'web_stats.log');
-
-function isBotBlackListed($ip = '') {
-	if (!$ip) {
-		$ip = $_SERVER['REMOTE_ADDR'];
-	}
-	$referer = gethostbyaddr($ip);
-
-	// blacklist must have * to work correctly
-	$aBlackList = array(
-		'*.go.mail.ru',
-		'*.bot.semrush.com',
-		'*.applebot.apple.com',
-		'*.search.msn.com',
-		'*.petalsearch.com',
-		'*.webmeup.com',
-		'*.your-server.de',
-		'*.dataforseo.com',
-		'*.babbar.eu',
-		'*.amazonaws.com',
-		'*.lyse.net',
-		'*.r00tbase.de',
-		'*.kabel-deutschland.de',
-		'*.tiss.fun',
-		'*.tiss.xyz',
-		'*.kiev.ua',
-		'ip*.net',
-		'ip*.eu',
-		'*.businessesforsale.ru',
-		'*.triolan.net',
-		'*.ahrefs.com',
-		'ns3*.eu',
-		'ns5*.net',
-		'vdsl*.encoline.de',
-		'*.amazonbot.amazon',
-		'*.seopowersuite.com',
-		'*.fbsv.net',
-		'*.agava.net',
-		'*.contaboserver.net',
-		'*.online.no',
-		'*.hosting-russia.ru',
-		'*.corbina.ru',
-		'*.as51430.net',
-		'*.balticom.lv',
-		'*.f3netze.de',
-		'*.poneytelecom.eu',
-		'*.nothingtohide.nl',
-		'*.seznam.cz',
-		'*.secureserver.net',
-		'*.qwant.com',
-		'*.zencurity.com',
-		'*.udm.net',
-		'*.tuxli.org',
-		'*.mnet.bg',
-		'*.nicecrawler.com',
-		'*.smailru.net',
-		'*.hwclouds-dns.com',
-		'*.brandonkuschel.com',
-		'*.above.net',
-		'*.digitalcourage.de',
-		'*.relayon.org',
-		'*.ptr',
-		'*.com.cn',
-		'*.vultrusercontent.com'
-	);
-
-	foreach($aBlackList as $mask) {
-		$pos = strpos($mask, '*');
-		if ($pos !== false) {
-			$_black = substr($mask, 0, $pos);
-			$_black2 = substr($mask, $pos + 1);
-			$_ref = substr($referer, 0, strlen($_black));
-			$_ref2 = substr($referer, -strlen($_black2));
-			if ($mask === $_ref.'*'.$_ref2) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
