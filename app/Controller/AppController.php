@@ -118,7 +118,7 @@ class AppController extends Controller {
 	}
 
 	protected function currUser($key) {
-	    return Hash::get($this->currUser, 'User.'.$key);
+	    return $this->currUser ? Hash::get($this->currUser, 'User.'.$key) : '';
 	}
 
 	protected function getUrl($url, $slug = '') {
