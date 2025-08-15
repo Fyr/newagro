@@ -70,6 +70,15 @@ class ArticlesController extends AppController {
 			$this->aEvents = $this->News->find('all', compact('fields','conditions', 'order'));
 			$this->set('featuredEvents', $this->aEvents);
 		}
+
+		if ($this->objectType === 'Offer') {
+		    // set special SEO data for offers
+		    $this->seo = array(
+		        'title' => 'Акции на оригинальные запчасти для спецтехники',
+		        'keywords' => '',
+		        'descr' => 'Специальные предложения и скидки на оригинальные запчасти для спецтехники: экскаваторов, бульдозеров, погрузчиков и другой техники'
+		    );
+		}
 	}
 
 	public function view($slug) {
