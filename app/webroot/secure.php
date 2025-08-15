@@ -37,6 +37,19 @@ function checkDotURL($url) {
     if (strpos($url, '.') === false) {
         return $allowed;
     }
+
+    // TODO: refactor to respect cakePHP's named params
+    // for ex. /AdminProducts/index/Product/limit:100/Product.detail_num:~04207119
+    $aWhiteList = array(
+        'product.detail_num:',
+        'product.id:'
+    );
+    foreach($aWhiteList as $skip) {
+        if (strpos($url, $skip)) {
+            return $allowed;
+        }
+    }
+
     $pathInfo = pathinfo($url);
 
     $dirname = $pathInfo['dirname'];
@@ -45,7 +58,7 @@ function checkDotURL($url) {
     }
 
     $ext = strtolower($pathInfo['extension']);
-    $aWhiteList = array('html', 'css', 'js', 'ico', 'txt', 'jpg', 'jpeg', 'jfif', 'png', 'gif', 'pdf', 'csv');
+    $aWhiteList = array('html', 'css', 'js', 'ico', 'txt', 'jpg', 'jpeg', 'jfif', 'png', 'gif', 'pdf', 'csv', 'gz');
     if (in_array($ext, $aWhiteList)) {
         return $allowed;
     }
@@ -56,35 +69,26 @@ function checkDotURL($url) {
     }
 
     // check *.xml - only sitemap*.xml is allowed
-    if ($ext === 'xml' && strpos($pathInfo['filename'], 'sitemap') !== 0) {
-        return array('WARN', 'Found non-sitemap *.XML');
+    if ($ext === 'xml') {
+        if (startsWith($pathInfo['filename'], 'sitemap')) {
+            return $allowed;
+        }
+        return array('WARN', "Found non-sitemap *.XML");
     }
 
     // json-s - needs to be checked
     if ($ext === 'json') {
         // skip our own ajax calls
-        $aWhiteListJson = array(
+        $aWhiteList = array(
             '/media/ajax',
             '/adminajax'
         );
-        foreach($aWhiteListJson as $skip) {
+        foreach($aWhiteList as $skip) {
             if (startsWith($url, $skip)) {
                 return $allowed;
             }
         }
         return array('WARN', 'Found *.JSON that needs to be checked');
-    }
-
-    // TODO: refactor to respect cakePHP's named params
-    // for ex. /AdminProducts/index/Product/limit:100/Product.detail_num:~04207119
-    $aWhiteListExt = array(
-        '.detail_num:',
-        '.id:'
-    );
-    foreach($aWhiteListExt as $skip) {
-        if (startsWith('.'.$ext, $skip)) {
-            return $allowed;
-        }
     }
 
     return array('WARN', 'Found suspicious file extension *.'.$ext);
@@ -127,7 +131,7 @@ function checkStopWord($url) {
 }
 
 function handleCrit($ip, $reason) {
-    file_put_contents($ip, 'secure-crit-ip.log', FILE_APPEND);
+    file_put_contents('secure-crit-ip.log', $ip, FILE_APPEND);
     logIssue("CRIT! {$ip} - {$reason}");
     exit('Service is temporary unavailable');
 }
