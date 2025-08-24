@@ -1,5 +1,5 @@
 <?
-class Security {
+class Secure {
     const NOTE = 0;
     const WARN = 1;
     const CRIT = 2;

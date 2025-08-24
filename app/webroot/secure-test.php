@@ -2,7 +2,7 @@
 <?
 require_once('./secure.php');
 
-class SecurityTest extends Security {
+class SecureTest extends Secure {
     private $log = array();
 
     protected function logIssue($ip, $level, $issue) {
@@ -32,7 +32,7 @@ $fixtures = readResponse('secure-response.tests');
 
 foreach($requests as $i => $request) {
     $_SERVER = array_merge($_SERVER, $request);
-    $secure = new SecurityTest();
+    $secure = new SecureTest();
     $secure->check();
     if ($fixtures[$i] !== $secure->getLog()) {
         echo 'FAILED!';
