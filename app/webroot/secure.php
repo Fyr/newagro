@@ -29,6 +29,13 @@ class Security {
     );
     private $aStopWords = array(
         self::CRIT => array(
+            // most used
+            '/wp/',
+            '/wp-',
+            '.well-known',
+            '.git',
+            '.env',
+
             'config',
             'xmlrpc',
             'backup',
@@ -38,20 +45,17 @@ class Security {
             'node_modules',
             'credentials',
             'production',
+            'install',
             '/aws/',
             '/docker',
+            '/cgi-bin',
             '/conf',
             '/cron',
-            '/wp/',
             '/wp2/',
-            '/wp-',
             '/application',
             '/app/',
             '.aws',
-            '.git',
             '.github',
-            '.env',
-            '.well-known',
             '.vscode',
             '.idea',
             '.circleci',
@@ -187,9 +191,17 @@ class Security {
          /zapchasti/fendt/fendt/toplivoprovod-f-f339.202.060.090
          /AdminProducts/index/Product/sort:Category.title
         */
-        if (!($this->startsWith($url, '/admin') || $this->startsWith($url, '/zapchasti'))) {
-            throw new Exception('Found suspicious file extension *.'.$ext, self::WARN);
+        $aWhiteList = array(
+            '/admin',
+            '/zapchasti',
+            '/products',
+        );
+        foreach($aWhiteList as $skip) {
+            if ($this->startsWith($url, $skip)) {
+                return;
+            }
         }
+        throw new Exception('Found suspicious file extension *.'.$ext, self::WARN);
     }
 
     private function startsWith($str, $key) {
@@ -224,7 +236,7 @@ class Security {
         file_put_contents(self::BAN_FILE, $ip."\r\n", FILE_APPEND);
 
         // ban this IP
-        // system("/usr/local/bin/ip-ban {$ip} &");
+        system("/usr/local/bin/ip-ban {$ip} &");
     }
 
     protected function abortRequest() {

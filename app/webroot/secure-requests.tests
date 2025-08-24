@@ -31,7 +31,7 @@
 198.55.98.182 - - [31/Jul/2025:12:45:15 +0200] "GET /.git/config HTTP/1.1" 404 8033 "-" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36 OPR/18.0.1284.49"
 198.55.98.182 - - [31/Jul/2025:12:45:15 +0200] "GET /.git HTTP/1.1" 404 8033 "-" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36 OPR/18.0.1284.49"
 198.55.98.182 - - [31/Jul/2025:12:45:15 +0200] "GET /apps/.git HTTP/1.1" 404 8033 "-" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36 OPR/18.0.1284.49"
-157.245.153.71 - - [31/Jul/2025:12:36:40 +0200] "GET /wp2/wp-includes/wlwmanifest.xml HTTP/1.1" 404 501 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+157.245.153.71 - - [31/Jul/2025:12:36:40 +0200] "GET /wp2/includes/wlwmanifest.xml HTTP/1.1" 404 501 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
 196.251.70.223 - - [31/Jul/2025:19:30:04 +0200] "GET /.env HTTP/1.1" 403 3471 "-" "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/6.0)"
 185.177.72.111 - - [31/Jul/2025:20:00:44 +0200] "GET /.env.local HTTP/1.1" 404 3581 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 185.177.72.111 - - [31/Jul/2025:20:00:47 +0200] "GET /.env.*.local HTTP/1.1" 404 3557 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"

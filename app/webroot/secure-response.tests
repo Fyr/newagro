@@ -28,7 +28,7 @@ OK
 79.127.132.23 | CRIT! | Stop word '/wp/'
 79.127.132.23 | CRIT! | Stop word '/wp/'
 79.127.132.23 | CRIT! | Stop word '/wp-'
-198.55.98.182 | CRIT! | Stop word 'config'
+198.55.98.182 | CRIT! | Stop word '.git'
 198.55.98.182 | CRIT! | Stop word '.git'
 198.55.98.182 | CRIT! | Stop word '.git'
 157.245.153.71 | CRIT! | Stop word '/wp2/'
