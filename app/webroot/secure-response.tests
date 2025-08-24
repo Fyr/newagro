@@ -1,0 +1,47 @@
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+191.96.227.189 | WARN! | Unsupported *.XML
+OK
+OK
+OK
+127.0.0.0 | CRIT! | Dangerous HTTP method 'TRACE'
+127.0.0.0 | WARN! | Unsupported HTTP method 'HEAD'
+127.0.0.0 | WARN! | Stop line '/api'
+127.0.0.0 | WARN! | Stop line '/feed'
+198.55.98.182 | CRIT! | Stop word 'config'
+198.55.98.182 | CRIT! | Stop word 'config'
+34.19.116.124 | CRIT! | Stop word 'wordpress'
+34.19.116.124 | CRIT! | Stop word 'wordpress'
+52.169.14.191 | CRIT! | Stop word '/wp-'
+52.169.14.191 | CRIT! | Stop word '/wp-'
+52.169.14.191 | CRIT! | Stop word '/wp-'
+79.127.132.23 | CRIT! | Stop word '/wp/'
+79.127.132.23 | CRIT! | Stop word '/wp/'
+79.127.132.23 | CRIT! | Stop word '/wp-'
+198.55.98.182 | CRIT! | Stop word 'config'
+198.55.98.182 | CRIT! | Stop word '.git'
+198.55.98.182 | CRIT! | Stop word '.git'
+157.245.153.71 | CRIT! | Stop word '/wp2/'
+196.251.70.223 | CRIT! | Stop word '.env'
+185.177.72.111 | CRIT! | Stop word '.env'
+185.177.72.111 | CRIT! | Stop word '.env'
+185.177.72.111 | CRIT! | Stop word '.env'
+185.177.72.111 | CRIT! | Stop word 'credentials'
+185.177.72.111 | CRIT! | Stop word 'credentials'
+185.177.72.111 | CRIT! | Stop word '.aws'
+94.156.177.35 | CRIT! | Dangerous extension *.sql
+49.37.33.208 | CRIT! | Stop word 'xmlrpc'
+192.42.116.192 | CRIT! | Stop word 'phpmyadmin'
+OK
+OK
+OK

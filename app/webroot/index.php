@@ -1,5 +1,6 @@
 <?php
 require_once('secure.php');
+(new Security())->check();
 /**
  * The Front Controller for handling every request
  *
