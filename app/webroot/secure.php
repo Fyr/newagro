@@ -45,7 +45,7 @@ class Secure {
             'node_modules',
             'credentials',
             'production',
-            'install',
+            '/install',
             '/aws/',
             '/docker',
             '/cgi-bin',
@@ -67,7 +67,7 @@ class Secure {
     private $aExtWhiteList = array('html', 'css', 'js', 'ico', 'txt', 'jpg', 'jpeg', 'jfif', 'png', 'gif', 'pdf', 'csv');
     private $aStopExt = array(
         self::CRIT => array('php', 'sql', 'py', 'exe'),
-        self::WARN => array('xsd', 'yml', 'yaml', 'zip', 'rar', 'bak'),
+        self::WARN => array('xsd', 'yml', 'yaml', 'zip', 'rar', 'bak', 'json'),
     );
 
     private $url = '', $pathInfo = array();
@@ -78,6 +78,23 @@ class Secure {
 
     public function check() {
         try {
+            /* exclude URLs like:
+             /zapchasti/fendt/fendt/toplivoprovod-f-f339.202.060.090
+             /AdminProducts/index/Product/sort:Category.title
+             allow HEAD /zapchasti/deutz?utm_source=yandex_smart&utm_medium=cpc&utm_campaign=
+            */
+            $aWhiteList = array(
+                '/admin',
+                '/media',
+                '/products',
+                '/zapchasti',
+            );
+            foreach($aWhiteList as $skip) {
+                if ($this->startsWith($this->getURL(), $skip)) {
+                    return;
+                }
+            }
+
             // check all CRIT issues first
             foreach(array(self::CRIT, self::WARN) as $level) {
                 $this->checkHeaders($level, $_SERVER['REQUEST_METHOD'], $this->aHttpMethods[$level]);
@@ -139,15 +156,6 @@ class Secure {
         // for ex. /AdminProducts/index/Product/sort:Category.title/limit:100/
         $dirname = $pathInfo['dirname'];
         if (strpos($dirname, '.') !== false) { // only admin or products URLs can contain sort or filters with '.'
-            $aWhiteList = array(
-                '/admin',
-                '/products'
-            );
-            foreach($aWhiteList as $skip) {
-                if ($this->startsWith($url, $skip)) {
-                    return;
-                }
-            }
             throw new Exception("Unsupported folder '$dirname'", self::WARN);
         }
 
@@ -171,36 +179,6 @@ class Secure {
             throw new Exception('Unsupported *.XML', self::WARN);
         }
 
-        // json-s - needs to be checked
-        // TODO: refactor our ajax-requests to have placeholder
-        if ($ext === 'json') {
-            // skip our own ajax calls
-            $aWhiteList = array(
-                '/media/ajax',
-                '/adminajax'
-            );
-            foreach($aWhiteList as $skip) {
-                if ($this->startsWith($url, $skip)) {
-                    return;
-                }
-            }
-            throw new Exception('Unsupported *.JSON', self::WARN);
-        }
-
-        /* exclude URLs like:
-         /zapchasti/fendt/fendt/toplivoprovod-f-f339.202.060.090
-         /AdminProducts/index/Product/sort:Category.title
-        */
-        $aWhiteList = array(
-            '/admin',
-            '/zapchasti',
-            '/products',
-        );
-        foreach($aWhiteList as $skip) {
-            if ($this->startsWith($url, $skip)) {
-                return;
-            }
-        }
         throw new Exception('Found suspicious file extension *.'.$ext, self::WARN);
     }
 
