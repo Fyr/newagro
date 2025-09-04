@@ -194,7 +194,7 @@ class Secure {
         if ($this->url) {
             return $this->url;
         }
-        $url = strtolower($_SERVER['REQUEST_URI']);
+        $url = str_replace(array('http://agromotors.by', 'http://agromotors.ru'), '', strtolower($_SERVER['REQUEST_URI']));
         if (strpos($url, '?') !== false) {
             list($url) = explode('?', $url);
         }

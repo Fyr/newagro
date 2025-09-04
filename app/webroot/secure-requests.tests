@@ -45,3 +45,4 @@
 127.0.0.0 - - [31/Jul/2025:00:45:02 +0200] "GET /zapchasti/fendt/fendt/toplivoprovod-f-f339.202.060.090 HTTP/1.1" 404 184 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36"
 66.249.66.9 - - [31/Jul/2025:06:03:12 +0200] "GET /zapchasti/deutz/sitemap_5.xml.gz HTTP/1.1" 500 428 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 127.0.0.0 - - [31/Jul/2025:00:45:02 +0200] "GET /products/index/page:2/sort:Product.modified/direction:desc HTTP/1.1" 404 184 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36"
+127.0.0.0 - - [31/Jul/2025:00:45:02 +0200] "GET http://agromotors.by/magazini-zapchastei/belarus-gomel-zapchasti-deutz-remont-dvigatel HTTP/1.1" 404 184 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36"
