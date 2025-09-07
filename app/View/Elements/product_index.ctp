@@ -8,7 +8,7 @@
 					$src = $this->Media->imageUrl($aBrands[$brand_id], '190x145');
 				}
 			}
-			
+
 ?>
 			<a id="product_<?=$article['Product']['id']?>" class="catalog__block" href="<?=$url?>">
 				<div class="top">
@@ -27,7 +27,7 @@
 					<img src="<?=($src) ? $src : '/img/default_product100.png'?>" alt="<?=$title?>" />
 				</div>
 <?
-			$price = $this->Price->getPrice($article, isset($lForcePrice) && $lForcePrice);
+			$price = $this->Price->getPrice($article);
 			if ($price) {
 				echo '<div class="price">'.$this->Price->format($price).'</div>';
 			}
@@ -35,4 +35,4 @@
 			</a>
 <?
 		}
-?>                            
+?>

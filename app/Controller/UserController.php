@@ -122,13 +122,14 @@ class UserController extends AppController {
             $this->request->data('SiteOrder.address', $this->currUser('delivery_address'));
         }
 
-        $this->set('aProducts', $this->getCartProducts());
-
         $aDiscounts = $this->UserBrandDiscount->find('list', array(
             'fields' => array('brand_id', 'discount'),
             'conditions' => array('client_id' => $user_id)
         ));
-        $this->set(compact('aDiscounts'));
+        $this->set(array(
+            'aProducts' => $this->getCartProducts(),
+            'aDiscounts' => $aDiscounts
+        ));
     }
 
     public function success($id) {

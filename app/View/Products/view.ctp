@@ -50,13 +50,6 @@
 	}
 	$lShowCart = (isset($cartItems[$article['Product']['id']]));
 	$cartQty = ($lShowCart) ? $cartItems[$article['Product']['id']] : '';
-
-	$price = $this->Price->getPrice($article, false);
-    $finalPrice = $this->Price->getPrice($article, false, $aDiscounts);
-	$brandDiscount = 0;
-	if ($price !== $finalPrice) { // brand discount for this item is already applied
-        $brandTitle.= ' (<span class="discount-price">-'.$aDiscounts[$brand_id].'%</span>)';
-	}
 ?>
 
 							<div class="floatR" style="width: 250px;">
@@ -78,9 +71,24 @@
 									</div>
 								</div>
 							</div>
+<?
+    $brandDiscount = $this->Price->getBrandDiscount($article, $aDiscounts);
+    if ($brandDiscount) {
+        $brandTitle.= ' (<span class="discount-price">-'.$brandDiscount.'%</span>)';
+    }
+?>
 							<b><?=__('Brand')?></b> : <?=$brandTitle?><br />
 <?
-	if ($finalPrice) {
+    /*
+        Алгоритм показа цены:
+        1. Определяем - можем ли мы показывать цены (CMS\Настройки\Цены - вкладка Брэнды
+        Показываем цену, только если стоит флаг Показывать цены брэнда или у юзера есть скидка на этот брэнд
+        2. Формируем цену со скидкой и без
+        3. Форматируем цены и показываем цену без скидки, если конечная цена со скидкой
+    */
+	if ($this->Price->isShowPrice($article, $aDiscounts)) {
+    	$price = $this->Price->getPrice($article, $aDiscounts, false);
+        $finalPrice = $this->Price->getPrice($article, $aDiscounts);
 	    $showPrice = ($price === $finalPrice)
 	        ? $this->Price->format($finalPrice, true)
 	        : $this->Html->div('old-price', $this->Price->format($price, false)).' '.$this->Html->div('discount-price', $this->Price->format($finalPrice, true));

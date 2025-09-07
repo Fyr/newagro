@@ -177,11 +177,8 @@ class ProductsController extends AppController {
 			$title_rus.", ".str_replace(',', ' ', $title_rus)." ".$article['Category']['title'].", запчасти для спецтехники ".$article['Category']['title'].", запчасти для ".$article['Category']['title'],
 			'На нашем сайте вы можете приобрести '.str_replace(',', ' ', $title_rus).' для трактора или спецтехники '.$article['Category']['title']." в ".((Configure::read('domain.zone') == 'ru') ? 'России' : 'Белоруссии').". Низкие цены на спецтехнику, быстрая доставка по стране, диагностика, ремонт."
 		);
-		// unset($this->seo['keywords']);
-		// unset($this->seo['descr']);
 
-		$this->set('aRelated', $this->_getRelatedProducts($id, $article['Product']['code'], $article['Product']['cat_id'], $article['Product']['subcat_id']));
-
+        $aRelated = $this->_getRelatedProducts($id, $article['Product']['code'], $article['Product']['cat_id'], $article['Product']['subcat_id']);
 		$aDiscounts = array();
 		if ($this->currUser('id')) {
 		    $aDiscounts = $this->UserBrandDiscount->find('list', array(
@@ -189,7 +186,7 @@ class ProductsController extends AppController {
                 'conditions' => array('client_id' => $this->currUser('id'))
             ));
         }
-        $this->set(compact('aDiscounts'));
+        $this->set(compact('aRelated', 'aDiscounts'));
 	}
 
 	private function _getRelatedProducts($id, $code, $cat_id, $subcat_id) {
@@ -265,14 +262,11 @@ class ProductsController extends AppController {
 			}
 		}
 
-		$this->set('aProducts', $this->getCartProducts());
-		$this->disableCopy = false;
-
-		$aDiscounts = $this->UserBrandDiscount->find('list', array(
-            'fields' => array('brand_id', 'discount'),
-            'conditions' => array('client_id' => $user_id)
+		$this->set(array(
+		    'aProducts' => $this->getCartProducts(),
+		    'aDiscounts' => array()
         ));
-        $this->set(compact('aDiscounts'));
+		$this->disableCopy = false;
 	}
 
 	public function success($id) {

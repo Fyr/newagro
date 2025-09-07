@@ -19,21 +19,42 @@ class PriceHelper extends AppHelper {
 		return '<span class="rubl">₽</span>';
 	}
 
-	public function getPrice($product, $lForce = false, $aBrandDiscounts = array()) {
+	public function getPrice($product, $aBrandDiscounts = array(), $isApplyDiscount = true) {
 	    $brand_id = $product['Product']['brand_id'];
-	    $lBrandPrices = Configure::read('Settings.brand_prices')
-	        ? in_array($brand_id, explode(',', Configure::read('Settings.brand_prices')))
-	        : true; // if no brands selected - show for all brands
-		if (Configure::read('Settings.fk_price') && ($lForce || $lBrandPrices) ) {
-			$price = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price')]);
-			$price2 = floatval($product['PMFormData']['fk_'.Configure::read('Settings.fk_price2')]);
+	    $fk_price = Configure::read('Settings.fk_price');
+	    $fk_price2 = Configure::read('Settings.fk_price2');
+		if ($fk_price && $this->isShowPrice($product, $aBrandDiscounts)) {
+			$price = floatval($product['PMFormData']['fk_'.$fk_price]);
+			$price2 = floatval($product['PMFormData']['fk_'.$fk_price2]);
 			$finalPrice = ($price) ? $price : $price2;
 
-			if (isset($aBrandDiscounts[$brand_id])) {
-			    $finalPrice = $finalPrice * (100 - $aBrandDiscounts[$brand_id]) / 100;
+            $discount = $this->getBrandDiscount($product, $aBrandDiscounts);
+			if ($discount && $isApplyDiscount) {
+			    $finalPrice = $finalPrice * (100 - $discount) / 100;
 			}
             return $finalPrice;
 		}
 		return null;
+	}
+
+    // Return brand IDs that are allowed to show its prices
+	private function getBrandsWithPrices() {
+	    $brand_ids = Configure::read('Settings.brand_prices');
+	    return ($brand_ids) ? explode(',', $brand_ids) : array();
+	}
+
+	// return discount of current client for this brand if any
+	// if user is not logged in, there will be no discounts
+	public function getBrandDiscount($product, $aBrandDiscounts) {
+	    $brand_id = Hash::get($product, 'Product.brand_id');
+	    return (isset($aBrandDiscounts[$brand_id])) ? $aBrandDiscounts[$brand_id] : 0;
+	}
+
+    // returns true if price is available for this product
+    // returns true, if product's brand is in a list of brands with available prices or client has a brand discount for product's brand
+	public function isShowPrice($product, $aBrandDiscounts) {
+        $productBrand_id = Hash::get($product, 'Product.brand_id');
+	    $brandsWithPrices_ids = $this->getBrandsWithPrices();
+	    return in_array($productBrand_id, $this->getBrandsWithPrices()) || $this->getBrandDiscount($product, $aBrandDiscounts);
 	}
 }

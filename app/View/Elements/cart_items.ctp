@@ -40,10 +40,11 @@
             'Brand.title'
         );
 
-		$price = $this->Price->getPrice($article, false); // price is shown dynamically (JS)
-		$finalPrice = $this->Price->getPrice($article, false, $aDiscounts);
-		if ($price !== $finalPrice) { // brand discount for this item is already applied
-		    $brandTitle.= '<br/>'.$this->Html->div('discount-price', $aDiscounts[$brand_id].'%');
+		$price = $this->Price->getPrice($article, $aDiscounts, false); // price is shown dynamically (JS)
+		$finalPrice = $this->Price->getPrice($article, $aDiscounts);
+		$brandDiscount = $this->Price->getBrandDiscount($article, $aDiscounts);
+		if ($brandDiscount) { // brand discount for this item is already applied
+		    $brandTitle.= '<br/>'.$this->Html->div('discount-price', -$brandDiscount.'%');
 		}
 
 		$aPrices[$id] = $price;
