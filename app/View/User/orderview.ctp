@@ -52,8 +52,19 @@
 		}
 
 		$class = ($class == 'odd') ? 'even' : 'odd';
-		$price = $this->Price->getPrice($product);
-		$total+= ($price) ? $price * $detail['qty'] : 0;
+		$price = $detail['price'];
+		$finalPrice = $this->Price->calcPrice($price, $detail['discount']);
+		$showPrice = ($price === $finalPrice)
+            ? $this->Price->format($finalPrice, true)
+            : $this->Html->div('old-price', $this->Price->format($price, false)).' '.$this->Html->div('discount-price', $this->Price->format($finalPrice, false));
+
+
+		$sum = $finalPrice * $detail['qty'];
+		$total+= $sum;
+
+		$sum = ($price === $finalPrice)
+		    ? $this->Price->format($sum, false)
+		    : $this->Price->format($sum, false).' ('.$this->Html->div('discount-price', -$detail['discount'].'%').')';
 		$asterix = ($price) ? '' : '<span style="font-size: 14px; font-weight: bold;">*</span>';
 ?>
 			<tr id="cart-item_<?=$id?>" class="gridRow <?=$class?>">
@@ -78,8 +89,8 @@
 				<td nowrap="nowrap"><?=Hash::get($aBrands[$brand_id], 'Brand.title')?></td>
 				<td><?=$this->Html->link($code.' '.$title, $url)?></td>
 				<td align="right"><?=$detail['qty']?></td>
-				<td class="cart-price" align="right" nowrap="nowrap"><?=($price) ? $this->Price->format($price, false) : ''?></td>
-				<td class="cart-sum" align="right" nowrap="nowrap"><?=($price) ? $this->Price->format($price * $detail['qty'], false) : ''?></td>
+				<td class="cart-price" align="right" nowrap="nowrap"><?=($price > 0) ? $showPrice : ''?></td>
+				<td class="cart-sum" align="right" nowrap="nowrap"><?=($sum > 0) ? $sum : ''?></td>
 			</tr>
 <?
 	}

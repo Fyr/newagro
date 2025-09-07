@@ -19,6 +19,10 @@ class PriceHelper extends AppHelper {
 		return '<span class="rubl">₽</span>';
 	}
 
+	public function calcPrice($price, $discount) {
+	    return $price * (100 - $discount) / 100;
+	}
+
 	public function getPrice($product, $aBrandDiscounts = array(), $isApplyDiscount = true) {
 	    $brand_id = $product['Product']['brand_id'];
 	    $fk_price = Configure::read('Settings.fk_price');
@@ -30,7 +34,7 @@ class PriceHelper extends AppHelper {
 
             $discount = $this->getBrandDiscount($product, $aBrandDiscounts);
 			if ($discount && $isApplyDiscount) {
-			    $finalPrice = $finalPrice * (100 - $discount) / 100;
+			    $finalPrice = $this->calcPrice($finalPrice, $discount);
 			}
             return $finalPrice;
 		}

@@ -398,7 +398,16 @@ class AppController extends Controller {
         return $this->getProducts(array_keys($cartItems));
 	}
 
+	protected function getHelper($className) {
+	    App::uses($className, 'View/Helper');
+	    return new $className($this->_getViewObject());
+	}
+
 	protected function saveSiteOrder($data) {
+	    $cartItems = $this->getCartItems();
+	    $products = $this->getCartProducts();
+	    $aProducts = Hash::combine($products, '{n}.Product.id', '{n}');
+
 	    $this->loadModel('SiteOrder');
 	    $this->loadModel('SiteOrderDetails');
 	    if (!$this->SiteOrder->save($data)) {
@@ -406,22 +415,29 @@ class AppController extends Controller {
 	    }
 
 	    $site_order_id = $this->SiteOrder->id;
-	    $cartItems = $this->getCartItems();
+	    $aDiscounts = array();
+        if ($this->currUser('id')) {
+            $aDiscounts = $this->UserBrandDiscount->find('list', array(
+                'fields' => array('brand_id', 'discount'),
+                'conditions' => array('client_id' => $this->currUser('id'))
+            ));
+        }
+        $this->PriceHelper = $this->getHelper('PriceHelper');
         foreach($cartItems as $product_id => $qty) {
             $this->SiteOrderDetails->clear();
-            $this->SiteOrderDetails->save(compact('site_order_id', 'product_id', 'qty'));
+            $price = $this->PriceHelper->getPrice($aProducts[$product_id]);
+            $discount = $this->PriceHelper->getBrandDiscount($aProducts[$product_id], $aDiscounts);
+            $this->SiteOrderDetails->save(compact('site_order_id', 'product_id', 'qty', 'price', 'discount'));
         }
 
         $order = $this->SiteOrder->findById($site_order_id);
 
-        $aProducts = $this->getCartProducts();
-
         $this->loadModel('Brand');
         $this->Brand->unbindModel(array('hasOne' => array('Seo')));
-        $aBrands = Hash::combine($this->Brand->findAllById(Hash::extract($aProducts, '{n}.Product.brand_id')), '{n}.Brand.id', '{n}');
+        $aBrands = Hash::combine($this->Brand->findAllById(Hash::extract($products, '{n}.Product.brand_id')), '{n}.Brand.id', '{n}');
 
         $subject = Configure::read('domain.title') . ': ' . __('New order has been accepted');
-        $viewVars = compact('aProducts', 'order', 'cartItems', 'aBrands');
+        $viewVars = compact('products', 'order', 'cartItems', 'aBrands', 'aDiscounts');
 
         // create a notify message for Vcars admin
         $View = $this->_getViewObject();

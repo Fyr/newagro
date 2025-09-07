@@ -21,6 +21,7 @@ Email: <?=h($this->request->data('SiteOrder.email'))?><br/>
 		<th width="50%">Название</th>
 		<th>Кол-во</th>
 		<th>Цена</th>
+		<th>Скидка</th>
 		<th>Сумма</th>
 	</tr>
 </thead>
@@ -35,7 +36,8 @@ Email: <?=h($this->request->data('SiteOrder.email'))?><br/>
 			$title = Hash::get($article, 'Product.title');
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
-		$price = $this->Price->getPrice($article);
+		$price = $this->Price->getPrice($article, $aDiscounts);
+		$discount = $this->Price->getBrandDiscount($article, $aDiscounts);
 		$qty = intval($cartItems[$id]);
 		$total+= $price * $qty;
 ?>
@@ -45,8 +47,9 @@ Email: <?=h($this->request->data('SiteOrder.email'))?><br/>
 		<td><?=Hash::get($article, 'Product.code')?></td>
 		<td><?=$this->Html->link($title, $url)?></td>
 		<td align="right" nowrap="nowrap"><?=$cartItems[$id]?></td>
-		<td align="right" nowrap="nowrap"><?=$this->Price->format($price, false)?></td>
-		<td align="right" nowrap="nowrap"><?=$this->Price->format($price * $qty, false)?></td>
+		<td align="right" nowrap="nowrap"><?=($price > 0) ? $this->Price->format($price, false) : ''?></td>
+		<td align="right" nowrap="nowrap"><?=($discount > 0) ? $discount : ''?></td>
+		<td align="right" nowrap="nowrap"><?=($price > 0) ? $this->Price->format($price * $qty, false) : ''?></td>
 	</tr>
 <?
 	}
