@@ -5,7 +5,7 @@ class SiteOrder extends AppModel {
 	public $validate = array(
 		'username' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field cannot be blank',
 			),
 			'checkNameLen' => array(
@@ -15,7 +15,7 @@ class SiteOrder extends AppModel {
 		),
 		'email' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field cannot be blank',
 			),
 			'checkEmail' => array(
@@ -25,13 +25,13 @@ class SiteOrder extends AppModel {
 		),
 		'phone' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field cannot be blank'
 			)
 		),
 		'address' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field cannot be blank'
 			)
 		)

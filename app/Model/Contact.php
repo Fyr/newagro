@@ -2,11 +2,11 @@
 App::uses('AppModel', 'Model');
 class Contact extends AppModel {
 	public $useTable = false;
-	
+
 	public $validate = array(
 		'username' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field cannot be blank',
 			),
 			'checkNameLen' => array(
@@ -22,7 +22,7 @@ class Contact extends AppModel {
 		),
 		'body' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field cannot be blank',
 			)
 		)

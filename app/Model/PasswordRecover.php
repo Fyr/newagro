@@ -6,7 +6,7 @@ class PasswordRecover extends AppModel {
 	public $validate = array(
         'email' => array(
             'checkNotEmpty' => array(
-                'rule' => 'notEmpty',
+                'rule' => 'notBlank',
                 'message' => 'Field is mandatory',
             ),
             'checkEmail' => array(

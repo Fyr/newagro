@@ -21,7 +21,7 @@ class User extends AppModel {
 	public $validate = array(
 		'email' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field is mandatory',
 			),
 			'checkEmail' => array(
@@ -35,7 +35,7 @@ class User extends AppModel {
 		),
 		'password' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field is mandatory'
 			),
 			'checkMinLen' => array(
@@ -49,19 +49,19 @@ class User extends AppModel {
 		),
 		'password_confirm' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field is mandatory',
 			)
 		),
 		'fio' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field is mandatory',
 			)
 		),
 		'phone' => array(
 			'checkNotEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Field is mandatory',
 			),
 			'checkIsUnique' => array(
