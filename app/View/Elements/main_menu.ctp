@@ -27,7 +27,7 @@
 ?>
 <span class="floatR langSwitch">
 <?
-    if (isset($currUser)) {
+    if ($currUser) {
         echo $this->Html->link(__('User%sarea', '<br/>'), array('controller' => 'user', 'action' => 'index'), array('class' => 'login userarea', 'escape' => false));
     } else {
         echo $this->Html->link(__('Log in'), array('controller' => 'user', 'action' => 'login'), array('class' => 'login'));

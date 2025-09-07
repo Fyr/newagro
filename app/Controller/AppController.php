@@ -111,9 +111,8 @@ class AppController extends Controller {
         $userID = AuthComponent::user('id');
         if ($userID) {
             $this->currUser = $this->User->findById($userID);
-            $this->set('currUser', $this->currUser);
         }
-
+        $this->set('currUser', $this->currUser);
 		$this->beforeFilterLayout();
 	}
 
