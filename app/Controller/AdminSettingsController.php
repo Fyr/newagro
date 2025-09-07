@@ -37,7 +37,9 @@ class AdminSettingsController extends AdminController {
 
         $this->paginate = array(
             'Brand' => array(
-                'fields' => array('title')
+                'fields' => array('title'),
+                'conditions' => array('published' => 1, 'is_fake' => 0),
+                'order' => array('title' => 'asc')
             )
         );
         $this->PCTableGrid->paginate('Brand');

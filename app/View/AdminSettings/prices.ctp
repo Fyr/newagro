@@ -44,7 +44,7 @@
 	$aTabs = array(
 		'Выбор цен' => implode('', $aPricesForm),
 		'Формат' => implode('', $aFormatForm),
-		'Брэнды' => $this->PHTableGrid->render('Brand', array(
+		'Брэнды' => 'Показывать цены для:<br />'.$this->PHTableGrid->render('Brand', array(
 			'actions' => array(
 				'table' => array(),
 				'row' => array(),
