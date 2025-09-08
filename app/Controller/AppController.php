@@ -52,6 +52,7 @@ class AppController extends Controller {
 			$this->layout = 'error-page';
 			$this->initNavBar();
 			$this->initNavBarView();
+			$this->set('currUser', $this->currUser);
 			return;
 		}
 		$this->disableCopy = false; // !TEST_ENV;
