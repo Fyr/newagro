@@ -245,7 +245,7 @@ $(document).ready(function(){
 <?
     // echo $this->element('sql_dump');
     echo $this->element('call-widget');
-    echo $this->element('sql_stats');
+    // echo $this->element('sql_stats');
 ?>
 	</body>
 </html>

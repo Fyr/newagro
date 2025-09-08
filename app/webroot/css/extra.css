@@ -178,7 +178,10 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 }
 
 @media (max-width: 720px) {
-	.langSwitch { margin-top: 31px; margin-right: 0px; }
+	.langSwitch {
+		margin: 22px 0 0 10px;
+		font-size: 12px;
+	}
 }
 
 .paging-title {
@@ -205,6 +208,7 @@ a.our-partners, a.our-partners:visited, a.our-partners:hover, a.our-partners:act
 .floatR.langSwitch .login {
 	color: #fff;
 	display: block;
+	margin-bottom: 3px;
 }
 
 /* Form styles */
