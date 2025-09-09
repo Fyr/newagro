@@ -240,7 +240,7 @@ class ProductsController extends AppController {
 	private function processNumber($value) {
 		$this->searchNumber = $value;
 		// $_value = str_replace(array('.', '-', ',', '/', '\\'), '', $value);
-		$product_ids = $this->DetailNum->findDetails($this->DetailNum->stripList('*'.$value.'*'), true, DetailNum::ORIG);
+		$product_ids = $this->DetailNum->findDetails($this->DetailNum->stripList($value.'*'), true, DetailNum::ORIG);
 		$this->paginate['conditions'] = array('Product.id' => $product_ids);
 		$order = array();
 		foreach ($product_ids as $id) {
