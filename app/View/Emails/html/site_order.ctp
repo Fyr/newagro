@@ -29,7 +29,7 @@ Email: <?=h($this->request->data('SiteOrder.email'))?><br/>
 <?
 	$class = '';
 	$total = 0;
-	foreach($aProducts as $i => $article) {
+	foreach($products as $i => $article) {
 		$this->ArticleVars->init($article, $url, $title, $teaser, $src, '130x100', $featured, $id);
 		$brand_id = Hash::get($article, 'Product.brand_id');
 		if (!($title = Hash::get($article, 'Product.title_rus'))) {

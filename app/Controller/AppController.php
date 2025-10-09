@@ -427,6 +427,9 @@ class AppController extends Controller {
         foreach($cartItems as $product_id => $qty) {
             $this->SiteOrderDetails->clear();
             $price = $this->PriceHelper->getPrice($aProducts[$product_id]);
+            if ($price === null) {
+                $price = 0;
+            }
             $discount = $this->PriceHelper->getBrandDiscount($aProducts[$product_id], $aDiscounts);
             $this->SiteOrderDetails->save(compact('site_order_id', 'product_id', 'qty', 'price', 'discount'));
         }
