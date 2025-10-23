@@ -19,7 +19,7 @@
 				$url = SiteRouter::url($_article);
 				$active = (isset($currSubcat) && $currSubcat == $_article[$objectType]['id']) ? 'class="active"' : '';
 				$title = ($objectType == 'SectionArticle') ? $_article[$objectType]['section'] : $_article[$objectType]['title'];
-				if ($_article[$objectType]['featured']) {
+				if (Hash::get($_article, $objectType.'.featured')) {
 					$title = '<b>'.$title.'</b>';
 				}
 ?>
