@@ -7,17 +7,17 @@ App::uses('Category', 'Model');
 
 class Subcategory extends AppModel {
 	public $useDbConfig = 'vitacars';
-	public $useTable = 'articles';
-	
+	public $useTable = 'subcategories';
+
 	public $belongsTo = array(
 		'Category' => array(
 			'className' => 'Category',
-			'foreignKey' => 'object_id',
+			'foreignKey' => 'cat_id',
 			'dependent' => true
 		)
 	);
-	
-	var $hasOne = array(
+
+	public $hasOne = array(
 		'Seo' => array(
 			'className' => 'SeoArticle',
 			'foreignKey' => 'object_id',
@@ -25,7 +25,6 @@ class Subcategory extends AppModel {
 			'dependent' => true
 		)
 	);
-	
-	protected $objectType = 'Subcategory';
 
+	// protected $objectType = 'Subcategory';
 }

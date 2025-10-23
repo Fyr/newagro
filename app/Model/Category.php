@@ -1,12 +1,12 @@
 <?
 App::uses('AppModel', 'Model');
 App::uses('Article', 'Article.Model');
-App::uses('Media', 'Media.Model');
 App::uses('SeoArticle', 'Model');
+App::uses('Media', 'Media.Model');
 class Category extends AppModel {
 	public $useDbConfig = 'vitacars';
-	public $useTable = 'articles';
-	
+	public $useTable = 'categories';
+
 	var $hasOne = array(
 		'Seo' => array(
 			'className' => 'SeoArticle',
@@ -15,7 +15,6 @@ class Category extends AppModel {
 			'dependent' => true
 		)
 	);
-	
-	protected $objectType = 'Category';
 
+	// protected $objectType = 'Category';
 }

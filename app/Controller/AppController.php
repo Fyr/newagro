@@ -272,8 +272,7 @@ class AppController extends Controller {
 
 		$this->loadModel('Category');
 		$this->Category->unbindModel(array('hasOne' => array('Seo')));
-		$conditions = array('Category.object_type' => 'Category', 'is_fake' => 0);
-		$conditions['Category.export_'.Configure::read('domain.zone')] = 1;
+		$conditions = array('Category.is_fake' => 0, 'Category.export_'.Configure::read('domain.zone') => 1);
 		$order = array('Category.sorting' => 'ASC');
 		$aCategories = $this->Category->find('all', compact('conditions', 'order'));
 		$aCategories = Hash::combine($aCategories, '{n}.Category.id', '{n}');
@@ -284,9 +283,14 @@ class AppController extends Controller {
 		}
 
 		$this->loadModel('Subcategory');
-		$this->Subcategory->unbindModel(array('hasOne' => array('Seo')));
-		$aSubcategories = $this->Subcategory->getObjectList('Subcategory', '', array('Subcategory.sorting' => 'ASC'));
-		$aSubcategories = Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.object_id');
+		$this->Subcategory->unbindModel(array(
+		    'hasOne' => array('Seo')
+        ));
+		$aSubcategories = $this->Subcategory->find('all', array(
+		    'conditions' => array('Subcategory.is_fake' => 0),
+		    'order' => array('Subcategory.sorting' => 'ASC')
+        ));
+		$aSubcategories = Hash::combine($aSubcategories, '{n}.Subcategory.id', '{n}', '{n}.Subcategory.cat_id');
 		$this->set('aSubcategories', $aSubcategories);
 
 		// Load menu titles from articles

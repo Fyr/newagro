@@ -4,10 +4,11 @@ App::uses('Article', 'Article.Model');
 App::uses('Media', 'Media.Model');
 App::uses('MediaArticle', 'Model');
 App::uses('SeoArticle', 'Model');
+
 class Brand extends AppModel {
 	public $useDbConfig = 'vitacars';
-	public $useTable = 'articles';
-	
+	public $useTable = 'brands';
+
 	public $hasOne = array(
 		'Seo' => array(
 			'className' => 'SeoArticle',
@@ -22,6 +23,6 @@ class Brand extends AppModel {
 			'dependent' => true
 		)
 	);
-	
-	protected $objectType = 'Brand';
+
+	// protected $objectType = 'Brand';
 }

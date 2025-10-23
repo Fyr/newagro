@@ -65,7 +65,7 @@ class SitemapController extends AppController {
 			array('controller' => 'pages', 'action' => 'show', 'about-us'),
 			array('controller' => 'contacts', 'action' => 'index')
 		);
-		
+
 		// get all subdomains except 1st one (www)
 		$aSubdomains = $this->Subdomain->find('all');
 		array_shift($aSubdomains);
@@ -91,8 +91,7 @@ class SitemapController extends AppController {
 			return;
 		}
 
-		$zone = Configure::read('domain.zone');
-		$conditions = array("export_$zone" => 1);
+		$conditions = array('Category.is_fake' => 0, 'Category.export_'.Configure::read('domain.zone') => 1);
 		$fields = array('id', 'title', 'slug');
 		$order = array('sorting ASC');
 		$categories = $this->Category->find('all', compact('fields', 'conditions', 'order'));
@@ -127,7 +126,7 @@ class SitemapController extends AppController {
 			'page' => $page
 		);
 		$aArticles = $this->paginate('Product');
-		
+
 		// Добавить подкатегории вручную - сокращает время запроса на count(*) Product
 		$this->_unbindModels($this->Subcategory);
 		$subcat_ids = array_unique(Hash::extract($aArticles, '{n}.Product.subcat_id'));
@@ -142,7 +141,7 @@ class SitemapController extends AppController {
 				$article['Subcategory'] = $subcategories[$subcat_id]['Subcategory'];
 			}
 		}
-		
+
 		return $aArticles;
 	}
 
