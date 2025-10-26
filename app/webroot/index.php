@@ -1,4 +1,5 @@
 <?php
+// $curTime = microtime(true);
 require_once('secure.php');
 (new Secure())->check();
 /**
@@ -118,3 +119,7 @@ $Dispatcher->dispatch(
 	new CakeRequest(),
 	new CakeResponse()
 );
+/*
+$timeConsumed = round(microtime(true) - $curTime,3)*1000;
+fdebug($timeConsumed."\r\n", 'perfomance-php.log');
+*/
