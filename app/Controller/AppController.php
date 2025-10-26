@@ -132,18 +132,23 @@ class AppController extends Controller {
 		$this->aNavBar = $this->aBottomLinks = array(
 			'home' => array('href' => $this->getUrl('/'), 'title' => __('Home')),
 			'news' => array('href' => $this->getUrl('/news', $this->request->param('filial')), 'title' => __('News')),
+			'blog' => array('href' => $this->getUrl('/blog'), 'title' => __('Blog')),
 			'products' => array('href' => $this->getUrl('/zapchasti'), 'title' => __('Spares')),
 			'remont' => array('href' => $this->getUrl('/remont'), 'title' => __('Repair')),
 			'offer' => array('href' => $this->getUrl('/offers', $this->request->param('filial')), 'title' => __('Hot Offers')),
-			'brand' => array('href' => $this->getUrl('/brand'), 'title' => __('Brands')),
-			'machinetool' => array('href' => $this->getUrl('/stanki'), 'title' => __('Machine tools')),
+			// 'brand' => array('href' => $this->getUrl('/brand'), 'title' => __('Brands')),
+			// 'machinetool' => array('href' => $this->getUrl('/stanki'), 'title' => __('Machine tools')),
 			'motor' => array('href' => $this->getUrl('/motors'), 'title' => __('Machinery')),
 			'about-us' => array('href' => $this->getUrl('/pages/show/about-us', $this->request->param('filial')), 'title' => ''),
 			'dealer' => array('href' => $this->getUrl('/magazini-zapchastei'), 'title' => ''),
 			'contacts' => array('href' => $this->getUrl('/contacts', $this->request->param('filial')), 'title' => __('Contacts'))
 		);
+
 		$this->aBottomLinks['policy'] = array('href' => $this->getUrl('/pages/show/policy'), 'title' => '');
 		$this->aBottomLinks['privacy'] = array('href' => $this->getUrl('/pages/show/privacy'), 'title' => '');
+
+		unset($this->aNavBar['home']);
+		unset($this->aNavBar['products']);
 	}
 
 	protected function beforeFilterLayout() {
@@ -277,10 +282,12 @@ class AppController extends Controller {
 		$aCategories = $this->Category->find('all', compact('conditions', 'order'));
 		$aCategories = Hash::combine($aCategories, '{n}.Category.id', '{n}');
 		$this->set('aCategories', array(0 => $aCategories));
+		/*
 		foreach ($aCategories as $article) {
 			$url = SiteRouter::url($article);
 			$this->aNavBar['products']['submenu'][] = array('href' => $url, 'title' => $article['Category']['title']);
 		}
+		*/
 
 		$this->loadModel('Subcategory');
 		$this->Subcategory->unbindModel(array(
@@ -314,17 +321,6 @@ class AppController extends Controller {
 		$this->set('enPage', ($pageEn) ? $this->getUrl('/pages/show/en-version') : '');
 		$this->set('isEN', $pageEn && isset($this->request->pass[0]) && $this->request->pass[0] == 'en-version');
 
-		if (Configure::read('domain.zone') == 'ru') {
-			unset($this->aNavBar['home']);
-			unset($this->aNavBar['brand']);
-			unset($this->aNavBar['machinetool']);
-			unset($this->aBottomLinks['brand']);
-		} else {
-			unset($this->aNavBar['home']);
-			unset($this->aNavBar['brand']);
-			unset($this->aNavBar['machinetool']);
-			unset($this->aBottomLinks['machinetool']);
-		}
 		$this->set('aBottomLinks', $this->aBottomLinks);
 		$this->set('aMenu', $this->aNavBar);
 

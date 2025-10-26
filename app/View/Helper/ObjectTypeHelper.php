@@ -2,7 +2,7 @@
 App::uses('AppHelper', 'View/Helper');
 class ObjectTypeHelper extends AppHelper {
     public $helpers = array('Html');
-    
+
     private function _getTitles() {
         $Titles = array(
             'index' => array(
@@ -22,8 +22,9 @@ class ObjectTypeHelper extends AppHelper {
                 'Subdomain' => __('Subdomains'),
                 'MachineTool' => __('Machine tools'),
                 'Region' => __('Regions'),
-                'Marker' => __('Markers')
-            ), 
+                'Marker' => __('Markers'),
+                'SiteArticle' => __('Blog')
+            ),
             'create' => array(
                 'Article' => __('Create Article'),
                 'Page' => __('Create Static page'),
@@ -40,7 +41,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Subdomain' => __('Create subdomain'),
                 'MachineTool' => __('Create machine tool'),
                 'Region' => __('Create region'),
-                'Marker' => __('Create marker')
+                'Marker' => __('Create marker'),
             ),
             'edit' => array(
                 'Article' => __('Edit Article'),
@@ -70,12 +71,12 @@ class ObjectTypeHelper extends AppHelper {
         );
         return $Titles;
     }
-    
+
     public function getTitle($action, $objectType) {
         $aTitles = $this->_getTitles();
         return (isset($aTitles[$action][$objectType])) ? $aTitles[$action][$objectType] : $aTitles[$action]['Article'];
     }
-    
+
     public function getBaseURL($objectType, $objectID = '') {
         return $this->Html->url(array('action' => 'index', $objectType, $objectID));
     }
