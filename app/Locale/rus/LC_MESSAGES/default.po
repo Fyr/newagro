@@ -286,6 +286,9 @@ msgstr "Общее"
 msgid "Title"
 msgstr "Название"
 
+msgid "Author"
+msgstr "Автор"
+
 msgid "Price"
 msgstr "Цена"
 
