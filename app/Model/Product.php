@@ -6,13 +6,13 @@ App::uses('PMFormData', 'Form.Model');
 App::uses('SeoArticle', 'Model');
 App::uses('Category', 'Model');
 App::uses('Subcategory', 'Model');
-class Product extends Article {
+class Product extends AppModel {
 	public $useDbConfig = 'vitacars';
-	public $useTable = 'articles';
-	
-	const NUM_DETAIL = 5;
-	const MOTOR = 6;
-	
+	public $useTable = 'products';
+
+	// const NUM_DETAIL = 5;
+	// const MOTOR = 6;
+
 	public $belongsTo = array(
 		'Category' => array(
 			'foreignKey' => 'cat_id'
@@ -21,7 +21,7 @@ class Product extends Article {
 			'foreignKey' => 'subcat_id'
 		)
 	);
-	
+
 	public $hasOne = array(
 		'MediaArticle' => array(
 			'className' => 'MediaArticle',
@@ -40,7 +40,7 @@ class Product extends Article {
 			'dependent' => true
 		)
 	);
-	
-	public $objectType = 'Product';
-	
+
+	// public $objectType = 'Product';
+
 }
