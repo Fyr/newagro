@@ -8,24 +8,48 @@ require_once('routes_filials.php');
 
 /* -= News =- */
 Router::connect('/news', array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'index',
 		'objectType' => 'News',
 	),
 	array('named' => array('page' => 1))
 );
-Router::connect('/news/:slug', 
+Router::connect('/news/:slug',
 	array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'view',
 		'objectType' => 'News'
 	),
 	array('pass' => array('slug'))
 );
 Router::connect('/news/page/:page', array(
-	'controller' => 'Articles', 
+	'controller' => 'Articles',
 	'action' => 'index',
 	'objectType' => 'News'
+),
+	array('named' => array('page' => '[\d]*'))
+);
+
+/* -= Blog =- */
+Router::connect('/blog', array(
+		'controller' => 'Articles',
+		'action' => 'index',
+		'objectType' => 'SiteArticle',
+	),
+	array('named' => array('page' => 1))
+);
+Router::connect('/blog/:slug',
+	array(
+		'controller' => 'Articles',
+		'action' => 'view',
+		'objectType' => 'SiteArticle'
+	),
+	array('pass' => array('slug'))
+);
+Router::connect('/blog/page/:page', array(
+	'controller' => 'Articles',
+	'action' => 'index',
+	'objectType' => 'SiteArticle'
 ),
 	array('named' => array('page' => '[\d]*'))
 );
@@ -47,22 +71,22 @@ Router::connect('/remont/:slug',
 
 /* -= Offers =- */
 Router::connect('/offers', array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'index',
 		'objectType' => 'Offer',
 	),
 	array('named' => array('page' => 1))
 );
-Router::connect('/offers/:slug', 
+Router::connect('/offers/:slug',
 	array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'view',
 		'objectType' => 'Offer'
 	),
 	array('pass' => array('slug'))
 );
 Router::connect('/offers/page/:page', array(
-	'controller' => 'Articles', 
+	'controller' => 'Articles',
 	'action' => 'index',
 	'objectType' => 'Offer'
 ),
@@ -95,22 +119,22 @@ Router::connect('/brand/page/:page', array(
 
 /* -= Motors =- */
 Router::connect('/motors', array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'index',
 		'objectType' => 'Motor',
 	),
 	array('named' => array('page' => 1))
 );
-Router::connect('/motors/:slug', 
+Router::connect('/motors/:slug',
 	array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'view',
 		'objectType' => 'Motor'
 	),
 	array('pass' => array('slug'))
 );
 Router::connect('/motors/page/:page', array(
-	'controller' => 'Articles', 
+	'controller' => 'Articles',
 	'action' => 'index',
 	'objectType' => 'Motor'
 ),
@@ -143,22 +167,22 @@ Router::connect('/stanki/page/:page', array(
 
 /* -= Dealers =- */
 Router::connect('/magazini-zapchastei', array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'index',
 		'objectType' => 'Dealer',
 	),
 	array('named' => array('page' => 1))
 );
-Router::connect('/magazini-zapchastei/:slug', 
+Router::connect('/magazini-zapchastei/:slug',
 	array(
-		'controller' => 'Articles', 
+		'controller' => 'Articles',
 		'action' => 'view',
 		'objectType' => 'Dealer'
 	),
 	array('pass' => array('slug'))
 );
 Router::connect('/magazini-zapchastei/page/:page', array(
-	'controller' => 'Articles', 
+	'controller' => 'Articles',
 	'action' => 'index',
 	'objectType' => 'Dealer'
 ),
