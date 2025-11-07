@@ -16,7 +16,7 @@ class Secure {
     // allowed: GET, POST, PUT
     private $aHttpMethods = array(
         self::CRIT => array('OPTIONS', 'TRACE', 'CONNECT'),
-        self::WARN => array('DELETE', 'HEAD', 'PATCH'),
+        self::WARN => array('DELETE', 'PATCH'),
     );
 
     private $aStopLines = array(
