@@ -12,7 +12,7 @@ class ArticlesController extends AppController {
 	public $components = array('Table.PCTableGrid');
 	// public $uses = array('News', 'Offer', 'Motor');
 
-	// const PER_PAGE = 3;
+	// const PER_PAGE = 2;
 	const PER_PAGE = 21;
 
 	protected $objectType;
@@ -102,8 +102,6 @@ class ArticlesController extends AppController {
 			}
 		}
 
-		$this->set('article', $aArticle);
-
 		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
 			$aArticle['Seo']['title'] = $aArticle[$this->objectType]['title'];
 		}
@@ -118,5 +116,11 @@ class ArticlesController extends AppController {
 				$this->set('category', $aArticle);
 			}
 		}
+
+		$id = Hash::get($aArticle, $this->objectType.'.id');
+		$this->{$this->objectType}->increase('views', $id);
+		$aArticle[$this->objectType]['views']++;
+
+		$this->set('article', $aArticle);
 	}
 }
