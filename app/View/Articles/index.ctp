@@ -1,4 +1,7 @@
 <?
+    if ($objectType === 'SiteArticle') {
+        $this->Html->css(array('/Icons/css/icons'), array('inline' => false));
+    }
 	$title = $this->ObjectType->getTitle('index', $objectType);
 	echo $this->element('bread_crumbs', array('aBreadCrumbs' => array(
 		__('Home') => '/',
@@ -18,11 +21,28 @@
                             <a href="<?=$url?>"><img src="<?=$src?>" alt="<?=$title?>" class="thumb"/></a>
 <?
 			}
-			if ($objectType == 'News' || $objectType == 'Offer') {
+			if (in_array($objectType, array('News', 'Offer', 'SiteArticle'))) {
 ?>
-                            <div class="time"><span class="icon clock"></span><?=$this->PHTime->niceShort($article[$objectType]['created'])?></div>
+                            <div class="time">
+                                <span class="icon clock"></span><?=$this->PHTime->niceShort($article[$objectType]['created'])?>
+                            </div>
 <?
 			}
+?>
+<?
+            if ($objectType === 'SiteArticle') {
+?>
+                            <div class="views">
+                                <span class="">Просмотров: </span><?=$article[$objectType]['views']?>
+                                <span class="icon-color icon-preview"></span><br/>
+                                <span class="">Рейтинг: </span><?=$article[$objectType]['views']?>
+                            </div>
+                            <div class="author">
+                                <span class="">Автор: </span><?=$article[$objectType]['author']?>
+                            </div>
+
+<?
+            }
 ?>
                             <a href="<?=$url?>" class="title"><?=$title?></a>
                             <div class="description"><?=$teaser?></div>

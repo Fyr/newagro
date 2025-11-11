@@ -327,3 +327,17 @@ button.close {
 
 .old-price { display: inline; text-decoration: line-through; font-size: 0.8em; }
 .discount-price { display: inline; color: #f00; }
+
+.author {
+	margin-top: 5px;
+	font-style: italic;
+	padding-left: 18px;
+}
+.author span {
+	font-style: normal;
+}
+.views {
+	margin: 5px 5px 0 0;
+	float: right;
+	font-size: 0.8em;
+}

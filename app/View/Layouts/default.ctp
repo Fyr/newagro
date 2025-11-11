@@ -243,7 +243,7 @@ $(document).ready(function(){
         </div>
 
 <?
-    // echo $this->element('sql_dump');
+    echo $this->element('sql_dump');
     echo $this->element('call-widget');
     // echo $this->element('sql_stats');
 ?>
