@@ -5,9 +5,9 @@ class Secure {
     const CRIT = 2;
 
     const LEVEL = array(
-        self::NOTE => 'NOTE!',
-        self::WARN => 'WARN!',
         self::CRIT => 'CRIT!',
+        self::WARN => 'WARN!',
+        self::NOTE => 'NOTE!',
     );
 
     const LOG_FILE = 'secure.log';
@@ -17,6 +17,7 @@ class Secure {
     private $aHttpMethods = array(
         self::CRIT => array('OPTIONS', 'TRACE', 'CONNECT'),
         self::WARN => array('DELETE', 'PATCH'),
+        self::NOTE => array('HEAD')
     );
 
     private $aStopLines = array(
@@ -61,7 +62,6 @@ class Secure {
             '.circleci',
             '.dump',
         ),
-        self::WARN => array(),
     );
 
     private $aExtWhiteList = array('html', 'css', 'js', 'ico', 'txt', 'jpg', 'jpeg', 'jfif', 'png', 'gif', 'pdf', 'csv');
@@ -96,10 +96,16 @@ class Secure {
             }
 
             // check all CRIT issues first
-            foreach(array(self::CRIT, self::WARN) as $level) {
-                $this->checkHeaders($level, $_SERVER['REQUEST_METHOD'], $this->aHttpMethods[$level]);
-                $this->checkStopLine($level, $this->getURL(), $this->aStopLines[$level]);
-                $this->checkStopWord($level, $this->getURL(), $this->aStopWords[$level]);
+            foreach(self::LEVEL as $level => $levelName) {
+                if (isset($this->aHttpMethods[$level])) {
+                    $this->checkHeaders($level, $_SERVER['REQUEST_METHOD'], $this->aHttpMethods[$level]);
+                }
+                if (isset($this->aStopLines[$level])) {
+                    $this->checkStopLine($level, $this->getURL(), $this->aStopLines[$level]);
+                }
+                if (isset($this->aStopWords[$level])) {
+                    $this->checkStopWord($level, $this->getURL(), $this->aStopWords[$level]);
+                }
 
                 if ($level === self::CRIT) { // check this issues only once
                     $this->checkDotURL($this->getURL());
@@ -113,6 +119,7 @@ class Secure {
                 case self::WARN:
                     // in both cases terminate request
                     $this->abortRequest('Service is temporary unavailable');
+                case self::NOTE: // do nothing - just bypass
             }
         }
     }
@@ -213,8 +220,8 @@ class Secure {
         // log this ip that we block
         file_put_contents(self::BAN_FILE, $ip."\r\n", FILE_APPEND);
 
-        // ban this IP
-        system("/usr/local/bin/ip-ban {$ip} &");
+        // ban this IP - temporary cancelled
+        // system("/usr/local/bin/ip-ban {$ip} &");
     }
 
     protected function abortRequest() {

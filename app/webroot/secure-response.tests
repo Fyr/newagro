@@ -15,7 +15,7 @@ OK
 OK
 OK
 127.0.0.0 | CRIT! | Dangerous HTTP method 'TRACE'
-127.0.0.0 | WARN! | Unsupported HTTP method 'HEAD'
+127.0.0.0 | NOTE! | Unsupported HTTP method 'HEAD'
 127.0.0.0 | WARN! | Stop line '/api'
 127.0.0.0 | WARN! | Stop line '/feed'
 198.55.98.182 | CRIT! | Stop word 'config'
