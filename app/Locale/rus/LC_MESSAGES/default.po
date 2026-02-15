@@ -915,3 +915,6 @@ msgstr "Автор"
 
 msgid "Blog"
 msgstr "Блог"
+
+msgid "Submit"
+msgstr "Отправить"

@@ -96,7 +96,7 @@ a:hover { text-decoration: none;}
 }
 
 @media (max-width: 547px) {
-    .phones { font-size: 12px;}
+    .phones { font-size: 18px;}
 }
 
 @media (max-width: 1187px) {

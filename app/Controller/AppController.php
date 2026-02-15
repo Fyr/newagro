@@ -17,7 +17,7 @@ class AppController extends Controller {
 	public $paginate;
 	public $aNavBar = array(), $aBottomLinks = array(), $currMenu = '', $currLink = '', $currUser = false;
 	public $pageTitle = '', $aBreadCrumbs = array(), $seo = array(), $disableCopy = true, $leftSidebar = true, $rightSidebar = true;
-	public $stylesVersion = 11;
+	public $stylesVersion = 12;
 
 	public function __construct($request = null, $response = null) {
 		$this->_beforeInit();
@@ -131,11 +131,12 @@ class AppController extends Controller {
 	protected function initNavBar() {
 		$this->aNavBar = $this->aBottomLinks = array(
 			'home' => array('href' => $this->getUrl('/'), 'title' => __('Home')),
+			'products' => array('href' => $this->getUrl('/zapchasti'), 'title' => __('Catalog')),
 			'news' => array('href' => $this->getUrl('/news', $this->request->param('filial')), 'title' => __('News')),
-			'blog' => array('href' => $this->getUrl('/blog'), 'title' => __('Blog')),
-			'products' => array('href' => $this->getUrl('/zapchasti'), 'title' => __('Spares')),
-			'remont' => array('href' => $this->getUrl('/remont'), 'title' => __('Repair')),
 			'offer' => array('href' => $this->getUrl('/offers', $this->request->param('filial')), 'title' => __('Hot Offers')),
+			'remont' => array('href' => $this->getUrl('/remont'), 'title' => __('Repair')),
+			'blog' => array('href' => $this->getUrl('/blog'), 'title' => __('Blog')),
+
 			// 'brand' => array('href' => $this->getUrl('/brand'), 'title' => __('Brands')),
 			// 'machinetool' => array('href' => $this->getUrl('/stanki'), 'title' => __('Machine tools')),
 			'motor' => array('href' => $this->getUrl('/motors'), 'title' => __('Machinery')),
@@ -148,7 +149,8 @@ class AppController extends Controller {
 		$this->aBottomLinks['privacy'] = array('href' => $this->getUrl('/pages/show/privacy'), 'title' => '');
 
 		unset($this->aNavBar['home']);
-		unset($this->aNavBar['products']);
+		// unset($this->aNavBar['products']);
+		unset($this->aNavBar['motor']);
 	}
 
 	protected function beforeFilterLayout() {

@@ -1,6 +1,11 @@
 <?
     if ($objectType === 'SiteArticle') {
         $this->Html->css(array('/Icons/css/icons'), array('inline' => false));
+        $captchaKey = Configure::read('Recaptcha.publicKey');
+        $this->Html->script(array(
+            '/core/js/json_handler',
+            'https://www.google.com/recaptcha/api.js?render='.$captchaKey
+        ), array('inline' => false));
     }
 
 	if ($objectType == 'SectionArticle') {
@@ -36,7 +41,7 @@
 	} else {
 ?>
 <?
-            if ($objectType === 'SiteArticle') {
+        if ($objectType === 'SiteArticle') {
 ?>
         <div class="views">
             <span class="">Просмотров: </span><?=$article[$objectType]['views']?>
@@ -51,7 +56,7 @@
         </div>
 
 <?
-            }
+        }
 ?>
 
 <div class="block main clearfix">
@@ -60,5 +65,49 @@
 	</div>
 </div>
 <?
+	}
+	if ($objectType === 'SiteArticle') {
+	    echo $this->Form->create('UserComment', array('class' => 'feedback register'));
+?>
+	<div class="block main">
+<?
+        if ($currUser) {
+?>
+        <p>
+            <span class="star">*</span> Ваш комментарий появится после модерации.
+        </p>
+<?
+            echo $this->Form->input('body', array('label' => array('text' => '<b>Оставить комментарий</b>')));
+            echo $this->Form->hidden('UserComment.token');
+            echo $this->Form->button(__('Submit'), array('type' => 'button', 'class' => 'submit', 'div' => false));
+?>
+<script>
+$(function() {
+	grecaptcha.ready(function() {
+		$('#UserCommentForm .submit').click(function () {
+			grecaptcha.execute('<?=$captchaKey?>', { action: 'register' }).then(function(token) {
+				$('#UserCommentToken').val(token);
+				$('#UserCommentForm').submit();
+			});
+		});
+	});
+});
+</script>
+
+<?
+	    } else {
+?>
+	    <p>
+	        Комментарии могут оставлять только авторизованные пользователи.<br/>
+	        Войдите в <?=$this->Html->link('личный кабинет', array('controller' => 'user', 'action' => 'login'))?>, чтобы оставить комментарий. <br/>
+	        Пройдите по этой <?=$this->Html->link('ссылке', array('controller' => 'pages', 'action' => 'action'))?> для регистрации.
+	    </p>
+
+<?
+	    }
+?>
+	</div>
+<?
+	echo $this->Form->end();
 	}
 ?>
