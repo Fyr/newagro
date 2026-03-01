@@ -14,7 +14,10 @@
 		'SEO' => $this->element('Seo.edit')
     );
     if ($id) {
-        $aTabs['Media'] = $this->element('Media.edit', array('object_type' => $objectType, 'object_id' => $id));
+        $aTabs['Media'] = $this->element('Media.edit', array(
+            'object_type' => ($objectType === 'SiteArticle') ? $objectType : 'Page',
+            'object_id' => $id
+        ));
     }
 	echo $this->element('admin_tabs', compact('aTabs'));
 	echo $this->element('Form.form_actions', array('backURL' => $this->ObjectType->getBaseURL($objectType, $objectID)));
