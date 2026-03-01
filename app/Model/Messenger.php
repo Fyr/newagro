@@ -7,7 +7,8 @@ class Messenger extends AppModel {
             'skype' => 'Skype',
             'viber' => 'Viber',
             'telegram' => 'Telegram',
-            'whatsapp' => 'WhatsApp'
+            'whatsapp' => 'WhatsApp',
+            'max' => 'MAX'
         );
 	}
 
@@ -18,12 +19,12 @@ class Messenger extends AppModel {
 
     public function getUsedList() {
         $sql = "
-SELECT ms.*, `Messenger`.* 
+SELECT ms.*, `Messenger`.*
 FROM (
     SELECT `type`, AVG(sorting) as sorting, (SELECT id FROM messengers AS mu WHERE mt.type = mu.type AND active = 1 ORDER BY used LIMIT 1 ) AS id
     FROM messengers AS mt
-    WHERE mt.active = 1 
-    GROUP BY `type` 
+    WHERE mt.active = 1
+    GROUP BY `type`
     ORDER BY sorting) AS ms
 INNER JOIN messengers AS `Messenger` ON `Messenger`.id = ms.id
 ORDER BY ms.sorting";
