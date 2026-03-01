@@ -145,12 +145,15 @@ class AppController extends Controller {
 			'contacts' => array('href' => $this->getUrl('/contacts', $this->request->param('filial')), 'title' => __('Contacts'))
 		);
 
+        $this->aBottomLinks['investments'] = array('href' => $this->getUrl('/pages/show/investments'), 'title' => '');
 		$this->aBottomLinks['policy'] = array('href' => $this->getUrl('/pages/show/policy'), 'title' => '');
 		$this->aBottomLinks['privacy'] = array('href' => $this->getUrl('/pages/show/privacy'), 'title' => '');
+
 
 		unset($this->aNavBar['home']);
 		// unset($this->aNavBar['products']);
 		unset($this->aNavBar['motor']);
+		unset($this->aBottomLinks['blog']);
 	}
 
 	protected function beforeFilterLayout() {
@@ -304,7 +307,7 @@ class AppController extends Controller {
 
 		// Load menu titles from articles
 		$this->loadModel('Page');
-		$aSlugs = array('magazini-zapchastei', 'about-us', 'policy', 'privacy');
+		$aSlugs = array('magazini-zapchastei', 'about-us', 'policy', 'privacy', 'investments');
 		$aArticleTitles = $this->Page->find('list', array(
 			'fields' => array('slug', 'title'),
 			'conditions' => array('slug' => $aSlugs, 'subdomain_id' => 0)
