@@ -9,6 +9,7 @@ class SiteArticle extends Article {
 
 	public $hasOne = array(
 		'Media' => array(
+		    'className' => 'Media.Media',
 			'foreignKey' => 'object_id',
 			'conditions' => array('Media.object_type' => 'SiteArticle', 'Media.main' => 1),
 			'dependent' => true
