@@ -69,7 +69,6 @@ $(document).ready(function(){
 <!-- END: Counters for HEAD -->
 </head>
 	<body>
-        <?=$this->element('accept-cookies')?>
         <!-- Counters for BODY TOP: START -->
 <?
 	if (isset($aSlot[8]) && !TEST_ENV) {
@@ -80,6 +79,7 @@ $(document).ready(function(){
 ?>
 
         <!-- Counters for BODY TOP: END -->
+        <?=$this->element('accept-cookies')?>
 		<div class="header">
             <div class="header_back">
                 <div class="inner clearfix">
