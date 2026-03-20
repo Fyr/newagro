@@ -39,7 +39,7 @@ class ArticleVarsHelper extends AppHelper {
 
 	public function callableLink($type, $phoneOrUID, $xOptions = array()) {
 		$options = array_merge(array('class' => "callable ${type}"), $xOptions);
-		$url = $phoneOrUID;
+		$url = $phoneOrUID; // for MAX UID is URL
 		switch ($type) {
 			case 'tel':
 				$url = 'tel:'.str_replace('375', '+375', $this->fixPhone(str_replace('+7', '8', $phoneOrUID)));
