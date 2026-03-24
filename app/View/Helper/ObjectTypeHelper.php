@@ -23,7 +23,8 @@ class ObjectTypeHelper extends AppHelper {
                 'MachineTool' => __('Machine tools'),
                 'Region' => __('Regions'),
                 'Marker' => __('Markers'),
-                'SiteArticle' => __('Blog')
+                'SiteArticle' => __('Blog'),
+                'AdminUser' => __('Admins'),
             ),
             'create' => array(
                 'Article' => __('Create Article'),
@@ -42,6 +43,7 @@ class ObjectTypeHelper extends AppHelper {
                 'MachineTool' => __('Create machine tool'),
                 'Region' => __('Create region'),
                 'Marker' => __('Create marker'),
+                'AdminUser' => __('Create Admin'),
             ),
             'edit' => array(
                 'Article' => __('Edit Article'),
@@ -59,7 +61,8 @@ class ObjectTypeHelper extends AppHelper {
                 'Subdomain' => __('Edit subdomain'),
                 'MachineTool' => __('Edit machine tool'),
                 'Region' => __('Edit region'),
-                'Marker' => __('Edit marker')
+                'Marker' => __('Edit marker'),
+                'AdminUser' => __('Edit Admin'),
             ),
             'view' => array(
             	'Article' => __('View Article'),

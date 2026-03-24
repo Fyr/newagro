@@ -918,3 +918,12 @@ msgstr "Блог"
 
 msgid "Submit"
 msgstr "Отправить"
+
+msgid "Admins"
+msgstr "Администраторы"
+
+msgid "Create Admin"
+msgstr "Создать Администратора"
+
+msgid "Edit Admin"
+msgstr "Редактировать Администратора"

@@ -1,9 +1,11 @@
 <?php
 App::uses('AdminController', 'Controller');
+App::uses('AdminUser', 'Model');
+App::uses('User', 'Model');
 class AdminUsersController extends AdminController {
     public $name = 'AdminUsers';
     public $components = array('Auth', 'Table.PCTableGrid', 'Article.PCArticle');
-    public $uses = array('User', 'Form.FormField', 'Brand');
+    public $uses = array('AdminUser');
 
     public function beforeFilter() {
 		if (!$this->isAdmin()) {
@@ -15,46 +17,36 @@ class AdminUsersController extends AdminController {
 
     public function beforeRender() {
     	parent::beforeRender();
-    	$this->set('objectType', 'User');
+    	$this->set('objectType', 'AdminUser');
     }
 
     public function index() {
     	$this->paginate = array(
-    		'fields' => array('id', 'created', 'username', 'active')
+    		'fields' => array('id', 'created', 'username', 'active'),
+    		'conditions' => array('zone' => Configure::read('domain.zone'), 'group_id' => User::GROUP_ADMIN)
     	);
-    	$this->PCTableGrid->paginate('User');
+    	$rows = $this->PCTableGrid->paginate('AdminUser');
     }
 
     public function edit($id = 0) {
     	if ($id) {
-			if ($this->request->is(array('put', 'post')) && !$this->request->data('User.password')) {
-				unset($this->request->data['User']['password']);
+			if ($this->request->is(array('put', 'post')) && !$this->request->data('AdminUser.password')) {
+				unset($this->request->data['AdminUser']['password']);
 			}
 		}
-    	$this->PCArticle->setModel('User')->edit($id, $lSaved);
+    	$this->PCArticle->setModel('AdminUser')->edit($id, $lSaved);
 		if ($lSaved) {
-			$id = $this->User->id;
+			$id = $this->AdminUser->id;
 			if ($id == AuthComponent::user('id')) {
 				// перечитать данные для текущего юзера
-				$user = $this->User->findById($id);
-				$this->Auth->login($user['User']);
+				$user = $this->AdminUser->findById($id);
+				$this->Auth->login($user['AdminUser']);
 			}
 			$baseRoute = array('action' => 'index');
 			return $this->redirect(($this->request->data('apply')) ? $baseRoute : array($id));
 		}
 		if ($id) {
-			$this->request->data('User.password', '');
+			$this->request->data('AdminUser.password', '');
 		}
-		$this->paginate = array(
-			'FormField' => array(
-				'fields' => array('id', 'field_type', 'label', 'fieldset', 'required'),
-    			'limit' => 100
-			),
-    		'Brand' => array(
-    			'fields' => array('id', 'title')
-    		)
-    	);
-    	$this->PCTableGrid->paginate('Brand');
-    	$this->PCTableGrid->paginate('FormField');
     }
 }

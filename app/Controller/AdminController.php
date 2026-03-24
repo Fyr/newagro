@@ -34,7 +34,8 @@ class AdminController extends AppController {
 				'Regions' => array('label' => __('Regions'), 'href' => array('controller' => 'AdminRegions', 'action' => 'index')),
 				'Subdomains' => array('label' => __('Subdomains (Contacts)'), 'href' => array('controller' => 'AdminSubdomains', 'action' => 'index')),
 				'Markers' => array('label' => __('Markers'), 'href' => array('controller' => 'AdminMarkers', 'action' => 'index')),
-				'Messengers' => array('label' => __('Messengers'), 'href' => array('controller' => 'AdminMessengers', 'action' => 'index'))
+				'Messengers' => array('label' => __('Messengers'), 'href' => array('controller' => 'AdminMessengers', 'action' => 'index')),
+				'AdminUsers' => array('label' => __('Admins'), 'href' => array('controller' => 'AdminUsers', 'action' => 'index')),
 			))
 		);
 		if (Configure::read('domain.zone') != 'ru') {
