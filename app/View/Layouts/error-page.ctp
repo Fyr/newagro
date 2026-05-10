@@ -58,10 +58,7 @@
 
         </div>
         <div class="wrapper clearfix">
-            <form class="searchBlock" action="/products" method="get">
-                <button class="submit"><?=__('search')?></button>
-                <div class="outerSearch"><input type="text" name="q" value="<?=$this->request->query('q')?>" placeholder="<?=__('Enter spare number or its name...')?>" /></div>
-            </form>
+            <?=$this->element('search_form')?>
             <div class="oneLeftSide">
                 <div class="leftSidebar">
                     <?//$this->element('sidebar_left')?>

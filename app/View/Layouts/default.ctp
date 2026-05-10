@@ -10,6 +10,10 @@
 	echo $this->element('Seo.seo_info', array('data' => $seo))."\n";
 	echo $this->Html->css(array('style.css?v='.$stylesVersion, 'fonts', 'smoothDivScroll', 'extra.css?v='.$stylesVersion, 'jquery.fancybox', 'call-widget.css?v='.$stylesVersion));
 ?>
+<style>
+.rightSidebar { margin-top: 0 }
+.oneLeftSide { margin-top: 69px; }
+</style>
 <!--[if gte IE 9]>
 <style type="text/css">
     .gradient { filter: none; }
@@ -102,10 +106,7 @@ $(document).ready(function(){
 
         </div>
         <div class="wrapper clearfix">
-            <form class="searchBlock" action="/products" method="get">
-                <button class="submit"><?=__('search')?></button>
-                <div class="outerSearch"><input type="text" name="q" value="<?=$this->request->query('q')?>" placeholder="<?=__('Enter spare number or its name...')?>" /></div>
-            </form>
+            <?=$this->element('search_form')?>
             <div class="oneLeftSide">
                 <div class="leftSidebar">
                     <?=($leftSidebar) ? $this->element('sidebar_left') : ''?>

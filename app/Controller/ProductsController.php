@@ -33,6 +33,9 @@ class ProductsController extends AppController {
 			'order' => "MediaArticle.main_$zone DESC"
 		);
 		$q = $this->request->query('q');
+		if ($q) {
+		    return $this->redirect404();
+		}
 		$catSlug = $this->request->param('category');
 		$category = array();
 		if ($catSlug && !$q) {

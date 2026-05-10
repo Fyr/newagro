@@ -1,15 +1,14 @@
+<style>
+.searchBlock { margin: 0 0 20px 0 }
+</style>
+
 <?
     $this->Html->css(array('grid', '/Icons/css/icons'), array('inline' => false));
 
     // $aBreadCrumbs = array(__('Home') => '/', __('Cart') => '');
     // echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
     echo $this->element('title', array('title' => __('Checkout')));
-?>
-            <form class="searchBlock" action="/products" method="get" style="margin: 0 0 20px 0">
-                <button class="submit"><?=__('search')?></button>
-                <div class="outerSearch"><input type="text" name="q" value="<?=$this->request->query('q')?>" placeholder="<?=__('Enter spare number or its name...')?>" /></div>
-            </form>
-<?
+    echo $this->element('search_form');
     if ($cartItems) {
         echo $this->element('cart_items');
         echo $this->element('title', array('title' => 'Ваши данные для заказа'));
