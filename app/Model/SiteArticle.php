@@ -17,7 +17,7 @@ class SiteArticle extends Article {
 		'Seo' => array(
 			'className' => 'Seo.Seo',
 			'foreignKey' => 'object_id',
-			'conditions' => array('Seo.object_type' => 'SiteArticle'),
+			'conditions' => array('Seo.object_type' => 'Page'),
 			'dependent' => true
 		)
 	);
