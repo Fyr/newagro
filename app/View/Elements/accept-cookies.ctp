@@ -1,6 +1,6 @@
         <div id="acceptCookie" style="display: none">
             <div style="display: inline-block; padding: 0 10px; max-width: 80%">
-                <h1><?=$cookiesText['Page']['title']?></h1>
+                <div class="head"><?=$cookiesText['Page']['title']?></div>
                 <?=$this->ArticleVars->body($cookiesText)?>
                 <div style="margin: 10px 0;">
                     <a class="accept" href="javascript:void(0)" onclick="AcceptCookies.update(1); $('#acceptCookie').hide()">Принять все cookies</a>
