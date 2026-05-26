@@ -102,10 +102,41 @@ class ArticlesController extends AppController {
 			}
 		}
 
-		if (!(isset($aArticle['Seo']) & isset($aArticle['Seo']['title']) && $aArticle['Seo']['title'])) {
-			$aArticle['Seo']['title'] = $aArticle[$this->objectType]['title'];
+		if (!isset($aArticle['Seo'])) {
+		    $aArticle['Seo'] = array('title' => '', 'keywords' => '', 'descr' => '');
 		}
 		$this->seo = $aArticle['Seo'];
+
+        fdebug($aArticle);
+
+		// fix SEO info - auto-title for empty SEO title
+		if ($this->objectType === 'Offer') {
+		    if (!trim($this->seo['title'])) {
+		        $this->seo['title'] = __('%s | Offers from AgroMotors', trim($aArticle['Offer']['title']));
+		    }
+		    if (!trim($this->seo['descr'])) {
+                $this->seo['descr'] = __('%s | Special offers and discounts', trim($aArticle['Offer']['title']));
+            }
+		} else if ($this->objectType === 'Brand') {
+		    if (!trim($this->seo['title'])) {
+                $this->seo['title'] = __('Our partner - %s', trim($aArticle['Brand']['title']));
+            }
+            if (!trim($this->seo['descr'])) {
+                $this->seo['descr'] = __('%s | Working with trusted partners | Quality', trim($aArticle['Brand']['title']));
+            }
+		} else if ($this->objectType === 'SectionArticle') {
+            if (!trim($this->seo['title'])) {
+                $this->seo['title'] = __('%s | AgroMotors', trim($aArticle['SectionArticle']['title'])); // no need to translate!
+            }
+            if (!trim($this->seo['descr'])) {
+                $this->seo['descr'] = __('%s | Useful info | Quality', trim($aArticle['SectionArticle']['title']));
+            }
+        }
+
+		if (!trim($this->seo['title'])) {
+		    $this->seo['title'] = $aArticle[$this->objectType]['title'];
+		}
+
 		$this->currMenu = $slug;
 
 		if ($this->objectType == 'SectionArticle') {

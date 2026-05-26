@@ -927,3 +927,18 @@ msgstr "Создать Администратора"
 
 msgid "Edit Admin"
 msgstr "Редактировать Администратора"
+
+msgid "%s | Offers from AgroMotors"
+msgstr "%s | Акции от AgroMotors"
+
+msgid "%s | Special offers and discounts"
+msgstr "%s | Специальные предложения и скидки"
+
+msgid "Our partner - %s"
+msgstr "Наш партнер - %s"
+
+msgid "%s | Working with trusted partners | Quality"
+msgstr "%s | Работаем с надежными и проверенными компаниями | Гарантия качества"
+
+msgid "%s | Useful info | Quality"
+msgstr "%s | Полезная информация от компании AgroMotors | Гарантия качества"
