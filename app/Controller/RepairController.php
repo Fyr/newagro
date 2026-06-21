@@ -30,6 +30,7 @@ class RepairController extends AppController {
 			$aArticle['Seo']['title'] = $aArticle[$objectType]['title'];
 		}
 		$this->seo = $aArticle['Seo'];
+		$this->setImageSeo($aArticle);
 
 		$conditions = array('cat_id' => $cat_id, 'published' => 1);
 		$order = 'sorting';

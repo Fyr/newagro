@@ -53,6 +53,8 @@ class ContactsController extends AppController {
 		$this->set(compact('article', 'article2'));
 		// $this->set('recaptchaError', $recaptchaError);
 		$this->disableCopy = false;
+
+		$this->setImageSeo($article2);
 	}
 
 	public function success() {

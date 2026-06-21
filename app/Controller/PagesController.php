@@ -47,6 +47,7 @@ class PagesController extends AppController {
 			$aArticle['Seo']['title'] = $aArticle['Page']['title'];
 		}
 		$this->seo = $aArticle['Seo'];
+		$this->setImageSeo($aArticle);
 
 		$aRegions = Hash::combine($this->Region->find('all'), '{n}.Region.id', '{n}.Region');
 		$aMarkers = $this->Marker->find('all');
@@ -68,6 +69,8 @@ class PagesController extends AppController {
 		$this->seo = $aArticle['Seo'];
 		$this->currMenu = $slug;
 		$this->currLink = $slug;
+
+		$this->setImageSeo($aArticle);
 	}
 
 	public function nonExist() {

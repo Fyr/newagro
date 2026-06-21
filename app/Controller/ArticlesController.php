@@ -7,6 +7,7 @@ App::uses('Offer', 'Model');
 App::uses('Motor', 'Model');
 App::uses('Brand', 'Model');
 App::uses('SiteArticle', 'Model');
+App::uses('MediaHelper', 'View/Helper');
 class ArticlesController extends AppController {
 	public $name = 'Articles';
 	public $components = array('Table.PCTableGrid');
@@ -107,8 +108,6 @@ class ArticlesController extends AppController {
 		}
 		$this->seo = $aArticle['Seo'];
 
-        fdebug($aArticle);
-
 		// fix SEO info - auto-title for empty SEO title
 		if ($this->objectType === 'Offer') {
 		    if (!trim($this->seo['title'])) {
@@ -153,5 +152,6 @@ class ArticlesController extends AppController {
 		$aArticle[$this->objectType]['views']++;
 
 		$this->set('article', $aArticle);
+		$this->setImageSeo($aArticle);
 	}
 }

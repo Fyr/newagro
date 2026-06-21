@@ -4,27 +4,38 @@
  * @param $data
  */
 
-	$title = (isset($data['title']) && $data['title']) ? $data['title'] : Configure::read('domain.title');
-	echo $this->Html->tag('title', $this->PHSeo->addPagingTitle($title))."\n";
+    $zone = Configure::read('domain.zone') == 'by' ? 'в Беларуси' : 'в России';
 
-	if (isset($data['descr']) && $data['descr']) {
-		echo $this->Html->meta('description', $this->PHSeo->addPagingTitle($data['descr']))."\n";
-	}
+	$title = (isset($data['title']) && $data['title'])
+	    ? $data['title']
+	    : 'Купить запчасти Deutz в '.$zone.' с доставкой';
 
-	if (isset($data['keywords']) && $data['keywords']) {
-		echo $this->Html->meta('keywords', $data['keywords'])."\n";
-	}
+    $descr = (isset($data['descr']) && $data['descr'])
+        ? $data['descr']
+        : 'Запчасти Deutz '.$zone.' | Оригинальное качество из Германии | Низкие цены запчасти Дойц в наличии | + 7 495 241 00 96';
+
+    $keywords = (isset($data['keywords']) && $data['keywords'])
+        ? $data['keywords']
+        : '';
+
+    echo $this->Html->tag('title', $this->PHSeo->addPagingTitle($title))."\n";
+    echo $this->Html->meta('description', $this->PHSeo->addPagingTitle($title))."\n";
+    echo $this->Html->meta('keywords', $keywords)."\n";
+
+	$image = (isset($data['image']) && $data['image'])
+	    ? $data['image']
+	    : '/img/logo2_footer.png';
 
 	$ogTags = array(
 		'og:title' => $title,
 		'og:type' => 'website',
-		'og:url' => HTTP.Configure::read('domain.url').'/',
-		'og:image' => HTTP.Configure::read('domain.url').'/img/logo2_footer.png',
-		'og:description' => (isset($data['descr']) && $data['descr']) ? $data['descr'] : ''
+		'og:url' => HTTP.Configure::read('domain.url').$_SERVER['REQUEST_URI'],
+		'og:image' => HTTP.Configure::read('domain.url').$image,
+		'og:description' => $descr
 	);
 
 	foreach($ogTags as $property => $content) {
 		echo $this->Html->tag('meta', null, compact('property', 'content'))."\n";
 	}
-	
+
 	echo $this->Html->tag('link', null, array('rel' => 'image_src', 'href' => $ogTags['og:image']))."\n";

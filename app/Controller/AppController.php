@@ -409,6 +409,15 @@ class AppController extends Controller {
 	    return new $className($this->_getViewObject());
 	}
 
+	// add main image for SEO
+	protected function setImageSeo($aArticle) {
+        $this->MediaHelper = $this->getHelper('MediaHelper');
+        $image = $this->MediaHelper->imageUrl($aArticle);
+        if ($image) {
+            $this->seo['image'] = $image;
+        }
+	}
+
 	protected function saveSiteOrder($data) {
 	    $cartItems = $this->getCartItems();
 	    $products = $this->getCartProducts();
