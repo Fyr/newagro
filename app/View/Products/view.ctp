@@ -22,9 +22,14 @@
 
 	echo $this->element('bread_crumbs', compact('aBreadCrumbs'));
 	echo $this->element('title', compact('title'));
-	$brand_id = $article['Product']['brand_id'];
-	$brand = ($article['Product']['is_fake']) ? $aFakeBrands[$brand_id] : $aBrands[$brand_id];
-	$brandTitle = $brand['Brand']['title'];
+
+    $brand_id = $article['Product']['brand_id'];
+	$brand = array();
+	$brandTitle = '-';
+	if (isset($aBrands[$brand_id]) || isset($aFakeBrands[$brand_id])) {
+        $brand = ($article['Product']['is_fake']) ? $aFakeBrands[$brand_id] : $aBrands[$brand_id];
+        $brandTitle = $brand['Brand']['title'];
+	}
 ?>
 						<div class="block main clearfix">
 
