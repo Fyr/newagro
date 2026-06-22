@@ -13,7 +13,7 @@ if ($aMessengers) {
         $type = $app['Messenger']['type'];
         $title = $app['Messenger']['title'];
         $options = array('target' => '_blank', 'title' => $title, 'data-title' => $title, 'class' => 'widget-messengers-icon widget-messengers-icon--'.$type);
-?>            
+?>
             <div class="widget-messengers-icon-wrap">
                 <?=$this->ArticleVars->callableLink($type, $app['Messenger']['uid'], $options)?>
                 <span><?=$title?></span>
@@ -22,7 +22,7 @@ if ($aMessengers) {
     }
 ?>
             <div class="widget-messengers-icon-wrap">
-                <a href="javascript:;" title="Закрыть" data-title="Закрыть" class="widget-messengers-icon widget-messengers-icon--close"></a>
+                <a rel="nofollow" href="javascript:;" title="Закрыть" data-title="Закрыть" class="widget-messengers-icon widget-messengers-icon--close"></a>
                 <span>&nbsp;</span>
             </div>
         </div>

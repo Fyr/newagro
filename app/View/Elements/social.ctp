@@ -11,7 +11,7 @@
     );
     foreach($aSocial as $img => $url) {
 ?>
-        <a href="<?=$url?>" target="_blank"><img src="/img/social/<?=$img?>.png" /></a>
+        <a rel="nofollow" href="<?=$url?>" target="_blank"><img src="/img/social/<?=$img?>.png" /></a>
 <?
     }
 ?>

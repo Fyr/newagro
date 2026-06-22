@@ -5,7 +5,7 @@
     // array('class' => "callable ${type}")
 ?>
 <div class="phones">
-    <a href="<?=$url?>"><span class="icon phone"></span></a>
+    <a rel="nofollow" href="<?=$url?>"><span class="icon phone"></span></a>
     <span class="numbers">
 <?
     foreach($phones as $phone) {

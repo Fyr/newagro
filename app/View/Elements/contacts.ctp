@@ -3,8 +3,8 @@
     if ($skype) {
 ?>
                     <div class="skypeName">
-                        <a href="skype:<?=$skype?>" class="icon skype"></a>
-                        <a href="skype:<?=$skype?>"><?=$skype?></a>
+                        <a rel="nofollow" href="skype:<?=$skype?>" class="icon skype"></a>
+                        <a rel="nofollow" href="skype:<?=$skype?>"><?=$skype?></a>
                     </div>
 <?
     }
@@ -12,8 +12,8 @@
     if ($email) {
 ?>
                     <div class="letter">
-                        <a href="mailto:<?=$email?>" class="icon email"></a>
-                        <a href="mailto:<?=$email?>"><?=$email?></a>
+                        <a rel="nofollow" href="mailto:<?=$email?>" class="icon email"></a>
+                        <a rel="nofollow" href="mailto:<?=$email?>"><?=$email?></a>
                     </div>
 <?
     }

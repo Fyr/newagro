@@ -38,7 +38,7 @@ class ArticleVarsHelper extends AppHelper {
 	}
 
 	public function callableLink($type, $phoneOrUID, $xOptions = array()) {
-		$options = array_merge(array('class' => "callable ${type}"), $xOptions);
+		$options = array_merge(array('class' => "callable ${type}", 'rel' => 'nofollow'), $xOptions);
 		$url = $phoneOrUID; // for MAX UID is URL
 		switch ($type) {
 			case 'tel':
