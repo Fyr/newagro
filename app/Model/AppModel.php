@@ -127,6 +127,7 @@ class AppModel extends Model {
 	}
 
 	public function isBot($ip = '') {
+	    return false;
 		if (!$ip) {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
@@ -155,7 +156,7 @@ class AppModel extends Model {
 				}
 			}
 		}
-		fdebug($referer."\r\n", 'is_bot.log');
+		// fdebug($referer."\r\n", 'is_bot.log');
 		return false;
 	}
 
