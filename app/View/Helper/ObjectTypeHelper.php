@@ -24,6 +24,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Region' => __('Regions'),
                 'Marker' => __('Markers'),
                 'SiteArticle' => __('Blog'),
+                'UserComment' => __('Comments'),
                 'AdminUser' => __('Admins'),
             ),
             'create' => array(
@@ -44,6 +45,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Region' => __('Create region'),
                 'Marker' => __('Create marker'),
                 'AdminUser' => __('Create Admin'),
+                'UserComment' => __('Create Comment'),
             ),
             'edit' => array(
                 'Article' => __('Edit Article'),
@@ -63,6 +65,7 @@ class ObjectTypeHelper extends AppHelper {
                 'Region' => __('Edit region'),
                 'Marker' => __('Edit marker'),
                 'AdminUser' => __('Edit Admin'),
+                'UserComment' => __('Edit Comment'),
             ),
             'view' => array(
             	'Article' => __('View Article'),

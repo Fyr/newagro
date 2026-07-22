@@ -942,3 +942,12 @@ msgstr "%s | Работаем с надежными и проверенными 
 
 msgid "%s | Useful info | Quality"
 msgstr "%s | Полезная информация от компании AgroMotors | Гарантия качества"
+
+msgid "Comments"
+msgstr "Комментарии"
+
+msgid "Create Comment"
+msgstr "Создать комментарий"
+
+msgid "Edit Comment"
+msgstr "Редактировать комментарий"

@@ -2,11 +2,19 @@
 	$title = $this->ObjectType->getTitle('index', $objectType);
     $createURL = $this->Html->url(array('action' => 'edit', 0, $objectType, $objectID));
     $createTitle = $this->ObjectType->getTitle('create', $objectType);
-    
+
     $actions = $this->PHTableGrid->getDefaultActions($objectType);
     $actions['table']['add']['href'] = $createURL;
     $actions['table']['add']['label'] = $createTitle;
     $actions['row']['edit']['href'] = $this->Html->url(array('action' => 'edit', '~id', $objectType, $objectID));
+
+    if ($objectType == 'SiteArticle') {
+        $actions['row'][] = array(
+            'label' => 'Комментарии к статье',
+            'class' => 'icon-color icon-open-folder',
+            'href' => $this->Html->url(array('controller' => 'AdminUserComments', 'action' => 'index', '~id'))
+        );
+    }
 
 	$columns = $this->PHTableGrid->getDefaultColumns($objectType);
     if (in_array($objectType, array('Page', 'News', 'Offer'))) {

@@ -153,5 +153,11 @@ class ArticlesController extends AppController {
 
 		$this->set('article', $aArticle);
 		$this->setImageSeo($aArticle);
+
+		if ($this->objectType == 'SiteArticle') {
+		    // load comments
+		    $this->loadModel('UserComment');
+		    $this->set('aComments', $this->UserComment->findAllBySiteArticleId($id));
+		}
 	}
 }

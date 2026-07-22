@@ -46,7 +46,6 @@
         <div class="views">
             <span class="">Просмотров: </span><?=$article[$objectType]['views']?>
             <span class="icon-color icon-preview"></span><br/>
-            <span class="">Рейтинг: </span><?=$article[$objectType]['views']?>
         </div>
         <div class="time">
             <span class="icon clock" style="margin-right: 3px; position: relative; top: -1px; "></span><?=$this->PHTime->niceShort($article[$objectType]['created'])?>
@@ -67,10 +66,22 @@
 <?
 	}
 	if ($objectType === 'SiteArticle') {
+	    echo $this->element('title', array('title' => __('Comments')));
 	    echo $this->Form->create('UserComment', array('class' => 'feedback register'));
 ?>
 	<div class="block main">
 <?
+        foreach($aComments as $comment) {
+            $comment = $comment['UserComment'];
+?>
+        <p>
+            <b><?=$comment['author']?>:</b>
+            <span style="background: #eee; display: block; padding: 3px 5px;">
+                <?=nl2br($comment['body'])?>
+            </span>
+        </p>
+<?
+        }
         if ($currUser) {
 ?>
         <p>
