@@ -35,7 +35,6 @@
                             <div class="views">
                                 <span class="">Просмотров: </span><?=$article[$objectType]['views']?>
                                 <span class="icon-color icon-preview"></span><br/>
-                                <span class="">Рейтинг: </span><?=$article[$objectType]['views']?>
                             </div>
                             <div class="author">
                                 <span class="">Автор: </span><?=$article[$objectType]['author']?>
