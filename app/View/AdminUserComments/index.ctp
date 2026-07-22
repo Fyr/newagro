@@ -4,11 +4,14 @@
     $createTitle = $this->ObjectType->getTitle('create', $objectType);
 
     $actions = $this->PHTableGrid->getDefaultActions($objectType);
-    /*
     $actions['table']['add']['href'] = $createURL;
     $actions['table']['add']['label'] = $createTitle;
     $actions['row']['edit']['href'] = $this->Html->url(array('action' => 'edit', '~id'));
-    */
+
+    $backURL = $this->Html->url(array('action' => 'index', $objectID));
+    $deleteURL = $this->Html->url(array('action' => 'delete')).'/{$id}?model=UserComment&backURL='.urlencode($backURL);
+    $actions['row']['delete'] = $this->Html->link('', $deleteURL, array('class' => 'icon-color icon-delete', 'title' => __('Delete record')), __('Are you sure to delete this record?'));
+
 	$columns = $this->PHTableGrid->getDefaultColumns($objectType);
 
 	foreach($aRowset as &$row) {
